@@ -1,0 +1,281 @@
+{
+	"about": {
+		"title": "About Mettyerng",
+		"subtitle": "Recognizing the importance of protecting and improving the living standards, employment and business opportunities of self-employed and self-employed workers, technical experts, service workers and other business practitioners both domestically and internationally, <<Our Friends Association>> was established by a group of young people under the motto <<Friendship, Solidarity, Loyalty>> on December 27, 2022 with the goal",
+		"badge1": "Founded in 2020",
+		"badge2": "27 Members",
+		"badge3": "10+ Projects",
+		"mission": {
+			"title": "Mission",
+			"title_en": "Our Mission",
+			"desc1": "To build a strong and prosperous Khmer community through quality education, preservation of traditional culture, and mutual support with a spirit of love.",
+			"desc2": "We work to improve the lives of Cambodians and encourage youth to pursue education and uphold excellent values."
+		},
+		"vision": {
+			"title": "Vision",
+			"title_en": "Our Vision",
+			"desc1": "To become a leading organization in building a strong Khmer community where education is accessible, culture is preserved, and society is supportive.",
+			"desc2": "We envision a community where all children have the opportunity to receive an education and youth are encouraged to preserve national culture."
+		},
+		"values": {
+			"title": "Values",
+			"title_en": "Our Values",
+			"description": "These core values guide our work in building the community.",
+			"love": {
+				"title": "ការស្រឡាញ់",
+				"title_en": "Love & Compassion",
+				"description": "We believe that love and care for one another are the essential foundation for building a strong community."
+			},
+			"education": {
+				"title": "ការអប់រំ",
+				"title_en": "Education",
+				"description": "Education is the most crucial foundation for development and building a bright future."
+			},
+			"culture": {
+				"title": "វប្បធម៌",
+				"title_en": "Culture",
+				"description": "Preserving and promoting the glorious Khmer traditional culture for future generations."
+			},
+			"unity": {
+				"title": "ការរួបរួម",
+				"title_en": "Unity",
+				"description": "Unity in building the community and helping one another."
+			},
+			"innovation": {
+				"title": "ភាពច្នៃប្រឌិត",
+				"title_en": "Innovation",
+				"description": "Initiating new ideas and creative thinking to solve social problems."
+			},
+			"responsibility": {
+				"title": "ការទទួលខុសត្រូវ",
+				"title_en": "Responsibility",
+				"description": "Responsibility towards the community and working with integrity."
+			}
+		},
+		"timeline": {
+			"title": "Journey",
+			"title_en": "Our Journey",
+			"description": "Tracing our growth and achievements since 2018.",
+			"founded": {
+				"title": "ការបង្កើតក្រុម",
+				"title_en": "Organization Founded",
+				"description": "Mettyerng was formed by an initial group of 10 dedicated volunteers.",
+				"achievements": {
+					"members": "10 founding members",
+					"firstProject": "First project launched"
+				}
+			},
+			"education": {
+				"title": "ការអប់រំ",
+				"title_en": "Education Initiative",
+				"description": "Launched a project to provide education to children in rural areas.",
+				"achievements": {
+					"children": "50 children educated",
+					"classrooms": "5 first classrooms"
+				}
+			},
+			"covid": {
+				"title": "ជំនួយកូវីដ",
+				"title_en": "COVID-19 Relief",
+				"description": "Provided food and medical aid during the COVID-19 pandemic.",
+				"achievements": {
+					"families": "500 families assisted",
+					"medicalKits": "Medical kits distributed"
+				}
+			},
+			"haircut": {
+				"title": "គម្រោងកាត់សក់",
+				"title_en": "Free Haircut Project",
+				"description": "Started a project to provide free haircuts to the community.",
+				"achievements": {
+					"people": "200 people served",
+					"monthlyService": "Monthly service"
+				}
+			},
+			"expansion": {
+				"title": "ការរីកចម្រើន",
+				"title_en": "Expansion",
+				"description": "Expanded activities to other provinces and increased membership.",
+				"achievements": {
+					"activeMembers": "100+ active members",
+					"provinces": "Active in 3 provinces"
+				}
+			},
+			"recognition": {
+				"title": "ការទទួលស្គាល់",
+				"title_en": "Recognition",
+				"description": "Received recognition from the government and civil society for our forums.",
+				"achievements": {
+					"nationalAward": "National award received",
+					"acknowledgement": "Official acknowledgement"
+				}
+			},
+			"newFuture": {
+				"title": "អនាគតថ្មី",
+				"title_en": "New Future",
+				"description": "Launched a new website and expanded activities into the digital technology sphere.",
+				"achievements": {
+					"newWebsite": "New website launched",
+					"digitalSystem": "Digital management system"
+				}
+			}
+		},
+		"team": {
+			"title": "Our Team",
+			"title_en": "Our Core Team",
+			"description": "The core members who have dedicated themselves to building our community.",
+			"member1": { "name": "Mr. Mettyerng", "role": "President" },
+			"member2": { "name": "Mrs. Sokha", "role": "Vice President" },
+			"member3": { "name": "Mr. Dara", "role": "Secretary" },
+			"member4": { "name": "Mrs. Chanda", "role": "Treasurer" }
+		},
+		"partner": {
+			"title": "Partner",
+			"title_en": "Our Partner",
+			"description": "Our Partner in our community",
+			"partner1": { "name": "Wing", "image": "/wing.png" },
+			"partner2": { "name": "My Cut", "image": "/my-cut.png" }
+		}
+	},
+	"nav": {
+		"home": "Home",
+		"about": "About",
+		"structure": "Structure",
+		"news": "Events",
+		"latestNews": "Latest News",
+		"events": "Events",
+		"videos": "Videos",
+		"projects": "Projects",
+		"allProjects": "All Projects",
+		"community": "Community",
+		"education": "Education",
+		"culture": "Culture",
+		"sports": "Sports",
+		"gallery": "Gallery",
+		"contact": "Contact",
+		"joinUs": "Join Us"
+	},
+	"hero": {
+		"title": "Community Builders",
+		"subtitle": "Building Stronger Communities Together",
+		"description": "We are a group of social enthusiasts focused on education, culture, and community development",
+		"learnMore": "Learn More",
+		"watchVideo": "Watch Video",
+		"projectTitle": "Free Haircut Project",
+		"projectSubtitle": "Community Service Initiative",
+		"projectDescription": "Free haircuts for community members in need",
+		"viewProjects": "View Projects",
+		"educationTitle": "Education & Culture",
+		"educationSubtitle": "Learning & Heritage",
+		"educationDescription": "Promoting education and preserving Khmer culture",
+		"joinUs": "Join Us"
+	},
+	"home": {
+		"achievements": "Our Achievements",
+		"achievementsDesc": "Through the dedication of our volunteers, we have achieved success in various fields",
+		"missionTitle": "Our Mission",
+		"missionDesc": "We are a group of social enthusiasts created to help communities through education, culture, and social development.",
+		"missionText": "We believe that education is the most important foundation for development and building a bright future for Cambodian children and youth.",
+		"focusAreas": "Our Focus Areas",
+		"focusAreasDesc": "We focus on building communities through these key areas",
+		"joinCommunity": "Join Our Community",
+		"joinDesc": "Become part of positive change, participate in building a strong community",
+		"becomeVolunteer": "Become a Volunteer",
+		"viewProjects": "View Our Projects",
+		"education": "Education",
+		"educationDesc": "Providing quality education to children and youth in the community",
+		"culture": "Culture",
+		"cultureDesc": "Preserving and promoting traditional Khmer culture",
+		"social": "Social",
+		"socialDesc": "Helping people in difficult situations",
+		"activeMembers": "Active members in the group",
+		"successfulProjects": "Successfully implemented projects",
+		"educatedChildren": "Children and youth who received education",
+		"helpedFamilies": "Families who received help"
+	},
+	"projects": {
+		"title": "Our Projects",
+		"subtitle": "Discover our impactful projects and community initiatives",
+		"impact": "Our Impact",
+		"impactDesc": "Our achievements",
+		"allProjects": "All Projects",
+		"showing": "Showing",
+		"of": "of",
+		"projects": "projects",
+		"noResults": "No projects found",
+		"clearFilters": "Clear all filters",
+		"categories": {
+			"all": "All Projects",
+			"community": "Community",
+			"education": "Education",
+			"culture": "Culture",
+			"sports": "Sports"
+		}
+	},
+	"contact": {
+		"title": "Contact Us",
+		"subtitle": "Get in touch for collaboration, participation, or any questions",
+		"info": "Contact Information",
+		"sendMessage": "Send us a Message",
+		"name": "Name",
+		"email": "Email",
+		"phone": "Phone",
+		"department": "Department",
+		"subject": "Subject",
+		"message": "Message",
+		"send": "Send Message",
+		"sending": "Sending...",
+		"workingHours": "Working Hours",
+		"followUs": "Follow Us on Social Media",
+		"quickActions": "Quick Actions",
+		"volunteer": "Become a Volunteer",
+		"donate": "Donation",
+		"location": "Our Location"
+	},
+	"common": {
+		"readMore": "Read More",
+		"viewMore": "View More",
+		"learnMore": "Learn More",
+		"viewDetails": "View Details",
+		"back": "Back",
+		"next": "Next",
+		"previous": "Previous",
+		"close": "Close",
+		"search": "Search",
+		"filter": "Filter",
+		"all": "All",
+		"loading": "Loading...",
+		"error": "Error",
+		"success": "Success"
+	},
+	"footer": {
+		"aboutUs": "About Us",
+		"history": "History",
+		"mission": "Mission",
+		"vision": "Vision",
+		"values": "Values",
+		"activities": "Activities",
+		"news": "News",
+		"projects": "Projects",
+		"videos": "Videos",
+		"gallery": "Gallery",
+		"contact": "Contact",
+		"contactUs": "Contact Us",
+		"joinUs": "Join Us",
+		"volunteer": "Volunteer",
+		"support": "Support",
+		"newsletterDesc": "Subscribe to receive our latest news and activities",
+		"emailPlaceholder": "Enter your email",
+		"subscribe": "Subscribe",
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service"
+	},
+	"stats": {
+		"members": "Members",
+		"projects": "Projects",
+		"beneficiaries": "Beneficiaries",
+		"volunteers": "Volunteers",
+		"years": "Years",
+		"communities": "Communities"
+	}
+}
