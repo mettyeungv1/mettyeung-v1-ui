@@ -14,26 +14,35 @@ import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-const navigation = [
+type SubNavItem = {
+	key: string;
+	href: string;
+};
+
+type NavItem = {
+	key: string;
+	href: string;
+	submenu?: SubNavItem[];
+};
+
+// === Navigation Array with Type ===
+const navigation: NavItem[] = [
 	{ key: "nav.home", href: "/" },
 	{ key: "nav.about", href: "/about" },
 	{ key: "nav.structure", href: "/structure" },
-	{
-		key: "nav.news",
-		href: "/news",
-	},
+	{ key: "nav.news", href: "/news" },
 	{ key: "nav.videos", href: "/videos" },
-	{
-		key: "nav.projects",
-		href: "/projects",
-		submenu: [
-			{ key: "nav.allProjects", href: "/projects" },
-			{ key: "nav.community", href: "/projects?category=community" },
-			{ key: "nav.education", href: "/projects?category=education" },
-			{ key: "nav.culture", href: "/projects?category=culture" },
-			{ key: "nav.sports", href: "/projects?category=sports" },
-		],
-	},
+	// {
+	// 	key: "nav.projects",
+	// 	href: "/projects",
+	// 	submenu: [
+	// 		// { key: "nav.allProjects", href: "/projects" },
+	// 		// { key: "nav.community", href: "/projects?category=community" },
+	// 		// { key: "nav.education", href: "/projects?category=education" },
+	// 		// { key: "nav.culture", href: "/projects?category=culture" },
+	// 		// { key: "nav.sports", href: "/projects?category=sports" },
+	// 	],
+	// },
 	{ key: "nav.contact", href: "/contact" },
 ];
 

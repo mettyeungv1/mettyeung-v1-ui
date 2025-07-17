@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslation } from "@/lib/i18n";
+import { useRouter } from "next/navigation";
 
 const newsData = [
 	{
@@ -140,7 +141,9 @@ export default function NewsPage() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState("all");
 	const { t } = useTranslation();
+	const router = useRouter();
 
+	const moveToDetail = (id: any) => router.push("/news/asdfasdf");
 	const filteredNews = useMemo(() => {
 		let filtered = newsData;
 
@@ -195,7 +198,10 @@ export default function NewsPage() {
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							{featuredNews.map((item, index) => (
 								<AnimatedSection key={item.id} delay={index * 0.2}>
-									<Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group">
+									<Card
+										className="overflow-hidden hover:shadow-2xl transition-all duration-500 group  cursor-pointer"
+										onClick={moveToDetail}
+									>
 										<div className="aspect-video overflow-hidden">
 											<img
 												src={item.image}
@@ -258,7 +264,7 @@ export default function NewsPage() {
 						{/* Sidebar */}
 						<div className="lg:col-span-1">
 							<AnimatedSection>
-								<Card className="p-6 sticky top-24">
+								<Card className="p-6 sticky top-24 hover:cursor-pointer">
 									<h3 className="text-lg font-semibold text-gray-900 mb-4">
 										ស្វែងរក
 									</h3>
@@ -341,7 +347,10 @@ export default function NewsPage() {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 									{filteredNews.map((item, index) => (
 										<AnimatedSection key={item.id} delay={index * 0.1}>
-											<Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+											<Card
+												className="overflow-hidden hover:shadow-xl transition-all duration-300 group hover:cursor-pointer"
+												onClick={moveToDetail}
+											>
 												<div className="aspect-video overflow-hidden">
 													<img
 														src={item.image}
