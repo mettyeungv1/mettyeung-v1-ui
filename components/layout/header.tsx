@@ -27,11 +27,24 @@ type NavItem = {
 
 // === Navigation Array with Type ===
 const navigation: NavItem[] = [
-	{ key: "nav.home", href: "/" },
-	{ key: "nav.about", href: "/about" },
-	{ key: "nav.structure", href: "/structure" },
+	{
+		key: "nav.home",
+		href: "/",
+	},
+	{
+		key: "nav.about",
+		href: "/about",
+		submenu: [
+			{ key: "nav.subMenuAbout", href: "/about" },
+			{ key: "nav.structure", href: "/structure" },
+			{ key: "nav.network", href: "/about#network" },
+		],
+	},
 	{ key: "nav.news", href: "/news" },
-	{ key: "nav.videos", href: "/videos" },
+	{
+		key: "nav.videos",
+		href: "/videos",
+	},
 	// {
 	// 	key: "nav.projects",
 	// 	href: "/projects",

@@ -140,6 +140,8 @@
 	"nav": {
 		"home": "Home",
 		"about": "About",
+		"subMenuAbout": "About us",
+		"network": "Our network",
 		"structure": "Structure",
 		"news": "Events",
 		"latestNews": "Latest News",

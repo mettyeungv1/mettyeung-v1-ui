@@ -351,3 +351,7 @@
 	height: 24px;
 	border-radius: 99px;
 }
+
+html {
+	scroll-behavior: smooth;
+}

@@ -199,7 +199,6 @@ export default function AboutPage() {
 					</AnimatedSection>
 				</div>
 			</section>
-
 			{/* Mission, Vision & Values */}
 			<section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
 				<div className="container px-4 sm:px-6 lg:px-8">
@@ -270,160 +269,12 @@ export default function AboutPage() {
 					</div>
 				</div>
 			</section>
-
-			{/* Values Section */}
-			{/* <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
-				<div className="container px-4 sm:px-6 lg:px-8">
-					<AnimatedSection className="text-center mb-12 sm:mb-16">
-						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-							{t("about.values.title")}
-							<span className="block text-xl sm:text-2xl md:text-3xl bg-gradient-to-r from-yellow-500 to-red-500 bg-clip-text text-transparent mt-2">
-								{t("about.values.title_en")}
-							</span>
-						</h2>
-						<p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
-							{t("about.values.description")}
-						</p>
-					</AnimatedSection>
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-						{values.map((value, index) => (
-							<AnimatedSection
-								key={value.key}
-								delay={index * 0.1}
-								className="group"
-							>
-								<Card className="h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-									<CardContent className="p-4 sm:p-6">
-										<div className="mb-4 sm:mb-6">
-											<div
-												className={`w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br ${value.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
-											>
-												<value.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-											</div>
-											<h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-												{t(`about.values.${value.key}.title_en`)}
-											</h3>
-											<p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
-												{t(`about.values.${value.key}.title`)}
-											</p>
-										</div>
-										<p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-											{t(`about.values.${value.key}.description`)}
-										</p>
-									</CardContent>
-								</Card>
-							</AnimatedSection>
-						))}
-					</div>
-				</div>
-			</section> */}
-
-			{/* Timeline Section */}
-			{/* <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white">
-				<div className="container px-4 sm:px-6 lg:px-8">
-					<AnimatedSection className="text-center mb-12 sm:mb-16">
-						<h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-							{t("about.timeline.title")}
-							<span className="block text-xl sm:text-2xl md:text-3xl bg-gradient-to-r from-yellow-500 to-red-500 bg-clip-text text-transparent mt-2">
-								{t("about.timeline.title_en")}
-							</span>
-						</h2>
-						<p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
-							{t("about.timeline.description")}
-						</p>
-					</AnimatedSection>
-					<div className="relative">
-						<div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-yellow-500 via-red-500 to-blue-500"></div>
-						<div className="space-y-8 sm:space-y-12">
-							{timelineKeys.map((key, index) => (
-								<AnimatedSection
-									key={key}
-									delay={index * 0.2}
-									className={`flex items-center ${
-										index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-									}`}
-								>
-									<div
-										className={`w-full md:w-5/12 ${
-											index % 2 === 0 ? "md:pr-6 lg:pr-8" : "md:pl-6 lg:pl-8"
-										}`}
-									>
-										<Card className="p-4 sm:p-6 shadow-lg hover:shadow-2xl transition-all duration-300 ml-8 md:ml-0">
-											<CardContent className="p-0">
-												<div className="flex items-center mb-3 sm:mb-4">
-													<div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
-														{(2018 + index).toString().slice(-2)}
-													</div>
-													<div className="ml-3 sm:ml-4">
-														<h3 className="text-lg sm:text-xl font-bold text-gray-900">
-															{t(`about.timeline.${key}.title_en`)}
-														</h3>
-														<p className="text-xs sm:text-sm text-gray-500">
-															{t(`about.timeline.${key}.title`)}
-														</p>
-													</div>
-												</div>
-												<p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-3 sm:mb-4">
-													{t(`about.timeline.${key}.description`)}
-												</p>
-												<div className="flex flex-wrap gap-1 sm:gap-2">
-													<Badge variant="secondary" className="text-xs">
-														{t(`about.timeline.${key}.achievements.members`) ||
-															t(
-																`about.timeline.${key}.achievements.children`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.families`
-															) ||
-															t(`about.timeline.${key}.achievements.people`) ||
-															t(
-																`about.timeline.${key}.achievements.activeMembers`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.nationalAward`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.newWebsite`
-															)}
-													</Badge>
-													<Badge variant="secondary" className="text-xs">
-														{t(
-															`about.timeline.${key}.achievements.firstProject`
-														) ||
-															t(
-																`about.timeline.${key}.achievements.classrooms`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.medicalKits`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.monthlyService`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.provinces`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.acknowledgement`
-															) ||
-															t(
-																`about.timeline.${key}.achievements.digitalSystem`
-															)}
-													</Badge>
-												</div>
-											</CardContent>
-										</Card>
-									</div>
-									<div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full border-2 sm:border-4 border-white shadow-lg"></div>
-									<div className="w-full md:w-5/12"></div>
-								</AnimatedSection>
-							))}
-						</div>
-					</div>
-				</div>
-			</section> */}
-
 			{/* Team Section */}
-			<section className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5 relative overflow-hidden">
+
+			<section
+				className="py-16 sm:py-20 md:py-24 lg:py-32 bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5 relative overflow-hidden"
+				id="network"
+			>
 				{/* Background decoration */}
 				<div className="absolute inset-0">
 					<div className="absolute top-1/4 left-10 w-2 h-2 bg-yellow-400 rounded-full opacity-60 animate-ping"></div>
