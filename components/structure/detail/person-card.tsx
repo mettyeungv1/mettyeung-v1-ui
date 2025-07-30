@@ -175,7 +175,7 @@ export function PersonCard({
 									className="w-full hover:bg-khmer-gold hover:text-white hover:border-khmer-gold"
 								>
 									<Link
-										href={`/person/${person.id}`}
+										href={`/structure/${person.id}`}
 										className="flex items-center justify-center"
 									>
 										<ExternalLink className="w-3 h-3 mr-2" />
