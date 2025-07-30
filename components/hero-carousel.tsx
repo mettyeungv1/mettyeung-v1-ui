@@ -19,7 +19,6 @@ const slides = [
 	{ id: 4, image: "/slider-4.jpg" },
 ];
 
-// Simplified animation for "contain" style to prevent empty edges
 const kenBurnsVariants = {
 	active: { scale: 1.1 },
 	inactive: { scale: 1 },
@@ -27,8 +26,6 @@ const kenBurnsVariants = {
 
 export function HeroCarousel() {
 	return (
-		// FIXED: Reduced the height of the carousel container.
-		// It now calculates the screen height minus the header height (h-20 = 5rem).
 		<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100">
 			<Swiper
 				modules={[Navigation, Autoplay, EffectFade]}
