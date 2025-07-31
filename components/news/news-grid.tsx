@@ -25,12 +25,7 @@ export function NewsGrid({ items, categories, onCardClick }: NewsGridProps) {
 			{items.length > 0 ? (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					{items.map((item) => (
-						<NewsCard
-							key={item.id}
-							item={item}
-							categoryName={getCategoryName(item.category.name)}
-							onClick={onCardClick}
-						/>
+						<NewsCard key={item.id} item={item} onClick={onCardClick} />
 					))}
 				</div>
 			) : (

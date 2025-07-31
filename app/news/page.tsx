@@ -80,11 +80,7 @@ export default function NewsPage() {
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							{featuredNews.map((item) => (
 								<AnimatedSection key={item.id}>
-									<NewsCard
-										item={item}
-										categories={categories}
-										onClick={handleArticleClick}
-									/>
+									<NewsCard item={item} onClick={handleArticleClick} />
 								</AnimatedSection>
 							))}
 						</div>

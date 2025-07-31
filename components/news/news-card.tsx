@@ -6,14 +6,10 @@ import Image from "next/image";
 
 interface NewsCardProps {
 	item: NewsArticle;
-	// The categories array is passed to find the main category's display name if needed,
-	// though the item itself now contains most of what we need.
-	categories: NewsCategory[];
 	onClick: (id: number) => void;
 }
 
-export function NewsCard({ item, categories, onClick }: NewsCardProps) {
-	// The category name is now directly available on the item.
+export function NewsCard({ item, onClick }: NewsCardProps) {
 	const categoryName = item.category.name_en;
 	const subCategoryName = item.category.subCategory?.name_en;
 
