@@ -41,11 +41,12 @@ export default function VideosPage() {
 				<iframe
 					width="100%"
 					height="100%"
-					src={`https://www.youtube.com/embed/$${video.videoId}`}
+					src={`https://www.youtube.com/embed/${video.videoId}`}
 					title={video.title_en}
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 					allowFullScreen
 				></iframe>
+				a asdfasdf
 			</div>
 			<div className="space-y-2">
 				<div className="flex items-center space-x-4">

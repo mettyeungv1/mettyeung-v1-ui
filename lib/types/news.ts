@@ -4,7 +4,9 @@ export interface NewsArticle {
 	title_en: string;
 	excerpt: string;
 	content: string;
-	category: NewsCategory;
+	category: Omit<NewsCategory, "subcategories"> & {
+		subCategory: SubCategory;
+	};
 	author: Author;
 	date: string;
 	readTime: string;
@@ -18,11 +20,18 @@ export interface NewsArticle {
 	updatedAt: string;
 }
 
+export interface SubCategory {
+	id: string;
+	name: string;
+	name_en: string;
+}
+
 export interface NewsCategory {
 	id: string;
 	name: string;
 	name_en: string;
 	count: number;
+	subcategories?: SubCategory[];
 }
 
 export interface Author {

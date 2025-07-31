@@ -10,30 +10,42 @@ import { PageHero } from "@/components/gallery/page-hero";
 import { NewsFilterSidebar } from "@/components/news/new-filter-sidebar";
 import { NewsGrid } from "@/components/news/news-grid";
 import { NewsCard } from "@/components/news/news-card";
-// import { FeaturedNewsSection } from "@/components/news/FeaturedNewsSection"; // Assume this is created similarly
 
 export default function NewsPage() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState("all");
+	// 1. Add state to manage the selected subcategory
+	const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+		null
+	);
 	const { t } = useTranslation();
 	const router = useRouter();
 
 	const handleArticleClick = (id: number) => {
-		// Correctly navigate to the detail page
 		router.push(`/news/${id}`);
 	};
 
-	// Memoize all derived data for better performance
 	const { filteredNews, featuredNews, recentNews } = useMemo(() => {
-		let filtered = newsData.filter(
-			(item) =>
-				item.title_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				item.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
-		);
+		let filtered = newsData;
 
+		// 2. Correctly filter by category ID and then by subcategory ID
 		if (selectedCategory !== "all") {
 			filtered = filtered.filter(
-				(item) => item.category.name === selectedCategory
+				(item) => item.category.id === selectedCategory
+			);
+			if (selectedSubCategory) {
+				filtered = filtered.filter(
+					(item) => item.category.subCategory?.id === selectedSubCategory
+				);
+			}
+		}
+
+		// Filter by search term
+		if (searchTerm) {
+			filtered = filtered.filter(
+				(item) =>
+					item.title_en.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					item.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
 			);
 		}
 
@@ -48,7 +60,7 @@ export default function NewsPage() {
 			featuredNews: featured,
 			recentNews: recent,
 		};
-	}, [searchTerm, selectedCategory]);
+	}, [searchTerm, selectedCategory, selectedSubCategory]); // Add dependency
 
 	return (
 		<div className="min-h-screen bg-gray-50">
@@ -57,7 +69,6 @@ export default function NewsPage() {
 				subtitle="ស្វែងយល់ពីសកម្មភាព និងព្រឹត្តិការណ៍ចុងក្រោយរបស់យើង"
 			/>
 
-			{/* Render the dedicated Featured News Section */}
 			{featuredNews.length > 0 && (
 				<section className="section-padding bg-white">
 					<div className="container">
@@ -69,7 +80,11 @@ export default function NewsPage() {
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							{featuredNews.map((item) => (
 								<AnimatedSection key={item.id}>
-									<NewsCard item={item} onClick={handleArticleClick} />
+									<NewsCard
+										item={item}
+										categories={categories}
+										onClick={handleArticleClick}
+									/>
 								</AnimatedSection>
 							))}
 						</div>
@@ -77,7 +92,6 @@ export default function NewsPage() {
 				</section>
 			)}
 
-			{/* Main Content Area */}
 			<section className="section-padding">
 				<div className="container">
 					<div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
@@ -90,6 +104,8 @@ export default function NewsPage() {
 									categories={categories}
 									selectedCategory={selectedCategory}
 									onCategoryChange={setSelectedCategory}
+									selectedSubCategory={selectedSubCategory}
+									onSubCategoryChange={setSelectedSubCategory}
 									recentNews={recentNews}
 									onRecentNewsClick={handleArticleClick}
 								/>

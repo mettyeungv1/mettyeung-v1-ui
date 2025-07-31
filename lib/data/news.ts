@@ -1,5 +1,31 @@
-import { NewsArticle, NewsCategory } from "../types/news";
+import { NewsArticle, NewsCategory, SubCategory } from "@/lib/types/news";
 
+// A map of all available subcategories for easy lookup and consistency.
+const subCategoryMap: Record<string, SubCategory> = {
+	volunteer: { id: "volunteer", name: "ស្ម័គ្រចិត្ត", name_en: "Volunteer" },
+	youth: { id: "youth", name: "យុវជន", name_en: "Youth" },
+	local_dev: {
+		id: "local_dev",
+		name: "អភិវឌ្ឍន៍សហគមន៍",
+		name_en: "Community Development",
+	},
+	school: { id: "school", name: "សាលារៀន", name_en: "School" },
+	university: {
+		id: "university",
+		name: "សាកលវិទ្យាល័យ",
+		name_en: "University",
+	},
+	training: { id: "training", name: "បណ្តុះបណ្តាល", name_en: "Training" },
+	tradition: { id: "tradition", name: "ប្រពៃណី", name_en: "Tradition" },
+	festival: { id: "festival", name: "ពិធីបុណ្យ", name_en: "Festival" },
+	art: { id: "art", name: "សិល្បៈ", name_en: "Art" },
+	football: { id: "football", name: "បាល់ទាត់", name_en: "Football" },
+	volleyball: { id: "volleyball", name: "បាល់ទះ", name_en: "Volleyball" },
+	athletics: { id: "athletics", name: "កីឡាវាស់ល្បឿន", name_en: "Athletics" },
+};
+
+// This is the main data array for your news articles.
+// Each article's 'category' property now contains a nested 'subCategory' object.
 export const newsData: NewsArticle[] = [
 	{
 		id: 1,
@@ -12,7 +38,8 @@ export const newsData: NewsArticle[] = [
 			id: "community",
 			name: "សហគមន៍",
 			name_en: "Community",
-			count: 10,
+			count: 2, // Note: Best practice is to calculate this dynamically.
+			subCategory: subCategoryMap["volunteer"],
 		},
 		author: {
 			name: "ក្រុមការងារ Mettyerng",
@@ -60,7 +87,8 @@ export const newsData: NewsArticle[] = [
 			id: "education",
 			name: "ការអប់រំ",
 			name_en: "Education",
-			count: 10,
+			count: 2,
+			subCategory: subCategoryMap["school"],
 		},
 		author: {
 			name: "អ្នកស្រី គិម សុផល",
@@ -101,7 +129,8 @@ export const newsData: NewsArticle[] = [
 			id: "culture",
 			name: "វប្បធម៌",
 			name_en: "Culture",
-			count: 10,
+			count: 1,
+			subCategory: subCategoryMap["art"],
 		},
 		author: {
 			name: "លោក ខៀវ ផាណា",
@@ -143,7 +172,8 @@ export const newsData: NewsArticle[] = [
 			id: "community",
 			name: "សហគមន៍",
 			name_en: "Community",
-			count: 10,
+			count: 2,
+			subCategory: subCategoryMap["local_dev"],
 		},
 		author: {
 			name: "ក្រុមការងារ Mettyerng",
@@ -184,10 +214,11 @@ export const newsData: NewsArticle[] = [
 		excerpt: "កម្មវិធីបណ្តុះបណ្តាលជំនាញដល់កុមារ ដើម្បីរៀបចំខ្លួនសម្រាប់អនាគត",
 		content: `<h2>សិក្ខាសាលាជំនាញសម្រាប់កុមារ</h2><p>ការបណ្តុះបណ្តាលជំនាញគឺជាការវិនិយោគសម្រាប់អនាគត។ កុមារចូលរួមក្នុងសិក្ខាសាលានេះបានស្វែងយល់ពីជំនាញនានាដូចជា: ជំនាញសហការជាក្រុម, ការបង្កើតគំនិតច្នៃប្រឌិត, និងការនិយាយជាសាធារណៈ។</p>`,
 		category: {
-			id: "community",
-			name: "សហគមន៍",
-			name_en: "Community",
-			count: 10,
+			id: "education",
+			name: "ការអប់រំ",
+			name_en: "Education",
+			count: 2,
+			subCategory: subCategoryMap["training"],
 		},
 		author: {
 			name: "អ្នកស្រី ពេជ្រ មាលា",
@@ -223,7 +254,8 @@ export const newsData: NewsArticle[] = [
 			id: "sports",
 			name: "កីឡា",
 			name_en: "Sports",
-			count: 10,
+			count: 1,
+			subCategory: subCategoryMap["football"],
 		},
 		author: {
 			name: "ក្រុមកីឡា",
@@ -256,34 +288,57 @@ export const newsData: NewsArticle[] = [
 	},
 ];
 
+// This helper array is used to build the filter UI.
+// The counts are calculated dynamically here, which is the best practice.
 export const categories: NewsCategory[] = [
 	{ id: "all", name: "ទាំងអស់", name_en: "All", count: newsData.length },
 	{
 		id: "education",
 		name: "ការអប់រំ",
 		name_en: "Education",
-		count: newsData.filter((n) => n.category.name === "education").length,
+		count: newsData.filter((n) => n.category.id === "education").length,
+		subcategories: [
+			subCategoryMap["school"],
+			subCategoryMap["university"],
+			subCategoryMap["training"],
+		],
 	},
 	{
 		id: "culture",
 		name: "វប្បធម៌",
 		name_en: "Culture",
-		count: newsData.filter((n) => n.category.name === "culture").length,
+		count: newsData.filter((n) => n.category.id === "culture").length,
+		subcategories: [
+			subCategoryMap["tradition"],
+			subCategoryMap["festival"],
+			subCategoryMap["art"],
+		],
 	},
 	{
 		id: "community",
 		name: "សហគមន៍",
 		name_en: "Community",
-		count: newsData.filter((n) => n.category.name === "community").length,
+		count: newsData.filter((n) => n.category.id === "community").length,
+		subcategories: [
+			subCategoryMap["volunteer"],
+			subCategoryMap["youth"],
+			subCategoryMap["local_dev"],
+		],
 	},
 	{
 		id: "sports",
 		name: "កីឡា",
 		name_en: "Sports",
-		count: newsData.filter((n) => n.category.name === "sports").length,
+		count: newsData.filter((n) => n.category.id === "sports").length,
+		subcategories: [
+			subCategoryMap["football"],
+			subCategoryMap["volleyball"],
+			subCategoryMap["athletics"],
+		],
 	},
 ];
 
+// This helper function finds a single article by its ID.
 export const getArticleById = (id: number): NewsArticle | undefined => {
 	return newsData.find((article) => article.id === id);
 };
