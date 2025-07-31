@@ -7,7 +7,8 @@
 		"build": "next build",
 		"start": "next start",
 		"export": "next export",
-		"lint": "next lint"
+		"lint": "next lint",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.1.1",
@@ -71,5 +72,10 @@
 		"vaul": "^0.9.9",
 		"zod": "^4.0.5",
 		"zustand": "^5.0.6"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^19.8.1",
+		"@commitlint/config-conventional": "^19.8.1",
+		"husky": "^9.1.7"
 	}
 }

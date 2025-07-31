@@ -11,7 +11,7 @@ export const videosData: Video[] = [
 		views: 128,
 		date: "2024-05-08", // Using ISO format for consistency
 		thumbnail: "/video-thumbnail-1.jpg",
-		videoId: "ZPJN45TueFo?si=i5ZrZI1hO8nq0lGb",
+		videoId: "f4d4_0Ns3Ek?si=Ky5HEqK0O17pRWDI",
 		featured: true,
 	},
 	{
@@ -24,23 +24,23 @@ export const videosData: Video[] = [
 		category: "community",
 		duration: "3:04",
 		views: 8900,
-		date: "2025-05-25", // Corrected to match the date in the description
+		date: "2025-05-25",
 		thumbnail: "/video-thumbnail-2.jpg",
-		videoId: "Wkv8bpL1ZCM?si=5UnWzDAnaEMz5PE0",
+		videoId: "Hz1p7hryPww?si=lrhcvj1GPbyncddm",
 		featured: false,
 	},
 	{
 		id: 3,
 		title: "សក់ និងសម្រស់ដើម្បីមិត្តយើង ព្រឹកថ្ងៃអង្គារ ទី២៨ ខែឧសភា ឆ្នាំ២០២៤",
-		title_en: "Hair and Beauty for Mett Yeung - Morning of May 28, 2024", // Corrected from Khmer to English
+		title_en: "Hair and Beauty for Mett Yeung - Morning of May 28, 2024",
 		description:
 			"ដំណើរការកម្មវិធី សក់ និងសម្រស់ដើម្បីមិត្តយើង  ព្រឹកថ្ងៃអង្គារ ទី២៨ ខែឧសភា ឆ្នាំ២០២៤ ភូមិព្រៃទា សង្កាត់ចោមចៅ៣ ខណ្ឌពោធិ៍សែនជ័យ រាជធានីភ្នំពេញ។",
 		category: "community",
 		duration: "1:34",
 		views: 6750,
-		date: "2024-05-28", // Corrected to ISO format and trimmed whitespace
+		date: "2024-05-28",
 		thumbnail: "/video-thumbnail-3.jpg",
-		videoId: "t81gbop2mDc?si=LM3jx-IQAFIHvdiZ",
+		videoId: "B90qWtT7Alw?si=-OisNL63nER6h3JP",
 		featured: true,
 	},
 	{
