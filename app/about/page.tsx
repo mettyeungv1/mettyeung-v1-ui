@@ -7,7 +7,9 @@ export default function AboutPage() {
 		<div className="min-h-screen bg-white">
 			<AboutHeroSection />
 			<MissionVisionSection />
-			<PartnersSection />
+			<section id="network" className="scroll-mt-24">
+				<PartnersSection />
+			</section>
 		</div>
 	);
 }
