@@ -11,7 +11,10 @@ import { GlowingCard } from "./glowing-card";
 export function PartnersSection() {
 	const { t } = useTranslation();
 	return (
-		<section className="section-padding bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5">
+		<section
+			className="section-padding bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5"
+			id="network"
+		>
 			<div className="container">
 				<AnimatedSection className="text-center mb-16">
 					<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-red-600">
