@@ -1,5 +1,3 @@
-// FILE: components/layout/header.tsx
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -13,6 +11,7 @@ import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
 
 type SubNavItem = {
 	key: string;
@@ -64,6 +63,7 @@ export function Header() {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const pathname = usePathname();
 	const { t } = useTranslation();
+	const { data: session } = useSession();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -73,6 +73,8 @@ export function Header() {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
+
+	console.log("SESSION", session?.user);
 
 	return (
 		<motion.header
@@ -164,22 +166,54 @@ export function Header() {
 						})}
 					</nav>
 
-					{/* Language Switcher & CTA Button */}
 					<div className="hidden lg:flex items-center space-x-4">
 						<LanguageSwitcher />
-						<Button
-							asChild
-							variant="outline"
-							className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-						>
-							<Link href="/auth/login">{t("auth.login")}</Link>
-						</Button>
-						<Button
-							asChild
-							className="bg-blue-600 text-white hover:bg-blue-700"
-						>
-							<Link href="/auth/register">{t("auth.register")}</Link>
-						</Button>
+
+						{session ? (
+							<>
+								{/* Profile Avatar or Username */}
+								{/* <Link href="/profile" className="flex items-center space-x-2">
+									<Image
+										src={session.user?.image || "/default-avatar.png"}
+										alt={session.user?.name || "Profile"}
+										width={32}
+										height={32}
+										className="rounded-full"
+									/> */}
+								<span className="font-medium text-neutral-800">
+									{session.user?.name || "User"}
+								</span>
+								{/* </Link> */}
+
+								{/* Logout */}
+								<Button
+									variant="outline"
+									className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+									onClick={() => signOut({ callbackUrl: "/" })}
+								>
+									{t("auth.logout")}
+								</Button>
+							</>
+						) : (
+							<>
+								{/* Login */}
+								<Button
+									asChild
+									variant="outline"
+									className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+								>
+									<Link href="/auth/login">{t("auth.login")}</Link>
+								</Button>
+
+								{/* Register */}
+								<Button
+									asChild
+									className="bg-blue-600 text-white hover:bg-blue-700"
+								>
+									<Link href="/auth/register">{t("auth.register")}</Link>
+								</Button>
+							</>
+						)}
 					</div>
 
 					{/* Mobile Menu Button */}
