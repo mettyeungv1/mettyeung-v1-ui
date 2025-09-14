@@ -27,6 +27,8 @@ import { SocialAuthButtons } from "@/components/auth/social-auth-buttons";
 import { useTranslation } from "@/lib/i18n";
 import { registerSchema, RegisterFormData } from "@/lib/validations/auth";
 import { toast } from "sonner";
+import { registerAction } from "@/action/auth/register-action";
+// 1. Import your server action
 
 export default function RegisterPage() {
 	const [showPassword, setShowPassword] = useState(false);
@@ -68,21 +70,31 @@ export default function RegisterPage() {
 
 	const passwordRequirements = getPasswordStrength(password);
 
+	// 2. This function now calls the server action and handles the real API response
 	const onSubmit = async (data: RegisterFormData) => {
 		setIsLoading(true);
 		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+			// Call the server action with the validated form data
+			const result = await registerAction(data);
 
-			toast.success("ចុះឈ្មោះជោគជ័យ!", {
-				description: "សូមពិនិត្យអ៊ីមែលរបស់អ្នកដើម្បីបញ្ជាក់គណនី",
-			});
-
-			// Redirect to OTP verification
-			router.push(`/auth/verify-otp?email=${encodeURIComponent(data.email)}`);
+			// Check the response from your API. (Assuming 201 is success for creation)
+			if (result && result.status_code === 201) {
+				toast.success("ចុះឈ្មោះជោគជ័យ!", {
+					description:
+						result.message || "សូមពិនិត្យអ៊ីមែលរបស់អ្នកដើម្បីបញ្ជាក់គណនី",
+				});
+				// Redirect to OTP verification on success
+				router.push(`/auth/verify-otp?email=${encodeURIComponent(data.email)}`);
+			} else {
+				// If the API returns an error (e.g., email exists), display it
+				toast.error("មានបញ្ហាក្នុងការចុះឈ្មោះ", {
+					description: result.message || "សូមព្យាយាមម្តងទៀត",
+				});
+			}
 		} catch (error) {
-			toast.error("មានបញ្ហាក្នុងការចុះឈ្មោះ", {
-				description: "សូមព្យាយាមម្តងទៀត",
+			// This catches network failures or if the server action itself throws an error
+			toast.error("មានបញ្ហាប្រព័ន្ធ", {
+				description: "មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបានទេ។ សូមព្យាយាមម្តងទៀត។",
 			});
 		} finally {
 			setIsLoading(false);

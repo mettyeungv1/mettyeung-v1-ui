@@ -13,6 +13,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslation } from "@/lib/i18n";
 import { otpSchema, OtpFormData } from "@/lib/validations/auth";
 import { toast } from "sonner";
+import { resendOtpAction } from "@/action/auth/resent-otp-action";
+import { verifyOtpAction } from "@/action/auth/verify-otp-action";
 
 export default function VerifyOtpForm({
 	emailFromParams,
@@ -57,29 +59,21 @@ export default function VerifyOtpForm({
 	// Handle OTP input change
 	const handleOtpChange = (index: number, value: string) => {
 		if (value.length > 1) {
-			// Handle paste
 			const pastedValue = value.slice(0, 6);
 			const newOtpValues = [...otpValues];
-
 			for (let i = 0; i < pastedValue.length && i + index < 6; i++) {
 				newOtpValues[i + index] = pastedValue[i];
 			}
-
 			setOtpValues(newOtpValues);
 			setValue("otp", newOtpValues.join(""));
-
-			// Focus on the last filled input or next empty one
 			const nextIndex = Math.min(index + pastedValue.length, 5);
 			inputRefs.current[nextIndex]?.focus();
 			return;
 		}
-
 		const newOtpValues = [...otpValues];
 		newOtpValues[index] = value;
 		setOtpValues(newOtpValues);
 		setValue("otp", newOtpValues.join(""));
-
-		// Auto-focus next input
 		if (value && index < 5) {
 			inputRefs.current[index + 1]?.focus();
 		}
@@ -95,18 +89,23 @@ export default function VerifyOtpForm({
 	const onSubmit = async (data: OtpFormData) => {
 		setIsLoading(true);
 		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+			// Call the verify OTP server action
+			const result = await verifyOtpAction({ email, otp: data.otp });
 
-			toast.success("បញ្ជាក់គណនីជោគជ័យ!", {
-				description: "គណនីរបស់អ្នកត្រូវបានបញ្ជាក់ហើយ",
-			});
-
-			// Redirect to login or dashboard
-			router.push("/auth/login");
+			// Check the response from the API (assuming 200 is success)
+			if (result && result.status_code === 200) {
+				toast.success("បញ្ជាក់គណនីជោគជ័យ!", {
+					description: result.message || "គណនីរបស់អ្នកត្រូវបានបញ្ជាក់ហើយ",
+				});
+				router.push("/auth/login");
+			} else {
+				toast.error("កូដ OTP មិនត្រឹមត្រូវ", {
+					description: result.message || "សូមពិនិត្យកូដ OTP ហើយព្យាយាមម្តងទៀត",
+				});
+			}
 		} catch (error) {
-			toast.error("កូដ OTP មិនត្រឹមត្រូវ", {
-				description: "សូមពិនិត្យកូដ OTP ហើយព្យាយាមម្តងទៀត",
+			toast.error("មានបញ្ហាប្រព័ន្ធ", {
+				description: "មិនអាចបញ្ជាក់ OTP បានទេ។ សូមព្យាយាមម្តងទៀត។",
 			});
 		} finally {
 			setIsLoading(false);
@@ -116,20 +115,27 @@ export default function VerifyOtpForm({
 	const handleResendOtp = async () => {
 		setIsResending(true);
 		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1500));
+			// Call the resend OTP server action
+			const result = await resendOtpAction({ email });
 
-			toast.success("កូដ OTP ថ្មីត្រូវបានផ្ញើ!", {
-				description: "សូមពិនិត្យអ៊ីមែលរបស់អ្នក",
-			});
-
-			// Reset countdown
-			setCountdown(300);
-			setOtpValues(["", "", "", "", "", ""]);
-			setValue("otp", "");
-			inputRefs.current[0]?.focus();
+			if (result && result.status_code === 200) {
+				toast.success("កូដ OTP ថ្មីត្រូវបានផ្ញើ!", {
+					description: result.message || "សូមពិនិត្យអ៊ីមែលរបស់អ្នក",
+				});
+				// Reset state on successful resend
+				setCountdown(300);
+				setOtpValues(["", "", "", "", "", ""]);
+				setValue("otp", "");
+				inputRefs.current[0]?.focus();
+			} else {
+				toast.error("មានបញ្ហាក្នុងការផ្ញើកូដ OTP", {
+					description: result.message || "សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។",
+				});
+			}
 		} catch (error) {
-			toast.error("មានបញ្ហាក្នុងការផ្ញើកូដ OTP");
+			toast.error("មានបញ្ហាប្រព័ន្ធ", {
+				description: "មិនអាចផ្ញើកូដ OTP បានទេ។",
+			});
 		} finally {
 			setIsResending(false);
 		}
