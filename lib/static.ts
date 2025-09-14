@@ -7,3 +7,9 @@ console.log(
 );
 console.log("API_BASE_URL:", API_BASE_URL);
 console.log("AUTH_ENDPOINT:", AUTH_ENDPOINT);
+
+/*
+	Banner API: 
+	- Get endpoint
+*/
+export const BANNER_ENDPOINT = `${API_BASE_URL}/banners`;

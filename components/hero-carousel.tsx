@@ -1,10 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import Image from "next/image";
+
+import { getBannersService } from "@/service/banner/banner-service";
+import { Banner } from "@/lib/types/banner";
+import { API_BASE_URL } from "@/lib/static";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,19 +16,58 @@ import "swiper/css/effect-fade";
 
 const MotionImage = motion(Image);
 
-const slides = [
-	{ id: 1, image: "/slider-1.png" },
-	{ id: 2, image: "/slider-2.jpg" },
-	{ id: 3, image: "/slider-3.jpg" },
-	{ id: 4, image: "/slider-4.jpg" },
-];
-
 const kenBurnsVariants = {
 	active: { scale: 1.1 },
 	inactive: { scale: 1 },
 };
 
 export function HeroCarousel() {
+	const [banners, setBanners] = useState<Banner[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		const fetchBanners = async () => {
+			try {
+				setLoading(true);
+				const response = await getBannersService();
+				
+				if (response.status_code === 200 && response.data) {
+					setBanners(response.data);
+				} else {
+					setError("Failed to load banners");
+				}
+			} catch (err) {
+				console.error("Error fetching banners:", err);
+				setError("Failed to load banners");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchBanners();
+	}, []);
+
+	// Show loading state
+	if (loading) {
+		return (
+			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
+				<div className="text-lg text-gray-600">Loading banners...</div>
+			</div>
+		);
+	}
+
+	// Show error state
+	if (error || banners.length === 0) {
+		return (
+			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
+				<div className="text-lg text-gray-600">
+					{error || "No banners available"}
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100">
 			<Swiper
@@ -37,18 +80,18 @@ export function HeroCarousel() {
 					prevEl: ".swiper-button-prev",
 				}}
 				autoplay={{ delay: 5000, disableOnInteraction: false }}
-				loop
+				loop={banners.length > 1}
 				className="h-full w-full"
 			>
-				{slides.map((slide, index) => (
+				{banners.map((banner, index) => (
 					<SwiperSlide
-						key={slide.id}
+						key={banner.id}
 						className="relative h-full w-full my-[50px]"
 					>
 						{({ isActive }) => (
 							<MotionImage
-								src={slide.image}
-								alt={`Hero Carousel Slide ${slide.id}`}
+								src={`${API_BASE_URL}/media/view/${banner.media.url}`}
+								alt={banner.media.altText || `Banner ${banner.order}`}
 								fill
 								priority={index === 0}
 								style={{ objectFit: "contain" }}
