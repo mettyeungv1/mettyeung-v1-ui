@@ -19,6 +19,7 @@ import { loginSchema, LoginFormData } from "@/lib/validations/auth";
 import { toast } from "sonner";
 import { signIn, useSession } from "next-auth/react";
 import { getUserProfileAction } from "@/action/auth/user-action";
+import { getUserProfileService } from "@/service/auth/user-service";
 
 export default function LoginPage() {
 	const [showPassword, setShowPassword] = useState(false);
@@ -39,6 +40,8 @@ export default function LoginPage() {
 		},
 	});
 
+	const { update } = useSession();
+
 	const rememberMe = watch("rememberMe");
 
 	const onSubmit = async (data: LoginFormData) => {
@@ -49,24 +52,20 @@ export default function LoginPage() {
 				redirect: false,
 			});
 
-			if (res?.error) {
+			if (!res || res.error) {
 				toast.error("មានបញ្ហាក្នុងការចូលប្រើប្រាស់", {
 					description: "សូមពិនិត្យអ៊ីមែល និងពាក្យសម្ងាត់របស់អ្នក",
 				});
 				return;
 			}
 
-			await getUserProfileAction();
+			await update();
 
 			toast.success("ចូលប្រើប្រាស់ជោគជ័យ!", {
 				description: "អ្នកនឹងត្រូវបានបញ្ជូនទៅទំព័រដើម",
 			});
 
-			router.push("/"); // force redirect to home
-		} catch (error) {
-			toast.error("មានបញ្ហាក្នុងការចូលប្រើប្រាស់", {
-				description: "សូមពិនិត្យអ៊ីមែល និងពាក្យសម្ងាត់របស់អ្នក",
-			});
+			router.push("/");
 		} finally {
 			setIsLoading(false);
 		}

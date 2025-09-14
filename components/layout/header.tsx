@@ -12,6 +12,8 @@ import { useTranslation } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import { getUserProfileAction } from "@/action/auth/user-action";
+import { UserProfile } from "@/service/auth/user-service";
 
 type SubNavItem = {
 	key: string;
@@ -61,6 +63,7 @@ const navigation: NavItem[] = [
 export function Header() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 	const pathname = usePathname();
 	const { t } = useTranslation();
 	const { data: session } = useSession();
@@ -74,7 +77,24 @@ export function Header() {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
-	console.log("SESSION", session?.user);
+	useEffect(() => {
+		const fetchProfile = async () => {
+			if (session && !userProfile) {
+				// Fetch only if there's a session and profile isn't already loaded
+				const response = await getUserProfileAction();
+
+				// 3. Check for success and set the user profile state
+				if (response && response.status_code === 200 && response.data?.user) {
+					setUserProfile(response.data.user);
+				}
+			} else if (!session) {
+				// Clear profile if user signs out
+				setUserProfile(null);
+			}
+		};
+
+		fetchProfile();
+	}, [session, userProfile]);
 
 	return (
 		<motion.header
@@ -169,23 +189,13 @@ export function Header() {
 					<div className="hidden lg:flex items-center space-x-4">
 						<LanguageSwitcher />
 
-						{session ? (
+						{session && userProfile ? (
 							<>
-								{/* Profile Avatar or Username */}
-								{/* <Link href="/profile" className="flex items-center space-x-2">
-									<Image
-										src={session.user?.image || "/default-avatar.png"}
-										alt={session.user?.name || "Profile"}
-										width={32}
-										height={32}
-										className="rounded-full"
-									/> */}
 								<span className="font-medium text-neutral-800">
-									{session.user?.name || "User"}
+									{/* Displaying user ID as an example */}
+									User: {userProfile.id.substring(0, 8)}...
 								</span>
-								{/* </Link> */}
 
-								{/* Logout */}
 								<Button
 									variant="outline"
 									className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
@@ -196,7 +206,6 @@ export function Header() {
 							</>
 						) : (
 							<>
-								{/* Login */}
 								<Button
 									asChild
 									variant="outline"
@@ -205,7 +214,6 @@ export function Header() {
 									<Link href="/auth/login">{t("auth.login")}</Link>
 								</Button>
 
-								{/* Register */}
 								<Button
 									asChild
 									className="bg-blue-600 text-white hover:bg-blue-700"

@@ -1,8 +1,18 @@
 import { fetchAPI } from "@/lib/api";
 import { AUTH_ENDPOINT } from "@/lib/static";
 
-export const getUserProfileService = async () => {
-	const res = await fetchAPI(`${AUTH_ENDPOINT}/profile`);
+export type UserProfile = {
+	id: string;
+	// Add other properties like name, email, etc., as they become available
+};
 
-	console.log(res);
+type ProfileResponseData = {
+	message: string;
+	user: UserProfile;
+};
+
+export const getUserProfileService = async (): Promise<
+	APIResponse<ProfileResponseData>
+> => {
+	return fetchAPI<ProfileResponseData>(`${AUTH_ENDPOINT}/profile`);
 };

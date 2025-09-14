@@ -2,10 +2,9 @@ export {};
 
 declare global {
 	interface APIResponse<T> {
-		data: T;
+		status_code: number;
 		message: string;
-		status: string;
-		success: boolean;
-		timestamps: string;
+		dev_message: string;
+		data: T;
 	}
 }
