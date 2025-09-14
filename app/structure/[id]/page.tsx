@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import Link from "next/link";
 
 import { Person } from "@/lib/types/structure";
@@ -27,12 +27,9 @@ import {
 } from "lucide-react";
 import { getPersonById } from "@/lib/data/structure";
 
-export default function PersonDetailPage({
-	params,
-}: {
-	params: { id: string };
-}) {
+export default function PersonDetailPage() {
 	const [person, setPerson] = useState<Person | null>(null);
+	const params = useParams<{ id: string }>(); // here instead i use this
 
 	useEffect(() => {
 		// Fetch data from the single source of truth

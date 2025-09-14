@@ -19,10 +19,14 @@ import { RelatedArticles } from "@/components/news/related-articles";
 // import { ArticleSidebar } from "@/components/news/detail/ArticleSidebar"; // A new component to hold sidebar items
 import { NewsArticle } from "@/lib/types/news";
 import { ArticleSidebar } from "@/components/news/detail/article-sidebar";
+import { useParams } from "next/navigation";
 
-export default function NewsDetailPage({ params }: { params: { id: string } }) {
+// i change the params here because useClient cant inject the params?
+export default function NewsDetailPage() {
 	const [article, setArticle] = useState<NewsArticle | null>(null);
 	const [showShareDialog, setShowShareDialog] = useState(false);
+	const params = useParams<{ id: string }>(); // here instead i use this
+	const id = params?.id;
 
 	useEffect(() => {
 		// Fetch data dynamically based on the URL parameter

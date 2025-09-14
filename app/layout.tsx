@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { AppInitializer } from "@/components/providers/app-initializer";
 import { googleSans, miSansKhmer } from "@/lib/fonts"; // Assuming your fonts are in lib/fonts
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
 	title: {
@@ -49,9 +50,11 @@ export default function RootLayout({
 					<LanguageProvider>
 						<AppInitializer />
 						<div className="min-h-screen flex flex-col">
-							<Header />
-							<main className="flex-1">{children}</main>
-							<Footer />
+							<SessionProvider>
+								<Header />
+								<main className="flex-1">{children}</main>
+								<Footer />
+							</SessionProvider>
 						</div>
 						<Toaster />
 					</LanguageProvider>
