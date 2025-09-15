@@ -339,6 +339,7 @@
 		"loginWithNewPassword": "Login with New Password",
 		"invalidResetLink": "Invalid Reset Link",
 		"invalidResetLinkDescription": "This password reset link is invalid or has expired. Please request a new one.",
-		"requestNewLink": "Request New Link"
+		"requestNewLink": "Request New Link",
+		"resetLinkSentTitle": "Reset Link Sent"
 	}
 }

@@ -25,6 +25,7 @@ import {
 	ResetPasswordFormData,
 } from "@/lib/validations/auth";
 import { toast } from "sonner";
+import { resetPasswordAction } from "@/action/auth/password-action";
 
 export default function ResetPasswordForm({
 	onTokenReady,
@@ -34,13 +35,10 @@ export default function ResetPasswordForm({
 	const searchParams = useSearchParams();
 	const token = searchParams.get("token") || null;
 
-	if (onTokenReady) onTokenReady(token);
-
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
-	const router = useRouter();
 	const { t } = useTranslation();
 
 	const {
@@ -54,13 +52,12 @@ export default function ResetPasswordForm({
 
 	const password = watch("password");
 
-	// Password strength checker
 	const getPasswordStrength = (password: string) => {
 		const requirements = [
-			{ regex: /.{8,}/, text: "យ៉ាងហោចណាស់ 8 តួអក្សរ" },
-			{ regex: /[A-Z]/, text: "អក្សរធំ 1 តួ" },
-			{ regex: /[a-z]/, text: "អក្សរតូច 1 តួ" },
-			{ regex: /[0-9]/, text: "លេខ 1 តួ" },
+			{ regex: /.{8,}/, text: "At least 8 characters" },
+			{ regex: /[A-Z]/, text: "One uppercase letter" },
+			{ regex: /[a-z]/, text: "One lowercase letter" },
+			{ regex: /[0-9]/, text: "One number" },
 		];
 
 		return requirements.map((req) => ({
@@ -73,23 +70,29 @@ export default function ResetPasswordForm({
 
 	const onSubmit = async (data: ResetPasswordFormData) => {
 		if (!token) {
-			toast.error("តំណកំណត់ពាក្យសម្ងាត់មិនត្រឹមត្រូវ");
+			toast.error(t("auth.invalidResetLink"));
 			return;
 		}
 
 		setIsLoading(true);
 		try {
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 2000));
+			const result = await resetPasswordAction({ ...data, token });
 
-			setIsSuccess(true);
-
-			toast.success("ពាក្យសម្ងាត់ត្រូវបានកំណត់ថ្មីជោគជ័យ!", {
-				description: "អ្នកអាចចូលប្រើប្រាស់ដោយពាក្យសម្ងាត់ថ្មីបានហើយ",
-			});
+			if (result && result.status_code === 200) {
+				toast.success(t("auth.passwordResetSuccess"), {
+					description:
+						result.message || t("auth.passwordResetSuccessDescription"),
+				});
+				setIsSuccess(true);
+			} else {
+				toast.error(t("auth.errorResettingPassword"), {
+					description:
+						result.message || t("auth.errorResettingPasswordDescription"),
+				});
+			}
 		} catch (error) {
-			toast.error("មានបញ្ហាក្នុងការកំណត់ពាក្យសម្ងាត់ថ្មី", {
-				description: "សូមព្យាយាមម្តងទៀត",
+			toast.error(t("auth.errorResettingPassword"), {
+				description: t("auth.systemError"),
 			});
 		} finally {
 			setIsLoading(false);

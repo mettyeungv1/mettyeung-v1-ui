@@ -339,6 +339,7 @@
 		"loginWithNewPassword": "ចូលប្រើប្រាស់ជាមួយពាក្យសម្ងាត់ថ្មី",
 		"invalidResetLink": "តំណកំណត់មិនត្រឹមត្រូវ",
 		"invalidResetLinkDescription": "តំណកំណត់ពាក្យសម្ងាត់នេះមិនត្រឹមត្រូវ ឬបានផុតកំណត់ហើយ។ សូមស្នើសុំតំណថ្មី។",
-		"requestNewLink": "ស្នើសុំតំណថ្មី"
+		"requestNewLink": "ស្នើសុំតំណថ្មី",
+		"resetLinkSentTitle": "បានផ្ញើតំណកំណត់ឡើងវិញ"
 	}
 }
