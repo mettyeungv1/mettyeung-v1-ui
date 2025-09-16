@@ -1,54 +1,68 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { notFound } from "next/navigation";
-import { getArticleById } from "@/lib/data/news";
+import React, { useEffect, useMemo, useState } from "react";
+import { notFound, useParams } from "next/navigation";
 
-// Import the new organized components
+// Components
 import { Breadcrumbs } from "@/components/news/detail/bread-crumbs";
 import { ArticleHeader } from "@/components/news/detail/article-header";
 import { ArticleAuthor } from "@/components/news/detail/article-author";
 import { ArticleContent } from "@/components/news/detail/article-content";
-
-// Import existing modular components
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { ImageGallery } from "@/components/news/image-gallery";
 import { ShareDialog } from "@/components/news/share-dialog";
 import { CommentSection } from "@/components/news/comment-section";
-import { RelatedArticles } from "@/components/news/related-articles";
-// import { ArticleSidebar } from "@/components/news/detail/ArticleSidebar"; // A new component to hold sidebar items
-import { NewsArticle } from "@/lib/types/news";
 import { ArticleSidebar } from "@/components/news/detail/article-sidebar";
-import { useParams } from "next/navigation";
 
-// i change the params here because useClient cant inject the params?
+// Services/Types
+import { getBlogByIdService } from "@/service/blog/blog-service";
+import type { BlogPost } from "@/lib/types/blog";
+
 export default function NewsDetailPage() {
-	const [article, setArticle] = useState<NewsArticle | null>(null);
+	const [post, setPost] = useState<BlogPost | null>(null);
 	const [showShareDialog, setShowShareDialog] = useState(false);
-	const params = useParams<{ id: string }>(); // here instead i use this
-	const id = params?.id;
+	const params = useParams<{ id: string }>();
 
 	useEffect(() => {
-		// Fetch data dynamically based on the URL parameter
-		const articleId = parseInt(params.id, 10);
-		if (!isNaN(articleId)) {
-			const foundArticle = getArticleById(articleId);
-			if (foundArticle) {
-				setArticle(foundArticle);
-			} else {
-				notFound(); // If article doesn't exist, show a 404 page
-			}
-		}
-	}, [params.id]);
+		(async () => {
+			const id = params?.id;
+			if (!id) return;
+			const res = await getBlogByIdService(id);
+			if (res.status_code === 200 && res.data) setPost(res.data);
+			else notFound();
+		})();
+	}, [params?.id]);
 
-	const handleShare = async (platform: string) => {
-		// Share logic remains the same
-	};
+	const article = useMemo(() => {
+		if (!post) return null;
+		return {
+			id: post.id as unknown as number,
+			title_en:
+				typeof post.title === "string" ? post.title : (post.title as any)?.en || "",
+			excerpt: "",
+			date: (post.publishedAt || post.createdAt) as any,
+			image: post.coverImageUrl || post.media[0]?.url || "/placeholder.jpg",
+			views: post.readCounts || 0,
+			author: {
+				name_en: post.author?.name || "",
+				avatar: post.author?.avatarUrl || "",
+				bio_en: "",
+			},
+			content:
+				typeof post.content === "string"
+					? post.content
+					: (post.content as any)?.en || "",
+			tags: [] as string[],
+			gallery: (post.media || []).map((m) => ({ url: m.url, caption: m.altText || "" })),
+			readTime: post.readTimes || 0,
+			comments: post.commentsCount || 0,
+			category: { name: "", name_en: "" },
+		};
+	}, [post]);
 
-	if (!article) {
-		// Loading state or a skeleton screen can be shown here
-		return <div>Loading article...</div>;
-	}
+	const handleShare = async (_platform: string) => {};
+
+	if (!article) return <div>Loading article...</div>;
 
 	const breadcrumbItems = [
 		{ href: "/", label: "Home" },
@@ -61,16 +75,12 @@ export default function NewsDetailPage() {
 
 			<div className="container py-12">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-					{/* Main Content */}
 					<main className="lg:col-span-8">
 						<AnimatedSection>
 							<article>
-								<ArticleHeader
-									article={article}
-									onShareClick={() => setShowShareDialog(true)}
-								/>
+								<ArticleHeader article={article as any} onShareClick={() => setShowShareDialog(true)} />
 								<ImageGallery images={article.gallery} />
-								<ArticleAuthor author={article.author} />
+								<ArticleAuthor author={article.author as any} />
 								<ArticleContent content={article.content} tags={article.tags} />
 							</article>
 						</AnimatedSection>
@@ -79,10 +89,9 @@ export default function NewsDetailPage() {
 						</div>
 					</main>
 
-					{/* Sidebar */}
 					<aside className="lg:col-span-4">
 						<div className="sticky top-24">
-							<ArticleSidebar article={article} />
+							<ArticleSidebar article={article as any} />
 						</div>
 					</aside>
 				</div>
@@ -92,7 +101,7 @@ export default function NewsDetailPage() {
 				isOpen={showShareDialog}
 				onClose={() => setShowShareDialog(false)}
 				onShare={handleShare}
-				article={article}
+				article={{ title_en: article.title_en, excerpt: article.excerpt, image: article.image }}
 			/>
 		</div>
 	);
