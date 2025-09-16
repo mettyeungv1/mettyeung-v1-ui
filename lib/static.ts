@@ -13,3 +13,21 @@ console.log("AUTH_ENDPOINT:", AUTH_ENDPOINT);
 	- Get endpoint
 */
 export const BANNER_ENDPOINT = `${API_BASE_URL}/banners`;
+
+/*
+	Partner API: 
+	- Get endpoint
+*/
+export const PARTNER_ENDPOINT = `${API_BASE_URL}/partners`;
+
+/*
+	Blog API: 
+	- Get endpoint
+*/
+export const BLOG_ENDPOINT = `${API_BASE_URL}/blogs`;
+
+/*
+	Media API: 
+	- Get endpoint
+*/
+export const MEDIA_ENDPOINT = `${API_BASE_URL}/media`;

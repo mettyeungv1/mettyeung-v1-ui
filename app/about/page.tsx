@@ -1,6 +1,6 @@
 import { AboutHeroSection } from "@/components/about/about-hero-section";
 import { MissionVisionSection } from "@/components/about/mission-vision-section";
-import { PartnersSection } from "@/components/about/partmer-section";
+import { PartnersSection } from "@/components/about/partner-section";
 
 export default function AboutPage() {
 	return (
