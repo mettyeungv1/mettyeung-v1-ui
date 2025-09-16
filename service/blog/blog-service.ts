@@ -36,7 +36,6 @@ export const listBlogsService = async (
 
 	const url = qs ? `${BLOG_ENDPOINT}?${qs}` : BLOG_ENDPOINT;
 	const res = await fetchAPI<any>(url);
-	console.log("[blogs] raw response:", res);
 
 	// Backend returns data: BlogPost[] directly
 	if (Array.isArray(res?.data)) {
@@ -45,7 +44,6 @@ export const listBlogsService = async (
 			...res,
 			data: { data: items },
 		};
-		console.log("[blogs] normalized -> paginated:", wrapped);
 		return wrapped;
 	}
 
@@ -56,7 +54,6 @@ export const listBlogsService = async (
 			data: res.data.data.map((p: BlogPost) => normalizeMediaUrls(p)),
 		};
 	}
-	console.log("[blogs] passthrough:", res);
 	return res as APIResponse<Paginated<BlogPost>>;
 };
 

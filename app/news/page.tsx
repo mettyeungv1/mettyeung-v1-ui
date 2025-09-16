@@ -31,7 +31,6 @@ export default function NewsPage() {
 		(async () => {
 			setLoading(true);
 			const res = await listBlogsService({ sort: "-createdAt", limit: 24 });
-			console.log("[news/page] listBlogsService result:", res);
 			if (res.status_code === 200 && res.data?.data) {
 				setPosts(res.data.data);
 			}
