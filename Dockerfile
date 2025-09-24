@@ -30,7 +30,7 @@
 
     ENV NODE_ENV=production
     ENV PORT=3000
-
+    
     # Assumes next.config.js has: output: "standalone"
     COPY --from=builder /app/.next/standalone ./
     COPY --from=builder /app/.next/static ./.next/static
