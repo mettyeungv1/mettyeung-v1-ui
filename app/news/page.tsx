@@ -53,7 +53,10 @@ export default function NewsPage() {
 			readTime: p.readTimes || 0,
 			comments: p.commentsCount || 0,
 			tags: [],
-			gallery: (p.media || []).map((m) => ({ url: m.url, caption: m.altText || "" })),
+			gallery: (p.media || []).map((m) => ({
+				url: m.url,
+				caption: m.altText || "",
+			})),
 		}));
 
 		let filtered = items;
@@ -65,7 +68,9 @@ export default function NewsPage() {
 		if (searchTerm) {
 			const q = searchTerm.toLowerCase();
 			filtered = filtered.filter(
-				(i) => i.title_en.toLowerCase().includes(q) || i.excerpt.toLowerCase().includes(q)
+				(i) =>
+					i.title_en.toLowerCase().includes(q) ||
+					i.excerpt.toLowerCase().includes(q)
 			);
 		}
 
@@ -75,7 +80,11 @@ export default function NewsPage() {
 			.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 			.slice(0, 4);
 
-		return { filteredNews: filtered, featuredNews: featured, recentNews: recent };
+		return {
+			filteredNews: filtered,
+			featuredNews: featured,
+			recentNews: recent,
+		};
 	}, [posts, searchTerm, selectedCategory, selectedSubCategory]);
 
 	if (loading) {
