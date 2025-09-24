@@ -4,19 +4,36 @@
     
     # ---- Build Stage ----
     FROM base AS builder
+    
+    # Copy dependency files first (important for npm ci)
+    COPY package*.json ./
+    
+    # Install dependencies
     RUN npm ci
+    
+    # Copy the rest of the project
     COPY . .
+    
     # This ARG receives the public URL from the CI/CD workflow
     ARG NEXT_PUBLIC_AUTH_BASE_URL
     ENV NEXT_PUBLIC_AUTH_BASE_URL=${NEXT_PUBLIC_AUTH_BASE_URL}
+    
+    # Build the Next.js app
     RUN npm run build
     
     # ---- Production Stage ----
     FROM base AS production
+    
+    # Use non-root user for security
+    USER node
+    WORKDIR /app
+    
     ENV NODE_ENV=production
-    # Assumes output: 'standalone' in next.config.js
-    COPY --from=builder --chown=node:node /app/.next/standalone ./
-    COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+    
+    # Assumes next.config.js has: output: "standalone"
+    COPY --from=builder /app/.next/standalone ./
+    COPY --from=builder /app/.next/static ./.next/static
     
     EXPOSE 3000
     CMD ["node", "server.js"]
+    
