@@ -8,7 +8,7 @@ on:
 
 env:
   # Correctly identifies the admin image
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/mya-admin
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/mya-client
   # Correctly identifies the service name in docker-compose.yml
   SERVICE_NAME: client
 
