@@ -35,7 +35,7 @@
     COPY --from=builder /app/.next/standalone ./
     COPY --from=builder /app/.next/static ./.next/static
 
-    # ❗ FIX: Add this line to copy your images and other public assets
+    # ❗ FIX: Add this line to copy your images and other public assets right here
     COPY --from=builder /app/public ./public
 
     EXPOSE 3000
