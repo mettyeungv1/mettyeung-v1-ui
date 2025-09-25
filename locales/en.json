@@ -251,6 +251,20 @@
 		"success": "Success"
 	},
 	"footer": {
+		"description": "We are a group of social enthusiasts focused on education, culture, and community development, committed to building stronger communities together.",
+		"quickLinks": "Quick Links",
+		"contactInfo": {
+			"title": "Contact Info",
+			"phone": "+855 12 345 678",
+			"email": "info@mettyerng.org",
+			"address": "Phnom Penh, Cambodia"
+		},
+		"newsletter": {
+			"title": "Newsletter",
+			"description": "Subscribe to receive our latest news and activities."
+		},
+		"followUs": "Follow Us",
+		"copyright": "All Rights Reserved.",
 		"aboutUs": "About Us",
 		"history": "History",
 		"mission": "Mission",
