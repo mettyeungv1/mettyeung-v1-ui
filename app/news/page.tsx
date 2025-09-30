@@ -74,11 +74,20 @@ export default function NewsPage() {
 			})),
 		}));
 
-		let filtered = items;
-		if (selectedCategory !== "all") {
-            filtered = filtered.filter((i) => i.category.id === selectedCategory);
-            if (selectedSubCategory) filtered = filtered.filter((i) => (i as any).category?.subCategory?.id === selectedSubCategory);
-		}
+        let filtered = items;
+        if (selectedCategory !== "all") {
+            // Build allowed ids: selected parent + its children
+            const parent = categories.find((c) => c.id === selectedCategory);
+            const allowedIds = new Set<string>([
+                selectedCategory,
+                ...((parent?.subcategories || []).map((s) => s.id) as string[]),
+            ]);
+            filtered = filtered.filter((i) => allowedIds.has(i.category.id as string));
+            if (selectedSubCategory) {
+                // If a subcategory is selected, filter by that exact child id
+                filtered = filtered.filter((i) => i.category.id === selectedSubCategory);
+            }
+        }
 
 		if (searchTerm) {
 			const q = searchTerm.toLowerCase();

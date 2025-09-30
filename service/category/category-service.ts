@@ -34,21 +34,32 @@ export async function listCategoriesService(): Promise<APIResponse<RawCategory[]
 }
 
 export function mapToUICategories(raw: RawCategory[], posts?: Array<{ categoryId?: string | null }>): UICategory[] {
-  const counts = new Map<string, number>();
+  // Count occurrences per actual category id (typically leaf/child id on posts)
+  const leafCounts = new Map<string, number>();
   if (posts) {
     for (const p of posts) {
-      if (p.categoryId) counts.set(p.categoryId, (counts.get(p.categoryId) || 0) + 1);
+      if (p.categoryId) leafCounts.set(p.categoryId, (leafCounts.get(p.categoryId) || 0) + 1);
     }
   }
 
   const ui: UICategory[] = [];
+  let total = 0;
   for (const cat of raw) {
-    const children = (cat.children || []).map((c) => ({ id: c.id, name_en: getNameEn(c.name) }));
-    const count = counts.size > 0 ? (counts.get(cat.id) || 0) : 0;
-    ui.push({ id: cat.id, name_en: getNameEn(cat.name), count, subcategories: children });
+    const children = (cat.children || []);
+    const uiChildren: UICategorySub[] = children.map((c) => ({ id: c.id, name_en: getNameEn(c.name) }));
+
+    // Sum counts of this parent (own id if posts can be assigned to parent) + its children
+    let parentCount = 0;
+    if (leafCounts.size > 0) {
+      parentCount += leafCounts.get(cat.id) || 0;
+      for (const child of children) parentCount += leafCounts.get(child.id) || 0;
+      total += parentCount;
+    }
+
+    ui.push({ id: cat.id, name_en: getNameEn(cat.name), count: parentCount, subcategories: uiChildren });
   }
 
-  const allCount = counts.size > 0 ? Array.from(counts.values()).reduce((a, b) => a + b, 0) : 0;
+  const allCount = leafCounts.size > 0 ? total : 0;
   return [{ id: "all", name_en: "All", count: allCount }, ...ui];
 }
 
