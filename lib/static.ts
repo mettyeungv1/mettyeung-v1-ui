@@ -31,3 +31,9 @@ export const BLOG_ENDPOINT = `${API_BASE_URL}/blogs`;
 	- Get endpoint
 */
 export const MEDIA_ENDPOINT = `${API_BASE_URL}/media`;
+
+/*
+  Category API:
+  - Get endpoint
+*/
+export const CATEGORY_ENDPOINT = `${API_BASE_URL}/categories`;

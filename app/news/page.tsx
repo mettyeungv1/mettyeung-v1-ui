@@ -10,6 +10,7 @@ import { NewsFilterSidebar } from "@/components/news/new-filter-sidebar";
 import { NewsGrid } from "@/components/news/news-grid";
 import { NewsCard } from "@/components/news/news-card";
 import { listBlogsService } from "@/service/blog/blog-service";
+import { listCategoriesService, mapToUICategories, UICategory } from "@/service/category/category-service";
 import type { BlogPost } from "@/lib/types/blog";
 
 export default function NewsPage() {
@@ -18,7 +19,8 @@ export default function NewsPage() {
 	const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
 		null
 	);
-	const [posts, setPosts] = useState<BlogPost[]>([]);
+    const [posts, setPosts] = useState<BlogPost[]>([]);
+    const [categories, setCategories] = useState<UICategory[]>([]);
 	const [loading, setLoading] = useState(true);
 	const { t } = useTranslation();
 	const router = useRouter();
@@ -27,19 +29,26 @@ export default function NewsPage() {
 		router.push(`/news/${id}`);
 	};
 
-	useEffect(() => {
-		(async () => {
-			setLoading(true);
-			const res = await listBlogsService({ sort: "-createdAt", limit: 24 });
-			if (res.status_code === 200 && res.data?.data) {
-				setPosts(res.data.data);
-			}
-			setLoading(false);
-		})();
-	}, []);
+    useEffect(() => {
+        (async () => {
+            setLoading(true);
+            const [postRes, catRes] = await Promise.all([
+                listBlogsService({ sort: "-createdAt", limit: 24 }),
+                listCategoriesService(),
+            ]);
+            if (postRes.status_code === 200 && postRes.data?.data) {
+                setPosts(postRes.data.data);
+            }
+            if (catRes.status_code === 200 && Array.isArray(catRes.data)) {
+                const uiCats = mapToUICategories(catRes.data, (postRes.data?.data || []).map(p => ({ categoryId: (p as any)?.category?.id })));
+                setCategories(uiCats);
+            }
+            setLoading(false);
+        })();
+    }, []);
 
-	const normalized = useMemo(() => {
-		const items = posts.map((p) => ({
+    const normalized = useMemo(() => {
+        const items = posts.map((p) => ({
 			id: p.id as unknown as number,
 			title_en:
 				typeof p.title === "string" ? p.title : (p.title as any)?.en || "",
@@ -48,7 +57,13 @@ export default function NewsPage() {
 			image: p.coverImageUrl || p.media[0]?.url || "/placeholder.jpg",
 			views: p.readCounts || 0,
 			author: { name_en: p.author?.name || "" },
-			category: { id: "all", name_en: "", subCategory: undefined },
+            category: {
+                id: (p as any)?.category?.id || "all",
+                name_en: typeof (p as any)?.category?.name === "string"
+                    ? (p as any)?.category?.name
+                    : (p as any)?.category?.name?.en || "",
+                subCategory: undefined as any,
+            },
 			featured: p.isFeatured,
 			readTime: p.readTimes || 0,
 			comments: p.commentsCount || 0,
@@ -61,8 +76,8 @@ export default function NewsPage() {
 
 		let filtered = items;
 		if (selectedCategory !== "all") {
-			filtered = filtered.filter((_) => true);
-			if (selectedSubCategory) filtered = filtered.filter((_) => true);
+            filtered = filtered.filter((i) => i.category.id === selectedCategory);
+            if (selectedSubCategory) filtered = filtered.filter((i) => (i as any).category?.subCategory?.id === selectedSubCategory);
 		}
 
 		if (searchTerm) {
@@ -128,10 +143,10 @@ export default function NewsPage() {
 						{/* Sidebar */}
 						<div className="lg:col-span-1">
 							<AnimatedSection>
-								<NewsFilterSidebar
+            <NewsFilterSidebar
 									searchTerm={searchTerm}
 									onSearchChange={setSearchTerm}
-									categories={[]}
+                categories={categories as any}
 									selectedCategory={selectedCategory}
 									onCategoryChange={setSelectedCategory}
 									selectedSubCategory={selectedSubCategory}
@@ -145,9 +160,9 @@ export default function NewsPage() {
 						{/* News Grid */}
 						<div className="lg:col-span-3">
 							<AnimatedSection>
-								<NewsGrid
+                                <NewsGrid
 									items={filteredNews as any}
-									categories={[]}
+                                    categories={categories as any}
 									onCardClick={(nid) => handleArticleClick(String(nid))}
 								/>
 							</AnimatedSection>
