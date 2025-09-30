@@ -1,93 +1,78 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart, MessageCircle, MoreHorizontal, Flag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { createCommentService, listCommentsService } from "@/service/comment/comment-service";
 
 interface CommentSectionProps {
 	articleId: number;
 }
 
-const sampleComments = [
-	{
-		id: 1,
-		author: {
-			name: "សុខា វី",
-			name_en: "Sokha Vee",
-			avatar:
-				"https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=150",
-		},
-		content: "កម្មវិធីល្អណាស់! សូមអរគុណក្រុម Mettyerng ដែលបានជួយប្រជាជន។",
-		content_en:
-			"Great program! Thank you Mettyerng team for helping the community.",
-		likes: 12,
-		replies: 3,
-		timestamp: "2024-01-15T14:30:00Z",
-		isVerified: false,
-	},
-	{
-		id: 2,
-		author: {
-			name: "ដារ៉ា ខេម",
-			name_en: "Dara Khem",
-			avatar:
-				"https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=150",
-		},
-		content: "យើងត្រូវការកម្មវិធីបែបនេះច្រើនទៀត។ សង្ឃឹមថាអាចបន្តទៀតបាន។",
-		content_en: "We need more programs like this. Hope this can continue.",
-		likes: 8,
-		replies: 1,
-		timestamp: "2024-01-15T16:45:00Z",
-		isVerified: true,
-	},
-	{
-		id: 3,
-		author: {
-			name: "ពិសាច្ច នាង",
-			name_en: "Pisach Neang",
-			avatar:
-				"https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=150",
-		},
-		content: "ខ្ញុំបានចូលរួមក្នុងកម្មវិធីនេះ។ ពិតជាមានអារម្មណ៍ល្អណាស់។",
-		content_en:
-			"I participated in this program. It was really a great experience.",
-		likes: 15,
-		replies: 2,
-		timestamp: "2024-01-15T18:20:00Z",
-		isVerified: false,
-	},
-];
+type UIComment = {
+    id: string | number;
+    author: { name_en: string; avatar: string };
+    content_en: string;
+    likes: number;
+    replies: number;
+    timestamp: string;
+    isVerified: boolean;
+};
 
 export function CommentSection({ articleId }: CommentSectionProps) {
 	const [newComment, setNewComment] = useState("");
-	const [comments, setComments] = useState(sampleComments);
+    const [comments, setComments] = useState<UIComment[]>([]);
 
-	const handleSubmitComment = (e: React.FormEvent) => {
-		e.preventDefault();
-		if (newComment.trim()) {
-			const comment = {
-				id: Date.now(),
-				author: {
-					name: "អ្នកប្រើប្រាស់",
-					name_en: "User",
-					avatar:
-						"https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=150",
-				},
-				content: newComment,
-				content_en: newComment,
-				likes: 0,
-				replies: 0,
-				timestamp: new Date().toISOString(),
-				isVerified: false,
-			};
-			setComments([comment, ...comments]);
-			setNewComment("");
-		}
-	};
+    useEffect(() => {
+        (async () => {
+            const res = await listCommentsService(String(articleId));
+            if (res.status_code === 200 && Array.isArray(res.data)) {
+                const mapped: UIComment[] = res.data.map((c) => ({
+                    id: c.id,
+                    author: { name_en: c.author?.name || "User", avatar: c.author?.avatarUrl || "" },
+                    content_en: c.content,
+                    likes: 0,
+                    replies: 0,
+                    timestamp: (c as any).createdAt as string,
+                    isVerified: !!(c as any).isApproved,
+                }));
+                setComments(mapped);
+            }
+        })();
+    }, [articleId]);
+
+    const handleSubmitComment = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!newComment.trim()) return;
+        const optimistic: UIComment = {
+            id: `tmp-${Date.now()}`,
+            author: { name_en: "You", avatar: "" },
+            content_en: newComment,
+            likes: 0,
+            replies: 0,
+            timestamp: new Date().toISOString(),
+            isVerified: false,
+        };
+        setComments([optimistic, ...comments]);
+        setNewComment("");
+        const res = await createCommentService(String(articleId), { content: optimistic.content_en });
+        if (res.status_code === 201 && res.data) {
+            const saved: UIComment = {
+                id: res.data.id,
+                author: { name_en: res.data.author?.name || "You", avatar: res.data.author?.avatarUrl || "" },
+                content_en: res.data.content,
+                likes: 0,
+                replies: 0,
+                timestamp: (res.data as any).createdAt as string,
+                isVerified: !!res.data.isApproved,
+            };
+            setComments((prev) => [saved, ...prev.filter((c) => String(c.id) !== String(optimistic.id))]);
+        }
+    };
 
 	const formatTimeAgo = (timestamp: string) => {
 		const now = new Date();
@@ -138,7 +123,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 									alt={comment.author.name_en}
 								/>
 								<AvatarFallback>
-									{comment.author.name_en.charAt(0)}
+                                    {comment.author.name_en.charAt(0)}
 								</AvatarFallback>
 							</Avatar>
 
