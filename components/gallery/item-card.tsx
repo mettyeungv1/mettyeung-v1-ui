@@ -12,14 +12,14 @@ export interface GalleryItem {
 	thumbnail: string;
 	date: string;
 	category: string;
-	duration?: string; // Optional property
+	duration?: string;
 }
 
 interface ItemCardProps<T extends GalleryItem> {
 	item: T;
 	categoryName?: string;
 	onCardClick: (item: T) => void;
-	isFeatured?: boolean; // To apply different styling for featured items
+	isFeatured?: boolean;
 }
 
 export function ItemCard<T extends GalleryItem>({

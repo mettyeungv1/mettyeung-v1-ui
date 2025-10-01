@@ -8,11 +8,13 @@ interface Category {
 	name_en: string;
 }
 
-interface ItemGalleryProps<T extends GalleryItem> {
+interface ItemGalleryProps<T> {
 	title: string;
 	subtitle: string;
 	items: T[];
-	categories: Category[];
+	categories: { id: string; name_en: string }[];
+	selectedCategory: string; // ✅ add this
+	onCategoryChange: React.Dispatch<React.SetStateAction<string>>;
 	onItemClick: (item: T) => void;
 }
 
@@ -32,7 +34,6 @@ export function ItemGallery<T extends GalleryItem>({
 		return map;
 	}, [categories]);
 
-	// Suggestion 2: Memoize the filtering logic for performance.
 	const filteredItems = useMemo(() => {
 		if (selectedCategory === "all") {
 			return items;
