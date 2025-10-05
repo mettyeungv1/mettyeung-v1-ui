@@ -65,4 +65,4 @@ jobs:
           script: |
             cd /home/mya_user/mettyeung-v1
             # ✅ CORRECT: Calls the deploy script with the correct service and image tag
-            ./deploy.sh ${{ env.SERVICE_NAME }} ${{ env.DOCKER_IMAGE }}:${{ steps.meta.outputs.sha_short }}
+            ./deploy.sh ${{ env.SERVICE_NAME }} ${{ env.DOCKER_IMAGE }}:latest
