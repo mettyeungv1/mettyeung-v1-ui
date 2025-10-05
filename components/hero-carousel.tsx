@@ -31,7 +31,7 @@ export function HeroCarousel() {
 			try {
 				setLoading(true);
 				const response = await getBannersService();
-				
+
 				if (response.status_code === 200 && response.data) {
 					setBanners(response.data);
 				} else {
@@ -94,7 +94,7 @@ export function HeroCarousel() {
 								alt={banner.media.altText || `Banner ${banner.order}`}
 								fill
 								priority={index === 0}
-								style={{ objectFit: "contain" }}
+								className="object-cover sm:object-contain"
 								sizes="100vw"
 								variants={kenBurnsVariants}
 							/>

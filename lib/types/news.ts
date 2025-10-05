@@ -1,5 +1,5 @@
 export interface NewsArticle {
-	id: number;
+	id: string;
 	title: string;
 	title_en: string;
 	excerpt: string;

@@ -10,6 +10,7 @@ interface ArticleSidebarProps {
 export function ArticleSidebar({ article }: ArticleSidebarProps) {
 	return (
 		<div className="sticky top-24 space-y-6">
+			{JSON.stringify(article)}
 			{/* Quick Info Card */}
 			<Card className="border-l-4 border-l-khmer-gold">
 				<CardContent className="p-6">
@@ -44,11 +45,7 @@ export function ArticleSidebar({ article }: ArticleSidebarProps) {
 					</div>
 				</CardContent>
 			</Card>
-
-			{/* Related Articles Component */}
 			<RelatedArticles currentArticleId={article.id} />
-
-			{/* Newsletter Signup Card */}
 			<Card className="bg-gradient-to-br from-khmer-gold/5 to-khmer-red/5 border-khmer-gold/20">
 				<CardContent className="p-6 text-center">
 					<h3 className="text-lg font-semibold text-gray-900 mb-3">

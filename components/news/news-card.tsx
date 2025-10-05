@@ -6,7 +6,7 @@ import Image from "next/image";
 
 interface NewsCardProps {
 	item: NewsArticle;
-	onClick: (id: number) => void;
+	onClick: (id: string) => void;
 }
 
 export function NewsCard({ item, onClick }: NewsCardProps) {

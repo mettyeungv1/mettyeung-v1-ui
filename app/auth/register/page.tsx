@@ -166,7 +166,7 @@ export default function RegisterPage() {
 
 					<CardContent className="space-y-6">
 						{/* Social Auth */}
-						<SocialAuthButtons
+						{/* <SocialAuthButtons
 							isLoading={isLoading}
 							onGoogleAuth={() => handleSocialAuth("Google")}
 							onTelegramAuth={() => handleSocialAuth("Telegram")}
@@ -179,7 +179,7 @@ export default function RegisterPage() {
 									{t("auth.orRegisterWith")}
 								</span>
 							</div>
-						</div>
+						</div> */}
 
 						{/* Register Form */}
 						<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

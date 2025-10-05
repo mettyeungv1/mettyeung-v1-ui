@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 interface NewsGridProps {
 	items: NewsArticle[];
 	categories: NewsCategory[];
-	onCardClick: (id: number) => void;
+	onCardClick: (id: string) => void;
 }
 
 export function NewsGrid({ items, categories, onCardClick }: NewsGridProps) {

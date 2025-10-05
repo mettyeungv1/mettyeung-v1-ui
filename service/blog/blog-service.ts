@@ -19,7 +19,10 @@ function normalizeMediaUrls(post: BlogPost): BlogPost {
 	return {
 		...post,
 		coverImageUrl: normalizeUrl(post.coverImageUrl ?? undefined) ?? null,
-		media: (post.media || []).map((m: BlogMedia) => ({ ...m, url: normalizeUrl(m.url)! })),
+		media: (post.media || []).map((m: BlogMedia) => ({
+			...m,
+			url: normalizeUrl(m.url)!,
+		})),
 	};
 }
 
@@ -66,8 +69,22 @@ export const getBlogByIdService = async (
 	return res;
 };
 
-// Featured post
-export const getFeaturedBlogService = async (): Promise<APIResponse<BlogPost>> => {
+export const getBlogRelatedPostService = async (
+	id: string
+): Promise<APIResponse<any>> => {
+	const res = await fetchAPI<any>(`${BLOG_ENDPOINT}/${id}/related`);
+	if (res?.data) {
+		res.data = {
+			...res.data,
+			data: res.data.map((p: BlogPost) => normalizeMediaUrls(p)),
+		};
+	}
+	return res;
+};
+
+export const getFeaturedBlogService = async (): Promise<
+	APIResponse<BlogPost>
+> => {
 	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/featured`);
 	if (res?.data) res.data = normalizeMediaUrls(res.data);
 	return res;

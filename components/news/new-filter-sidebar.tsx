@@ -17,7 +17,7 @@ interface NewsFilterSidebarProps {
 	selectedSubCategory: string | null;
 	onSubCategoryChange: (id: string | null) => void;
 	recentNews: NewsArticle[];
-	onRecentNewsClick: (id: number) => void;
+	onRecentNewsClick: (id: string) => void;
 }
 
 export function NewsFilterSidebar({

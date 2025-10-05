@@ -1,102 +1,149 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Eye, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getBlogRelatedPostService } from "@/service/blog/blog-service";
+import type { BlogPost } from "@/lib/types/blog";
+import { formatDate } from "@/lib/utils";
+import { MEDIA_ENDPOINT } from "@/lib/static";
+import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
 
 interface RelatedArticlesProps {
-	currentArticleId: number;
+	currentArticleId: string;
 }
 
-const relatedArticles = [
-	{
-		id: 2,
-		title: "ការបង្រៀនភាសាខ្មែរដល់កុមារ 50 នាក់",
-		title_en: "Khmer Language Classes for 50 Children",
-		excerpt: "កម្មវិធីបង្រៀនភាសាខ្មែរ និងសំណេរដល់កុមារក្នុងតំបន់ជនបទ",
-		category: "education",
-		date: "2024-01-10",
-		image:
-			"https://images.pexels.com/photos/5427652/pexels-photo-5427652.jpeg?auto=compress&cs=tinysrgb&w=400",
-		views: 890,
-	},
-	{
-		id: 3,
-		title: "ការប្រកួតរបាំប្រពៃណីខ្មែរ",
-		title_en: "Traditional Khmer Dance Competition",
-		excerpt: "ការរៀបចំការប្រកួតរបាំប្រពៃណីខ្មែរ ដើម្បីលើកកម្ពស់វប្បធម៌ជាតិ",
-		category: "culture",
-		date: "2024-01-05",
-		image:
-			"https://images.pexels.com/photos/8369686/pexels-photo-8369686.jpeg?auto=compress&cs=tinysrgb&w=400",
-		views: 650,
-	},
-	{
-		id: 4,
-		title: "ការបរិច្ចាគអាហារដល់គ្រួសារក្រីក្រ",
-		title_en: "Food Donation to Poor Families",
-		excerpt:
-			"ក្រុម Mettyerng បានបរិច្ចាគអាហារ និងសម្ភារៈចាំបាច់ដល់គ្រួសារក្រីក្រ",
-		category: "community",
-		date: "2023-12-20",
-		image:
-			"https://images.pexels.com/photos/6646918/pexels-photo-6646918.jpeg?auto=compress&cs=tinysrgb&w=400",
-		views: 920,
-	},
-];
+// A dedicated skeleton loader for a better UX while data is fetching
+const RelatedArticlesSkeleton = () => (
+	<Card>
+		<CardHeader>
+			<Skeleton className="h-6 w-32" />
+		</CardHeader>
+		<CardContent className="space-y-4">
+			{Array.from({ length: 3 }).map((_, index) => (
+				<div key={index} className="flex space-x-4">
+					<Skeleton className="w-20 h-20 rounded-lg" />
+					<div className="flex-1 space-y-2">
+						<Skeleton className="h-4 w-1/4" />
+						<Skeleton className="h-5 w-full" />
+						<Skeleton className="h-4 w-1/2" />
+					</div>
+				</div>
+			))}
+		</CardContent>
+	</Card>
+);
 
 export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
-	const filtered = relatedArticles.filter(
-		(article) => article.id !== currentArticleId
-	);
+	// 1. Use strong typing, not 'any'
+	const [relatedPosts, setRelatedPosts] = useState<any>([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (!currentArticleId) {
+			setLoading(false);
+			return;
+		}
+
+		const fetchRelated = async () => {
+			setLoading(true);
+			setError(null);
+			try {
+				const res = await getBlogRelatedPostService(currentArticleId);
+				console.log("This is the related data", res);
+				if (res.data) {
+					setRelatedPosts(res.data.data.slice(0, 3));
+				} else {
+					throw new Error(res.message || "Failed to fetch related posts.");
+				}
+			} catch (err) {
+				console.error(err);
+				setError("Could not load related articles.");
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchRelated();
+	}, [currentArticleId]);
+
+	if (loading) {
+		return <RelatedArticlesSkeleton />;
+	}
+
+	if (error) {
+		return (
+			<Card>
+				<CardContent className="pt-6 text-center text-sm text-destructive">
+					{error}
+				</CardContent>
+			</Card>
+		);
+	}
+
+	// Don't render the component if there are no related articles
+	if (relatedPosts.length === 0) {
+		return null;
+	}
 
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-lg">ព័ត៌មានពាក់ព័ន្ធ</CardTitle>
+				<CardTitle className="text-lg">Related Articles</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
-				{filtered.map((article) => (
-					<div key={article.id} className="group cursor-pointer">
-						<div className="flex space-x-3">
-							<div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+				{relatedPosts.map((post: any) => (
+					<Link
+						key={post.id}
+						href={`/news/${post.id}`}
+						className="group cursor-pointer block"
+					>
+						<div className="flex space-x-4">
+							<div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 relative">
 								<img
-									src={article.image}
-									alt={article.title_en}
+									src={post.coverImageUrl}
+									alt={post.title[DEFAULT_LANGUAGE_CODE]}
 									className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
 								/>
 							</div>
 							<div className="flex-1 min-w-0">
 								<Badge variant="secondary" className="text-xs mb-1">
-									{article.category}
+									{post.categoryName}
 								</Badge>
-								<h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1 group-hover:text-khmer-gold transition-colors">
-									{article.title_en}
+								<h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1 group-hover:text-primary transition-colors">
+									{post.title[DEFAULT_LANGUAGE_CODE]}{" "}
+									{/* 3. This now works perfectly */}
 								</h4>
 								<div className="flex items-center text-xs text-gray-500 space-x-3">
 									<div className="flex items-center">
 										<Calendar className="w-3 h-3 mr-1" />
-										{new Date(article.date).toLocaleDateString("km-KH")}
+										{formatDate(post.date)}
 									</div>
 									<div className="flex items-center">
 										<Eye className="w-3 h-3 mr-1" />
-										{article.views}
+										{post.readCounts.toLocaleString()}
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</Link>
 				))}
 
-				<div className="pt-4 border-t border-gray-200">
+				<div className="pt-4 border-t">
 					<Button
 						variant="outline"
-						className="w-full text-khmer-gold border-khmer-gold hover:bg-khmer-gold hover:text-white"
+						className="w-full text-primary border-primary hover:bg-primary hover:text-primary-foreground"
+						asChild
 					>
-						មើលព័ត៌មានបន្ថែម
-						<ArrowRight className="w-4 h-4 ml-2" />
+						<Link href="/news">
+							View All Articles
+							<ArrowRight className="w-4 h-4 ml-2" />
+						</Link>
 					</Button>
 				</div>
 			</CardContent>

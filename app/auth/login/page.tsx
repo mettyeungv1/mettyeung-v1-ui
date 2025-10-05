@@ -136,7 +136,7 @@ export default function LoginPage() {
 
 					<CardContent className="space-y-6">
 						{/* Social Auth */}
-						<SocialAuthButtons
+						{/* <SocialAuthButtons
 							isLoading={isLoading}
 							onGoogleAuth={() => handleSocialAuth("Google")}
 							onTelegramAuth={() => handleSocialAuth("Telegram")}
@@ -149,7 +149,7 @@ export default function LoginPage() {
 									{t("auth.orContinueWith")}
 								</span>
 							</div>
-						</div>
+						</div> */}
 
 						{/* Login Form */}
 						<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

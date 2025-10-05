@@ -14,12 +14,15 @@ import { ShareDialog } from "@/components/news/share-dialog";
 import { CommentSection } from "@/components/news/comment-section";
 import { ArticleSidebar } from "@/components/news/detail/article-sidebar";
 
-// Services/Types
-import { getBlogByIdService } from "@/service/blog/blog-service";
+import {
+	getBlogByIdService,
+	getBlogRelatedPostService,
+} from "@/service/blog/blog-service";
 import type { BlogPost } from "@/lib/types/blog";
 
 export default function NewsDetailPage() {
 	const [post, setPost] = useState<BlogPost | null>(null);
+	const [relatedPost, setRelatedPost] = useState<any>(null);
 	const [showShareDialog, setShowShareDialog] = useState(false);
 	const params = useParams<{ id: string }>();
 
@@ -28,8 +31,11 @@ export default function NewsDetailPage() {
 			const id = params?.id;
 			if (!id) return;
 			const res = await getBlogByIdService(id);
-			if (res.status_code === 200 && res.data) setPost(res.data);
-			else notFound();
+			const relatedPost = await getBlogRelatedPostService(id);
+			if (res.status_code === 200 && res.data) {
+				setPost(res.data);
+				setRelatedPost(relatedPost.data);
+			} else notFound();
 		})();
 	}, [params?.id]);
 
@@ -38,7 +44,9 @@ export default function NewsDetailPage() {
 		return {
 			id: post.id as unknown as number,
 			title_en:
-				typeof post.title === "string" ? post.title : (post.title as any)?.en || "",
+				typeof post.title === "string"
+					? post.title
+					: (post.title as any)?.en || "",
 			excerpt: "",
 			date: (post.publishedAt || post.createdAt) as any,
 			image: post.coverImageUrl || post.media[0]?.url || "/placeholder.jpg",
@@ -53,7 +61,10 @@ export default function NewsDetailPage() {
 					? post.content
 					: (post.content as any)?.en || "",
 			tags: [] as string[],
-			gallery: (post.media || []).map((m) => ({ url: m.url, caption: m.altText || "" })),
+			gallery: (post.media || []).map((m) => ({
+				url: m.url,
+				caption: m.altText || "",
+			})),
 			readTime: post.readTimes || 0,
 			comments: post.commentsCount || 0,
 			category: { name: "", name_en: "" },
@@ -78,7 +89,10 @@ export default function NewsDetailPage() {
 					<main className="lg:col-span-8">
 						<AnimatedSection>
 							<article>
-								<ArticleHeader article={article as any} onShareClick={() => setShowShareDialog(true)} />
+								<ArticleHeader
+									article={article as any}
+									onShareClick={() => setShowShareDialog(true)}
+								/>
 								<ImageGallery images={article.gallery} />
 								<ArticleAuthor author={article.author as any} />
 								<ArticleContent content={article.content} tags={article.tags} />
@@ -101,7 +115,11 @@ export default function NewsDetailPage() {
 				isOpen={showShareDialog}
 				onClose={() => setShowShareDialog(false)}
 				onShare={handleShare}
-				article={{ title_en: article.title_en, excerpt: article.excerpt, image: article.image }}
+				article={{
+					title_en: article.title_en,
+					excerpt: article.excerpt,
+					image: article.image,
+				}}
 			/>
 		</div>
 	);
