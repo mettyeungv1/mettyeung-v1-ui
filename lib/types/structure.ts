@@ -1,69 +1,115 @@
-export interface SocialLink {
-	platform: string;
-	url: string;
-	icon: string;
-}
+// Type definitions for Structure/Member system
 
-export interface Experience {
-	title: string;
-	company: string;
-	period: string;
-	description: string;
+export interface LocalizedText {
+	en?: string;
+	km?: string;
 }
 
 export interface Education {
-	degree: string;
-	institution: string;
-	year: string;
+	schoolName: LocalizedText;
+	degree: LocalizedText;
+	startYear?: number;
+	endYear?: number;
+	order: number;
 }
 
-export interface Language {
-	language: string;
-	level: string;
+export interface Experience {
+	title: LocalizedText;
+	organization: LocalizedText;
+	description: LocalizedText;
+	startYear?: number;
+	endYear?: number;
+	order: number;
 }
 
-export interface Testimonial {
-	text: string;
-	author: string;
-	role: string;
+export interface Skill {
+	skillId: string;
+	order: number;
 }
 
-export interface Person {
+export interface SocialLink {
+	platform: string;
+	url: string;
+}
+
+/**
+ * Raw API response structure for a member
+ */
+export interface APIMemberResponse {
+	id: string;
+	name: string;
+	title: LocalizedText;
+	email?: string;
+	phoneNumber?: string;
+	joinYear?: number;
+	avatarUrl?: string;
+	location?: LocalizedText;
+	educations?: Education[];
+	experiences?: Experience[];
+	skills?: Skill[];
+	associationIds?: string[];
+	createdAt?: Date;
+	updatedAt?: Date;
+}
+
+/**
+ * Normalized member structure for frontend use
+ * Compatible with existing Person interface
+ */
+export interface Member {
 	id: string;
 	name: string;
 	name_en: string;
-	position: string;
+	title_en: string;
 	position_en: string;
-	department: string;
-	department_name: string;
-	bio: string;
+	image: string;
 	email: string;
 	phone: string;
+	phoneNumber: string;
 	location: string;
+	location_en: string;
 	joinDate: string;
-	image: string;
+	joinYear?: number;
+	bio: string;
+	department: string;
 	skills: string[];
-	experience: {
+	socialLinks: SocialLink[];
+
+	// API-specific fields
+	educations: Education[];
+	experiences: Experience[];
+	associationIds: string[];
+
+	// Legacy compatibility fields
+	education: Array<{
+		degree: string;
+		institution: string;
+		year: string;
+	}>;
+	experience: Array<{
 		title: string;
 		company: string;
 		period: string;
 		description: string;
-	}[];
-	education: { degree: string; institution: string; year: string }[];
-	socialLinks: { platform: string; url: string; icon: string }[];
-	achievements: string[];
-	languages: { language: string; level: string }[];
+	}>;
 	projects: string[];
-	testimonials: Testimonial[];
+	testimonials: Array<{
+		text: string;
+		author: string;
+		role: string;
+	}>;
 }
 
+/**
+ * Department/Section structure
+ */
 export interface Department {
 	id: string;
 	title: string;
 	title_en: string;
-	icon: React.ElementType;
+	description: string;
+	icon: React.ComponentType<{ className?: string }>;
 	color: string;
 	bgColor: string;
-	description: string;
-	members: Person[];
+	members: Member[];
 }

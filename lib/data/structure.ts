@@ -1,5 +1,5 @@
 import { Crown, Shield, BookOpen, Palette } from "lucide-react";
-import { Department, Person } from "../types/structure";
+import { Department } from "../types/structure";
 
 const generateMembers = (deptId: string, deptName: string, startId: number) =>
 	Array.from({ length: 5 }, (_, i) => {
@@ -76,7 +76,7 @@ const generateMembers = (deptId: string, deptName: string, startId: number) =>
 		};
 	});
 
-export const organizationData: Department[] = [
+export const organizationData: any = [
 	{
 		id: "executive",
 		title: "គណៈកម្មការប្រតិបត្តិ",
@@ -122,8 +122,8 @@ export const organizationData: Department[] = [
 	},
 ];
 
-export const getPersonById = (id: string): Person | undefined => {
+export const getPersonById = (id: string): any => {
 	return organizationData
-		.flatMap((dept) => dept.members)
-		.find((p) => p.id === id);
+		.flatMap((dept: any) => dept.members)
+		.find((p: any) => p.id === id);
 };

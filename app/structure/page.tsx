@@ -1,21 +1,42 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { useTranslation } from "@/lib/i18n";
+import { Skeleton } from "@/components/ui/skeleton";
 
-// Data and Logic
-import { organizationData } from "@/lib/data/structure";
-import { useOrganizationFilter } from "@/hooks/use-organization-filter";
+// Services
+import { listMembersService } from "@/service/structure/structure-service";
+import type { Member, Department } from "@/lib/types/structure";
 
-// Reusable Components
+// Components
 import { StructureHero } from "@/components/structure/strucuture-hero";
 import { StructureFilterBar } from "@/components/structure/structure-filterbar";
 import { DepartmentCard } from "@/components/structure/department-card";
 
+// Icons for departments
+import { Users, Award, BookOpen, Heart, Globe, Briefcase } from "lucide-react";
+
+// Loading skeleton
+const StructureSkeleton = () => (
+	<div className="container section-padding">
+		<div className="space-y-8">
+			{Array.from({ length: 3 }).map((_, i) => (
+				<div key={i} className="space-y-4">
+					<Skeleton className="h-32 w-full rounded-lg" />
+				</div>
+			))}
+		</div>
+	</div>
+);
+
 export default function StructurePage() {
+	// State for API data
+	const [members, setMembers] = useState<Member[]>([]);
+	const [loading, setLoading] = useState(true);
+
+	// UI State
 	const [expandedSections, setExpandedSections] = useState<string[]>([
 		"executive",
 	]);
@@ -23,20 +44,111 @@ export default function StructurePage() {
 	const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-	const filteredStructure = useOrganizationFilter(
-		organizationData,
-		searchTerm,
-		selectedDepartment
-	);
+	// Fetch members on mount
+	useEffect(() => {
+		const fetchData = async () => {
+			setLoading(true);
+			try {
+				const response = await listMembersService({
+					sort: "-joinYear",
+					limit: 100,
+				});
 
-	const totalMembers = useMemo(
-		() =>
-			organizationData.reduce(
-				(total, section) => total + section.members.length,
-				0
-			),
-		[] // This only needs to compute once
-	);
+				if (response.data) {
+					setMembers(response.data);
+				}
+			} catch (error) {
+				console.error("Failed to fetch members:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
+		fetchData();
+	}, []);
+
+	// Group members by department (you'll need to add department field or association)
+	// For now, creating a simple grouping structure
+	const organizationData = useMemo((): Department[] => {
+		// TODO: Replace with actual department categorization from your API
+		// This is a placeholder structure
+		const departments: Department[] = [
+			{
+				id: "executive",
+				title: "ក្រុមប្រឹក្សាភិបាល",
+				title_en: "Executive Board",
+				description:
+					"Leadership team guiding our mission and strategic direction",
+				icon: Users,
+				color: "from-blue-500 to-blue-600",
+				bgColor: "bg-blue-50",
+				members: [],
+			},
+			{
+				id: "education",
+				title: "ផ្នែកអប់រំ",
+				title_en: "Education Department",
+				description:
+					"Dedicated to providing quality education and learning opportunities",
+				icon: BookOpen,
+				color: "from-green-500 to-green-600",
+				bgColor: "bg-green-50",
+				members: [],
+			},
+			{
+				id: "community",
+				title: "ផ្នែកសហគមន៍",
+				title_en: "Community Services",
+				description:
+					"Building stronger communities through outreach and support",
+				icon: Heart,
+				color: "from-red-500 to-red-600",
+				bgColor: "bg-red-50",
+				members: [],
+			},
+		];
+
+		// Distribute members to departments
+		// You should categorize based on actual department field from API
+		members.forEach((member, index) => {
+			const deptIndex = index % departments.length;
+			departments[deptIndex].members.push({
+				...member,
+				department: departments[deptIndex].title_en,
+			});
+		});
+
+		return departments;
+	}, [members]);
+
+	// Filter members based on search and department
+	const filteredStructure = useMemo(() => {
+		return organizationData
+			.map((dept) => ({
+				...dept,
+				members: dept.members.filter((member) => {
+					if (selectedDepartment !== "all" && dept.id !== selectedDepartment) {
+						return false;
+					}
+
+					if (searchTerm) {
+						const search = searchTerm.toLowerCase();
+						return (
+							member.name_en.toLowerCase().includes(search) ||
+							member.position_en.toLowerCase().includes(search) ||
+							member.skills.some((skill) =>
+								skill.toLowerCase().includes(search)
+							) ||
+							member.bio.toLowerCase().includes(search)
+						);
+					}
+
+					return true;
+				}),
+			}))
+			.filter((dept) => dept.members.length > 0);
+	}, [organizationData, searchTerm, selectedDepartment]);
+
+	const totalMembers = useMemo(() => members.length, [members]);
 
 	const toggleSection = (sectionId: string) => {
 		setExpandedSections((prev) =>
@@ -45,6 +157,15 @@ export default function StructurePage() {
 				: [...prev, sectionId]
 		);
 	};
+
+	if (loading) {
+		return (
+			<div className="min-h-screen bg-gray-50">
+				<StructureHero departmentCount={0} totalMembers={0} />
+				<StructureSkeleton />
+			</div>
+		);
+	}
 
 	return (
 		<div className="min-h-screen bg-gray-50">

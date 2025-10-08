@@ -76,7 +76,7 @@ export function DepartmentCard({
 								{department.members.map((member, i) => (
 									<PersonCard
 										key={member.id}
-										person={member}
+										person={member as any}
 										variant="detailed"
 										index={i}
 									/>

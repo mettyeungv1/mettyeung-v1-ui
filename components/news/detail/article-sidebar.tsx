@@ -10,7 +10,6 @@ interface ArticleSidebarProps {
 export function ArticleSidebar({ article }: ArticleSidebarProps) {
 	return (
 		<div className="sticky top-24 space-y-6">
-			{JSON.stringify(article)}
 			{/* Quick Info Card */}
 			<Card className="border-l-4 border-l-khmer-gold">
 				<CardContent className="p-6">
