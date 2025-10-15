@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PersonDetailModal } from "@/components/person/person-detail-modal";
 import { Person } from "@/lib/stores/person-store";
+import { MEDIA_ENDPOINT } from "@/lib/static";
 
 interface PersonCardProps {
 	person: Person;
@@ -108,7 +109,10 @@ export function PersonCard({
 					{/* Responsive Layout: Stacks on mobile, side-by-side on larger screens */}
 					<div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
 						<Avatar className="w-24 h-24 sm:w-20 sm:h-20 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-khmer-gold transition-all duration-300">
-							<AvatarImage src={person.image} alt={person.name_en} />
+							<AvatarImage
+								src={`${MEDIA_ENDPOINT}/view/${person.image}`}
+								alt={person.name_en}
+							/>
 							<AvatarFallback className="bg-gradient-to-br from-khmer-gold to-khmer-red text-white font-bold text-2xl">
 								{person?.name_en
 									? person.name_en
