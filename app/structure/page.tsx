@@ -2,12 +2,15 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search } from "lucide-react";
+import { Folder, Search, Star } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Services
-import { listMembersService } from "@/service/structure/structure-service";
+import {
+	getAssociationService,
+	listMembersService,
+} from "@/service/structure/structure-service";
 import type { Member, Department } from "@/lib/types/structure";
 
 // Components
@@ -33,32 +36,37 @@ const StructureSkeleton = () => (
 
 export default function StructurePage() {
 	// State for API data
-	const [members, setMembers] = useState<Member[]>([]);
+	const [allMembers, setAllMembers] = useState<any[]>([]);
+	const [allAssociations, setAllAssociations] = useState<Member[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
-	// UI State
-	const [expandedSections, setExpandedSections] = useState<string[]>([
-		"executive",
-	]);
+	// State for UI filters and interactions
 	const [searchTerm, setSearchTerm] = useState("");
-	const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
+	const [selectedDepartment, setSelectedDepartment] = useState("all");
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+	const [expandedSections, setExpandedSections] = useState<any>([]);
 
-	// Fetch members on mount
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
+			setError(null);
 			try {
-				const response = await listMembersService({
-					sort: "-joinYear",
-					limit: 100,
-				});
+				const [membersRes, associationsRes] = await Promise.all([
+					listMembersService(),
+					getAssociationService(),
+				]);
 
-				if (response.data) {
-					setMembers(response.data);
+				if (Array.isArray(membersRes.data)) {
+					setAllMembers(membersRes.data);
+				} else {
+					throw new Error("Failed to fetch members.");
 				}
-			} catch (error) {
-				console.error("Failed to fetch members:", error);
+				if (associationsRes?.data) {
+					setAllAssociations(associationsRes.data);
+				}
+			} catch (err) {
+				setError("Could not load organization data. Please try again later.");
 			} finally {
 				setLoading(false);
 			}
@@ -66,94 +74,104 @@ export default function StructurePage() {
 		fetchData();
 	}, []);
 
-	// Group members by department (you'll need to add department field or association)
-	// For now, creating a simple grouping structure
 	const organizationData = useMemo((): Department[] => {
-		// TODO: Replace with actual department categorization from your API
-		// This is a placeholder structure
-		const departments: Department[] = [
-			{
-				id: "executive",
-				title: "ក្រុមប្រឹក្សាភិបាល",
-				title_en: "Executive Board",
-				description:
-					"Leadership team guiding our mission and strategic direction",
+		const departmentStylingMap: Record<
+			string,
+			{ icon: React.ElementType; color: string; bgColor: string }
+		> = {
+			"Our Friends Association Board of Directors": {
 				icon: Users,
 				color: "from-blue-500 to-blue-600",
 				bgColor: "bg-blue-50",
-				members: [],
 			},
-			{
-				id: "education",
-				title: "ផ្នែកអប់រំ",
-				title_en: "Education Department",
-				description:
-					"Dedicated to providing quality education and learning opportunities",
-				icon: BookOpen,
+			"Our Friends Association Executive Committee": {
+				icon: Briefcase,
 				color: "from-green-500 to-green-600",
 				bgColor: "bg-green-50",
-				members: [],
 			},
-			{
-				id: "community",
-				title: "ផ្នែកសហគមន៍",
-				title_en: "Community Services",
-				description:
-					"Building stronger communities through outreach and support",
+			"Senior Advisor of Our Friends Association": {
+				icon: Star,
+				color: "from-amber-500 to-amber-600",
+				bgColor: "bg-amber-50",
+			},
+			"Honorary Member": {
+				icon: Award,
+				color: "from-purple-500 to-purple-600",
+				bgColor: "bg-purple-50",
+			},
+			"Association Branch": {
 				icon: Heart,
 				color: "from-red-500 to-red-600",
 				bgColor: "bg-red-50",
-				members: [],
 			},
-		];
+			"Board Director": {
+				icon: Users,
+				color: "from-sky-500 to-sky-600",
+				bgColor: "bg-sky-50",
+			},
+		};
+		const defaultStyle = {
+			icon: Folder,
+			color: "from-gray-500 to-gray-600",
+			bgColor: "bg-gray-50",
+		};
 
-		// Distribute members to departments
-		// You should categorize based on actual department field from API
-		members.forEach((member, index) => {
-			const deptIndex = index % departments.length;
-			departments[deptIndex].members.push({
-				...member,
-				department: departments[deptIndex].title_en,
-			});
+		// 2. Map over the associations fetched from the API
+
+		let finalDepartments = (allAssociations || []).map((assoc: any) => {
+			const membersOfAssociation = Array.isArray(assoc.associationMembers)
+				? assoc.associationMembers.map((m: any) => m.member)
+				: [];
+
+			const style = departmentStylingMap[assoc.name] || defaultStyle;
+
+			return {
+				id: assoc.id,
+				title_en: assoc.name,
+				title: assoc.name,
+				members: membersOfAssociation?.map((m: any) => ({
+					...m,
+					department: assoc.name,
+				})),
+				icon: style.icon,
+				color: style.color,
+				bgColor: style.bgColor,
+			};
 		});
 
-		return departments;
-	}, [members]);
+		if (selectedDepartment !== "all") {
+			finalDepartments = finalDepartments.filter(
+				(d) => d.id === selectedDepartment
+			);
+		}
 
-	// Filter members based on search and department
+		if (searchTerm) {
+			const lowercasedQuery = searchTerm.toLowerCase();
+			finalDepartments = finalDepartments
+				.map((dept) => ({
+					...dept,
+					members: dept.members.filter(
+						(member: any) =>
+							member.name.toLowerCase().includes(lowercasedQuery) ||
+							(member.title_en || "").toLowerCase().includes(lowercasedQuery)
+					),
+				}))
+				.filter((dept) => dept.members.length > 0); // Only show departments with matching members
+		}
+
+		return finalDepartments as any;
+	}, [allMembers, allAssociations, searchTerm, selectedDepartment]);
+
 	const filteredStructure = useMemo(() => {
-		return organizationData
-			.map((dept) => ({
-				...dept,
-				members: dept.members.filter((member) => {
-					if (selectedDepartment !== "all" && dept.id !== selectedDepartment) {
-						return false;
-					}
-
-					if (searchTerm) {
-						const search = searchTerm.toLowerCase();
-						return (
-							member.name_en.toLowerCase().includes(search) ||
-							member.position_en.toLowerCase().includes(search) ||
-							member.skills.some((skill) =>
-								skill.toLowerCase().includes(search)
-							) ||
-							member.bio.toLowerCase().includes(search)
-						);
-					}
-
-					return true;
-				}),
-			}))
-			.filter((dept) => dept.members.length > 0);
+		return organizationData.filter((dept) => dept?.members?.length > 0);
 	}, [organizationData, searchTerm, selectedDepartment]);
 
-	const totalMembers = useMemo(() => members.length, [members]);
+	const totalMembers = useMemo(() => allMembers.length, [allMembers]);
 
 	const toggleSection = (sectionId: string) => {
-		setExpandedSections((prev) =>
+		setExpandedSections((prev: any) =>
 			prev.includes(sectionId)
-				? prev.filter((id) => id !== sectionId)
+				? prev.filter((id: any) => id !== sectionId)
 				: [...prev, sectionId]
 		);
 	};
@@ -173,7 +191,6 @@ export default function StructurePage() {
 				departmentCount={organizationData.length}
 				totalMembers={totalMembers}
 			/>
-
 			<StructureFilterBar
 				searchTerm={searchTerm}
 				onSearchChange={setSearchTerm}
@@ -183,7 +200,6 @@ export default function StructurePage() {
 				viewMode={viewMode}
 				onViewModeChange={setViewMode}
 			/>
-
 			<section className="py-16 md:py-24">
 				<div className="container">
 					<AnimatedSection className="text-center mb-16">
@@ -204,7 +220,7 @@ export default function StructurePage() {
 								>
 									<DepartmentCard
 										department={section}
-										isExpanded={expandedSections.includes(section.id)}
+										isExpanded={expandedSections?.includes(section.id)}
 										onToggle={() => toggleSection(section.id)}
 										viewMode={viewMode}
 									/>

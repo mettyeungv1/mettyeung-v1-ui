@@ -56,13 +56,9 @@ function normalizeMemberData(member: any): Member {
 	};
 }
 
-/**
- * Fetches a paginated list of members from the API.
- */
 export const listMembersService = async (
 	params: { [key: string]: any } = {}
 ): Promise<{ data: Member[]; meta_data: any }> => {
-	// Clean up params to remove null/undefined/empty values and the "all" category
 	const cleanParams: Record<string, string> = {};
 	for (const key in params) {
 		if (params[key] != null && params[key] !== "" && params[key] !== "all") {
@@ -90,9 +86,6 @@ export const listMembersService = async (
 	};
 };
 
-/**
- * Fetches a single member by ID.
- */
 export const getMemberByIdService = async (id: string): Promise<Member> => {
 	const response = await fetchAPI<APIMemberResponse>(
 		`${STRUCTURE_ENDPOINT}/${id}`
@@ -100,9 +93,6 @@ export const getMemberByIdService = async (id: string): Promise<Member> => {
 	return normalizeMemberData(response);
 };
 
-/**
- * Creates a new member (admin only).
- */
 export const createMemberService = async (
 	memberData: Partial<APIMemberResponse>
 ): Promise<Member> => {
@@ -113,9 +103,6 @@ export const createMemberService = async (
 	return normalizeMemberData(response);
 };
 
-/**
- * Updates an existing member (admin only).
- */
 export const updateMemberService = async (
 	id: string,
 	memberData: Partial<APIMemberResponse>
@@ -130,11 +117,13 @@ export const updateMemberService = async (
 	return normalizeMemberData(response);
 };
 
-/**
- * Deletes a member (admin only).
- */
 export const deleteMemberService = async (id: string): Promise<void> => {
 	await fetchAPI(`${STRUCTURE_ENDPOINT}/${id}`, {
 		method: "DELETE",
 	});
+};
+
+export const getAssociationService = async (): Promise<any> => {
+	const response = await fetchAPI(`${STRUCTURE_ENDPOINT}/associations`);
+	return response;
 };

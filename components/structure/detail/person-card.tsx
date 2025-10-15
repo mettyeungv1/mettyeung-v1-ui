@@ -17,6 +17,22 @@ interface PersonCardProps {
 	index: number;
 }
 
+function transformPersonData(rawPerson: any): any {
+	if (!rawPerson) return {} as Person;
+
+	return {
+		id: rawPerson.id,
+		name_en: rawPerson.name || "Unknown",
+		image: rawPerson.avatar_url || undefined,
+		position_en: rawPerson.title || rawPerson.department || "Member",
+		bio:
+			rawPerson.bio ||
+			`A valued member of the ${rawPerson.department || "organization"}.`,
+		skills: rawPerson.skills || [],
+		department: rawPerson.department || "General",
+	};
+}
+
 export function PersonCard({
 	person,
 	variant = "compact",
@@ -24,6 +40,7 @@ export function PersonCard({
 }: PersonCardProps) {
 	const [showModal, setShowModal] = useState(false);
 
+	person = transformPersonData(person);
 	// --- COMPACT VARIANT ---
 	// A smaller card, often used in a grid view.
 	if (variant === "compact") {
@@ -39,10 +56,12 @@ export function PersonCard({
 							<Avatar className="w-20 h-20 mx-auto mb-4 ring-2 ring-gray-100 group-hover:ring-khmer-gold transition-all duration-300">
 								<AvatarImage src={person.image} alt={person.name_en} />
 								<AvatarFallback className="bg-gradient-to-br from-khmer-gold to-khmer-red text-white font-bold">
-									{person.name_en
-										.split(" ")
-										.map((n) => n[0])
-										.join("")}
+									{person?.name_en
+										? person.name_en
+												.split(" ")
+												.map((n) => n[0])
+												.join("")
+										: "?"}
 								</AvatarFallback>
 							</Avatar>
 
@@ -78,8 +97,6 @@ export function PersonCard({
 		);
 	}
 
-	// --- DETAILED VARIANT ---
-	// A larger, list-style card with more information.
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
@@ -93,10 +110,12 @@ export function PersonCard({
 						<Avatar className="w-24 h-24 sm:w-20 sm:h-20 flex-shrink-0 ring-2 ring-gray-100 group-hover:ring-khmer-gold transition-all duration-300">
 							<AvatarImage src={person.image} alt={person.name_en} />
 							<AvatarFallback className="bg-gradient-to-br from-khmer-gold to-khmer-red text-white font-bold text-2xl">
-								{person.name_en
-									.split(" ")
-									.map((n) => n[0])
-									.join("")}
+								{person?.name_en
+									? person.name_en
+											.split(" ")
+											.map((n) => n[0])
+											.join("")
+									: "?"}
 							</AvatarFallback>
 						</Avatar>
 
@@ -112,12 +131,12 @@ export function PersonCard({
 
 							{/* Skills */}
 							<div className="flex flex-wrap gap-1.5 justify-center sm:justify-start mb-4">
-								{person.skills.slice(0, 3).map((skill, idx) => (
+								{person?.skills?.slice(0, 3).map((skill, idx) => (
 									<Badge key={idx} variant="secondary" className="text-xs">
 										{skill}
 									</Badge>
 								))}
-								{person.skills.length > 3 && (
+								{person?.skills?.length > 3 && (
 									<Badge variant="secondary" className="text-xs">
 										+{person.skills.length - 3} more
 									</Badge>
