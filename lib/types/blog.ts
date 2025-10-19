@@ -15,6 +15,7 @@ export interface BlogPost {
 	id: string;
 	title: string | { [lang: string]: string };
 	content: string | { [lang: string]: string };
+	excerpt: string | { [lang: string]: string };
 	publishedAt?: string | Date | null;
 	coverImageUrl?: string | null;
 	readCounts?: number;

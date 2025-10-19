@@ -13,6 +13,7 @@ import { API_BASE_URL } from "@/lib/static";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
+import { SpinnerEmpty } from "./common/spinner";
 
 const MotionImage = motion(Image);
 
@@ -52,7 +53,7 @@ export function HeroCarousel() {
 	if (loading) {
 		return (
 			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
-				<div className="text-lg text-gray-600">Loading banners...</div>
+				<SpinnerEmpty />
 			</div>
 		);
 	}
@@ -69,7 +70,7 @@ export function HeroCarousel() {
 	}
 
 	return (
-		<div className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden bg-muted">
+		<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100">
 			<Swiper
 				modules={[Navigation, Autoplay, EffectFade]}
 				effect="fade"
@@ -94,11 +95,9 @@ export function HeroCarousel() {
 								alt={banner.media.altText || `Banner ${banner.order}`}
 								fill
 								priority={index === 0}
-								className="object-cover"
+								className="object-cover sm:object-contain"
 								sizes="100vw"
-								initial={{ scale: 1 }}
-								whileInView={{ scale: 1.05 }}
-								transition={{ duration: 8, ease: "linear" }}
+								variants={kenBurnsVariants}
 							/>
 						)}
 					</SwiperSlide>
