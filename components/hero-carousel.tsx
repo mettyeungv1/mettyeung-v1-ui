@@ -69,7 +69,7 @@ export function HeroCarousel() {
 	}
 
 	return (
-		<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100">
+		<div className="relative w-full h-[60vh] md:h-[70vh] lg:h-[80vh] overflow-hidden bg-muted">
 			<Swiper
 				modules={[Navigation, Autoplay, EffectFade]}
 				effect="fade"
@@ -94,9 +94,11 @@ export function HeroCarousel() {
 								alt={banner.media.altText || `Banner ${banner.order}`}
 								fill
 								priority={index === 0}
-								className="object-cover sm:object-contain"
+								className="object-cover"
 								sizes="100vw"
-								variants={kenBurnsVariants}
+								initial={{ scale: 1 }}
+								whileInView={{ scale: 1.05 }}
+								transition={{ duration: 8, ease: "linear" }}
 							/>
 						)}
 					</SwiperSlide>
