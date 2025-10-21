@@ -20,6 +20,7 @@ function normalizeVideoData(video: APIVideoPost): Video {
 	return {
 		...video,
 		title_en,
+		title: video.title,
 		description,
 		thumbnail: `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`,
 		date: video.publishedAt || video.createdAt,

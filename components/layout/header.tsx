@@ -188,7 +188,6 @@ export function Header() {
 
 					<div className="hidden lg:flex items-center space-x-4">
 						<LanguageSwitcher />
-
 						{session && userProfile ? (
 							<>
 								<span className="font-medium text-neutral-800">

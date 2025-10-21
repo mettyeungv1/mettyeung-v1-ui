@@ -19,6 +19,8 @@ import {
 	getBlogRelatedPostService,
 } from "@/service/blog/blog-service";
 import type { BlogPost } from "@/lib/types/blog";
+import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
+import { SpinnerEmpty } from "@/components/common/spinner";
 
 export default function NewsDetailPage() {
 	const [post, setPost] = useState<BlogPost | null>(null);
@@ -43,11 +45,14 @@ export default function NewsDetailPage() {
 		if (!post) return null;
 		return {
 			id: post.id as unknown as number,
+			title: post.title,
 			title_en:
 				typeof post.title === "string"
 					? post.title
 					: (post.title as any)?.en || "",
-			excerpt: "",
+			excerpt: post.excerpt as {
+				[lang: string]: string;
+			},
 			date: (post.publishedAt || post.createdAt) as any,
 			image: post.coverImageUrl || post.media[0]?.url || "/placeholder.jpg",
 			views: post.readCounts || 0,
@@ -56,10 +61,7 @@ export default function NewsDetailPage() {
 				avatar: post.author?.avatarUrl || "",
 				bio_en: "",
 			},
-			content:
-				typeof post.content === "string"
-					? post.content
-					: (post.content as any)?.en || "",
+			content: post.content,
 			tags: [] as string[],
 			gallery: (post.media || []).map((m) => ({
 				url: m.url,
@@ -71,9 +73,12 @@ export default function NewsDetailPage() {
 		};
 	}, [post]);
 
-	const handleShare = async (_platform: string) => {};
-
-	if (!article) return <div>Loading article...</div>;
+	if (!article)
+		return (
+			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
+				<SpinnerEmpty />
+			</div>
+		);
 
 	const breadcrumbItems = [
 		{ href: "/", label: "Home" },
@@ -83,26 +88,33 @@ export default function NewsDetailPage() {
 	return (
 		<div className="min-h-screen bg-white">
 			<Breadcrumbs items={breadcrumbItems} currentPage={article.title_en} />
-
 			<div className="container py-12">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 					<main className="lg:col-span-8">
-						<AnimatedSection>
-							<article>
-								<ArticleHeader
-									article={article as any}
-									onShareClick={() => setShowShareDialog(true)}
-								/>
-								<ImageGallery images={article.gallery} />
-								<ArticleAuthor author={article.author as any} />
-								<ArticleContent content={article.content} tags={article.tags} />
-							</article>
-						</AnimatedSection>
-						<div className="mt-16">
-							<CommentSection articleId={article.id} />
-						</div>
+						{!article ? (
+							<SpinnerEmpty />
+						) : (
+							<>
+								<AnimatedSection>
+									<article>
+										<ArticleHeader
+											article={article as any}
+											onShareClick={() => setShowShareDialog(true)}
+										/>
+										<ImageGallery images={article.gallery} />
+										<ArticleAuthor author={article.author as any} />
+										<ArticleContent
+											content={article.content as { [lang: string]: string }}
+											tags={article.tags}
+										/>
+									</article>
+								</AnimatedSection>
+								<div className="mt-16">
+									<CommentSection articleId={article.id} />
+								</div>
+							</>
+						)}
 					</main>
-
 					<aside className="lg:col-span-4">
 						<div className="sticky top-24">
 							<ArticleSidebar article={article as any} />
@@ -110,17 +122,16 @@ export default function NewsDetailPage() {
 					</aside>
 				</div>
 			</div>
-
-			<ShareDialog
+			{/* <ShareDialog
 				isOpen={showShareDialog}
 				onClose={() => setShowShareDialog(false)}
 				onShare={handleShare}
 				article={{
 					title_en: article.title_en,
-					excerpt: article.excerpt,
+					excerpt: article.excerpt[DEFAULT_LANGUAGE_CODE] as string,
 					image: article.image,
 				}}
-			/>
+			/> */}
 		</div>
 	);
 }

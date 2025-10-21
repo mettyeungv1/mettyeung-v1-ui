@@ -2,6 +2,7 @@ import { NewsArticle } from "@/lib/types/news";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Eye, MessageCircle, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/lib/i18n";
 
 interface ArticleHeaderProps {
 	article: NewsArticle;
@@ -9,6 +10,7 @@ interface ArticleHeaderProps {
 }
 
 export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
+	const { t } = useTranslation();
 	return (
 		<header className="mb-8">
 			<div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
@@ -30,9 +32,11 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 				</div>
 			</div>
 			<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-				{article.title_en}
+				{t(article.title)}
 			</h1>
-			<p className="text-xl text-gray-600 leading-relaxed">{article.excerpt}</p>
+			<p className="text-xl text-gray-600 leading-relaxed">
+				{t(article.excerpt)}
+			</p>
 			<div className="flex items-center justify-between py-4 border-t border-b mt-8">
 				<div className="flex items-center text-sm text-gray-500">
 					<MessageCircle className="w-4 h-4 mr-2" />

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { ItemCard, GalleryItem } from "./item-card";
+import { useTranslation } from "@/lib/i18n";
 
 interface Category {
 	id: string;
@@ -26,7 +27,7 @@ export function ItemGallery<T extends GalleryItem>({
 	onItemClick,
 }: ItemGalleryProps<T>) {
 	const [selectedCategory, setSelectedCategory] = useState("all");
-
+	const { t } = useTranslation();
 	// Suggestion 2: Create a memoized lookup map for categories for O(1) access.
 	const categoryMap = useMemo(() => {
 		const map = new Map<string, string>();
@@ -46,9 +47,9 @@ export function ItemGallery<T extends GalleryItem>({
 			<div className="container">
 				<AnimatedSection className="mb-12">
 					<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-						{title}
+						{t(title)}
 						<span className="block text-xl md:text-2xl gradient-text mt-2">
-							{subtitle}
+							{t(subtitle)}
 						</span>
 					</h2>
 				</AnimatedSection>

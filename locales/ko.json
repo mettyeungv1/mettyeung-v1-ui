@@ -1,0 +1,358 @@
+{
+	"about": {
+		"title": "Mettyerng 소개",
+		"subtitle": "자영업자, 비공식 경제 근로자, 기술 전문가, 서비스 종사자 및 기타 국내외 비즈니스 종사자들의 생활 수준, 고용, 사업 기회를 보호하고 개선하는 것의 중요성을 인식하여, '우리 친구 협회'는 <<우정, 연대, 충성>>이라는 모토 아래 젊은이들에 의해 2022년 12월 27일에 설립되었으며, 다음과 같은 목표를 가지고 있습니다.",
+		"badge1": "2020년 설립",
+		"badge2": "27명 회원",
+		"badge3": "10개 이상 프로젝트",
+		"mission": {
+			"title": "임무",
+			"title_en": "우리의 임무",
+			"desc1": "양질의 교육, 전통 문화 보존, 사랑의 정신을 담은 상호 지원을 통해 강하고 번영하는 크메르 공동체를 건설합니다.",
+			"desc2": "우리는 캄보디아인의 삶을 개선하고 젊은이들이 교육을 추구하며 훌륭한 가치를 지키도록 장려하기 위해 노력합니다."
+		},
+		"vision": {
+			"title": "비전",
+			"title_en": "우리의 비전",
+			"desc1": "교육에 접근 가능하고, 문화가 보존되며, 사회가 지원적인 강한 크메르 공동체를 건설하는 선도적인 조직이 되는 것입니다.",
+			"desc2": "우리는 모든 어린이가 교육을 받을 기회를 갖고 젊은이들이 국가 문화를 보존하도록 장려되는 공동체를 구상합니다."
+		},
+		"values": {
+			"title": "가치",
+			"title_en": "우리의 가치",
+			"description": "이 핵심 가치들은 공동체를 건설하는 우리의 작업을 안내합니다.",
+			"love": {
+				"title": "사랑",
+				"title_en": "사랑과 연민",
+				"description": "우리는 서로에 대한 사랑과 보살핌이 강한 공동체를 건설하는 필수적인 기반이라고 믿습니다."
+			},
+			"education": {
+				"title": "교육",
+				"title_en": "교육",
+				"description": "교육은 발전과 밝은 미래를 건설하기 위한 가장 중요한 기반입니다."
+			},
+			"culture": {
+				"title": "문화",
+				"title_en": "문화",
+				"description": "미래 세대를 위해 영광스러운 크메르 전통 문화를 보존하고 증진합니다."
+			},
+			"unity": {
+				"title": "단결",
+				"title_en": "단결",
+				"description": "공동체 건설과 서로 돕는 단결."
+			},
+			"innovation": {
+				"title": "혁신",
+				"title_en": "혁신",
+				"description": "사회 문제를 해결하기 위한 새로운 아이디어와 창의적 사고를 시작합니다."
+			},
+			"responsibility": {
+				"title": "책임",
+				"title_en": "책임",
+				"description": "공동체에 대한 책임과 성실하게 일하는 것."
+			}
+		},
+		"timeline": {
+			"title": "여정",
+			"title_en": "우리의 여정",
+			"description": "2018년 이후 우리의 성장과 성과를 추적합니다.",
+			"founded": {
+				"title": "조직 설립",
+				"title_en": "조직 설립",
+				"description": "Mettyerng은 10명의 헌신적인 초기 자원봉사자 그룹에 의해 결성되었습니다.",
+				"achievements": {
+					"members": "10명의 창립 회원",
+					"firstProject": "첫 번째 프로젝트 시작"
+				}
+			},
+			"education": {
+				"title": "교육 이니셔티브",
+				"title_en": "교육 이니셔티브",
+				"description": "농촌 지역 어린이들에게 교육을 제공하기 위한 프로젝트를 시작했습니다.",
+				"achievements": {
+					"children": "50명의 어린이 교육",
+					"classrooms": "5개의 첫 번째 교실"
+				}
+			},
+			"covid": {
+				"title": "코로나19 구호",
+				"title_en": "코로나19 구호",
+				"description": "코로나19 팬데믹 기간 동안 식량 및 의료 지원을 제공했습니다.",
+				"achievements": {
+					"families": "500가구 지원",
+					"medicalKits": "의료 키트 배포"
+				}
+			},
+			"haircut": {
+				"title": "무료 이발 프로젝트",
+				"title_en": "무료 이발 프로젝트",
+				"description": "공동체에 무료 이발을 제공하기 위한 프로젝트를 시작했습니다.",
+				"achievements": {
+					"people": "200명에게 서비스 제공",
+					"monthlyService": "월별 서비스"
+				}
+			},
+			"expansion": {
+				"title": "확장",
+				"title_en": "확장",
+				"description": "다른 지방으로 활동을 확장하고 회원 수를 늘렸습니다.",
+				"achievements": {
+					"activeMembers": "100명 이상의 활동 회원",
+					"provinces": "3개 지방에서 활동"
+				}
+			},
+			"recognition": {
+				"title": "인정",
+				"title_en": "인정",
+				"description": "우리 포럼에 대해 정부와 시민 사회로부터 인정을 받았습니다.",
+				"achievements": {
+					"nationalAward": "국가상 수상",
+					"acknowledgement": "공식 인정"
+				}
+			},
+			"newFuture": {
+				"title": "새로운 미래",
+				"title_en": "새로운 미래",
+				"description": "새로운 웹사이트를 출시하고 디지털 기술 분야로 활동을 확장했습니다.",
+				"achievements": {
+					"newWebsite": "새 웹사이트 출시",
+					"digitalSystem": "디지털 관리 시스템"
+				}
+			}
+		},
+		"team": {
+			"title": "우리 팀",
+			"title_en": "우리의 핵심 팀",
+			"description": "우리 공동체를 건설하는 데 헌신한 핵심 구성원들입니다.",
+			"member1": { "name": "Mettyerng 씨", "role": "회장" },
+			"member2": { "name": "Sokha 씨", "role": "부회장" },
+			"member3": { "name": "Dara 씨", "role": "비서" },
+			"member4": { "name": "Chanda 씨", "role": "회계" }
+		},
+		"partner": {
+			"title": "파트너",
+			"title_en": "우리의 파트너",
+			"description": "우리 공동체의 파트너",
+			"partner1": { "name": "윙 (Wing)", "image": "/wing.png" },
+			"partner2": { "name": "마이 컷 (My Cut)", "image": "/my-cut.png" }
+		}
+	},
+	"nav": {
+		"home": "홈",
+		"about": "소개",
+		"subMenuAbout": "협회 소개",
+		"network": "우리 네트워크",
+		"structure": "조직 구조",
+		"news": "이벤트",
+		"latestNews": "최신 소식",
+		"events": "이벤트",
+		"videos": "비디오",
+		"projects": "프로젝트",
+		"allProjects": "모든 프로젝트",
+		"community": "공동체",
+		"education": "교육",
+		"culture": "문화",
+		"sports": "스포츠",
+		"gallery": "갤러리",
+		"contact": "연락처",
+		"joinUs": "참여하기"
+	},
+	"hero": {
+		"title": "공동체 건설자",
+		"subtitle": "함께 더 강한 공동체를 건설합니다",
+		"description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹입니다.",
+		"learnMore": "더 알아보기",
+		"watchVideo": "비디오 보기",
+		"projectTitle": "무료 이발 프로젝트",
+		"projectSubtitle": "공동체 봉사 이니셔티브",
+		"projectDescription": "어려운 공동체 구성원을 위한 무료 이발",
+		"viewProjects": "프로젝트 보기",
+		"educationTitle": "교육 및 문화",
+		"educationSubtitle": "학습 및 유산",
+		"educationDescription": "교육을 증진하고 크메르 문화를 보존합니다.",
+		"joinUs": "참여하기"
+	},
+	"home": {
+		"achievements": "우리의 성과",
+		"achievementsDesc": "우리 자원봉사자들의 헌신을 통해 우리는 다양한 분야에서 성공을 거두었습니다.",
+		"missionTitle": "우리의 임무",
+		"missionDesc": "우리는 교육, 문화 및 사회 개발을 통해 공동체를 돕기 위해 만들어진 사회 활동가 그룹입니다.",
+		"missionText": "우리는 교육이 캄보디아 어린이와 청소년의 발전과 밝은 미래를 건설하기 위한 가장 중요한 기반이라고 믿습니다.",
+		"focusAreas": "우리의 중점 분야",
+		"focusAreasDesc": "우리는 이러한 핵심 분야를 통해 공동체 건설에 중점을 둡니다.",
+		"joinCommunity": "우리 공동체에 참여하세요",
+		"joinDesc": "긍정적인 변화의 일부가 되고, 강한 공동체 건설에 참여하십시오.",
+		"becomeVolunteer": "자원봉사자 되기",
+		"viewProjects": "우리 프로젝트 보기",
+		"education": "교육",
+		"educationDesc": "공동체의 어린이와 청소년에게 양질의 교육 제공",
+		"culture": "문화",
+		"cultureDesc": "전통 크메르 문화 보존 및 증진",
+		"social": "사회",
+		"socialDesc": "어려운 상황에 처한 사람들을 돕기",
+		"activeMembers": "그룹 내 활동 회원 수",
+		"successfulProjects": "성공적으로 실행된 프로젝트",
+		"educatedChildren": "교육을 받은 어린이와 청소년 수",
+		"helpedFamilies": "도움을 받은 가족 수"
+	},
+	"projects": {
+		"title": "우리 프로젝트",
+		"subtitle": "우리의 영향력 있는 프로젝트와 공동체 이니셔티브를 발견하십시오.",
+		"impact": "우리의 영향력",
+		"impactDesc": "우리의 성과",
+		"allProjects": "모든 프로젝트",
+		"showing": "표시 중",
+		"of": "중",
+		"projects": "프로젝트",
+		"noResults": "프로젝트를 찾을 수 없습니다.",
+		"clearFilters": "모든 필터 지우기",
+		"categories": {
+			"all": "모든 프로젝트",
+			"community": "공동체",
+			"education": "교육",
+			"culture": "문화",
+			"sports": "스포츠"
+		}
+	},
+	"contact": {
+		"title": "문의하기",
+		"subtitle": "협력, 참여 또는 질문을 위해 연락하십시오.",
+		"info": "연락처 정보",
+		"sendMessage": "메시지 보내기",
+		"name": "이름",
+		"email": "이메일",
+		"phone": "전화",
+		"department": "부서",
+		"subject": "제목",
+		"message": "메시지",
+		"send": "메시지 보내기",
+		"sending": "전송 중...",
+		"workingHours": "업무 시간",
+		"followUs": "소셜 미디어에서 팔로우",
+		"quickActions": "빠른 행동",
+		"volunteer": "자원봉사자 되기",
+		"donate": "기부",
+		"location": "우리 위치"
+	},
+	"common": {
+		"readMore": "더 읽기",
+		"viewMore": "더 보기",
+		"learnMore": "더 알아보기",
+		"viewDetails": "세부 정보 보기",
+		"back": "뒤로",
+		"next": "다음",
+		"previous": "이전",
+		"close": "닫기",
+		"search": "검색",
+		"filter": "필터",
+		"all": "전체",
+		"loading": "로딩 중...",
+		"error": "오류",
+		"success": "성공"
+	},
+	"footer": {
+		"description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹이며, 함께 더 강한 공동체를 건설하기 위해 헌신합니다.",
+		"quickLinks": "바로가기",
+		"contactInfo": {
+			"title": "연락처 정보",
+			"phone": "+855 12 345 678",
+			"email": "info@mettyerng.org",
+			"address": "프놈펜, 캄보디아"
+		},
+		"newsletter": {
+			"title": "뉴스레터",
+			"description": "최신 소식 및 활동을 받으려면 구독하십시오."
+		},
+		"followUs": "팔로우하세요",
+		"copyright": "모든 권리 보유.",
+		"aboutUs": "회사 소개",
+		"history": "연혁",
+		"mission": "임무",
+		"vision": "비전",
+		"values": "가치",
+		"activities": "활동",
+		"news": "뉴스",
+		"projects": "프로젝트",
+		"videos": "비디오",
+		"gallery": "갤러리",
+		"contact": "연락처",
+		"contactUs": "문의하기",
+		"joinUs": "참여하기",
+		"volunteer": "자원봉사",
+		"support": "지원",
+		"newsletterDesc": "최신 소식 및 활동을 받으려면 구독하십시오",
+		"emailPlaceholder": "이메일 입력",
+		"subscribe": "구독",
+		"privacy": "개인 정보 보호 정책",
+		"terms": "서비스 약관"
+	},
+	"stats": {
+		"members": "회원 수",
+		"projects": "프로젝트",
+		"beneficiaries": "수혜자",
+		"volunteers": "자원봉사자",
+		"years": "년",
+		"communities": "공동체"
+	},
+	"auth": {
+		"login": "로그인",
+		"register": "회원가입",
+		"logout": "로그아웃",
+		"loginSubtitle": "다시 오신 것을 환영합니다! 계정에 로그인하십시오.",
+		"registerSubtitle": "시작하려면 계정을 만드십시오.",
+		"email": "이메일",
+		"password": "비밀번호",
+		"fullName": "성명",
+		"confirmPassword": "비밀번호 확인",
+		"newPassword": "새 비밀번호",
+		"confirmNewPassword": "새 비밀번호 확인",
+		"emailPlaceholder": "이메일 주소 입력",
+		"passwordPlaceholder": "비밀번호 입력",
+		"fullNamePlaceholder": "성명 입력",
+		"confirmPasswordPlaceholder": "비밀번호 확인",
+		"newPasswordPlaceholder": "새 비밀번호 입력",
+		"confirmNewPasswordPlaceholder": "새 비밀번호 확인",
+		"rememberMe": "로그인 유지",
+		"forgotPassword": "비밀번호를 잊으셨습니까?",
+		"noAccount": "계정이 없으십니까?",
+		"haveAccount": "이미 계정이 있으십니까?",
+		"loggingIn": "로그인 중...",
+		"registering": "계정 생성 중...",
+		"continueWithGoogle": "Google로 계속하기",
+		"continueWithTelegram": "Telegram으로 계속하기",
+		"orContinueWith": "또는 이메일로 계속하기",
+		"orRegisterWith": "또는 이메일로 등록하기",
+		"agreeToTerms": "다음에 동의합니다",
+		"termsOfService": "서비스 약관",
+		"privacyPolicy": "개인 정보 보호 정책",
+		"and": "및",
+		"passwordRequirements": "비밀번호 요구 사항",
+		"verifyOtp": "계정 인증",
+		"otpSubtitle": "이메일로 전송된 6자리 코드 입력",
+		"sentTo": "전송됨",
+		"resendIn": "코드 재전송까지 남은 시간",
+		"resendOtp": "코드 재전송",
+		"resending": "재전송 중...",
+		"verify": "계정 인증",
+		"verifying": "인증 중...",
+		"wrongEmail": "잘못된 이메일입니까?",
+		"changeEmail": "이메일 변경",
+		"forgotPasswordSubtitle": "비밀번호 재설정 링크를 받으려면 이메일을 입력하십시오.",
+		"sendResetLink": "재설정 링크 보내기",
+		"sending": "전송 중...",
+		"emailSent": "이메일 전송 완료!",
+		"emailSentDescription": "다음 주소로 비밀번호 재설정 링크를 보냈습니다:",
+		"resendEmail": "이메일 재전송",
+		"backToLogin": "로그인으로 돌아가기",
+		"rememberPassword": "비밀번호를 기억하십니까?",
+		"resetPassword": "비밀번호 재설정",
+		"resetPasswordSubtitle": "아래에 새 비밀번호를 입력하십시오.",
+		"resetting": "재설정 중...",
+		"passwordResetSuccess": "비밀번호 재설정 성공!",
+		"passwordResetSuccessDescription": "비밀번호가 성공적으로 재설정되었습니다. 이제 새 비밀번호로 로그인할 수 있습니다.",
+		"loginWithNewPassword": "새 비밀번호로 로그인",
+		"invalidResetLink": "유효하지 않은 재설정 링크",
+		"invalidResetLinkDescription": "이 비밀번호 재설정 링크는 유효하지 않거나 만료되었습니다. 새 링크를 요청하십시오.",
+		"requestNewLink": "새 링크 요청"
+	}
+}

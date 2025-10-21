@@ -1,0 +1,358 @@
+{
+	"about": {
+		"title": "Mettyerngについて",
+		"subtitle": "自営業者、非公式経済の労働者、技術専門家、サービス業従事者、その他の国内外の事業者たちの生活水準、雇用、ビジネス機会を保護し改善することの重要性を認識し、「私たちの友人協会」は、<<友情、連帯、忠誠>>をモットーに、若者のグループによって2022年12月27日に設立されました。目的は以下の通りです。",
+		"badge1": "2020年設立",
+		"badge2": "メンバー27名",
+		"badge3": "10以上のプロジェクト",
+		"mission": {
+			"title": "使命",
+			"title_en": "私たちの使命",
+			"desc1": "質の高い教育、伝統文化の保存、そして愛の精神による相互支援を通じて、強く繁栄したクメールコミュニティを築くこと。",
+			"desc2": "私たちはカンボジアの人々の生活を改善し、若者が教育を追求し、優れた価値観を守るよう奨励するために活動しています。"
+		},
+		"vision": {
+			"title": "ビジョン",
+			"title_en": "私たちのビジョン",
+			"desc1": "教育が利用可能であり、文化が保存され、社会が支援的である、強力なクメールコミュニティを築く主要な組織となること。",
+			"desc2": "私たちは、すべての子どもたちが教育を受ける機会を持ち、若者が国家文化を保存するよう奨励されるコミュニティを構想しています。"
+		},
+		"values": {
+			"title": "価値観",
+			"title_en": "私たちの価値観",
+			"description": "これらの核となる価値観は、コミュニティを築く私たちの活動を導きます。",
+			"love": {
+				"title": "愛",
+				"title_en": "愛と思いやり",
+				"description": "私たちは、お互いへの愛と思いやりが、強力なコミュニティを築くための不可欠な基盤であると信じています。"
+			},
+			"education": {
+				"title": "教育",
+				"title_en": "教育",
+				"description": "教育は、発展と明るい未来を築くための最も重要な基盤です。"
+			},
+			"culture": {
+				"title": "文化",
+				"title_en": "文化",
+				"description": "輝かしいクメールの伝統文化を未来の世代のために保存し、促進すること。"
+			},
+			"unity": {
+				"title": "団結",
+				"title_en": "団結",
+				"description": "コミュニティを築き、お互いを助け合う団結。"
+			},
+			"innovation": {
+				"title": "革新",
+				"title_en": "革新",
+				"description": "社会問題を解決するための新しいアイデアと創造的思考の開始。"
+			},
+			"responsibility": {
+				"title": "責任",
+				"title_en": "責任",
+				"description": "コミュニティに対する責任と誠実さをもって働くこと。"
+			}
+		},
+		"timeline": {
+			"title": "歩み",
+			"title_en": "私たちの歩み",
+			"description": "2018年以来の成長と成果を辿ります。",
+			"founded": {
+				"title": "組織設立",
+				"title_en": "組織設立",
+				"description": "Mettyerngは、10名の献身的な初期ボランティアのグループによって結成されました。",
+				"achievements": {
+					"members": "10名の創設メンバー",
+					"firstProject": "最初のプロジェクトを開始"
+				}
+			},
+			"education": {
+				"title": "教育イニシアチブ",
+				"title_en": "教育イニシアチブ",
+				"description": "農村地域の子どもたちに教育を提供するプロジェクトを開始しました。",
+				"achievements": {
+					"children": "50人の子どもたちが教育を受ける",
+					"classrooms": "最初の5つの教室"
+				}
+			},
+			"covid": {
+				"title": "COVID-19救援",
+				"title_en": "COVID-19救援",
+				"description": "COVID-19パンデミック中に食料および医療支援を提供しました。",
+				"achievements": {
+					"families": "500世帯を支援",
+					"medicalKits": "医療キットを配布"
+				}
+			},
+			"haircut": {
+				"title": "無料ヘアカットプロジェクト",
+				"title_en": "無料ヘアカットプロジェクト",
+				"description": "コミュニティに無料ヘアカットを提供するプロジェクトを開始しました。",
+				"achievements": {
+					"people": "200人にサービス提供",
+					"monthlyService": "毎月のサービス"
+				}
+			},
+			"expansion": {
+				"title": "拡大",
+				"title_en": "拡大",
+				"description": "活動を他の州に拡大し、メンバーシップを増やしました。",
+				"achievements": {
+					"activeMembers": "100人以上の活動メンバー",
+					"provinces": "3つの州で活動中"
+				}
+			},
+			"recognition": {
+				"title": "認知",
+				"title_en": "認知",
+				"description": "私たちのフォーラムに対して、政府および市民社会から認知を受けました。",
+				"achievements": {
+					"nationalAward": "国家賞を受賞",
+					"acknowledgement": "公式な承認"
+				}
+			},
+			"newFuture": {
+				"title": "新しい未来",
+				"title_en": "新しい未来",
+				"description": "新しいウェブサイトを立ち上げ、デジタル技術分野への活動を拡大しました。",
+				"achievements": {
+					"newWebsite": "新しいウェブサイトを立ち上げ",
+					"digitalSystem": "デジタル管理システム"
+				}
+			}
+		},
+		"team": {
+			"title": "私たちのチーム",
+			"title_en": "私たちのコアチーム",
+			"description": "コミュニティの構築に専念しているコアメンバーです。",
+			"member1": { "name": "Mettyerng氏", "role": "会長" },
+			"member2": { "name": "Sokha氏", "role": "副会長" },
+			"member3": { "name": "Dara氏", "role": "書記" },
+			"member4": { "name": "Chanda氏", "role": "会計" }
+		},
+		"partner": {
+			"title": "パートナー",
+			"title_en": "私たちのパートナー",
+			"description": "私たちのコミュニティにおけるパートナー",
+			"partner1": { "name": "ウィング（Wing）", "image": "/wing.png" },
+			"partner2": { "name": "マイカット（My Cut）", "image": "/my-cut.png" }
+		}
+	},
+	"nav": {
+		"home": "ホーム",
+		"about": "協会概要",
+		"subMenuAbout": "私たちについて",
+		"network": "私たちのネットワーク",
+		"structure": "組織構造",
+		"news": "イベント",
+		"latestNews": "最新ニュース",
+		"events": "イベント",
+		"videos": "ビデオ",
+		"projects": "プロジェクト",
+		"allProjects": "すべてのプロジェクト",
+		"community": "コミュニティ",
+		"education": "教育",
+		"culture": "文化",
+		"sports": "スポーツ",
+		"gallery": "ギャラリー",
+		"contact": "お問い合わせ",
+		"joinUs": "参加する"
+	},
+	"hero": {
+		"title": "コミュニティビルダー",
+		"subtitle": "共に強力なコミュニティを築く",
+		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループです。",
+		"learnMore": "さらに詳しく",
+		"watchVideo": "ビデオを見る",
+		"projectTitle": "無料ヘアカットプロジェクト",
+		"projectSubtitle": "コミュニティサービスイニシアチブ",
+		"projectDescription": "支援が必要なコミュニティメンバーのための無料ヘアカット",
+		"viewProjects": "プロジェクトを見る",
+		"educationTitle": "教育と文化",
+		"educationSubtitle": "学習と遺産",
+		"educationDescription": "教育を推進し、クメール文化を保存する",
+		"joinUs": "参加する"
+	},
+	"home": {
+		"achievements": "私たちの功績",
+		"achievementsDesc": "ボランティアの献身を通じて、私たちは様々な分野で成功を収めてきました。",
+		"missionTitle": "私たちの使命",
+		"missionDesc": "私たちは、教育、文化、社会開発を通じてコミュニティを支援するために設立された社会活動家グループです。",
+		"missionText": "私たちは、教育がカンボジアの子どもたちと若者にとって、発展と明るい未来を築くための最も重要な基盤であると信じています。",
+		"focusAreas": "私たちの重点分野",
+		"focusAreasDesc": "私たちは、これらの主要分野を通じてコミュニティの構築に焦点を当てています。",
+		"joinCommunity": "私たちのコミュニティに参加する",
+		"joinDesc": "ポジティブな変化の一部となり、強力なコミュニティの構築に参加しましょう。",
+		"becomeVolunteer": "ボランティアになる",
+		"viewProjects": "私たちのプロジェクトを見る",
+		"education": "教育",
+		"educationDesc": "コミュニティの子どもたちと若者に質の高い教育を提供する",
+		"culture": "文化",
+		"cultureDesc": "伝統的なクメール文化の保存と促進",
+		"social": "社会",
+		"socialDesc": "困難な状況にある人々を助ける",
+		"activeMembers": "グループ内の活動メンバー数",
+		"successfulProjects": "成功裏に実施されたプロジェクト数",
+		"educatedChildren": "教育を受けた子どもたちと若者の数",
+		"helpedFamilies": "支援を受けた家族の数"
+	},
+	"projects": {
+		"title": "私たちのプロジェクト",
+		"subtitle": "影響力のある私たちのプロジェクトとコミュニティイニシアチブを発見してください。",
+		"impact": "私たちの影響",
+		"impactDesc": "私たちの功績",
+		"allProjects": "すべてのプロジェクト",
+		"showing": "表示中",
+		"of": "の",
+		"projects": "プロジェクト",
+		"noResults": "プロジェクトは見つかりませんでした",
+		"clearFilters": "すべてのフィルターをクリア",
+		"categories": {
+			"all": "すべてのプロジェクト",
+			"community": "コミュニティ",
+			"education": "教育",
+			"culture": "文化",
+			"sports": "スポーツ"
+		}
+	},
+	"contact": {
+		"title": "お問い合わせ",
+		"subtitle": "コラボレーション、参加、またはご質問については、お気軽にお問い合わせください。",
+		"info": "連絡先情報",
+		"sendMessage": "メッセージを送る",
+		"name": "氏名",
+		"email": "メールアドレス",
+		"phone": "電話番号",
+		"department": "部門",
+		"subject": "件名",
+		"message": "メッセージ",
+		"send": "メッセージを送る",
+		"sending": "送信中...",
+		"workingHours": "営業時間",
+		"followUs": "ソーシャルメディアでフォローする",
+		"quickActions": "クイックアクション",
+		"volunteer": "ボランティアになる",
+		"donate": "寄付",
+		"location": "所在地"
+	},
+	"common": {
+		"readMore": "続きを読む",
+		"viewMore": "もっと見る",
+		"learnMore": "さらに詳しく",
+		"viewDetails": "詳細を見る",
+		"back": "戻る",
+		"next": "次へ",
+		"previous": "前へ",
+		"close": "閉じる",
+		"search": "検索",
+		"filter": "フィルター",
+		"all": "すべて",
+		"loading": "読み込み中...",
+		"error": "エラー",
+		"success": "成功"
+	},
+	"footer": {
+		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループであり、共に強力なコミュニティを築くことに尽力しています。",
+		"quickLinks": "クイックリンク",
+		"contactInfo": {
+			"title": "連絡先情報",
+			"phone": "+855 12 345 678",
+			"email": "info@mettyerng.org",
+			"address": "プノンペン、カンボジア"
+		},
+		"newsletter": {
+			"title": "ニュースレター",
+			"description": "最新のニュースと活動を受け取るために購読してください。"
+		},
+		"followUs": "フォローする",
+		"copyright": "全著作権所有。",
+		"aboutUs": "私たちについて",
+		"history": "沿革",
+		"mission": "使命",
+		"vision": "ビジョン",
+		"values": "価値観",
+		"activities": "活動",
+		"news": "ニュース",
+		"projects": "プロジェクト",
+		"videos": "ビデオ",
+		"gallery": "ギャラリー",
+		"contact": "お問い合わせ",
+		"contactUs": "お問い合わせ",
+		"joinUs": "参加する",
+		"volunteer": "ボランティア",
+		"support": "サポート",
+		"newsletterDesc": "最新のニュースと活動を受け取るために購読してください",
+		"emailPlaceholder": "メールアドレスを入力",
+		"subscribe": "購読する",
+		"privacy": "プライバシーポリシー",
+		"terms": "利用規約"
+	},
+	"stats": {
+		"members": "メンバー数",
+		"projects": "プロジェクト数",
+		"beneficiaries": "受益者数",
+		"volunteers": "ボランティア数",
+		"years": "年数",
+		"communities": "コミュニティ数"
+	},
+	"auth": {
+		"login": "ログイン",
+		"register": "新規登録",
+		"logout": "ログアウト",
+		"loginSubtitle": "おかえりなさい！アカウントにサインインしてください",
+		"registerSubtitle": "始めるためにアカウントを作成してください",
+		"email": "メールアドレス",
+		"password": "パスワード",
+		"fullName": "氏名",
+		"confirmPassword": "パスワードを確認",
+		"newPassword": "新しいパスワード",
+		"confirmNewPassword": "新しいパスワードを確認",
+		"emailPlaceholder": "メールアドレスを入力",
+		"passwordPlaceholder": "パスワードを入力",
+		"fullNamePlaceholder": "氏名を入力",
+		"confirmPasswordPlaceholder": "パスワードを確認",
+		"newPasswordPlaceholder": "新しいパスワードを入力",
+		"confirmNewPasswordPlaceholder": "新しいパスワードを確認",
+		"rememberMe": "ログイン状態を保持",
+		"forgotPassword": "パスワードを忘れましたか？",
+		"noAccount": "アカウントをお持ちではありませんか？",
+		"haveAccount": "すでにアカウントをお持ちですか？",
+		"loggingIn": "サインイン中...",
+		"registering": "アカウント作成中...",
+		"continueWithGoogle": "Googleで続行",
+		"continueWithTelegram": "Telegramで続行",
+		"orContinueWith": "またはメールアドレスで続行",
+		"orRegisterWith": "またはメールアドレスで登録",
+		"agreeToTerms": "以下に同意します",
+		"termsOfService": "利用規約",
+		"privacyPolicy": "プライバシーポリシー",
+		"and": "および",
+		"passwordRequirements": "パスワードの要件",
+		"verifyOtp": "アカウントを確認",
+		"otpSubtitle": "メールアドレスに送信された6桁のコードを入力してください",
+		"sentTo": "送信先",
+		"resendIn": "コード再送まで",
+		"resendOtp": "コードを再送",
+		"resending": "再送中...",
+		"verify": "アカウントを確認",
+		"verifying": "確認中...",
+		"wrongEmail": "メールアドレスが間違っていますか？",
+		"changeEmail": "メールアドレスを変更",
+		"forgotPasswordSubtitle": "パスワードリセットリンクを受け取るためにメールアドレスを入力してください",
+		"sendResetLink": "リセットリンクを送信",
+		"sending": "送信中...",
+		"emailSent": "メールが送信されました！",
+		"emailSentDescription": "パスワードリセットリンクを以下に送信しました:",
+		"resendEmail": "メールを再送",
+		"backToLogin": "ログインに戻る",
+		"rememberPassword": "パスワードを覚えていますか？",
+		"resetPassword": "パスワードをリセット",
+		"resetPasswordSubtitle": "以下に新しいパスワードを入力してください",
+		"resetting": "リセット中...",
+		"passwordResetSuccess": "パスワードリセット成功！",
+		"passwordResetSuccessDescription": "パスワードが正常にリセットされました。新しいパスワードでログインできます。",
+		"loginWithNewPassword": "新しいパスワードでログイン",
+		"invalidResetLink": "無効なリセットリンク",
+		"invalidResetLinkDescription": "このパスワードリセットリンクは無効か期限切れです。新しいリンクをリクエストしてください。",
+		"requestNewLink": "新しいリンクをリクエスト"
+	}
+}

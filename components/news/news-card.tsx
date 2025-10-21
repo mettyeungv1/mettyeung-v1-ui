@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { User, Calendar, Eye } from "lucide-react";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n";
 
 interface NewsCardProps {
 	item: NewsArticle;
@@ -10,6 +11,8 @@ interface NewsCardProps {
 }
 
 export function NewsCard({ item, onClick }: NewsCardProps) {
+	const { t } = useTranslation();
+
 	const categoryName = item.category.name_en;
 	const subCategoryName = item.category.subCategory?.name_en;
 
@@ -48,20 +51,16 @@ export function NewsCard({ item, onClick }: NewsCardProps) {
 					</div>
 				</div>
 				<h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-khmer-gold transition-colors line-clamp-2">
-					{item.title_en}
+					{t(item.title)}
 				</h3>
 				<p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
-					{item.excerpt}
+					{t(item.excerpt)}
 				</p>
 				<div className="flex items-center justify-between text-xs text-gray-500 mt-auto pt-4 border-t">
 					<div className="flex items-center">
 						<User className="w-3 h-3 mr-1.5" />
 						{/* Corrected to use the English author name for consistency */}
-						<span className="truncate">{item.author.name_en}</span>
-					</div>
-					<div className="flex items-center">
-						<Eye className="w-3 h-3 mr-1.5" />
-						{item.views.toLocaleString()}
+						<span className="truncate">Mettyeung27</span>
 					</div>
 				</div>
 			</CardContent>

@@ -7,32 +7,51 @@ import { useState, useEffect } from "react";
 // Import the translation files
 import en from "@/locales/en.json";
 import km from "@/locales/km.json";
+import ja from "@/locales/ja.json";
+import ko from "@/locales/ko.json";
+import th from "@/locales/th.json";
 
-export type Language = "en" | "km";
+export type Language = "en" | "km" | "ko" | "ja" | "th";
 
 // The translations object
-const translations = { en, km };
+const translations = { en, km, ko, ja, th };
 
 // Function to get translation by key
-export const getTranslation = (key: string, language: Language): string => {
-	const keys = key.split(".");
-	let value: any = translations[language];
-
-	for (const k of keys) {
-		if (value && typeof value === "object" && k in value) {
-			value = value[k];
-		} else {
-			return key; // Return the key itself if no translation is found
-		}
+export function getTranslation(
+	keyOrObject: string | Record<string, string> | null | undefined,
+	language: Language,
+	translationsMap: Record<string, any>,
+	fallbackLang: Language = "en"
+): string {
+	// 🟩 CASE 1: Dynamic content from API
+	if (keyOrObject && typeof keyOrObject === "object") {
+		return keyOrObject[language] || keyOrObject[fallbackLang] || "";
 	}
 
-	return typeof value === "string" ? value : key;
-};
+	// 🟩 CASE 2: Static key from JSON files
+	if (typeof keyOrObject === "string") {
+		const keys = keyOrObject.split(".");
+		let value: any = translationsMap[language];
+
+		for (const k of keys) {
+			if (value && typeof value === "object" && k in value) {
+				value = value[k];
+			} else {
+				return keyOrObject; // fallback to key name if missing
+			}
+		}
+
+		return typeof value === "string" ? value : keyOrObject;
+	}
+
+	// Default fallback
+	return "";
+}
 
 interface LanguageStore {
 	language: Language;
 	setLanguage: (language: Language) => void;
-	t: (key: string) => string;
+	t: (key: string | Record<string, string> | null | undefined) => string;
 }
 
 // Create the Zustand store
@@ -41,9 +60,9 @@ export const useLanguageStore = create<LanguageStore>()(
 		(set, get) => ({
 			language: "km",
 			setLanguage: (language) => set({ language }),
-			t: (key: string) => {
+			t: (keyOrObject) => {
 				const { language } = get();
-				return getTranslation(key, language);
+				return getTranslation(keyOrObject, language, translations);
 			},
 		}),
 		{
@@ -58,14 +77,13 @@ export const useTranslation = () => {
 	const [isHydrated, setIsHydrated] = useState(false);
 
 	useEffect(() => {
-		// This effect runs only on the client, after the initial render.
 		setIsHydrated(true);
 	}, []);
 
-	const t = (key: string): string => {
-		// Before hydration, always use the default language ('km') to match the server.
-		// After hydration, use the real 't' function from the store, which might be 'en'.
-		return isHydrated ? store.t(key) : getTranslation(key, "km");
+	const t = (
+		key: string | Record<string, string> | null | undefined
+	): string => {
+		return isHydrated ? store.t(key) : getTranslation(key, "km", translations);
 	};
 
 	return {

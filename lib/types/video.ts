@@ -55,6 +55,7 @@ export interface Video {
 	videoId: string;
 	title_en: string;
 	title_km?: string;
+	title: any;
 	description: string;
 	description_km?: string;
 	thumbnail: string;

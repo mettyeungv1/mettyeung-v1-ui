@@ -92,6 +92,7 @@ export default function VideosPage() {
 		return videos.map((video) => ({
 			id: video.id,
 			title_en: video.title_en,
+			title: video.title,
 			description: video.description,
 			thumbnail: video.thumbnail,
 			date: video.date,
@@ -127,9 +128,7 @@ export default function VideosPage() {
 			</div>
 			<div className="space-y-2">
 				<div className="flex items-center space-x-4">
-					<Badge className="bg-primary text-primary-foreground">
-						{video.categoryName}
-					</Badge>
+					<Badge className="bg-blue-500 text-white">{video.categoryName}</Badge>
 					<div className="flex items-center text-sm text-muted-foreground">
 						<Calendar className="w-4 h-4 mr-1" />
 						{formatDate(video.date)}

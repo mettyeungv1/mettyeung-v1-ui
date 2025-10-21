@@ -38,6 +38,27 @@ const languages: LanguageDefinition[] = [
 		nativeName: "ខ្មែរ",
 		flag: "🇰🇭",
 	},
+	{
+		code: "ko",
+		name: "Korean",
+		shortName: "한국어",
+		nativeName: "한국어",
+		flag: "🇰🇷",
+	},
+	{
+		code: "ja",
+		name: "Japanese",
+		shortName: "日本語",
+		nativeName: "日本語",
+		flag: "🇯🇵",
+	},
+	{
+		code: "th",
+		name: "Thai",
+		shortName: "ไทย",
+		nativeName: "ไทย",
+		flag: "🇹🇭",
+	},
 ];
 
 interface LanguageSwitcherProps {

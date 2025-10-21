@@ -59,12 +59,10 @@ export default function NewsPage() {
 	const normalized = useMemo(() => {
 		const items = posts.map((p) => ({
 			id: p.id as unknown as number,
+			title: p.title,
 			title_en:
 				typeof p.title === "string" ? p.title : (p.title as any)?.en || "",
-			excerpt:
-				typeof p.excerpt === "string"
-					? p.excerpt
-					: (p.excerpt as any)?.en || "",
+			excerpt: p.excerpt,
 			date: (p.publishedAt || p.createdAt) as any,
 			image: p.coverImageUrl || p.media[0]?.url || "/placeholder.jpg",
 			views: p.readCounts || 0,
@@ -110,8 +108,8 @@ export default function NewsPage() {
 			const q = searchTerm.toLowerCase();
 			filtered = filtered.filter(
 				(i) =>
-					i.title_en.toLowerCase().includes(q) ||
-					i.excerpt.toLowerCase().includes(q)
+					t(i.title).toLowerCase().includes(q) ||
+					t(i.excerpt).toLowerCase().includes(q)
 			);
 		}
 
