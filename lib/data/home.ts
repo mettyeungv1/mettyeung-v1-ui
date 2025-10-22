@@ -48,7 +48,7 @@ export const features: FeatureItem[] = [
 	{
 		titleKey: "home.culture",
 		descriptionKey: "home.cultureDesc",
-		image: "/corevalue.jpg",
+		image: "/corevlaue.jpg",
 		link: "/about#culture",
 	},
 ];
