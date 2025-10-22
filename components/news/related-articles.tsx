@@ -112,9 +112,9 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 								/>
 							</div>
 							<div className="flex-1 min-w-0">
-								<Badge variant="secondary" className="text-xs mb-1">
+								{/* <Badge variant="secondary" className="text-xs mb-1">
 									{post.categoryName}
-								</Badge>
+								</Badge> */}
 								<h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1 group-hover:text-primary transition-colors">
 									{post.title[DEFAULT_LANGUAGE_CODE]}{" "}
 									{/* 3. This now works perfectly */}
@@ -122,12 +122,12 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 								<div className="flex items-center text-xs text-gray-500 space-x-3">
 									<div className="flex items-center">
 										<Calendar className="w-3 h-3 mr-1" />
-										{formatDate(post.date)}
+										{formatDate(post.publishedAt)}
 									</div>
-									<div className="flex items-center">
+									{/* <div className="flex items-center">
 										<Eye className="w-3 h-3 mr-1" />
 										{post.readCounts.toLocaleString()}
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</div>
