@@ -18,29 +18,29 @@ export const contactInfo: ContactInfoItem[] = [
 		icon: Phone,
 		title: "ទូរសព្ទ",
 		title_en: "Phone",
-		details: ["+855 12 345 678", "+855 10 987 654"],
+		details: ["015 220 320"],
 		color: "from-green-500 to-emerald-500",
 	},
 	{
 		icon: Mail,
 		title: "អ៊ីមែល",
 		title_en: "Email",
-		details: ["info@mettyerng.org", "contact@mettyerng.org"],
-		color: "from-blue-500 to-indigo-500",
+		details: ["info@mettyerng.org"],
+		color: "from-blue-500 to-blue-500",
 	},
 	{
 		icon: MapPin,
 		title: "អាសយដ្ឋាន",
 		title_en: "Address",
-		details: ["Phnom Penh, Cambodia", "House #123, Street 456"],
-		color: "from-red-500 to-pink-500",
+		details: ["Phnom Penh, Cambodia"],
+		color: "from-red-500 to-red-500",
 	},
 	{
 		icon: Clock,
 		title: "ម៉ោងបើកធ្វើការ",
 		title_en: "Working Hours",
-		details: ["Mon-Fri: 8:00 AM - 5:00 PM", "Saturday: 8:00 AM - 12:00 PM"],
-		color: "from-purple-500 to-violet-500",
+		details: ["Mon-Fri: 8:00 AM - 5:00 PM"],
+		color: "from-purple-500 to-indigo-600",
 	},
 ];
 
@@ -48,7 +48,7 @@ export const socialLinks: SocialLinkItem[] = [
 	{
 		name: "Facebook",
 		icon: Facebook,
-		href: "https://facebook.com",
+		href: "https://web.facebook.com/profile.php?id=100091461679738",
 		color: "hover:text-blue-600",
 	},
 	{
@@ -57,12 +57,12 @@ export const socialLinks: SocialLinkItem[] = [
 		href: "https://youtube.com",
 		color: "hover:text-red-600",
 	},
-	{
-		name: "Instagram",
-		icon: Instagram,
-		href: "https://instagram.com",
-		color: "hover:text-pink-600",
-	},
+	// {
+	// 	name: "Instagram",
+	// 	icon: Instagram,
+	// 	href: "https://instagram.com",
+	// 	color: "hover:text-pink-600",
+	// },
 ];
 
 export const departments: DepartmentOption[] = [

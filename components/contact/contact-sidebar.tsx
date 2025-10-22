@@ -21,14 +21,14 @@ export function ContactSidebar() {
 						<span className="text-gray-600">Monday - Friday</span>
 						<span className="font-medium">8:00 AM - 5:00 PM</span>
 					</div>
-					<Separator />
+					{/* <Separator />
 					<div className="flex justify-between items-center">
 						<span className="text-gray-600">Saturday</span>
 						<span className="font-medium">8:00 AM - 12:00 PM</span>
-					</div>
+					</div> */}
 					<Separator />
 					<div className="flex justify-between items-center">
-						<span className="text-gray-600">Sunday</span>
+						<span className="text-gray-600">Saturday & Sunday</span>
 						<span className="font-medium text-red-500">Closed</span>
 					</div>
 				</div>
@@ -40,13 +40,7 @@ export function ContactSidebar() {
 				</CardHeader>
 				<div className="flex space-x-3">
 					{socialLinks.map((social) => (
-						<Button
-							key={social.name}
-							variant="outline"
-							size="icon"
-							asChild
-							className={`${social.color} hover:border-current`}
-						>
+						<Button key={social.name} variant="outline" size="icon" asChild>
 							<a href={social.href} target="_blank" rel="noopener noreferrer">
 								<social.icon className="w-5 h-5" />
 							</a>
@@ -55,7 +49,7 @@ export function ContactSidebar() {
 				</div>
 			</Card>
 
-			<Card className="p-6">
+			{/* <Card className="p-6">
 				<CardHeader className="p-0 mb-4">
 					<CardTitle className="text-xl font-bold">Our Location</CardTitle>
 				</CardHeader>
@@ -63,7 +57,7 @@ export function ContactSidebar() {
 					<MapPin className="w-8 h-8" />{" "}
 					<span className="ml-2">Map Preview</span>
 				</div>
-			</Card>
+			</Card> */}
 		</div>
 	);
 }

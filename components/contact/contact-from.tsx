@@ -124,7 +124,7 @@ export function ContactForm() {
 						type="submit"
 						size="lg"
 						disabled={isSubmitting}
-						className="w-full bg-gradient-to-r from-khmer-gold to-khmer-red"
+						className="w-full bg-blue-600"
 					>
 						{isSubmitting ? (
 							<motion.div

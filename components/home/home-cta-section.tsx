@@ -23,7 +23,7 @@ export function HomeCTASection() {
 			/>
 			<div className="container relative text-white">
 				<AnimatedSection className="text-center">
-					<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+					<h2 className="text-3xl text-white md:text-4xl lg:text-5xl font-bold mb-6">
 						{t("home.joinCommunity")}
 					</h2>
 					<p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
@@ -39,7 +39,7 @@ export function HomeCTASection() {
 							{t("home.becomeVolunteer")}
 						</CTAButton>
 						<CTAButton
-							href="/projects"
+							href="/s"
 							variant="outline"
 							size="lg"
 							className="border-white text-white hover:bg-white hover:text-primary-900 text-lg px-8 py-4"

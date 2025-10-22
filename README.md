@@ -55,17 +55,20 @@ A modern, responsive website for the Mettyerng Khmer community organization, bui
 ## 🎨 Design System
 
 ### Colors
+
 - **Primary Gold**: `#D4AF37` (Khmer Gold)
 - **Primary Red**: `#C41E3A` (Khmer Red)
 - **Primary Blue**: `#1E40AF` (Khmer Blue)
 - **Neutral Grays**: Various shades for text and backgrounds
 
 ### Typography
+
 - **Font**: Inter (Google Fonts)
 - **Headings**: Bold weights with proper hierarchy
 - **Body**: Regular weight with good line spacing
 
 ### Components
+
 - **Cards**: Consistent shadow and border radius
 - **Buttons**: Gradient backgrounds with hover effects
 - **Forms**: Clean inputs with proper validation
@@ -78,24 +81,27 @@ A modern, responsive website for the Mettyerng Khmer community organization, bui
 3. **Structure** (`/structure`): Organization chart with expandable sections
 4. **News** (`/news`): News articles with filtering and search
 5. **Videos** (`/videos`): Video gallery with modal player
-6. **Projects** (`/projects`): Project showcase with detailed views
+6. **Projects** (`/s`): Project showcase with detailed views
 7. **Gallery** (`/gallery`): Photo gallery with lightbox
 8. **Contact** (`/contact`): Contact form and information
 
 ## 🚀 Getting Started
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/your-username/mettyerng-website.git
    cd mettyerng-website
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Run the development server**
+
    ```bash
    npm run dev
    ```
@@ -106,11 +112,13 @@ A modern, responsive website for the Mettyerng Khmer community organization, bui
 ## 🔧 Development
 
 ### Adding New Components
+
 ```bash
 npx shadcn-ui@latest add [component-name]
 ```
 
 ### Code Style
+
 - Use TypeScript for all components
 - Follow the existing naming conventions
 - Add proper type definitions
@@ -118,6 +126,7 @@ npx shadcn-ui@latest add [component-name]
 - Implement responsive design
 
 ### Performance Optimization
+
 - Use Next.js Image component for images
 - Implement lazy loading for heavy components
 - Optimize bundle size with dynamic imports
@@ -126,16 +135,19 @@ npx shadcn-ui@latest add [component-name]
 ## 📦 Build & Deploy
 
 ### Build for Production
+
 ```bash
 npm run build
 ```
 
 ### Static Export
+
 ```bash
 npm run build && npm run export
 ```
 
 ### Deploy to Netlify
+
 1. Connect your repository to Netlify
 2. Set build command: `npm run build`
 3. Set publish directory: `out`

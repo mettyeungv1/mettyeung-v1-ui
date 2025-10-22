@@ -56,7 +56,7 @@ export function ItemCard<T extends GalleryItem>({
 						}`}
 					>
 						<Play
-							className={`text-khmer-gold ml-1 ${
+							className={`text-blue-600 ml-1 ${
 								isFeatured ? "w-6 h-6" : "w-5 h-5"
 							}`}
 						/>
@@ -70,28 +70,32 @@ export function ItemCard<T extends GalleryItem>({
 				)}
 			</div>
 
-			<CardContent className="p-4">
-				<div className="flex items-center space-x-2 mb-2">
-					{categoryName && (
-						<Badge
-							variant={isFeatured ? "default" : "secondary"}
-							className={isFeatured ? "bg-khmer-gold text-white" : ""}
-						>
-							{categoryName}
-						</Badge>
+			{item.date && categoryName && (
+				<CardContent className="p-4">
+					<div className="flex items-center space-x-2 mb-2">
+						{categoryName && (
+							<Badge
+								variant={isFeatured ? "default" : "secondary"}
+								className={isFeatured ? "bg-khmer-gold text-white" : ""}
+							>
+								{categoryName}
+							</Badge>
+						)}
+					</div>
+					<h3 className="text-lg font-bold mb-2 group-hover:text-khmer-gold transition-colors line-clamp-1">
+						{item.title_en}
+					</h3>
+					<p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-2">
+						{item.description}
+					</p>
+					{item.date && (
+						<div className="flex items-center text-xs text-gray-500">
+							<Calendar className="w-3 h-3 mr-1" />
+							{formatDate(item.date)}
+						</div>
 					)}
-				</div>
-				<h3 className="text-lg font-bold mb-2 group-hover:text-khmer-gold transition-colors line-clamp-1">
-					{item.title_en}
-				</h3>
-				<p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-2">
-					{item.description}
-				</p>
-				<div className="flex items-center text-xs text-gray-500">
-					<Calendar className="w-3 h-3 mr-1" />
-					{formatDate(item.date)}
-				</div>
-			</CardContent>
+				</CardContent>
+			)}
 		</Card>
 	);
 }

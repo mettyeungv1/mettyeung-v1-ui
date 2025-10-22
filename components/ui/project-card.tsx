@@ -132,7 +132,7 @@ export function ProjectCard({
 
 								<Button asChild className="w-full group/btn">
 									{/* <Link
-										href={`/projects/${project.slug}`}
+										href={`/s/${project.slug}`}
 										className="flex items-center justify-center"
 									>
 										Learn More
@@ -177,7 +177,7 @@ export function ProjectCard({
 						className="w-full group/btn mt-auto"
 					>
 						{/* <Link
-							href={`/projects/${project.slug}`}
+							href={`/s/${project.slug}`}
 							className="flex items-center justify-center"
 						>
 							View Details

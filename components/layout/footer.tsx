@@ -37,15 +37,15 @@ const footerColumns = [
 			{ nameKey: "nav.events", href: "/news?category=events" },
 		],
 	},
-	{
-		titleKey: "nav.projects",
-		links: [
-			{ nameKey: "nav.allProjects", href: "/projects" },
-			{ nameKey: "nav.community", href: "/projects?category=community" },
-			{ nameKey: "nav.education", href: "/projects?category=education" },
-			{ nameKey: "nav.culture", href: "/projects?category=culture" },
-		],
-	},
+	// {
+	// 	titleKey: "nav.projects",
+	// 	links: [
+	// 		{ nameKey: "nav.allProjects", href: "/s" },
+	// 		{ nameKey: "nav.community", href: "/s?category=community" },
+	// 		{ nameKey: "nav.education", href: "/s?category=education" },
+	// 		{ nameKey: "nav.culture", href: "/s?category=culture" },
+	// 	],
+	// },
 ];
 
 const socialLinks = [
