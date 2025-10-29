@@ -12,21 +12,36 @@ import { googleSans, miSansKhmer } from "@/lib/fonts"; // Assuming your fonts ar
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
-	title: {
-		default: "Mettyerng - ក្រុមអ្នកស្រឡាញ់សង្គម",
-		template: "%s | Mettyerng",
-	},
+	title: "មិត្តយើង | Mett Yeung Association",
 	description:
-		"ក្រុមអ្នកស្រឡាញ់សង្គម - Khmer community organization dedicated to education, culture, and social development",
-	keywords: [
-		"Khmer",
-		"Cambodia",
-		"Community",
-		"Education",
-		"Culture",
-		"Social Development",
-	],
-	authors: [{ name: "Mettyerng Organization" }],
+		"មិត្តយើង (M.Y.A.) — សមាគមមិត្តភាព និងគាំទ្រការងារ និងអាជីវកម្ម នៅកម្ពុជា។",
+	applicationName: "Mett Yeung Association (MYA)",
+	metadataBase: new URL("https://mettyeung27.org"),
+	alternates: {
+		canonical: "https://mettyeung27.org",
+		languages: {
+			km: "https://mettyeung27.org/",
+			en: "https://mettyeung27.org/en",
+		},
+	},
+	openGraph: {
+		title: "មិត្តយើង | Mett Yeung Association",
+		description:
+			"Community association supporting jobs, training, and local events in Phnom Penh.",
+		url: "https://mettyeung27.org",
+		siteName: "Mett Yeung Association",
+		images: [{ url: "/og-default.png", alt: "Mett Yeung Association" }],
+	},
+	icons: {
+		icon: "/icon.png",
+		apple: "/apple-icon.png",
+	},
+	twitter: {
+		card: "summary_large_image",
+	},
+	other: {
+		keywords: "សមាគម, ការងារ, វគ្គបណ្តុះបណ្តាល, Phnom Penh, Mett Yeung",
+	},
 };
 
 export default function RootLayout({
