@@ -37,7 +37,7 @@ export default function NewsPage() {
 		(async () => {
 			setLoading(true);
 			const [postRes, catRes] = await Promise.all([
-				listBlogsService({ sort: "-publishedAt", limit: 24 }),
+				listBlogsService({ sort: "-publishedAt", limit: 100 }),
 				listCategoriesService(),
 			]);
 			if (postRes.status_code === 200 && postRes.data?.data) {
