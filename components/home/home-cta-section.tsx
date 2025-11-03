@@ -39,7 +39,7 @@ export function HomeCTASection() {
 							{t("home.becomeVolunteer")}
 						</CTAButton>
 						<CTAButton
-							href="/s"
+							href="/news"
 							variant="outline"
 							size="lg"
 							className="border-white text-white hover:bg-white hover:text-primary-900 text-lg px-8 py-4"
