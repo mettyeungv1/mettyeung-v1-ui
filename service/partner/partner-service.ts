@@ -2,8 +2,10 @@ import { fetchAPI } from "@/lib/api";
 import { MEDIA_ENDPOINT, PARTNER_ENDPOINT } from "@/lib/static";
 import type { Partner } from "@/lib/types/partner";
 
-export const getPartnersService = async (): Promise<APIResponse<Partner[]>> => {
-	const res = await fetchAPI<Partner[]>(PARTNER_ENDPOINT);
+export const getPartnersService = async (
+	params = "sort=order"
+): Promise<APIResponse<Partner[]>> => {
+	const res = await fetchAPI<Partner[]>(`${PARTNER_ENDPOINT}?${params}`);
 	// Normalize media URL for direct display
 	if (res?.data) {
 		res.data = res.data.map((p) => ({
