@@ -50,7 +50,7 @@ export function MissionSection() {
 		<section className="section-padding bg-white">
 			<div className="container">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-					<AnimatedSection direction="left">
+					<AnimatedSection direction="left" className="order-2 md:order-1">
 						<div className="space-y-6 text-center lg:text-left">
 							<h2 className="text-3xl md:text-4xl font-bold text-text-primary">
 								{t("home.missionTitle")}
@@ -78,7 +78,7 @@ export function MissionSection() {
 							</div>
 						</div>
 					</AnimatedSection>
-					<AnimatedSection direction="right">
+					<AnimatedSection direction="right" className="order-1 lg:order-2">
 						<ItemCard
 							item={emptyGalleryItem}
 							categoryName={""}

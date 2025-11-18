@@ -20,6 +20,7 @@ import { DepartmentCard } from "@/components/structure/department-card";
 
 // Icons for departments
 import { Users, Award, BookOpen, Heart, Globe, Briefcase } from "lucide-react";
+import { associationData } from "@/lib/data/association";
 
 // Loading skeleton
 const StructureSkeleton = () => (
@@ -77,37 +78,43 @@ export default function StructurePage() {
 	const organizationData = useMemo((): Department[] => {
 		const departmentStylingMap: Record<
 			string,
-			{ icon: React.ElementType; color: string; bgColor: string }
+			{ icon: React.ElementType; color: string; bgColor: string; image: string }
 		> = {
 			"Our Friends Association Board of Directors": {
 				icon: Users,
 				color: "from-blue-500 to-blue-600",
 				bgColor: "bg-blue-50",
+				image: "/Our Friends Association Board of Directors.jpg",
 			},
 			"Our Friends Association Executive Committee": {
 				icon: Briefcase,
 				color: "from-green-500 to-green-600",
 				bgColor: "bg-green-50",
+				image: "/Our Friends Association Executive Committee.jpg",
 			},
 			"Senior Advisor of Our Friends Association": {
 				icon: Star,
 				color: "from-amber-500 to-amber-600",
 				bgColor: "bg-amber-50",
+				image: "/Senior Advisor of Our Friends Association.jpg",
 			},
 			"Honorary Member": {
 				icon: Award,
 				color: "from-purple-500 to-purple-600",
 				bgColor: "bg-purple-50",
+				image: "/Honorary Member.png",
 			},
 			"Association Branch": {
 				icon: Heart,
 				color: "from-red-500 to-red-600",
 				bgColor: "bg-red-50",
+				image: "/Association Branch.png",
 			},
 			"Board Director": {
 				icon: Users,
 				color: "from-sky-500 to-sky-600",
 				bgColor: "bg-sky-50",
+				image: "",
 			},
 		};
 		const defaultStyle = {
@@ -136,6 +143,7 @@ export default function StructurePage() {
 				icon: style.icon,
 				color: style.color,
 				bgColor: style.bgColor,
+				image: style.image,
 			};
 		});
 
@@ -163,7 +171,8 @@ export default function StructurePage() {
 	}, [allMembers, allAssociations, searchTerm, selectedDepartment]);
 
 	const filteredStructure = useMemo(() => {
-		return organizationData.filter((dept) => dept?.members?.length > 0);
+		// return organizationData.filter((dept) => dept?.members?.length > 0);
+		return organizationData;
 	}, [organizationData, searchTerm, selectedDepartment]);
 
 	const totalMembers = useMemo(() => allMembers.length, [allMembers]);

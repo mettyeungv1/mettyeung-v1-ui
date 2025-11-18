@@ -74,7 +74,7 @@ export function PartnersSection() {
 						{t("about.partner.description")}
 					</p>
 				</AnimatedSection>
-				<div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8">
 					{partners.map((partner, index) => (
 						<AnimatedSection key={partner.id} delay={index * 0.2}>
 							<GlowingCard>

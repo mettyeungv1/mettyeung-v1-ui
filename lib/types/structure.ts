@@ -111,5 +111,6 @@ export interface Department {
 	icon: React.ComponentType<{ className?: string }>;
 	color: string;
 	bgColor: string;
+	image: string;
 	members: Member[];
 }

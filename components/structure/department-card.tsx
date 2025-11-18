@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PersonCard } from "@/components/structure/detail/person-card";
+import Image from "next/image";
 
 interface DepartmentCardProps {
 	department: Department;
@@ -26,32 +27,38 @@ export function DepartmentCard({
 				onClick={onToggle}
 			>
 				<CardHeader>
-					<div className="flex items-center justify-between">
-						<div className="flex items-center space-x-4">
+					<CardHeader>
+						<div className="grid grid-cols-[auto_1fr_auto] gap-4 items-start sm:items-center">
+							{/* Icon Box */}
 							<div
 								className={`w-16 h-16 bg-gradient-to-br ${department.color} rounded-xl flex items-center justify-center shadow-lg`}
 							>
 								<department.icon className="w-8 h-8 text-white" />
 							</div>
-							<div>
-								<CardTitle className="text-2xl font-bold text-gray-900">
+
+							{/* Title + Subtitle */}
+							<div className="flex flex-col">
+								<CardTitle className="text-2xl font-bold text-gray-900 break-words">
 									{department.title_en}
 								</CardTitle>
 								<p className="text-gray-600 mt-1">{department.title}</p>
 							</div>
-						</div>
-						<div className="flex items-center space-x-3">
-							<Badge variant="secondary" className="hidden sm:flex">
-								{department.members.length} members
-							</Badge>
+
+							{/* Chevron */}
 							<motion.div
 								animate={{ rotate: isExpanded ? 180 : 0 }}
 								transition={{ duration: 0.3 }}
+								className="ml-auto"
 							>
 								<ChevronDown className="w-5 h-5 text-gray-500" />
 							</motion.div>
 						</div>
-					</div>
+
+						<p className="text-gray-700 text-left mt-4 leading-relaxed">
+							{department.description}
+						</p>
+					</CardHeader>
+
 					<p className="text-gray-700 text-left mt-4 leading-relaxed">
 						{department.description}
 					</p>
@@ -64,25 +71,38 @@ export function DepartmentCard({
 						animate={{ height: "auto", opacity: 1 }}
 						exit={{ height: 0, opacity: 0 }}
 						transition={{ duration: 0.4, ease: "easeInOut" }}
+						className="overflow-hidden"
 					>
-						<CardContent className="p-6 bg-white">
-							<div
-								className={`grid gap-6 ${
-									viewMode === "grid"
-										? "grid-cols-1 lg:grid-cols-2"
-										: "grid-cols-1"
-								}`}
-							>
-								{department.members.map((member, i) => (
-									<PersonCard
-										key={member.id}
-										person={member as any}
-										variant="detailed"
-										index={i}
-									/>
-								))}
-							</div>
-						</CardContent>
+						<div className="w-full bg-gray-100">
+							<Image
+								src={department.image}
+								alt={department.description}
+								width={0}
+								height={0}
+								sizes="100vw"
+								className="w-full h-auto"
+								style={{ width: "100%", height: "auto" }}
+								priority
+							/>
+							<CardContent className="p-6 bg-white">
+								<div
+									className={`grid gap-6 ${
+										viewMode === "grid"
+											? "grid-cols-1 lg:grid-cols-2"
+											: "grid-cols-1"
+									}`}
+								>
+									{department.members.map((member, i) => (
+										<PersonCard
+											key={member.id}
+											person={member as any}
+											variant="detailed"
+											index={i}
+										/>
+									))}
+								</div>
+							</CardContent>
+						</div>
 					</motion.div>
 				)}
 			</AnimatePresence>

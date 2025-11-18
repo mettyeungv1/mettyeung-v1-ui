@@ -30,7 +30,7 @@ export function StructureHero({
 						Discover the dedicated teams and individuals driving our mission
 						forward.
 					</p>
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+					{/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ export function StructureHero({
 							<div className="text-3xl font-bold text-green-600">25+</div>
 							<div className="text-sm text-gray-600">Projects</div>
 						</motion.div>
-					</div>
+					</div> */}
 				</AnimatedSection>
 			</div>
 		</section>
