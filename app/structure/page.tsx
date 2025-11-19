@@ -78,43 +78,55 @@ export default function StructurePage() {
 	const organizationData = useMemo((): Department[] => {
 		const departmentStylingMap: Record<
 			string,
-			{ icon: React.ElementType; color: string; bgColor: string; image: string }
+			{
+				icon: React.ElementType;
+				color: string;
+				bgColor: string;
+				image: string;
+				title: string;
+			}
 		> = {
-			"Our Friends Association Board of Directors": {
-				icon: Users,
-				color: "from-blue-500 to-blue-600",
-				bgColor: "bg-blue-50",
-				image: "/Our Friends Association Board of Directors.jpg",
+			"Honorary Member": {
+				icon: Award,
+				color: "from-purple-500 to-purple-600",
+				bgColor: "bg-purple-50",
+				image: "/Honorary Member.png",
+				title: " Honorary Member / សមាជិកកិត្តិយស",
 			},
 			"Our Friends Association Executive Committee": {
 				icon: Briefcase,
 				color: "from-green-500 to-green-600",
 				bgColor: "bg-green-50",
 				image: "/Our Friends Association Executive Committee.jpg",
+				title: "Executive Committee / គណៈកម្មការប្រតិបត្តិ",
+			},
+			"Our Friends Association Board of Directors": {
+				icon: Users,
+				color: "from-blue-500 to-blue-600",
+				bgColor: "bg-blue-50",
+				image: "/Our Friends Association Board of Directors.jpg",
+				title: "Board of Directors / ក្រុមប្រឹក្សាភិបាល",
 			},
 			"Senior Advisor of Our Friends Association": {
 				icon: Star,
 				color: "from-amber-500 to-amber-600",
 				bgColor: "bg-amber-50",
 				image: "/Senior Advisor of Our Friends Association.jpg",
-			},
-			"Honorary Member": {
-				icon: Award,
-				color: "from-purple-500 to-purple-600",
-				bgColor: "bg-purple-50",
-				image: "/Honorary Member.png",
+				title: "Senior Advisors / ទីប្រឹក្សាជាន់ខ្ពស់",
 			},
 			"Association Branch": {
 				icon: Heart,
 				color: "from-red-500 to-red-600",
 				bgColor: "bg-red-50",
 				image: "/Association Branch.png",
+				title: "Association Branches / សាខាសមាគម",
 			},
 			"Board Director": {
 				icon: Users,
 				color: "from-sky-500 to-sky-600",
 				bgColor: "bg-sky-50",
 				image: "",
+				title: "Board Director",
 			},
 		};
 		const defaultStyle = {
@@ -135,7 +147,7 @@ export default function StructurePage() {
 			return {
 				id: assoc.id,
 				title_en: assoc.name,
-				title: assoc.name,
+				title: style.title,
 				members: membersOfAssociation?.map((m: any) => ({
 					...m,
 					department: assoc.name,

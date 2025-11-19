@@ -15,8 +15,11 @@ export function FeaturesSection() {
 					<h2 className="text-4xl font-bold text-gray-900">
 						{t("home.focusAreas")}
 					</h2>
-					<p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-						{t("home.focusAreasDesc")}
+					<p className="mt-4 text-lg text-start md:text-justify text-gray-600 max-w-3xl mx-auto">
+						{t("home.focusAreasDesc")}{" "}
+						<span>
+							"<b>{t("home.focusAreas")}</b>"
+						</span>
 					</p>
 				</AnimatedSection>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

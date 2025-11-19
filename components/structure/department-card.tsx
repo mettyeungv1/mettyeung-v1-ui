@@ -39,9 +39,8 @@ export function DepartmentCard({
 							{/* Title + Subtitle */}
 							<div className="flex flex-col">
 								<CardTitle className="text-2xl font-bold text-gray-900 break-words">
-									{department.title_en}
+									{department.title}
 								</CardTitle>
-								<p className="text-gray-600 mt-1">{department.title}</p>
 							</div>
 
 							{/* Chevron */}

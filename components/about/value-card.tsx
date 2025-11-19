@@ -19,13 +19,9 @@ export function ValueCard({ item }: { item: ValueItem }) {
 					<h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
 						{t(item.titleKey)}
 					</h2>
-					<span className="text-lg sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-red-600 font-semibold">
-						{t(item.subtitleKey)}
-					</span>
 				</div>
 				<p className="text-gray-600 leading-relaxed space-y-4">
 					<span>{t(item.descriptionKey1)}</span>
-					{item.descriptionKey2 && <span>{t(item.descriptionKey2)}</span>}
 				</p>
 			</CardContent>
 		</Card>

@@ -41,7 +41,7 @@ const navigation: NavItem[] = [
 			{ key: "nav.network", href: "/about#network" },
 		],
 	},
-	{ key: "nav.news", href: "/news" },
+	{ key: "nav.activity", href: "/news" },
 	{
 		key: "nav.videos",
 		href: "/videos",

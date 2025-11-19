@@ -2,55 +2,20 @@
 	"about": {
 		"title": "About Mettyerng",
 		"subtitle": "Our Friends Association is a private, non-profit legal entity established in 2021 by 27 founding members, operating under the motto Friendship, Solidarity, Loyalty. Our primary goal is to improve the living standards, job opportunities, and businesses of self-employed workers, technical experts, and business practitioners both domestically and internationally. We achieve this by gathering members, building a strong support network, sharing experiences, and providing training and advice.",
-		"badge1": "Founded in 2020",
-		"badge2": "27 Members",
-		"badge3": "10+ Projects",
+		"badge1": "Friendship",
+		"badge2": "Solidarity",
+		"badge3": "Loyalty",
 		"mission": {
 			"title": "Mission",
-			"title_en": "Our Mission",
-			"desc1": "To build a strong and prosperous Khmer community through quality education, preservation of traditional culture, and mutual support with a spirit of love.",
-			"desc2": "We work to improve the lives of Cambodians and encourage youth to pursue education and uphold excellent values."
+			"desc1": "To organize a network of friends and unite members into interest groups based on shared interests, both domestically and abroad, to foster better connections, provide support, share experiences and job market information, and offer consultation and training."
 		},
 		"vision": {
 			"title": "Vision",
-			"title_en": "Our Vision",
-			"desc1": "To become a leading organization in building a strong Khmer community where education is accessible, culture is preserved, and society is supportive.",
-			"desc2": "We envision a community where all children have the opportunity to receive an education and youth are encouraged to preserve national culture."
+			"desc1": "To become the unified voice of Our Friends Network and the banner under which members operate, facilitating activities and building public trust."
 		},
 		"values": {
-			"title": "Values",
-			"title_en": "Our Values",
-			"description": "These core values guide our work in building the community.",
-			"love": {
-				"title": "ការស្រឡាញ់",
-				"title_en": "Love & Compassion",
-				"description": "We believe that love and care for one another are the essential foundation for building a strong community."
-			},
-			"education": {
-				"title": "ការអប់រំ",
-				"title_en": "Education",
-				"description": "Education is the most crucial foundation for development and building a bright future."
-			},
-			"culture": {
-				"title": "វប្បធម៌",
-				"title_en": "Culture",
-				"description": "Preserving and promoting the glorious Khmer traditional culture for future generations."
-			},
-			"unity": {
-				"title": "ការរួបរួម",
-				"title_en": "Unity",
-				"description": "Unity in building the community and helping one another."
-			},
-			"innovation": {
-				"title": "ភាពច្នៃប្រឌិត",
-				"title_en": "Innovation",
-				"description": "Initiating new ideas and creative thinking to solve social problems."
-			},
-			"responsibility": {
-				"title": "ការទទួលខុសត្រូវ",
-				"title_en": "Responsibility",
-				"description": "Responsibility towards the community and working with integrity."
-			}
+			"title": "Our Values",
+			"desc1": "Friendship, Solidarity, Loyalty"
 		},
 		"timeline": {
 			"title": "Journey",
@@ -130,11 +95,7 @@
 			"member4": { "name": "Mrs. Chanda", "role": "Treasurer" }
 		},
 		"partner": {
-			"title": "Partner",
-			"title_en": "Our Partner",
-			"description": "Our Partner in our community",
-			"partner1": { "name": "Wing", "image": "/wing.png" },
-			"partner2": { "name": "My Cut", "image": "/my-cut.png" }
+			"title": "Our Friends Network"
 		}
 	},
 	"nav": {
@@ -145,6 +106,7 @@
 		"structure": "Structure",
 		"news": "Events",
 		"latestNews": "Latest News",
+		"activity": "Activity",
 		"events": "Events",
 		"videos": "Videos",
 		"projects": "Projects",
@@ -173,17 +135,24 @@
 		"joinUs": "Join Us"
 	},
 	"home": {
-		"achievements": "Our Achievements",
-		"achievementsDesc": "Through the dedication of our volunteers, we have achieved success in various fields",
+		"ourHistory": "Our History",
+		"ourHistoryDetail": "Our Friends Association is a private association established on December 2, 2020, under the initiative of 27 founding members. The 27 founding members jointly organized and drafted the statute and internal regulations, focusing on promoting living standards, knowledge, employment opportunities, and business, which are for the benefit and social well-being of Cambodia. The association received legal registration from the Ministry of Interior through Proclamation No. 245 Prakas dated January 27, 2021, as a 'legal entity'.",
+		"achievements": "Association Achievements",
+		"achievementsDesc": "Through various activities, Our Friends Association has provided protection and promoted living standards, as well as employment and business opportunities for self-employed individuals, technical experts, service providers, and various business operators both domestically and abroad.",
 		"missionTitle": "Our Mission",
 		"missionDesc": "To compile a network of friends and members into interest groups, both domestically and internationally, to foster better relationships, share experiences, provide job market information, and offer advice and training to improve living standards.",
 		"missionText": "We believe that education is the most important foundation for development and building a bright future for Cambodian children and youth.",
-		"focusAreas": "Our Focus Areas",
-		"focusAreasDesc": "We focus on building communities through these key areas",
-		"joinCommunity": "Join Our Community",
-		"joinDesc": "Become part of positive change, participate in building a strong community",
+		"focusAreas": "Friendship, Solidarity, Loyalty",
+		"focusAreasDesc": "Recognizing the importance of protecting and promoting living standards, employment, and business opportunities for workers, self-employed individuals, technical experts, service providers, and various business operators both domestically and abroad, Our Friends Association was established through the collective vision of a group of youth under the approach:",
+
+		"joinCommunity": "Benefits of Membership",
+		"joinDesc1": "Receive consultation and participate in various training courses such as labor law, union law, and financial management knowledge.",
+		"joinDesc2": "Build a strong network of peers with shared values to represent a unified voice in discussing challenges and finding solutions.",
+		"joinDesc3": "Increase business opportunities, expand professional networks, and build new relationships for collective development.",
 		"becomeVolunteer": "Become a Volunteer",
+		"becomeOurMember": "Become Our Member",
 		"viewProjects": "View Our Projects",
+		"viewOurActivity": "View Our Activities",
 		"education": "Strengthening Friendship and Solidarity",
 		"educationDesc": "A private, non-profit legal entity focused on strengthening bonds, solidarity, and a network of support among workers and businesses.",
 		"culture": "The Core Values: Friendship, Solidarity, and Loyalty",
@@ -287,10 +256,11 @@
 		"terms": "Terms of Service"
 	},
 	"stats": {
-		"members": "Members",
-		"projects": "Projects",
+		"members": "Active Members",
+		"projects": "Charity Activities",
 		"beneficiaries": "Beneficiaries",
 		"volunteers": "Volunteers",
+		"training": "Trainings",
 		"years": "Years",
 		"communities": "Communities"
 	},

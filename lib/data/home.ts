@@ -1,34 +1,34 @@
 import { FeatureItem, StatItem } from "../types/home";
-import { Users, BookOpen, Heart, Award } from "lucide-react";
+import { Users, BookOpen, Heart, Award, School } from "lucide-react";
 
 export const stats: StatItem[] = [
 	{
 		titleKey: "stats.members",
-		value: 250,
-		suffix: "+",
+		value: 430,
+		suffix: "",
 		icon: Users,
 		descriptionKey: "home.activeMembers",
 	},
 	{
 		titleKey: "stats.projects",
-		value: 10,
-		suffix: "+",
-		icon: Award,
+		value: 72,
+		suffix: "",
+		icon: Heart,
 		descriptionKey: "home.successfulProjects",
 	},
 	{
+		titleKey: "stats.training",
+		value: 12,
+		suffix: "",
+		icon: School,
+		descriptionKey: "home.helpedFamilies",
+	},
+	{
 		titleKey: "stats.beneficiaries",
-		value: 50000,
+		value: 10000,
 		suffix: "+",
 		icon: BookOpen,
 		descriptionKey: "home.educatedChildren",
-	},
-	{
-		titleKey: "stats.volunteers",
-		value: 500,
-		suffix: "+",
-		icon: Heart,
-		descriptionKey: "home.helpedFamilies",
 	},
 ];
 

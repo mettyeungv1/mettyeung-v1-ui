@@ -53,10 +53,10 @@ export function MissionSection() {
 					<AnimatedSection direction="left" className="order-2 md:order-1">
 						<div className="space-y-6 text-center lg:text-left">
 							<h2 className="text-3xl md:text-4xl font-bold text-text-primary">
-								{t("home.missionTitle")}
+								{t("home.ourHistory")}
 							</h2>
 							<p className="text-lg text-gray-600 leading-relaxed">
-								{t("home.missionDesc")}
+								{t("home.ourHistoryDetail")}
 							</p>
 
 							<div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">

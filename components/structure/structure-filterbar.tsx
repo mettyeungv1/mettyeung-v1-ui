@@ -46,13 +46,13 @@ export function StructureFilterBar({
 								<option value="all">All Departments</option>
 								{departments.map((section) => (
 									<option key={section.id} value={section.id}>
-										{section.title_en}
+										{section.title}
 									</option>
 								))}
 							</select>
 						</div>
 					</div>
-					<div className="flex items-center space-x-2">
+					{/* <div className="flex items-center space-x-2">
 						<Button
 							variant={viewMode === "grid" ? "default" : "outline"}
 							size="icon"
@@ -67,7 +67,7 @@ export function StructureFilterBar({
 						>
 							<List className="w-4 h-4" />
 						</Button>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</section>

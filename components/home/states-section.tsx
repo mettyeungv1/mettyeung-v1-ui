@@ -15,7 +15,7 @@ export function StatsSection() {
 					<h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-4">
 						{t("home.achievements")}
 					</h2>
-					<p className="text-lg text-gray-600 max-w-3xl mx-auto">
+					<p className="text-lg text-start md:text-justify  text-gray-600 max-w-3xl mx-auto">
 						{t("home.achievementsDesc")}
 					</p>
 				</AnimatedSection>

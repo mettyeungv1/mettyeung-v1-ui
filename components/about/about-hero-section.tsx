@@ -57,13 +57,13 @@ export function AboutHeroSection() {
 						transition={{ duration: 0.8, delay: 0.3 }}
 						className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-blue-800"
 					>
-						Mettyerng
+						MettYeung
 					</motion.h1>
 					<motion.p
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.4 }}
-						className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto"
+						className="text-lg text-start md:text-justify sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto"
 					>
 						{t("about.subtitle")}
 					</motion.p>

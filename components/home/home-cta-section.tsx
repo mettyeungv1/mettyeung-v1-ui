@@ -26,9 +26,20 @@ export function HomeCTASection() {
 					<h2 className="text-3xl text-white md:text-4xl lg:text-5xl font-bold mb-6">
 						{t("home.joinCommunity")}
 					</h2>
-					<p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
-						{t("home.joinDesc")}
-					</p>
+					<ul className="text-xl text-start md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 space-y-4 leading-relaxed">
+						<li className="flex gap-3">
+							<span className="text-green-400">•</span>
+							<span>{t("home.joinDesc1")}</span>
+						</li>
+						<li className="flex gap-3">
+							<span className="text-green-400">•</span>
+							<span>{t("home.joinDesc2")}</span>
+						</li>
+						<li className="flex gap-3">
+							<span className="text-green-400">•</span>
+							<span>{t("home.joinDesc3")}</span>
+						</li>
+					</ul>
 					<div className="flex flex-col sm:flex-row gap-6 justify-center">
 						<CTAButton
 							href="/contact"
@@ -36,7 +47,7 @@ export function HomeCTASection() {
 							className="bg-white text-primary-900 hover:bg-neutral-100 text-lg px-8 py-4"
 						>
 							<Heart className="mr-2 w-6 h-6" />
-							{t("home.becomeVolunteer")}
+							{t("home.becomeOurMember")}
 						</CTAButton>
 						<CTAButton
 							href="/news"
@@ -45,7 +56,7 @@ export function HomeCTASection() {
 							className="border-white text-white hover:bg-white hover:text-primary-900 text-lg px-8 py-4"
 						>
 							<Award className="mr-2 w-6 h-6" />
-							{t("home.viewProjects")}
+							{t("home.viewOurActivity")}
 						</CTAButton>
 					</div>
 				</AnimatedSection>

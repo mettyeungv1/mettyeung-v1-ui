@@ -43,9 +43,6 @@ export function PartnersSection() {
 						<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-red-600">
 							{t("about.partner.title")}
 						</h2>
-						<p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-							{t("about.partner.description")}
-						</p>
 						<p className="mt-6 text-gray-500">{t("common.loading")}</p>
 					</AnimatedSection>
 				</div>
@@ -67,12 +64,9 @@ export function PartnersSection() {
 		>
 			<div className="container">
 				<AnimatedSection className="text-center mb-16">
-					<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-red-600">
+					<h2 className="text-3xl​ sm:text-4xl md:text-5xl font-bold​​ text-blue-800 ">
 						{t("about.partner.title")}
 					</h2>
-					<p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-						{t("about.partner.description")}
-					</p>
 				</AnimatedSection>
 				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8">
 					{partners.map((partner, index) => (
