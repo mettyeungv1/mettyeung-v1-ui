@@ -216,6 +216,13 @@
 		"error": "エラー",
 		"success": "成功"
 	},
+	"structure": {
+		"honorMember": "名誉会員",
+		"executiveCommittee": "執行委員会",
+		"boardOfDirectors": "理事会",
+		"seniorAdvisors": "上級顧問",
+		"associationBranches": "協会支部"
+	},
 	"footer": {
 		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループであり、共に強力なコミュニティを築くことに尽力しています。",
 		"quickLinks": "クイックリンク",

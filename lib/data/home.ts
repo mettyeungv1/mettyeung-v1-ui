@@ -1,5 +1,13 @@
 import { FeatureItem, StatItem } from "../types/home";
-import { Users, BookOpen, Heart, Award, School } from "lucide-react";
+import {
+	Users,
+	BookOpen,
+	Heart,
+	Award,
+	School,
+	GraduationCap,
+	Users2,
+} from "lucide-react";
 
 export const stats: StatItem[] = [
 	{
@@ -20,14 +28,14 @@ export const stats: StatItem[] = [
 		titleKey: "stats.training",
 		value: 12,
 		suffix: "",
-		icon: School,
+		icon: GraduationCap,
 		descriptionKey: "home.helpedFamilies",
 	},
 	{
 		titleKey: "stats.beneficiaries",
 		value: 10000,
 		suffix: "+",
-		icon: BookOpen,
+		icon: Users2,
 		descriptionKey: "home.educatedChildren",
 	},
 ];

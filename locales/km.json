@@ -99,6 +99,13 @@
 			"title": "បណ្ដាញមិត្តយើង"
 		}
 	},
+	"structure": {
+		"honorMember": "សមាជិកកិត្តិយស",
+		"executiveCommittee": "គណៈកម្មការប្រតិបត្តិ",
+		"boardOfDirectors": "ក្រុមប្រឹក្សាភិបាល",
+		"seniorAdvisors": "ទីប្រឹក្សាជាន់ខ្ពស់",
+		"associationBranches": "សាខាសមាគម"
+	},
 	"nav": {
 		"home": "ទំព័រដើម",
 		"about": "មិត្តយើង",

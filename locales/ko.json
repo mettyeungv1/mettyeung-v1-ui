@@ -215,6 +215,13 @@
 		"error": "오류",
 		"success": "성공"
 	},
+	"structure": {
+		"honorMember": "명예 회원",
+		"executiveCommittee": "집행위원회",
+		"boardOfDirectors": "이사회",
+		"seniorAdvisors": "상임 고문",
+		"associationBranches": "협회 지부"
+	},
 	"footer": {
 		"description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹이며, 함께 더 강한 공동체를 건설하기 위해 헌신합니다.",
 		"quickLinks": "바로가기",

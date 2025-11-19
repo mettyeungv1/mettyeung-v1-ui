@@ -98,6 +98,13 @@
 			"title": "Our Friends Network"
 		}
 	},
+	"structure": {
+		"honorMember": "Honorary Member",
+		"executiveCommittee": "Executive Committee",
+		"boardOfDirectors": "Board of Directors",
+		"seniorAdvisors": "Senior Advisors",
+		"associationBranches": "Association Branches "
+	},
 	"nav": {
 		"home": "Home",
 		"about": "About",
