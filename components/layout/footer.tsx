@@ -48,10 +48,25 @@ const footerColumns = [
 	// },
 ];
 
-const socialLinks = [
-	{ name: "Facebook", icon: Facebook, href: "https://facebook.com" },
-	{ name: "Youtube", icon: Youtube, href: "https://youtube.com" },
-	{ name: "Instagram", icon: Instagram, href: "https://instagram.com" },
+export const socialLinks: any = [
+	{
+		name: "Facebook",
+		icon: Facebook,
+		href: "https://web.facebook.com/profile.php?id=100091461679738",
+		color: "hover:text-blue-600",
+	},
+	{
+		name: "Youtube",
+		icon: Youtube,
+		href: "https://youtube.com",
+		color: "hover:text-red-600",
+	},
+	// {
+	// 	name: "Instagram",
+	// 	icon: Instagram,
+	// 	href: "https://instagram.com",
+	// 	color: "hover:text-pink-600",
+	// },
 ];
 
 export function Footer() {
@@ -183,7 +198,7 @@ export function Footer() {
 							{t("footer.followUs")}
 						</h3>
 						<div className="flex space-x-2">
-							{socialLinks.map((social) => (
+							{socialLinks.map((social: any) => (
 								<Button
 									key={social.name}
 									variant="ghost"
