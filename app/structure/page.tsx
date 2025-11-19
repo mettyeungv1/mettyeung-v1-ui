@@ -20,7 +20,7 @@ import { DepartmentCard } from "@/components/structure/department-card";
 
 // Icons for departments
 import { Users, Award, BookOpen, Heart, Globe, Briefcase } from "lucide-react";
-import { associationData, departmentStylingMap } from "@/lib/data/association";
+import { associationData } from "@/lib/data/association";
 import { useTranslation } from "@/lib/i18n";
 
 // Loading skeleton
@@ -38,7 +38,59 @@ const StructureSkeleton = () => (
 
 export default function StructurePage() {
 	const { t } = useTranslation();
-
+	const departmentStylingMap: Record<
+		string,
+		{
+			icon: React.ElementType;
+			color: string;
+			bgColor: string;
+			image: string;
+			title: string;
+		}
+	> = {
+		"Honorary Member": {
+			icon: Award,
+			color: "from-purple-500 to-purple-600",
+			bgColor: "bg-purple-50",
+			image: "/Honorary Member.png",
+			title: t("structure.honorMember"),
+		},
+		"Our Friends Association Executive Committee": {
+			icon: Briefcase,
+			color: "from-green-500 to-green-600",
+			bgColor: "bg-green-50",
+			image: "/Our Friends Association Executive Committee.jpg",
+			title: t("structure.executiveCommittee"),
+		},
+		"Our Friends Association Board of Directors": {
+			icon: Users,
+			color: "from-blue-500 to-blue-600",
+			bgColor: "bg-blue-50",
+			image: "/Our Friends Association Board of Directors.jpg",
+			title: t("structure.boardOfDirectors"),
+		},
+		"Senior Advisor of Our Friends Association": {
+			icon: Star,
+			color: "from-amber-500 to-amber-600",
+			bgColor: "bg-amber-50",
+			image: "/Senior Advisor of Our Friends Association.jpg",
+			title: t("structure.seniorAdvisors"),
+		},
+		"Association Branch": {
+			icon: Heart,
+			color: "from-red-500 to-red-600",
+			bgColor: "bg-red-50",
+			image: "/Association Branch.png",
+			title: t("structure.associationBranches"),
+		},
+		"Board Director": {
+			icon: Users,
+			color: "from-sky-500 to-sky-600",
+			bgColor: "bg-sky-50",
+			image: "",
+			title: "Board Director",
+		},
+	};
 	// State for API data
 	const [allMembers, setAllMembers] = useState<any[]>([]);
 	const [allAssociations, setAllAssociations] = useState<Member[]>([]);
@@ -92,7 +144,7 @@ export default function StructurePage() {
 				? assoc.associationMembers.map((m: any) => m.member)
 				: [];
 
-			const style = departmentStylingMap(t)[assoc.name] || defaultStyle;
+			const style = departmentStylingMap[assoc.name] || defaultStyle;
 
 			return {
 				id: assoc.id,
