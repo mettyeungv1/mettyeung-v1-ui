@@ -202,7 +202,6 @@ export function Footer() {
 							{socialLinks.map((social: any) => (
 								<Button
 									key={social.name}
-									variant="ghost"
 									size="icon"
 									asChild
 									className="text-blue-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"

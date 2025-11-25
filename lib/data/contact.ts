@@ -39,7 +39,7 @@ export const contactInfo: ContactInfoItem[] = [
 		icon: Clock,
 		title: "ម៉ោងបើកធ្វើការ",
 		title_en: "Working Hours",
-		details: ["Mon-Fri: 8:00 AM - 5:00 PM"],
+		details: ["Mon-Fri: 9:00 AM - 4:30 PM"],
 		color: "from-purple-500 to-indigo-600",
 	},
 ];
