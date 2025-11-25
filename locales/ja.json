@@ -98,6 +98,10 @@
 			"title": "私たちの友人ネットワーク"
 		}
 	},
+	"events": {
+		"heroDescription": "私たちの最新の活動とイベントを確認してください",
+		"recentNews": "最新ニュース"
+	},
 	"nav": {
 		"activity": "活動",
 		"home": "ホーム",
@@ -217,6 +221,11 @@
 		"success": "成功"
 	},
 	"structure": {
+		"hero": {
+			"title": "組織体制",
+			"description": "私たちの使命を推進する献身的なチームとメンバーをご紹介します。"
+		},
+		"chart": "組織図",
 		"honorMember": "名誉会員",
 		"executiveCommittee": "執行委員会",
 		"boardOfDirectors": "理事会",

@@ -1,6 +1,7 @@
 import { Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { useTranslation } from "@/lib/i18n";
 
 interface StructureHeroProps {
 	departmentCount: number;
@@ -11,6 +12,7 @@ export function StructureHero({
 	departmentCount,
 	totalMembers,
 }: StructureHeroProps) {
+	const { t } = useTranslation();
 	return (
 		<section className="relative py-16 sm:py-20 md:py-24 bg-gradient-to-br from-khmer-gold/10 via-white to-khmer-red/10">
 			<div className="container relative text-center max-w-5xl mx-auto">
@@ -24,11 +26,10 @@ export function StructureHero({
 						<Users className="w-8 h-8 text-white" />
 					</motion.div>
 					<h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
-						Our Structure
+						{t("structure.hero.title")}
 					</h1>
 					<p className="text-lg md:text-2xl text-gray-600 leading-relaxed mb-8">
-						Discover the dedicated teams and individuals driving our mission
-						forward.
+						{t("structure.hero.description")}
 					</p>
 					{/* <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
 						<motion.div

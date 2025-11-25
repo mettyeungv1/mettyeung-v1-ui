@@ -215,7 +215,16 @@
 		"error": "오류",
 		"success": "성공"
 	},
+	"events": {
+		"heroDescription": "우리의 최신 활동과 이벤트를 살펴보세요",
+		"recentNews": "최근 소식"
+	},
 	"structure": {
+		"hero": {
+			"title": "조직 구조",
+			"description": "우리의 사명을 이끌어가는 헌신적인 팀과 구성원들을 만나보세요."
+		},
+		"chart": "조직도",
 		"honorMember": "명예 회원",
 		"executiveCommittee": "집행위원회",
 		"boardOfDirectors": "이사회",

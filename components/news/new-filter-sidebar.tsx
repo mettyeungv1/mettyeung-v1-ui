@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { NewsArticle, NewsCategory } from "@/lib/types/news";
 import { Search, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { useTranslation } from "@/lib/i18n";
 
 interface NewsFilterSidebarProps {
 	searchTerm: string;
@@ -31,6 +32,7 @@ export function NewsFilterSidebar({
 	recentNews,
 	onRecentNewsClick,
 }: NewsFilterSidebarProps) {
+	const { t } = useTranslation();
 	// State to manage which categories are visually expanded
 	const [expandedCategories, setExpandedCategories] = useState<string[]>(
 		selectedCategory === "all" ? [] : [selectedCategory]
@@ -137,7 +139,7 @@ export function NewsFilterSidebar({
 
 			<div className="mt-8">
 				<h4 className="text-sm font-semibold text-gray-900 mb-3">
-					Recent News
+					{t("events.recentNews")}
 				</h4>
 				<div className="space-y-4">
 					{recentNews.map((item) => (
@@ -155,7 +157,7 @@ export function NewsFilterSidebar({
 							</div>
 							<div className="flex-1 min-w-0">
 								<h5 className="text-sm font-medium text-gray-900 group-hover:text-khmer-gold line-clamp-2 mb-1">
-									{item.title_en}
+									{t(item.title)}
 								</h5>
 								<p className="text-xs text-gray-500">
 									{new Date(item.date).toLocaleDateString("en-GB")}

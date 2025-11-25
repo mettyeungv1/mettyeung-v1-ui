@@ -134,10 +134,7 @@ export default function NewsPage() {
 
 	return (
 		<div className="min-h-screen bg-gray-50">
-			<PageHero
-				title={t("nav.news")}
-				subtitle="ស្វែងយល់ពីសកម្មភាព និងព្រឹត្តិការណ៍ចុងក្រោយរបស់យើង"
-			/>
+			<PageHero title={t("nav.news")} subtitle={t("events.heroDescription")} />
 
 			{featuredNews.length > 0 && (
 				<section className="section-padding bg-white">

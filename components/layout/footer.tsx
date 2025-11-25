@@ -18,6 +18,7 @@ import { Separator } from "@/components/ui/separator";
 import { useTranslation } from "@/lib/i18n";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { FaTelegram } from "react-icons/fa";
 
 // Data is moved outside the component for cleaner code
 const footerColumns = [
@@ -58,15 +59,15 @@ export const socialLinks: any = [
 	{
 		name: "Youtube",
 		icon: Youtube,
-		href: "https://youtube.com",
+		href: "https://youtube.com/@_mettyeung8858",
 		color: "hover:text-red-600",
 	},
-	// {
-	// 	name: "Instagram",
-	// 	icon: Instagram,
-	// 	href: "https://instagram.com",
-	// 	color: "hover:text-pink-600",
-	// },
+	{
+		name: "Telegram",
+		icon: FaTelegram,
+		href: "https://t.me/mettyeung",
+		color: "hover:text-red-600",
+	},
 ];
 
 export function Footer() {

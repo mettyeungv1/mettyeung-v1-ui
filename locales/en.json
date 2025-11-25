@@ -86,24 +86,28 @@
 			}
 		},
 		"team": {
-			"title": "Our Team",
-			"title_en": "Our Core Team",
-			"description": "The core members who have dedicated themselves to building our community.",
-			"member1": { "name": "Mr. Mettyerng", "role": "President" },
-			"member2": { "name": "Mrs. Sokha", "role": "Vice President" },
-			"member3": { "name": "Mr. Dara", "role": "Secretary" },
-			"member4": { "name": "Mrs. Chanda", "role": "Treasurer" }
+			"title": "Our Structure",
+			"description": "Discover the dedicated teams and individuals driving our mission forward."
 		},
 		"partner": {
 			"title": "Our Friends Network"
 		}
 	},
 	"structure": {
+		"hero": {
+			"title": "Our Structure",
+			"description": "Discover the dedicated teams and individuals driving our mission forward."
+		},
+		"chart": "Organizational Chart",
 		"honorMember": "Honorary Member",
 		"executiveCommittee": "Executive Committee",
 		"boardOfDirectors": "Board of Directors",
 		"seniorAdvisors": "Senior Advisors",
 		"associationBranches": "Association Branches "
+	},
+	"events": {
+		"heroDescription": "Explore our latest activities and events",
+		"recentNews": "Recent News"
 	},
 	"nav": {
 		"home": "Home",

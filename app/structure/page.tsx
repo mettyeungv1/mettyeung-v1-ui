@@ -227,9 +227,8 @@ export default function StructurePage() {
 				<div className="container">
 					<AnimatedSection className="text-center mb-16">
 						<h2 className="text-4xl font-bold text-gray-900">
-							Organization Structure
+							{t("structure.chart")}
 						</h2>
-						<p className="gradient-text text-3xl mt-2">តារាងរចនាសម្ព័ន្ធ</p>
 					</AnimatedSection>
 					<div className="space-y-8">
 						<AnimatePresence>

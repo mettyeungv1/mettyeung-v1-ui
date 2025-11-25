@@ -19,7 +19,7 @@ export function ContactSidebar() {
 				<div className="space-y-3 text-sm">
 					<div className="flex justify-between items-center">
 						<span className="text-gray-600">Monday - Friday</span>
-						<span className="font-medium">8:00 AM - 5:00 PM</span>
+						<span className="font-medium">9:00 AM - 4:30 PM</span>
 					</div>
 					{/* <Separator />
 					<div className="flex justify-between items-center">
