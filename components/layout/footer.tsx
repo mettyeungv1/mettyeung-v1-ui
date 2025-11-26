@@ -158,11 +158,13 @@ export function Footer() {
 								<Mail className="w-5 h-5" />
 								<span className="text-sm">{t("footer.contactInfo.email")}</span>
 							</a>
-							<div className="flex items-center space-x-3 text-blue-200">
-								<MapPin className="w-5 h-5" />
-								<span className="text-sm">
-									{t("footer.contactInfo.address")}
-								</span>
+							<div className="flex w-full flex-col space-y-1 text-blue-200">
+								<div className="flex items-center space-x-3">
+									<MapPin className="w-5 h-5 shrink-0" />
+									<span className="text-sm">
+										{t("footer.contactInfo.address")}
+									</span>
+								</div>
 							</div>
 						</div>
 					</motion.div>

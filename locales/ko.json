@@ -125,6 +125,7 @@
 		"description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹입니다.",
 		"learnMore": "더 알아보기",
 		"watchVideo": "비디오 보기",
+		"videoDescription": "영상을 통해 우리의 활동과 프로그램을 확인해보세요",
 		"projectTitle": "무료 이발 프로젝트",
 		"projectSubtitle": "공동체 봉사 이니셔티브",
 		"projectDescription": "어려운 공동체 구성원을 위한 무료 이발",
@@ -231,6 +232,12 @@
 		"seniorAdvisors": "상임 고문",
 		"associationBranches": "협회 지부"
 	},
+	"contactUs": {
+		"phone": "전화번호",
+		"address": "주소",
+		"workingHours": "영업 시간",
+		"email": "이메일"
+	},
 	"footer": {
 		"description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹이며, 함께 더 강한 공동체를 건설하기 위해 헌신합니다.",
 		"quickLinks": "바로가기",
@@ -238,7 +245,7 @@
 			"title": "연락처 정보",
 			"phone": "+855 15 220 320",
 			"email": "info@mettyerng.org",
-			"address": "프놈펜, 캄보디아"
+			"address": "No. 9C, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
 		},
 		"newsletter": {
 			"title": "뉴스레터",

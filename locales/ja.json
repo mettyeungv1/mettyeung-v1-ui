@@ -129,6 +129,7 @@
 		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループです。",
 		"learnMore": "さらに詳しく",
 		"watchVideo": "ビデオを見る",
+		"videoDescription": "私たちの活動やプログラムを動画でご覧ください",
 		"projectTitle": "無料ヘアカットプロジェクト",
 		"projectSubtitle": "コミュニティサービスイニシアチブ",
 		"projectDescription": "支援が必要なコミュニティメンバーのための無料ヘアカット",
@@ -232,6 +233,12 @@
 		"seniorAdvisors": "上級顧問",
 		"associationBranches": "協会支部"
 	},
+	"contactUs": {
+		"phone": "電話番号",
+		"address": "住所",
+		"workingHours": "営業時間",
+		"email": "メールアドレス"
+	},
 	"footer": {
 		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループであり、共に強力なコミュニティを築くことに尽力しています。",
 		"quickLinks": "クイックリンク",
@@ -239,7 +246,7 @@
 			"title": "連絡先情報",
 			"phone": "+855 15 220 320",
 			"email": "info@mettyerng.org",
-			"address": "プノンペン、カンボジア"
+			"address": "No. 9C, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
 		},
 		"newsletter": {
 			"title": "ニュースレター",

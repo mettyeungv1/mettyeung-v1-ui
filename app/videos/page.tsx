@@ -117,10 +117,7 @@ export default function VideosPage() {
 
 	return (
 		<div className="min-h-screen bg-gray-50">
-			<PageHero
-				title={t("nav.videos")}
-				subtitle="Explore our activities and programs through video"
-			/>
+			<PageHero title={t("nav.videos")} subtitle={t("hero.videoDescription")} />
 			{loading ? (
 				<GallerySkeleton />
 			) : (

@@ -136,6 +136,7 @@
 		"description": "We are a group of social enthusiasts focused on education, culture, and community development",
 		"learnMore": "Learn More",
 		"watchVideo": "Watch Video",
+		"videoDescription": "Explore our activities and programs through video",
 		"projectTitle": "Free Haircut Project",
 		"projectSubtitle": "Community Service Initiative",
 		"projectDescription": "Free haircuts for community members in need",
@@ -230,6 +231,12 @@
 		"error": "Error",
 		"success": "Success"
 	},
+	"contactUs": {
+		"phone": "Phone",
+		"address": "Address",
+		"workingHours": "Working Hours",
+		"email": "Email"
+	},
 	"footer": {
 		"description": "We are a group of social enthusiasts focused on education, culture, and community development, committed to building stronger communities together.",
 		"quickLinks": "Quick Links",
@@ -237,7 +244,7 @@
 			"title": "Contact Info",
 			"phone": "+855 15 220 320",
 			"email": "info@mettyerng.org",
-			"address": "Phnom Penh, Cambodia"
+			"address": "No. 9C, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
 		},
 		"newsletter": {
 			"title": "Newsletter",

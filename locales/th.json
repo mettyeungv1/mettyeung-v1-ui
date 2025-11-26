@@ -125,6 +125,7 @@
 		"description": "เราคือกลุ่มผู้ที่หลงใหลในสังคมที่มุ่งเน้นการศึกษา วัฒนธรรม และการพัฒนาชุมชน",
 		"learnMore": "เรียนรู้เพิ่มเติม",
 		"watchVideo": "ดูวิดีโอ",
+		"videoDescription": "สำรวจกิจกรรมและโครงการของเราผ่านวิดีโอ",
 		"projectTitle": "โครงการตัดผมฟรี",
 		"projectSubtitle": "โครงการริเริ่มบริการชุมชน",
 		"projectDescription": "บริการตัดผมฟรีสำหรับสมาชิกชุมชนที่ต้องการความช่วยเหลือ",
@@ -232,6 +233,12 @@
 		"seniorAdvisors": "ที่ปรึกษาอาวุโส",
 		"associationBranches": "สาขาสมาคม"
 	},
+	"contactUs": {
+		"phone": "เบอร์โทรศัพท์",
+		"address": "ที่อยู่",
+		"workingHours": "เวลาทำการ",
+		"email": "อีเมล"
+	},
 	"footer": {
 		"description": "เราคือกลุ่มผู้ที่หลงใหลในสังคมที่มุ่งเน้นการศึกษา วัฒนธรรม และการพัฒนาชุมชน มุ่งมั่นที่จะสร้างชุมชนที่เข้มแข็งยิ่งขึ้นร่วมกัน",
 		"quickLinks": "ลิงก์ด่วน",
@@ -239,7 +246,7 @@
 			"title": "ข้อมูลติดต่อ",
 			"phone": "+855 15 220 320",
 			"email": "info@mettyerng.org",
-			"address": "พนมเปญ, กัมพูชา"
+			"address": "No. 9C, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
 		},
 		"newsletter": {
 			"title": "จดหมายข่าว",

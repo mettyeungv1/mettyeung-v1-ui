@@ -1,7 +1,6 @@
 export interface ContactInfoItem {
 	icon: React.ElementType;
 	title: string;
-	title_en: string;
 	details: string[];
 	color: string;
 }
