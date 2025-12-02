@@ -59,9 +59,13 @@ export function ItemGallery<T extends GalleryItem>({
 					onValueChange={setSelectedCategory}
 					className="w-full"
 				>
-					<TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 mb-8">
+					<TabsList className="flex flex-wrap justify-center gap-2 h-auto w-full mb-8 p-2 bg-gray-100">
 						{categories.map((category) => (
-							<TabsTrigger key={category.id} value={category.id}>
+							<TabsTrigger 
+								key={category.id} 
+								value={category.id}
+								className="flex-shrink-0 px-6 py-2.5 text-sm font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm"
+							>
 								{category.name_en}
 							</TabsTrigger>
 						))}

@@ -23,7 +23,7 @@ export function ItemModal<T extends { title_en: string }>({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-4xl w-full">
+			<DialogContent className="max-w-4xl w-full max-h-screen overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle className="text-lg font-bold">
 						{item.title_en}

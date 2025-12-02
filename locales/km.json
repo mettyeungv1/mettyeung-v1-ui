@@ -236,6 +236,10 @@
 		"error": "កំហុស",
 		"success": "ជោគជ័យ"
 	},
+	"video": {
+		"category": "ប្រភេទ",
+		"about": "អំពី"
+	},
 	"contactUs": {
 		"phone": "លេខទូរស័ព្ទ",
 		"address": "អាសយដ្ឋាន",

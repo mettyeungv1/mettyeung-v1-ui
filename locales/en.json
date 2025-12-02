@@ -231,6 +231,10 @@
 		"error": "Error",
 		"success": "Success"
 	},
+	"video": {
+		"category": "Category",
+		"about": "About"
+	},
 	"contactUs": {
 		"phone": "Phone",
 		"address": "Address",

@@ -4,9 +4,14 @@ import { Video } from "@/lib/types/video";
 import { formatDate } from "@/lib/utils";
 import { Calendar } from "lucide-react";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n";
 
-export const renderVideoModalContent = (video: Video) => (
+export const renderVideoModalContent = (video: Video) => {
+	const { t } = useTranslation();
+	
+	return (
 	<div className="space-y-4">
+		{/* Video Player */}
 		<div className="aspect-video bg-black rounded-lg overflow-hidden">
 			<iframe
 				width="100%"
@@ -17,6 +22,7 @@ export const renderVideoModalContent = (video: Video) => (
 				allowFullScreen
 			></iframe>
 		</div>
+		
 		{video.categoryName && video.date && (
 		<div className="space-y-4">
 			{/* Metadata Card */}
@@ -34,7 +40,7 @@ export const renderVideoModalContent = (video: Video) => (
 							/>
 						</div>
 						<div>
-							<p className="text-xs text-gray-500 uppercase tracking-wide">Category</p>
+							<p className="text-xs text-gray-500 uppercase tracking-wide">{t("video.category")}</p>
 							<p className="text-sm font-semibold text-gray-900">{video.categoryName}</p>
 						</div>
 					</div>
@@ -49,13 +55,14 @@ export const renderVideoModalContent = (video: Video) => (
 			
 			{/* Description */}
 			{video.description && <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
-				<h3 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wide">About</h3>
-				<p className="text-gray-700 leading-relaxed text-sm">
+				<h3 className="text-sm font-semibold text-gray-900 mb-2 uppercase tracking-wide">{t("video.about")}</h3>
+				<p className="text-gray-700 leading-relaxed text-sm whitespace-pre-wrap break-words">
 					{video.description}
 				</p>
 			</div>}
 			
 		</div>
-	)}
+		)}
 	</div>
-);
+	);
+};
