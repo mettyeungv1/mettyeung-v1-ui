@@ -36,12 +36,12 @@ export const contactInfo: ContactInfoItem[] = [
 		],
 		color: "from-red-500 to-red-500",
 	},
-	{
-		icon: Clock,
-		title: "contactUs.workingHours",
-		details: ["Mon-Fri: 9:00 AM - 4:30 PM"],
-		color: "from-purple-500 to-indigo-600",
-	},
+	// {
+	// 	icon: Clock,
+	// 	title: "contactUs.workingHours",
+	// 	details: ["Mon-Fri: 9:00 AM - 4:30 PM"],
+	// 	color: "from-purple-500 to-indigo-600",
+	// },
 ];
 
 export const socialLinks: SocialLinkItem[] = [

@@ -55,7 +55,7 @@ export default function VideosPage() {
 			setLoading(true);
 			try {
 				const [videosRes, categoriesRes] = await Promise.all([
-					listVideosService({ sort: "-createdAt", limit: 12 }),
+					listVideosService({ sort: "-createdAt", limit: 120 }),
 					getVideoCategoriesService(),
 				]);
 
