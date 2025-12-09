@@ -59,7 +59,7 @@ export default function StructurePage() {
 			icon: Briefcase,
 			color: "from-green-500 to-green-600",
 			bgColor: "bg-green-50",
-			image: "/Our Friends Association Executive Committee.jpg",
+			image: "/Our Friends Association Executive Committee.png",
 			title: t("structure.executiveCommittee"),
 		},
 		"Our Friends Association Board of Directors": {
