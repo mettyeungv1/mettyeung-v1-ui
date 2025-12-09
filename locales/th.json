@@ -194,7 +194,6 @@
 		"message": "ข้อความ",
 		"send": "ส่งข้อความ",
 		"sending": "กำลังส่ง...",
-		"workingHours": "เวลาทำการ",
 		"followUs": "ติดตามเราบนโซเชียลมีเดีย",
 		"quickActions": "ดำเนินการด่วน",
 		"volunteer": "มาเป็นอาสาสมัคร",
@@ -236,7 +235,6 @@
 	"contactUs": {
 		"phone": "เบอร์โทรศัพท์",
 		"address": "ที่อยู่",
-		"workingHours": "เวลาทำการ",
 		"email": "อีเมล"
 	},
 	"footer": {

@@ -198,7 +198,6 @@
 		"message": "メッセージ",
 		"send": "メッセージを送る",
 		"sending": "送信中...",
-		"workingHours": "営業時間",
 		"followUs": "ソーシャルメディアでフォローする",
 		"quickActions": "クイックアクション",
 		"volunteer": "ボランティアになる",
@@ -236,7 +235,6 @@
 	"contactUs": {
 		"phone": "電話番号",
 		"address": "住所",
-		"workingHours": "営業時間",
 		"email": "メールアドレス"
 	},
 	"footer": {

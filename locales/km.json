@@ -213,7 +213,6 @@
 		"message": "សារ",
 		"send": "ផ្ញើសារ",
 		"sending": "កំពុងផ្ញើ...",
-		"workingHours": "ម៉ោងបើកធ្វើការ",
 		"followUs": "តាមដានយើង",
 		"quickActions": "សកម្មភាពលឿន",
 		"volunteer": "ចូលរួមជាស្ម័គ្រចិត្ត",
@@ -243,7 +242,6 @@
 	"contactUs": {
 		"phone": "លេខទូរស័ព្ទ",
 		"address": "អាសយដ្ឋាន",
-		"workingHours": "ម៉ោងធ្វើការ",
 		"email": "អ៊ីមែល"
 	},
 	"footer": {
