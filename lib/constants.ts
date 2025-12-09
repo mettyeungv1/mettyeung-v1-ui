@@ -13,13 +13,8 @@ export const SITE_CONFIG = {
 
 export const CONTACT_INFO = {
   phone: '+855 12 345 678',
-  email: 'info@mettyerng.org',
+  email: 'mettyeung@gmail.com',
   address: 'Phnom Penh, Cambodia',
-  workingHours: {
-    weekdays: '8:00 - 17:00',
-    saturday: '8:00 - 12:00',
-    sunday: 'Closed',
-  },
 };
 
 export const ORGANIZATION_STATS = {

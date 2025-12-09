@@ -49,7 +49,7 @@ export const newsData: NewsArticle[] = [];
 // 				"https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=150",
 // 			bio_en:
 // 				"Mettyerng Team is a non-profit organization focused on community support and social services.",
-// 			email: "info@mettyerng.org",
+// 			email: "mettyeung@gmail.com",
 // 			phone: "+855 12 345 678",
 // 			location: "Phnom Penh, Cambodia",
 // 		},
@@ -183,7 +183,7 @@ export const newsData: NewsArticle[] = [];
 // 				"https://images.pexels.com/photos/4491461/pexels-photo-4491461.jpeg?auto=compress&cs=tinysrgb&w=150",
 // 			bio_en:
 // 				"Mettyerng Team is a non-profit organization focused on community support and social services.",
-// 			email: "info@mettyerng.org",
+// 			email: "mettyeung@gmail.com",
 // 			phone: "+855 12 345 678",
 // 			location: "Phnom Penh, Cambodia",
 // 		},

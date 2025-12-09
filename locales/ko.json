@@ -193,7 +193,6 @@
 		"message": "메시지",
 		"send": "메시지 보내기",
 		"sending": "전송 중...",
-		"workingHours": "업무 시간",
 		"followUs": "소셜 미디어에서 팔로우",
 		"quickActions": "빠른 행동",
 		"volunteer": "자원봉사자 되기",
@@ -235,7 +234,6 @@
 	"contactUs": {
 		"phone": "전화번호",
 		"address": "주소",
-		"workingHours": "영업 시간",
 		"email": "이메일"
 	},
 	"footer": {
@@ -244,7 +242,7 @@
 		"contactInfo": {
 			"title": "연락처 정보",
 			"phone": "+855 15 220 320",
-			"email": "info@mettyerng.org",
+			"email": "mettyeung@gmail.com",
 			"address": "No. 9C, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
 		},
 		"newsletter": {

@@ -213,7 +213,6 @@
 		"message": "សារ",
 		"send": "ផ្ញើសារ",
 		"sending": "កំពុងផ្ញើ...",
-		"workingHours": "ម៉ោងបើកធ្វើការ",
 		"followUs": "តាមដានយើង",
 		"quickActions": "សកម្មភាពលឿន",
 		"volunteer": "ចូលរួមជាស្ម័គ្រចិត្ត",
@@ -243,7 +242,6 @@
 	"contactUs": {
 		"phone": "លេខទូរស័ព្ទ",
 		"address": "អាសយដ្ឋាន",
-		"workingHours": "ម៉ោងធ្វើការ",
 		"email": "អ៊ីមែល"
 	},
 	"footer": {
@@ -252,7 +250,7 @@
 		"contactInfo": {
 			"title": "ព័ត៌មានទំនាក់ទំនង",
 			"phone": "+855 15 220 320",
-			"email": "info@mettyerng.org",
+			"email": "mettyeung@gmail.com",
 			"address": "ផ្ទះលេខ ៩C, ផ្លូវលេខ ៥៩៨, ភូមិទួលថ្ងាន់, សង្កាត់ទួលសង្កែទី២, ខណ្ឌឫស្សីកែវ, រាជធានីភ្នំពេញ"
 		},
 		"newsletter": {

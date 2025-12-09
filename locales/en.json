@@ -208,7 +208,6 @@
 		"message": "Message",
 		"send": "Send Message",
 		"sending": "Sending...",
-		"workingHours": "Working Hours",
 		"followUs": "Follow Us on Social Media",
 		"quickActions": "Quick Actions",
 		"volunteer": "Become a Volunteer",
@@ -238,7 +237,6 @@
 	"contactUs": {
 		"phone": "Phone",
 		"address": "Address",
-		"workingHours": "Working Hours",
 		"email": "Email"
 	},
 	"footer": {
@@ -247,7 +245,7 @@
 		"contactInfo": {
 			"title": "Contact Info",
 			"phone": "+855 15 220 320",
-			"email": "info@mettyerng.org",
+			"email": "mettyeung@gmail.com",
 			"address": "No. 9C, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
 		},
 		"newsletter": {
