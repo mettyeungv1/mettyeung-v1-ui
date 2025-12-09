@@ -24,7 +24,7 @@ export const contactInfo: ContactInfoItem[] = [
 	{
 		icon: Mail,
 		title: "contactUs.email",
-		details: ["info@mettyerng.org"],
+		details: ["mettyeung@gmail.com"],
 		color: "from-blue-500 to-blue-500",
 	},
 	{

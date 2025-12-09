@@ -152,7 +152,7 @@ export function Footer() {
 								<span className="text-sm">{t("footer.contactInfo.phone")}</span>
 							</a>
 							<a
-								href="mailto:info@mettyerng.org"
+								href="mailto:mettyeung@gmail.com"
 								className="flex items-center space-x-3 text-blue-200 hover:text-white group"
 							>
 								<Mail className="w-5 h-5" />
