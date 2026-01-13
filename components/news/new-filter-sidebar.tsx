@@ -100,7 +100,6 @@ export function NewsFilterSidebar({
 										</motion.div>
 									)}
 							</div>
-							<span className="text-xs">({category.count})</span>
 						</button>
 
 						<AnimatePresence>

@@ -52,13 +52,6 @@ const languages: LanguageDefinition[] = [
 		nativeName: "日本語",
 		flag: "🇯🇵",
 	},
-	{
-		code: "th",
-		name: "Thai",
-		shortName: "ไทย",
-		nativeName: "ไทย",
-		flag: "🇹🇭",
-	},
 ];
 
 interface LanguageSwitcherProps {

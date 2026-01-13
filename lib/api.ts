@@ -1,5 +1,20 @@
 import headerToken from "./header";
 
+export function getApiUrl(): string {
+	// Server-side: use internal Docker URL
+	if (typeof window === "undefined") {
+		return (
+			process.env.AUTH_BASE_URL ||
+			process.env.INTERNAL_API_URL ||
+			"http://backend:8000/api/v1"
+		);
+	}
+	// Client-side: use public URL
+	return (
+		process.env.NEXT_PUBLIC_AUTH_BASE_URL || "https://api.mettyeung27.org/api/v1"
+	);
+}
+
 export async function fetchAPI<T>(
 	url: string,
 	options: RequestInit = {}
