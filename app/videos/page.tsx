@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import { useTranslation } from "@/lib/i18n";
 import {
 	listVideosService,
@@ -47,23 +47,31 @@ export default function VideosPage() {
 	const [selectedCategory, setSelectedCategory] = useState("all");
 	const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
+	// Pagination state
+	const [page, setPage] = useState(1);
+	const [hasMore, setHasMore] = useState(true);
+	const [loadingMore, setLoadingMore] = useState(false);
+	const observerTarget = useRef<HTMLDivElement>(null);
+
 	const { t } = useTranslation();
 
-	// Fetch data on component mount
+	// Fetch initial data (categories and first page of videos)
 	useEffect(() => {
-		const fetchData = async () => {
+		const initData = async () => {
 			setLoading(true);
 			try {
 				const [videosRes, categoriesRes] = await Promise.all([
-					listVideosService({ sort: "-createdAt", limit: 120 }),
+					listVideosService({ sort: "-createdAt", page: 1, limit: 12 }),
 					getVideoCategoriesService(),
 				]);
 
 				if (videosRes.data) {
 					setVideos(videosRes.data);
+					// Check if there are more pages
+					const totalPages = videosRes.meta_data?.totalPages || 1;
+					setHasMore(1 < totalPages);
 				}
 
-				// --- THIS IS THE CORRECTED PART ---
 				// Create a complete "All" category object that satisfies the Category type.
 				const allCategory: Category = {
 					id: "all",
@@ -83,8 +91,99 @@ export default function VideosPage() {
 				setLoading(false);
 			}
 		};
-		fetchData();
+		initData();
 	}, []);
+
+	// Handle category change
+	const handleCategoryChange = async (categoryId: string) => {
+		setSelectedCategory(categoryId);
+		setLoading(true);
+		setPage(1);
+		setVideos([]); // Clear existing videos
+
+		const startTime = Date.now();
+
+		try {
+			const params: any = {
+				sort: "-createdAt",
+				page: 1,
+				limit: 12,
+			};
+			if (categoryId !== "all") {
+				params.categoryId = categoryId;
+			}
+
+			const res = await listVideosService(params);
+			if (res.data) {
+				setVideos(res.data);
+				const totalPages = res.meta_data?.totalPages || 1;
+				setHasMore(1 < totalPages);
+			}
+		} catch (error) {
+			console.error("Failed to fetch videos for category:", error);
+		} finally {
+			// Ensure loading state lasts at least 500ms for smooth animation
+			const elapsed = Date.now() - startTime;
+			const remaining = Math.max(0, 500 - elapsed);
+			setTimeout(() => {
+				setLoading(false);
+			}, remaining);
+		}
+	};
+
+	// Load more videos
+	const loadMoreVideos = useCallback(async () => {
+		if (loadingMore || !hasMore) return;
+
+		setLoadingMore(true);
+		const nextPage = page + 1;
+
+		try {
+			const params: any = {
+				sort: "-createdAt",
+				page: nextPage,
+				limit: 12,
+			};
+			if (selectedCategory !== "all") {
+				params.categoryId = selectedCategory;
+			}
+
+			const res = await listVideosService(params);
+			if (res.data) {
+				setVideos((prev) => [...prev, ...res.data]);
+				setPage(nextPage);
+				const totalPages = res.meta_data?.totalPages || 1;
+				setHasMore(nextPage < totalPages);
+			}
+		} catch (error) {
+			console.error("Failed to load more videos:", error);
+		} finally {
+			setLoadingMore(false);
+		}
+	}, [loadingMore, hasMore, page, selectedCategory]);
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+					loadMoreVideos();
+				}
+			},
+			{ threshold: 0.1 }
+		);
+
+		const currentTarget = observerTarget.current;
+		if (currentTarget) {
+			observer.observe(currentTarget);
+		}
+
+		return () => {
+			if (currentTarget) {
+				observer.unobserve(currentTarget);
+			}
+		};
+	}, [hasMore, loadingMore, loading, loadMoreVideos]);
 
 	// Transform API data into the format required by UI components
 	const normalizedItems = useMemo((): (GalleryItem & {
@@ -104,13 +203,6 @@ export default function VideosPage() {
 		}));
 	}, [videos]);
 
-	const filteredItems = useMemo(() => {
-		if (selectedCategory === "all") {
-			return normalizedItems;
-		}
-		return normalizedItems.filter((item) => item.category === selectedCategory);
-	}, [normalizedItems, selectedCategory]);
-
 	const handleVideoClick = (item: GalleryItem & { _original: Video }) => {
 		setSelectedVideo(item._original);
 	};
@@ -118,21 +210,28 @@ export default function VideosPage() {
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<PageHero title={t("nav.videos")} subtitle={t("hero.videoDescription")} />
-			{loading ? (
+			{loading && categories.length === 0 ? (
 				<GallerySkeleton />
 			) : (
-				<ItemGallery
-					title="All Videos"
-					subtitle="Video Gallery"
-					items={filteredItems}
-					categories={categories.map((c) => ({
-						id: c.id,
-						name_en: c.name.en || c.id,
-					}))}
-					selectedCategory={selectedCategory}
-					onCategoryChange={setSelectedCategory}
-					onItemClick={handleVideoClick}
-				/>
+				<>
+					<ItemGallery
+						title="All Videos"
+						subtitle="Video Gallery"
+						items={normalizedItems}
+						categories={categories.map((c) => ({
+							id: c.id,
+							name_en: c.name.en || c.id,
+						}))}
+						selectedCategory={selectedCategory}
+						onCategoryChange={handleCategoryChange}
+						onItemClick={handleVideoClick}
+						loadingMore={loadingMore}
+						hasMore={hasMore}
+						loading={loading}
+					/>
+					{/* Intersection Observer Target */}
+					<div ref={observerTarget} className="h-4" />
+				</>
 			)}
 
 			<ItemModal

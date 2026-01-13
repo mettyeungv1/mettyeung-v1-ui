@@ -49,12 +49,19 @@ export const listVideosService = async (
 		url
 	);
 
-	const paginatedData = response.data as any;
-	const normalizedVideos = paginatedData.map((d: any) => normalizeVideoData(d));
+	// The API response structure from fetchAPI is { data: APIVideoPost[], meta_data: any, ... }
+	// But based on the controller, it returns { data: APIVideoPost[], meta_data: any } inside the response body.
+	// Let's look at fetchAPI again. It returns `APIResponse<T>`.
+	// If the backend returns `okWithPagination`, the JSON body is:
+	// { status_code: 200, message: "...", data: [...], meta_data: {...} }
+	// fetchAPI returns this whole object.
+	
+	const videos = Array.isArray(response.data) ? response.data : [];
+	const normalizedVideos = videos.map((d: any) => normalizeVideoData(d));
 
 	return {
 		data: normalizedVideos,
-		meta_data: paginatedData.meta_data,
+		meta_data: response.meta_data, // Access meta_data from the root of the response
 	};
 };
 

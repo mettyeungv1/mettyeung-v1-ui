@@ -45,7 +45,10 @@ export const listBlogsService = async (
 		const items: BlogPost[] = res.data.map(normalizeMediaUrls);
 		const wrapped: APIResponse<Paginated<BlogPost>> = {
 			...res,
-			data: { data: items },
+			data: {
+				data: items,
+				...res.meta_data,
+			},
 		};
 		return wrapped;
 	}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "@/lib/i18n";
 
@@ -17,6 +17,8 @@ import {
 } from "@/service/category/category-service";
 import type { BlogPost } from "@/lib/types/blog";
 
+const POSTS_PER_PAGE = 12;
+
 export default function NewsPage() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState("all");
@@ -26,6 +28,11 @@ export default function NewsPage() {
 	const [posts, setPosts] = useState<BlogPost[]>([]);
 	const [categories, setCategories] = useState<UICategory[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [loadingMore, setLoadingMore] = useState(false);
+	const [page, setPage] = useState(1);
+	const [hasMore, setHasMore] = useState(true);
+	const [totalPages, setTotalPages] = useState(0);
+	const observerTarget = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
 	const router = useRouter();
 
@@ -33,15 +40,18 @@ export default function NewsPage() {
 		router.push(`/news/${id}`);
 	};
 
+	// Load initial posts and categories
 	useEffect(() => {
 		(async () => {
 			setLoading(true);
 			const [postRes, catRes] = await Promise.all([
-				listBlogsService({ sort: "-publishedAt", limit: 100 }),
+				listBlogsService({ sort: "-publishedAt", limit: POSTS_PER_PAGE, page: 1 }),
 				listCategoriesService(),
 			]);
 			if (postRes.status_code === 200 && postRes.data?.data) {
 				setPosts(postRes.data.data);
+				setTotalPages(postRes.data.totalPages || 1);
+				setHasMore((postRes.data.page || 1) < (postRes.data.totalPages || 1));
 			}
 			if (catRes.status_code === 200 && Array.isArray(catRes.data)) {
 				const uiCats = mapToUICategories(
@@ -55,6 +65,115 @@ export default function NewsPage() {
 			setLoading(false);
 		})();
 	}, []);
+
+	// Reset pagination when filters change
+	useEffect(() => {
+		const resetPagination = async () => {
+			setLoading(true);
+			setPage(1);
+			setPosts([]);
+			
+			const startTime = Date.now();
+
+			const params: any = { 
+				sort: "-publishedAt", 
+				limit: POSTS_PER_PAGE, 
+				page: 1 
+			};
+			
+			if (searchTerm) {
+				params.q = searchTerm;
+			}
+			
+			if (selectedCategory !== "all") {
+				// If subcategory is selected, use that as the categoryId filter
+				// Otherwise use the main category
+				params.categoryId = selectedSubCategory || selectedCategory;
+			}
+
+			const postRes = await listBlogsService(params);
+			
+			if (postRes.status_code === 200 && postRes.data?.data) {
+				setPosts(postRes.data.data);
+				setTotalPages(postRes.data.totalPages || 1);
+				setHasMore((postRes.data.page || 1) < (postRes.data.totalPages || 1));
+			}
+			
+			// Ensure loading state lasts at least 500ms for smooth animation
+			const elapsed = Date.now() - startTime;
+			const remaining = Math.max(0, 500 - elapsed);
+			setTimeout(() => {
+				setLoading(false);
+			}, remaining);
+		};
+
+		// Debounce search to avoid too many requests
+		const timeoutId = setTimeout(() => {
+			if (!loading) {
+				resetPagination();
+			}
+		}, 300);
+
+		return () => clearTimeout(timeoutId);
+		return () => clearTimeout(timeoutId);
+	}, [searchTerm, selectedCategory, selectedSubCategory]);
+
+	// Load more posts
+	const loadMorePosts = useCallback(async () => {
+		if (loadingMore || !hasMore) return;
+
+		setLoadingMore(true);
+		const nextPage = page + 1;
+
+		const params: any = { 
+			sort: "-publishedAt", 
+			limit: POSTS_PER_PAGE, 
+			page: nextPage 
+		};
+		
+		if (searchTerm) {
+			params.q = searchTerm;
+		}
+		
+		if (selectedCategory !== "all") {
+			// If subcategory is selected, use that as the categoryId filter
+			// Otherwise use the main category
+			params.categoryId = selectedSubCategory || selectedCategory;
+		}
+
+		const postRes = await listBlogsService(params);
+
+		if (postRes.status_code === 200 && postRes.data?.data) {
+			setPosts((prev) => [...prev, ...postRes.data.data]);
+			setPage(nextPage);
+			setHasMore(nextPage < (postRes.data.totalPages || 1));
+		}
+		setLoadingMore(false);
+		setLoadingMore(false);
+	}, [loadingMore, hasMore, page, searchTerm, selectedCategory, selectedSubCategory]);
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+					loadMorePosts();
+				}
+			},
+			{ threshold: 0.1 }
+		);
+
+		const currentTarget = observerTarget.current;
+		if (currentTarget) {
+			observer.observe(currentTarget);
+		}
+
+		return () => {
+			if (currentTarget) {
+				observer.unobserve(currentTarget);
+			}
+		};
+	}, [hasMore, loadingMore, loading, loadMorePosts]);
 
 	const normalized = useMemo(() => {
 		const items = posts.map((p) => ({
@@ -85,34 +204,6 @@ export default function NewsPage() {
 			})),
 		}));
 
-		let filtered = items;
-		if (selectedCategory !== "all") {
-			// Build allowed ids: selected parent + its children
-			const parent = categories.find((c) => c.id === selectedCategory);
-			const allowedIds = new Set<string>([
-				selectedCategory,
-				...((parent?.subcategories || []).map((s) => s.id) as string[]),
-			]);
-			filtered = filtered.filter((i) =>
-				allowedIds.has(i.category.id as string)
-			);
-			if (selectedSubCategory) {
-				// If a subcategory is selected, filter by that exact child id
-				filtered = filtered.filter(
-					(i) => i.category.id === selectedSubCategory
-				);
-			}
-		}
-
-		if (searchTerm) {
-			const q = searchTerm.toLowerCase();
-			filtered = filtered.filter(
-				(i) =>
-					t(i.title).toLowerCase().includes(q) ||
-					t(i.excerpt).toLowerCase().includes(q)
-			);
-		}
-
 		const featured = items.filter((i) => i.featured);
 		const recent = items
 			.filter((i) => !i.featured)
@@ -120,15 +211,16 @@ export default function NewsPage() {
 			.slice(0, 4);
 
 		return {
-			filteredNews: filtered,
+			filteredNews: items, // No more client-side filtering
 			featuredNews: featured,
 			recentNews: recent,
 		};
-	}, [posts, searchTerm, selectedCategory, selectedSubCategory]);
+	}, [posts]);
 
-	if (loading) {
-		return <div className="min-h-screen bg-gray-50" />;
-	}
+	// Removed full page loading check to prevent layout shift
+	// if (loading) {
+	// 	return <div className="min-h-screen bg-gray-50" />;
+	// }
 
 	const { filteredNews, featuredNews, recentNews } = normalized;
 
@@ -185,8 +277,13 @@ export default function NewsPage() {
 									items={filteredNews as any}
 									categories={categories as any}
 									onCardClick={(nid) => handleArticleClick(String(nid))}
+									loadingMore={loadingMore}
+									hasMore={hasMore}
+									loading={loading && page === 1}
 								/>
 							</AnimatedSection>
+							{/* Intersection Observer Target */}
+							<div ref={observerTarget} className="h-10" />
 						</div>
 					</div>
 				</div>

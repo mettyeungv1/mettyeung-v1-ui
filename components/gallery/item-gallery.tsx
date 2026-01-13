@@ -1,22 +1,23 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { ItemCard, GalleryItem } from "./item-card";
 import { useTranslation } from "@/lib/i18n";
-
-interface Category {
-	id: string;
-	name_en: string;
-}
+import { Loader2 } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ItemGalleryProps<T> {
 	title: string;
 	subtitle: string;
 	items: T[];
 	categories: { id: string; name_en: string }[];
-	selectedCategory: string; // ✅ add this
-	onCategoryChange: React.Dispatch<React.SetStateAction<string>>;
+	selectedCategory: string;
+	onCategoryChange: (category: string) => void;
 	onItemClick: (item: T) => void;
+	loadingMore?: boolean;
+	hasMore?: boolean;
+	loading?: boolean;
 }
 
 export function ItemGallery<T extends GalleryItem>({
@@ -24,9 +25,13 @@ export function ItemGallery<T extends GalleryItem>({
 	subtitle,
 	items,
 	categories,
+	selectedCategory,
+	onCategoryChange,
 	onItemClick,
+	loadingMore = false,
+	hasMore = true,
+	loading = false,
 }: ItemGalleryProps<T>) {
-	const [selectedCategory, setSelectedCategory] = useState("all");
 	const { t } = useTranslation();
 	// Suggestion 2: Create a memoized lookup map for categories for O(1) access.
 	const categoryMap = useMemo(() => {
@@ -34,13 +39,6 @@ export function ItemGallery<T extends GalleryItem>({
 		categories.forEach((cat) => map.set(cat.id, cat.name_en));
 		return map;
 	}, [categories]);
-
-	const filteredItems = useMemo(() => {
-		if (selectedCategory === "all") {
-			return items;
-		}
-		return items.filter((item) => item.category === selectedCategory);
-	}, [items, selectedCategory]);
 
 	return (
 		<section className="section-padding bg-gray-50">
@@ -56,13 +54,13 @@ export function ItemGallery<T extends GalleryItem>({
 
 				<Tabs
 					value={selectedCategory}
-					onValueChange={setSelectedCategory}
+					onValueChange={onCategoryChange}
 					className="w-full"
 				>
 					<TabsList className="flex flex-wrap justify-start md:grid md:grid-cols-5 gap-2 h-auto w-full mb-8 p-2 bg-gray-100">
 						{categories.map((category) => (
-							<TabsTrigger 
-								key={category.id} 
+							<TabsTrigger
+								key={category.id}
 								value={category.id}
 								className="flex-shrink-0 px-4 py-2.5 md:px-6 text-sm font-medium transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md"
 							>
@@ -71,30 +69,88 @@ export function ItemGallery<T extends GalleryItem>({
 						))}
 					</TabsList>
 
-					<TabsContent value={selectedCategory}>
-						{/* Suggestion 1: Handle empty state */}
-						{filteredItems.length > 0 ? (
-							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-								{filteredItems.map((item, index) => (
-									<AnimatedSection key={item.id} delay={index * 0.1}>
-										<ItemCard
-											item={item}
-											categoryName={categoryMap.get(item.category)}
-											onCardClick={onItemClick}
-										/>
-									</AnimatedSection>
-								))}
-							</div>
-						) : (
-							<div className="text-center py-16 text-gray-500 bg-white rounded-lg border">
-								<h3 className="text-xl font-semibold">No Items Found</h3>
-								<p className="mt-2 text-sm">
-									There are no items in the "
-									{categoryMap.get(selectedCategory) || selectedCategory}"
-									category.
-								</p>
-							</div>
-						)}
+					<TabsContent value={selectedCategory} className="mt-0">
+						<AnimatePresence mode="wait">
+							{loading ? (
+								<motion.div
+									key="loader"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.2 }}
+									className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+								>
+									{Array.from({ length: 6 }).map((_, i) => (
+										<div key={i} className="space-y-3">
+											<Skeleton className="aspect-video w-full rounded-lg" />
+											<Skeleton className="h-5 w-3/4" />
+											<Skeleton className="h-4 w-1/2" />
+										</div>
+									))}
+								</motion.div>
+							) : items.length > 0 ? (
+								<motion.div
+									key="content"
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									transition={{ duration: 0.2 }}
+								>
+									<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+										<AnimatePresence mode="popLayout">
+											{items.map((item, index) => (
+												<motion.div
+													layout
+													key={item.id}
+													initial={{ opacity: 0, scale: 0.9 }}
+													animate={{ opacity: 1, scale: 1 }}
+													exit={{ opacity: 0, scale: 0.9 }}
+													transition={{ duration: 0.3 }}
+												>
+													<ItemCard
+														item={item}
+														categoryName={categoryMap.get(item.category)}
+														onCardClick={onItemClick}
+													/>
+												</motion.div>
+											))}
+										</AnimatePresence>
+									</div>
+
+									{/* Loading More Indicator */}
+									{loadingMore && (
+										<div className="flex justify-center items-center py-8">
+											<Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+											<span className="ml-3 text-gray-600">Loading more...</span>
+										</div>
+									)}
+
+									{/* End of Items Message */}
+									{!hasMore && !loadingMore && items.length > 0 && (
+										<div className="text-center py-8">
+											<p className="text-gray-500">
+												You've reached the end of the list
+											</p>
+										</div>
+									)}
+								</motion.div>
+							) : (
+								<motion.div
+									key="empty"
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									exit={{ opacity: 0, y: -20 }}
+									className="text-center py-16 text-gray-500 bg-white rounded-lg border"
+								>
+									<h3 className="text-xl font-semibold">No Items Found</h3>
+									<p className="mt-2 text-sm">
+										There are no items in the "
+										{categoryMap.get(selectedCategory) || selectedCategory}"
+										category.
+									</p>
+								</motion.div>
+							)}
+						</AnimatePresence>
 					</TabsContent>
 				</Tabs>
 			</div>

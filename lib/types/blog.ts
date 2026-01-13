@@ -37,5 +37,8 @@ export interface BlogPost {
 
 export interface Paginated<T> {
 	data: T[];
-	meta?: { page?: number; limit?: number; total?: number; pages?: number };
+	total?: number;
+	totalPages?: number;
+	page?: number;
+	limit?: number;
 }

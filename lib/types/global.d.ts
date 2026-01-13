@@ -6,5 +6,6 @@ declare global {
 		message: string;
 		dev_message: string;
 		data: T;
+		meta_data?: any;
 	}
 }
