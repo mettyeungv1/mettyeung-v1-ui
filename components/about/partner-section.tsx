@@ -9,10 +9,10 @@ import { useEffect, useState, useRef } from "react";
 import { getPartnersService } from "@/service/partner/partner-service";
 import type { Partner } from "@/lib/types/partner";
 
-export function PartnersSection() {
+export function PartnersSection({ initialPartners = [] }: { initialPartners?: Partner[] }) {
 	const { t } = useTranslation();
-	const [partners, setPartners] = useState<Partner[]>([]);
-	const [loading, setLoading] = useState(true);
+	const [partners, setPartners] = useState<Partner[]>(initialPartners);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	
 	// Pagination state
@@ -20,29 +20,6 @@ export function PartnersSection() {
 	const [hasMore, setHasMore] = useState(true);
 	const [loadingMore, setLoadingMore] = useState(false);
 	const observerTarget = useRef<HTMLDivElement>(null);
-
-	// Initial fetch
-	useEffect(() => {
-		(async () => {
-			try {
-				const res = await getPartnersService({ page: 1, limit: 12, sort: "order" });
-				if (res.status_code === 200) {
-					// Handle both paginated and non-paginated responses
-					const newPartners = res.data?.data || (Array.isArray(res.data) ? res.data : []);
-					setPartners(newPartners);
-					
-					const totalPages = res.data?.totalPages || 1;
-					setHasMore(1 < totalPages);
-				} else {
-					setError("Failed to load partners");
-				}
-			} catch (e) {
-				setError("Failed to load partners");
-			} finally {
-				setLoading(false);
-			}
-		})();
-	}, []);
 
 	// Load more partners
 	const loadMorePartners = async () => {

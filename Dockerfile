@@ -32,11 +32,11 @@
     ENV PORT=3000
     
     # Assumes next.config.js has: output: "standalone"
-    COPY --from=builder /app/.next/standalone ./
-    COPY --from=builder /app/.next/static ./.next/static
+    COPY --from=builder --chown=node:node /app/.next/standalone ./
+    COPY --from=builder --chown=node:node /app/.next/static ./.next/static
 
     # ❗ FIX: Add this line to copy your images and other public assets right here
-    COPY --from=builder /app/public ./public
+    COPY --from=builder --chown=node:node /app/public ./public
 
     EXPOSE 3000
     CMD ["node", "server.js"]

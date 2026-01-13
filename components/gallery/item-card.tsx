@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 
+import Image from "next/image";
+
 // A generic type for any item the card can display
 export interface GalleryItem {
 	id: string | number;
@@ -38,10 +40,12 @@ export function ItemCard<T extends GalleryItem>({
 				className="relative aspect-video overflow-hidden"
 				onClick={() => onCardClick(item)}
 			>
-				<img
+				<Image
 					src={item.thumbnail}
 					alt={item.title_en}
-					className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+					fill
+					className="object-cover group-hover:scale-105 transition-transform duration-300"
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				/>
 				<div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
 

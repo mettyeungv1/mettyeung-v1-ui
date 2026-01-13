@@ -69,16 +69,17 @@
 		"tailwind-merge": "^2.5.2",
 		"tailwindcss-animate": "^1.0.7",
 		"typescript": "5.2.2",
+		"undici": "^7.18.2",
 		"vaul": "^0.9.9",
 		"zod": "^4.0.5",
 		"zustand": "^5.0.6"
 	},
 	"devDependencies": {
-		"eslint": "^9.0.0",
-		"eslint-config-next": "15.0.3",
 		"@commitlint/cli": "^19.8.1",
 		"@commitlint/config-conventional": "^19.8.1",
 		"autoprefixer": "^10.4.22",
+		"eslint": "^9.0.0",
+		"eslint-config-next": "15.0.3",
 		"husky": "^9.1.7",
 		"postcss": "^8.5.6",
 		"tailwindcss": "^3.4.18"

@@ -121,7 +121,6 @@ export function ItemGallery<T extends GalleryItem>({
 									{loadingMore && (
 										<div className="flex justify-center items-center py-8">
 											<Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-											<span className="ml-3 text-gray-600">Loading more...</span>
 										</div>
 									)}
 

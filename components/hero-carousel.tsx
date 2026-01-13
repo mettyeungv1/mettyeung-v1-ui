@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-import { getBannersService } from "@/service/banner/banner-service";
 import { Banner } from "@/lib/types/banner";
 import { API_BASE_URL } from "@/lib/static";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/effect-fade";
-import { SpinnerEmpty } from "./common/spinner";
 
 const MotionImage = motion(Image);
 
@@ -22,49 +20,11 @@ const kenBurnsVariants = {
 	inactive: { scale: 1 },
 };
 
-export function HeroCarousel() {
-	const [banners, setBanners] = useState<Banner[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		const fetchBanners = async () => {
-			try {
-				setLoading(true);
-				const response = await getBannersService();
-
-				if (response.status_code === 200 && response.data) {
-					setBanners(response.data);
-				} else {
-					setError("Failed to load banners");
-				}
-			} catch (err) {
-				console.error("Error fetching banners:", err);
-				setError("Failed to load banners");
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchBanners();
-	}, []);
-
-	// Show loading state
-	if (loading) {
+export function HeroCarousel({ banners }: { banners: Banner[] }) {
+	if (banners.length === 0) {
 		return (
 			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
-				<SpinnerEmpty />
-			</div>
-		);
-	}
-
-	// Show error state
-	if (error || banners.length === 0) {
-		return (
-			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
-				<div className="text-lg text-gray-600">
-					{error || "No banners available"}
-				</div>
+				<div className="text-lg text-gray-600">No banners available</div>
 			</div>
 		);
 	}

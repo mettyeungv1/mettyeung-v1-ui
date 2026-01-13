@@ -6,7 +6,7 @@ export function getApiUrl(): string {
 		return (
 			process.env.AUTH_BASE_URL ||
 			process.env.INTERNAL_API_URL ||
-			"http://backend:8000/api/v1"
+			"http://localhost:8000/api/v1"
 		);
 	}
 	// Client-side: use public URL
@@ -22,11 +22,28 @@ export async function fetchAPI<T>(
 	const headers = await headerToken();
 	console.log("🚀 Requesting API URL:", url);
 
+	// Default timeout of 10 seconds
+	const controller = new AbortController();
+	const timeoutId = setTimeout(() => controller.abort(), 10000);
+	
+	// Default caching strategy: revalidate every hour (3600s)
+	// This enables Next.js request deduplication
+	const defaultOptions: RequestInit = {
+		next: { revalidate: 3600 },
+		signal: controller.signal,
+	};
+
 	try {
 		const response = await fetch(url, {
+			...defaultOptions,
 			...options,
-			headers,
+			headers: {
+				...headers,
+				...options.headers,
+			},
 		});
+
+		clearTimeout(timeoutId);
 
 		// Check for non-successful HTTP status codes (e.g., 404, 500)
 		if (!response.ok) {
@@ -58,9 +75,20 @@ export async function fetchAPI<T>(
 		// Parse the successful JSON response
 		const data: APIResponse<T> = await response.json();
 		return data;
-	} catch (error) {
+	} catch (error: any) {
+		clearTimeout(timeoutId);
+		
 		// Handle network errors (e.g., user is offline)
 		console.error("Network or Fetch Error:", error);
+
+		if (error.name === 'AbortError') {
+			return {
+				status_code: 408, // Request Timeout
+				message: "Request timed out. Please try again.",
+				dev_message: "Fetch aborted due to timeout",
+				data: null,
+			} as APIResponse<T>;
+		}
 
 		// Return a standardized network error object
 		return {

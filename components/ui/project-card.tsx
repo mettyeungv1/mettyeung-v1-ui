@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
 	Calendar,
@@ -62,11 +63,13 @@ export function ProjectCard({
 			<AnimatedSection delay={index * 0.1}>
 				<Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group card-interactive">
 					<div className="flex">
-						<div className="w-24 h-24 flex-shrink-0">
-							<img
+						<div className="w-24 h-24 flex-shrink-0 relative">
+							<Image
 								src={project.images[0]}
 								alt={project.title}
-								className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+								fill
+								className="object-cover group-hover:scale-110 transition-transform duration-500"
+								sizes="96px"
 							/>
 						</div>
 						<CardContent className="flex-1 p-4">
@@ -107,11 +110,13 @@ export function ProjectCard({
 			<AnimatedSection delay={index * 0.2}>
 				<Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group card-interactive">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-						<div className="aspect-video lg:aspect-square overflow-hidden">
-							<img
+						<div className="aspect-video lg:aspect-square overflow-hidden relative">
+							<Image
 								src={project.images[0]}
 								alt={project.title}
-								className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+								fill
+								className="object-cover group-hover:scale-110 transition-transform duration-500"
+								sizes="(max-width: 1024px) 100vw, 50vw"
 							/>
 						</div>
 
@@ -151,11 +156,13 @@ export function ProjectCard({
 	return (
 		<AnimatedSection delay={index * 0.1}>
 			<Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group card-interactive h-full flex flex-col">
-				<div className="aspect-video overflow-hidden">
-					<img
+				<div className="aspect-video overflow-hidden relative">
+					<Image
 						src={project.images[0]}
 						alt={project.title}
-						className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+						fill
+						className="object-cover group-hover:scale-110 transition-transform duration-500"
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 					/>
 				</div>
 
