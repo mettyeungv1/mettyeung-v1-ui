@@ -46,7 +46,8 @@ export const listVideosService = async (
 
 	const url = queryParams ? `${VIDEO_ENDPOINT}?${queryParams}` : VIDEO_ENDPOINT;
 	const response = await fetchAPI<{ data: APIVideoPost[]; meta_data: any }>(
-		url
+		url,
+		{ skipAuth: true }
 	);
 
 	// The API response structure from fetchAPI is { data: APIVideoPost[], meta_data: any, ... }
@@ -71,7 +72,8 @@ export const listVideosService = async (
 export const getVideoCategoriesService = async (): Promise<Category[]> => {
 	// Assuming a general category endpoint that can be filtered by type
 	const response = await fetchAPI<{ data: Category[] }>(
-		`${CATEGORY_ENDPOINT}?type=video`
+		`${CATEGORY_ENDPOINT}?type=video`,
+		{ skipAuth: true }
 	);
 	return Array.isArray(response.data) ? response.data : [];
 };

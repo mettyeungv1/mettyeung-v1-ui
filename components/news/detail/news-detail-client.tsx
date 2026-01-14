@@ -74,7 +74,7 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 	];
 
 	return (
-		<div className="min-h-screen bg-white">
+		<div className="min-h-screen bg-white pt-16 lg:pt-20">
 			<Breadcrumbs items={breadcrumbItems} currentPage={article.title_en} />
 			<div className="container py-12">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">

@@ -4,5 +4,5 @@ import { BANNER_ENDPOINT } from "@/lib/static";
 import { Banner } from "@/lib/types/banner";
 
 export const getBannersService = async (): Promise<APIResponse<Banner[]>> => {
-  return fetchAPI<Banner[]>(BANNER_ENDPOINT);
+  return fetchAPI<Banner[]>(BANNER_ENDPOINT, { skipAuth: true });
 };

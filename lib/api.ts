@@ -6,7 +6,7 @@ export function getApiUrl(): string {
 		return (
 			process.env.AUTH_BASE_URL ||
 			process.env.INTERNAL_API_URL ||
-			"http://localhost:8000/api/v1"
+			"https://api.mettyeung27.org/api/v1"
 		);
 	}
 	// Client-side: use public URL
@@ -15,16 +15,30 @@ export function getApiUrl(): string {
 	);
 }
 
+type FetchAPIOptions = RequestInit & {
+	skipAuth?: boolean;
+};
+
 export async function fetchAPI<T>(
 	url: string,
-	options: RequestInit = {}
+	options: FetchAPIOptions = {}
 ): Promise<APIResponse<T>> {
-	const headers = await headerToken();
+	let headers: any = {
+		accept: "*/*",
+		"Content-Type": "application/json",
+	};
+
+	if (!options.skipAuth) {
+		const tokenHeaders = await headerToken();
+		headers = { ...headers, ...tokenHeaders };
+	} else {
+		console.log("🚀 Skipping Auth Token for:", url);
+	}
 	console.log("🚀 Requesting API URL:", url);
 
-	// Default timeout of 10 seconds
+	// Default timeout of 30 seconds
 	const controller = new AbortController();
-	const timeoutId = setTimeout(() => controller.abort(), 10000);
+	const timeoutId = setTimeout(() => controller.abort(), 30000);
 	
 	// Default caching strategy: revalidate every hour (3600s)
 	// This enables Next.js request deduplication

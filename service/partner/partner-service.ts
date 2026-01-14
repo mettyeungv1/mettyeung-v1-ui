@@ -17,7 +17,9 @@ export const getPartnersService = async (
 		...(params.limit && { limit: String(params.limit) }),
 	}).toString();
 
-	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}?${qs}`);
+	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}?${qs}`, {
+		skipAuth: true,
+	});
 	
 	// Helper to normalize a single partner
 	const normalizePartner = (p: Partner) => ({

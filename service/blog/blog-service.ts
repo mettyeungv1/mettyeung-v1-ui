@@ -38,7 +38,7 @@ export const listBlogsService = async (
 	).toString();
 
 	const url = qs ? `${BLOG_ENDPOINT}?${qs}` : BLOG_ENDPOINT;
-	const res = await fetchAPI<any>(url);
+	const res = await fetchAPI<any>(url, { skipAuth: true });
 
 	// Backend returns data: BlogPost[] directly
 	if (Array.isArray(res?.data)) {
@@ -67,7 +67,9 @@ export const listBlogsService = async (
 export const getBlogByIdService = async (
 	id: string
 ): Promise<APIResponse<BlogPost>> => {
-	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/${id}`);
+	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/${id}`, {
+		skipAuth: true,
+	});
 	if (res?.data) res.data = normalizeMediaUrls(res.data);
 	return res;
 };
@@ -75,7 +77,9 @@ export const getBlogByIdService = async (
 export const getBlogRelatedPostService = async (
 	id: string
 ): Promise<APIResponse<any>> => {
-	const res = await fetchAPI<any>(`${BLOG_ENDPOINT}/${id}/related`);
+	const res = await fetchAPI<any>(`${BLOG_ENDPOINT}/${id}/related`, {
+		skipAuth: true,
+	});
 	if (res?.data) {
 		res.data = {
 			...res.data,
@@ -88,7 +92,9 @@ export const getBlogRelatedPostService = async (
 export const getFeaturedBlogService = async (): Promise<
 	APIResponse<BlogPost>
 > => {
-	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/featured`);
+	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/featured`, {
+		skipAuth: true,
+	});
 	if (res?.data) res.data = normalizeMediaUrls(res.data);
 	return res;
 };

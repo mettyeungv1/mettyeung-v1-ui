@@ -35,11 +35,9 @@ export function ItemCard<T extends GalleryItem>({
 			className={`overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer ${
 				isFeatured ? "hover:shadow-2xl" : ""
 			}`}
+			onClick={() => onCardClick(item)}
 		>
-			<div
-				className="relative aspect-video overflow-hidden"
-				onClick={() => onCardClick(item)}
-			>
+			<div className="relative aspect-video overflow-hidden">
 				<Image
 					src={item.thumbnail}
 					alt={item.title_en}
@@ -80,7 +78,11 @@ export function ItemCard<T extends GalleryItem>({
 						{categoryName && (
 							<Badge
 								variant={isFeatured ? "default" : "secondary"}
-								className={isFeatured ? "bg-khmer-gold text-white" : ""}
+								className={
+									isFeatured
+										? "bg-khmer-gold text-white"
+										: "bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md px-3 py-1.5 text-sm font-medium border-transparent"
+								}
 							>
 								{categoryName}
 							</Badge>

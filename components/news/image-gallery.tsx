@@ -108,18 +108,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 					))}
 				</div>
 
-				{/* Show more indicator for many images */}
-				{images.length > 6 && (
-					<div className="mt-4 text-center">
-						<Button
-							variant="outline"
-							size="sm"
-							className="text-khmer-gold border-khmer-gold hover:bg-khmer-gold hover:text-white"
-						>
-							មើលរូបភាពទាំងអស់ ({images.length})
-						</Button>
-					</div>
-				)}
+
 			</div>
 
 			{/* Modal */}
@@ -151,19 +140,19 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 								<>
 									<Button
 										variant="ghost"
-										size="sm"
+										size="icon"
 										onClick={prevImage}
-										className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 z-10"
+										className="absolute -left-3 md:left-4 top-1/2 -translate-y-1/2 bg-primary/80 text-white hover:bg-primary hover:text-white rounded-full z-10 transition-colors w-10 h-10 md:w-12 md:h-12 border-2 border-white/20"
 									>
-										<ChevronLeft className="w-8 h-8" />
+										<ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
 									</Button>
 									<Button
 										variant="ghost"
-										size="sm"
+										size="icon"
 										onClick={nextImage}
-										className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 z-10"
+										className="absolute -right-3 md:right-4 top-1/2 -translate-y-1/2 bg-primary/80 text-white hover:bg-primary hover:text-white rounded-full z-10 transition-colors w-10 h-10 md:w-12 md:h-12 border-2 border-white/20"
 									>
-										<ChevronRight className="w-8 h-8" />
+										<ChevronRight className="w-5 h-5 md:w-8 md:h-8" />
 									</Button>
 								</>
 							)}
@@ -173,7 +162,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 								<img
 									src={images[selectedImage].url}
 									alt={images[selectedImage].caption}
-									className="max-w-full max-h-[80vh] object-contain rounded-lg"
+									className="max-w-full max-h-[60vh] md:max-h-[80vh] object-contain rounded-lg mx-auto"
 								/>
 
 								{/* Caption */}
@@ -189,15 +178,15 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
 							{/* Thumbnail navigation */}
 							{images.length > 1 && (
-								<div className="flex justify-center mt-4 space-x-2 max-w-full overflow-x-auto pb-2">
+								<div className="flex justify-center mt-4 space-x-2 max-w-full overflow-x-auto pb-2 scrollbar-hide px-2">
 									{images.map((image, index) => (
 										<button
 											key={index}
 											onClick={() => setSelectedImage(index)}
-											className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+											className={`flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all ${
 												index === selectedImage
-													? "border-khmer-gold"
-													: "border-transparent hover:border-white/50"
+													? "border-primary scale-110 shadow-lg ring-2 ring-primary/20"
+													: "border-transparent hover:border-white/50 opacity-70 hover:opacity-100"
 											}`}
 										>
 											<img

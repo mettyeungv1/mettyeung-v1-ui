@@ -41,10 +41,12 @@ export default async function VideosPage() {
 	const initialCategories = [allCategory, ...categoriesRes];
 
 	return (
-		<VideosPageClient
-			initialVideos={initialVideos}
-			initialCategories={initialCategories}
-			initialTotalPages={initialTotalPages}
-		/>
+		<React.Suspense fallback={<div>Loading...</div>}>
+			<VideosPageClient
+				initialVideos={initialVideos}
+				initialCategories={initialCategories}
+				initialTotalPages={initialTotalPages}
+			/>
+		</React.Suspense>
 	);
 }
