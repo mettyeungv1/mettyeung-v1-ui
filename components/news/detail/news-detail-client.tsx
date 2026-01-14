@@ -3,6 +3,8 @@
 import React, { useState, useMemo } from "react";
 import { useTranslation } from "@/lib/i18n";
 
+import { normalizeUrl } from "@/lib/utils/image";
+
 // Components
 import { Breadcrumbs } from "@/components/news/detail/bread-crumbs";
 import { ArticleHeader } from "@/components/news/detail/article-header";
@@ -40,17 +42,17 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 				[lang: string]: string;
 			},
 			date: (post.publishedAt || post.createdAt) as any,
-			image: post.coverImageUrl || post.media[0]?.url || "/placeholder.jpg",
+			image: normalizeUrl(post.coverImageUrl || post.media[0]?.url || "/placeholder.jpg"),
 			views: post.readCounts || 0,
 			author: {
 				name_en: post.author?.name || "",
-				avatar: post.author?.avatarUrl || "",
+				avatar: normalizeUrl(post.author?.avatarUrl || ""),
 				bio_en: "",
 			},
 			content: post.content,
 			tags: [] as string[],
 			gallery: (post.media || []).map((m) => ({
-				url: m.url,
+				url: normalizeUrl(m.url),
 				caption: m.altText || "",
 			})),
 			readTime: post.readTimes || 0,

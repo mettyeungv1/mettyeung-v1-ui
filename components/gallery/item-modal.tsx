@@ -2,9 +2,15 @@ import React from "react";
 import {
 	Dialog,
 	DialogContent,
-	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import {
+	Drawer,
+	DrawerContent,
+	DrawerTitle,
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface ItemModalProps<T> {
 	isOpen: boolean;
@@ -19,16 +25,31 @@ export function ItemModal<T extends { title_en: string }>({
 	item,
 	renderContent,
 }: ItemModalProps<T>) {
+	const isMobile = useIsMobile();
+	
 	if (!item) return null;
+
+	if (isMobile) {
+		return (
+			<Drawer open={isOpen} onOpenChange={onOpenChange}>
+				<DrawerContent className="h-[95dvh] mt-0 rounded-t-[10px] fixed bottom-0 left-0 right-0 z-[120]">
+					<VisuallyHidden>
+						<DrawerTitle>{item.title_en}</DrawerTitle>
+					</VisuallyHidden>
+					<div className="h-full overflow-y-auto">
+						{renderContent(item)}
+					</div>
+				</DrawerContent>
+			</Drawer>
+		);
+	}
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-4xl w-full max-h-screen overflow-y-auto">
-				<DialogHeader>
-					<DialogTitle className="text-lg font-bold">
-						{item.title_en}
-					</DialogTitle>
-				</DialogHeader>
+			<DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-y-auto z-[120] p-0 sm:rounded-lg border bg-white shadow-lg">
+				<VisuallyHidden>
+					<DialogTitle>{item.title_en}</DialogTitle>
+				</VisuallyHidden>
 				{renderContent(item)}
 			</DialogContent>
 		</Dialog>

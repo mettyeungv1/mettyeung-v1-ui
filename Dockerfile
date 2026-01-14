@@ -4,7 +4,7 @@
 
     # ---- Build Stage ----
     FROM base AS builder
-
+    
     # Copy dependency files first (important for npm ci)
     COPY package*.json ./
 
@@ -14,10 +14,16 @@
     # Copy the rest of the project
     COPY . .
 
+    # [NEW] Install Debugging Tools (Run as root before switching user)
+    # curl: to test API endpoints from inside
+    # net-tools: gives us 'netstat' to see connection states
+    # iproute2: gives us 'ss' (modern netstat)
+    RUN apk add --no-cache curl net-tools iproute2
+
     # This ARG receives the public URL from the CI/CD workflow
     ARG NEXT_PUBLIC_AUTH_BASE_URL
     ENV NEXT_PUBLIC_AUTH_BASE_URL=${NEXT_PUBLIC_AUTH_BASE_URL}
-
+    
     # Build the Next.js app
     RUN npm run build
 

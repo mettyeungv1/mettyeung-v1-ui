@@ -1,11 +1,21 @@
 export async function register() {
-	if (process.env.NEXT_RUNTIME === "nodejs") {
-		const { setGlobalDispatcher, Agent } = await import("undici");
-		setGlobalDispatcher(
-			new Agent({
-				keepAliveTimeout: 10000,
-				headersTimeout: 10000,
-			})
-		);
-	}
+  // Only run on the server side (Node.js runtime)
+  if (process.env.NEXT_RUNTIME === "nodejs") {
+    const { setGlobalDispatcher, Agent } = await import("undici");
+    setGlobalDispatcher(
+      new Agent({
+        // 1. Force close connections after 10s (Must be < Nginx's 300s/60s)
+        keepAliveTimeout: 10000,
+        
+        // 2. Kill stuck headers parsing after 10s
+        headersTimeout: 10000,
+        
+        // 3. CRITICAL: Disable pipelining. 
+        // Ensures requests are strictly ordered and easier to tear down safely.
+        pipelining: 0,
+      })
+    );
+    
+    console.log('[Instrumentation] ✅ Undici Agent Tuned for Docker');
+  }
 }
