@@ -31,7 +31,7 @@ export const contactInfo: ContactInfoItem[] = [
 		icon: MapPin,
 		title: "contactUs.address",
 		details: [
-			"ផ្ទះលេខ ៩C, ផ្លូវលេខ ៥៩៨, ភូមិទួលថ្ងាន់",
+			"ផ្ទះលេខ ៣AF, ផ្លូវលេខ ៥៩៨, ភូមិទួលថ្ងាន់",
 			"សង្កាត់ទួលសង្កែទី២, ខណ្ឌឫស្សីកែវ, រាជធានីភ្នំពេញ",
 		],
 		color: "from-red-500 to-red-500",
