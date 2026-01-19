@@ -14,7 +14,7 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 	const [partners, setPartners] = useState<Partner[]>(initialPartners);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	
+
 	// Pagination state
 	const [page, setPage] = useState(1);
 	const [hasMore, setHasMore] = useState(true);
@@ -111,29 +111,67 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 					{partners.map((partner, index) => (
 						<AnimatedSection key={partner.id} delay={index * 0.1}>
 							<GlowingCard>
-								<Card className="p-6 sm:p-8 border-0 shadow-2xl bg-white/80 backdrop-blur-sm hover:shadow-3xl transition-shadow duration-500">
+								<Card className="relative p-6 sm:p-8 border-0 shadow-2xl bg-white/80 backdrop-blur-sm transition-all duration-500 overflow-hidden group">
 									<CardContent className="p-0 text-center">
-										<Image
-											src={partner.media?.url || "/my-cut.png"}
-											alt={partner.media?.altText || partner.id}
-											width={160}
-											height={160}
-											className="w-40 h-40 object-contain mx-auto"
-										/>
+										{/* Logo Container */}
+										<div className="relative z-10 transition-transform duration-500 group-hover:scale-95 group-hover:-translate-y-8">
+											<Image
+												src={partner.media?.url || "/my-cut.png"}
+												alt={partner.media?.altText || partner.id}
+												width={160}
+												height={160}
+												className="w-32 h-32 object-contain mx-auto mb-4"
+											/>
+											<p className="text-sm font-bold text-blue-900 line-clamp-1 transition-opacity group-hover:opacity-0">
+												{partner.name}
+											</p>
+										</div>
+
+										{/* Details Overlay (visible on hover) */}
+										<div className="absolute inset-0 p-6 flex flex-col items-center justify-end bg-gradient-to-t from-white via-white/95 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-full group-hover:translate-y-0">
+											<h4 className="text-sm font-bold text-blue-900 mb-2 line-clamp-1">{partner.name}</h4>
+
+											{partner.location && (
+												<div className="flex items-center text-[10px] text-gray-500 mb-2">
+													<div className="w-1 h-1 rounded-full bg-blue-500 mr-1.5" />
+													<span className="line-clamp-1">{partner.location}</span>
+												</div>
+											)}
+
+											{partner.description && (
+												<p className="text-[10px] text-gray-600 line-clamp-2 mb-3 px-2 italic">
+													"{partner.description}"
+												</p>
+											)}
+
+											{partner.website && (
+												<a
+													href={partner.website}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-[10px] font-semibold text-blue-600 hover:text-blue-700 underline underline-offset-2 flex items-center group/link"
+												>
+													Visit Site
+													<svg className="w-2.5 h-2.5 ml-1 transition-transform group-hover/link:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+													</svg>
+												</a>
+											)}
+										</div>
 									</CardContent>
 								</Card>
 							</GlowingCard>
 						</AnimatedSection>
 					))}
 				</div>
-				
+
 				{/* Loading More Indicator */}
 				{loadingMore && (
 					<div className="flex justify-center items-center py-8">
 						<div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
 					</div>
 				)}
-				
+
 				{/* Intersection Observer Target */}
 				<div ref={observerTarget} className="h-4" />
 			</div>

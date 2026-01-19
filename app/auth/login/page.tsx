@@ -53,6 +53,15 @@ export default function LoginPage() {
 			});
 
 			if (!res || res.error) {
+				const errorMessage = res?.error || "";
+				if (errorMessage.includes("verify your email")) {
+					toast.info("គណនីមិនទាន់បានបញ្ជាក់", {
+						description: "សូមបញ្ជាក់អ៊ីមែលរបស់អ្នកមុនពេលចូលប្រើប្រាស់",
+					});
+					router.push(`/auth/verify-otp?email=${encodeURIComponent(data.email)}`);
+					return;
+				}
+
 				toast.error("មានបញ្ហាក្នុងការចូលប្រើប្រាស់", {
 					description: "សូមពិនិត្យអ៊ីមែល និងពាក្យសម្ងាត់របស់អ្នក",
 				});
