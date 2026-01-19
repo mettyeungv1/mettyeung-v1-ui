@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 🏷️ Generate image tags
-        id: meta
+        id: git_info
         run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: 🐳 Set up Docker Buildx
@@ -33,16 +33,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: 🏷️ Calculate Docker tags
+        id: dockertags
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            echo "tags=${{ env.DOCKER_IMAGE }}:uat" >> $GITHUB_OUTPUT
+          else
+            echo "tags=${{ env.DOCKER_IMAGE }}:latest,${{ env.DOCKER_IMAGE }}:${{ steps.git_info.outputs.sha_short }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: 🏗️ Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: |
-            ${{ env.DOCKER_IMAGE }}:latest
-            ${{ env.DOCKER_IMAGE }}:${{ steps.meta.outputs.sha_short }}
+          tags: ${{ steps.dockertags.outputs.tags }}
           build-args: |
-            NEXT_PUBLIC_AUTH_BASE_URL=${{ secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
+            NEXT_PUBLIC_AUTH_BASE_URL=${{ github.ref == 'refs/heads/develop' && 'https://api.uat.mettyeung27.org/api/v1' || secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -66,3 +73,20 @@ jobs:
             cd /home/mya_user/mettyeung-v1
             # ✅ CORRECT: Calls the deploy script with the correct service and image tag
             ./deploy.sh ${{ env.SERVICE_NAME }} ${{ env.DOCKER_IMAGE }}:latest
+
+  deploy_uat:
+    name: Deploy to UAT
+    needs: build_and_push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: 🚀 Deploy UAT via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/mya_user/mettyeung-v1
+            # Run the NEW UAT deploy script
+            ./uat/deploy-uat.sh uat-${{ env.SERVICE_NAME }}
