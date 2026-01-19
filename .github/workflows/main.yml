@@ -49,7 +49,7 @@ jobs:
           push: true
           tags: ${{ steps.dockertags.outputs.tags }}
           build-args: |
-            NEXT_PUBLIC_AUTH_BASE_URL=${{ secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
+            NEXT_PUBLIC_AUTH_BASE_URL=${{ github.ref == 'refs/heads/develop' && 'https://api.uat.mettyeung27.org/api/v1' || secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
