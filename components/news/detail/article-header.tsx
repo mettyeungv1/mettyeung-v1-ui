@@ -34,9 +34,20 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 			<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
 				{t(article.title)}
 			</h1>
-			<p className="text-xl text-gray-600 leading-relaxed">
+			<p className="text-xl text-gray-600 leading-relaxed mb-8">
 				{t(article.excerpt)}
 			</p>
+
+			{/* Cover Image Feature */}
+			{article.image && (
+				<div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8 shadow-sm">
+					<img
+						src={article.image}
+						alt={t(article.title)}
+						className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+					/>
+				</div>
+			)}
 			<div className="flex items-center justify-between py-4 border-t border-b mt-8">
 				<div className="flex items-center text-sm text-gray-500">
 					<MessageCircle className="w-4 h-4 mr-2" />
