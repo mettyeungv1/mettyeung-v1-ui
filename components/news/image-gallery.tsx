@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,57 +12,99 @@ interface ImageGalleryProps {
 	}>;
 }
 
+const variants = {
+	enter: (direction: number) => ({
+		x: direction > 0 ? 1000 : -1000,
+		opacity: 0,
+	}),
+	center: {
+		zIndex: 1,
+		x: 0,
+		opacity: 1,
+	},
+	exit: (direction: number) => ({
+		zIndex: 0,
+		x: direction < 0 ? 1000 : -1000,
+		opacity: 0,
+	}),
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+	return Math.abs(offset) * velocity;
+};
+
 export function ImageGallery({ images }: ImageGalleryProps) {
-	const [selectedImage, setSelectedImage] = useState<number | null>(null);
+	// [index, direction]
+	const [[activeIndex, direction], setActiveTuple] = useState<[number | null, number]>([null, 0]);
+
+	// Helper to extract the index (or null) safely
+	const selectedImage = activeIndex;
 
 	const openModal = (index: number) => {
-		setSelectedImage(index);
+		setActiveTuple([index, 0]);
 	};
 
 	const closeModal = () => {
-		setSelectedImage(null);
+		setActiveTuple([null, 0]);
 	};
+	
+	const paginate = useCallback((newDirection: number) => {
+		if (selectedImage === null) return;
 
-	const nextImage = () => {
-		if (selectedImage !== null) {
-			setSelectedImage((selectedImage + 1) % images.length);
-		}
-	};
+		let nextIndex = selectedImage + newDirection;
+		// Loop logic
+		if (nextIndex < 0) nextIndex = images.length - 1;
+		if (nextIndex >= images.length) nextIndex = 0;
 
-	const prevImage = () => {
-		if (selectedImage !== null) {
-			setSelectedImage(
-				selectedImage === 0 ? images.length - 1 : selectedImage - 1
-			);
-		}
-	};
+		setActiveTuple([nextIndex, newDirection]);
+	}, [selectedImage, images.length]);
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
+	const handleKeyDown = useCallback((e: KeyboardEvent) => {
 		if (e.key === "Escape") closeModal();
-		if (e.key === "ArrowRight") nextImage();
-		if (e.key === "ArrowLeft") prevImage();
-	};
+		if (e.key === "ArrowRight") paginate(1);
+		if (e.key === "ArrowLeft") paginate(-1);
+	}, [paginate]);
+
+	useEffect(() => {
+		if (selectedImage !== null) {
+			window.addEventListener("keydown", handleKeyDown);
+			document.body.style.overflow = "hidden";
+		} else {
+			window.removeEventListener("keydown", handleKeyDown);
+			document.body.style.overflow = "unset";
+		}
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+			document.body.style.overflow = "unset";
+		};
+	}, [selectedImage, handleKeyDown]);
+
+	// Safety check: if selectedImage is set but invalid (e.g. data changed), close modal
+	useEffect(() => {
+		if (selectedImage !== null && !images[selectedImage]) {
+			closeModal();
+		}
+	}, [selectedImage, images]);
 
 	if (images.length === 0) return null;
+
+	// Use selectedImage directly for rendering to avoid sync issues.
+	// Fallback to 0 if null/invalid to prevent crash during exit animation or race conditions
+	const SafeImage = images[selectedImage ?? 0] || images[0];
 
 	return (
 		<>
 			<div className="mb-8">
 				<h3 className="text-lg font-semibold text-gray-900 mb-4">
-					រូបភាពបន្ថែម ({images.length})
+					Images ({images.length})
 				</h3>
 
-				{/* Grid layout based on number of images */}
+				{/* Grid layout - 2 columns on mobile, 3 on desktop */}
 				<div
 					className={`grid gap-4 ${
 						images.length === 1
 							? "grid-cols-1"
-							: images.length === 2
-							? "grid-cols-1 md:grid-cols-2"
-							: images.length === 3
-							? "grid-cols-1 md:grid-cols-3"
-							: images.length === 4
-							? "grid-cols-2 md:grid-cols-2"
 							: "grid-cols-2 md:grid-cols-3"
 					}`}
 				>
@@ -72,9 +114,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 							className={`relative group cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ${
 								images.length === 1
 									? "aspect-video"
-									: images.length === 2
-									? "aspect-video"
-									: "aspect-square md:aspect-video"
+									: "aspect-square md:aspect-video" // Square on mobile grid for uniformity
 							}`}
 							onClick={() => openModal(index)}
 							whileHover={{ scale: 1.02 }}
@@ -93,7 +133,7 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 
 							{/* Caption overlay */}
 							<div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-								<p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+								<p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-1">
 									{image.caption}
 								</p>
 							</div>
@@ -107,102 +147,100 @@ export function ImageGallery({ images }: ImageGalleryProps) {
 						</motion.div>
 					))}
 				</div>
-
-
 			</div>
 
-			{/* Modal */}
-			<AnimatePresence>
+			{/* Lightbox Modal */}
+			<AnimatePresence initial={false} custom={direction}>
 				{selectedImage !== null && (
-					<div
-						className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-						onKeyDown={handleKeyDown}
-						tabIndex={0}
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.2 }}
+						className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md"
 					>
-						<motion.div
-							initial={{ opacity: 0, scale: 0.8 }}
-							animate={{ opacity: 1, scale: 1 }}
-							exit={{ opacity: 0, scale: 0.8 }}
-							className="relative max-w-7xl max-h-[90vh] mx-4"
+						{/* Close button */}
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={closeModal}
+							className="absolute top-4 right-4 text-white/70 hover:text-white hover:bg-white/10 z-50 rounded-full w-12 h-12"
 						>
-							{/* Close button */}
-							<Button
-								variant="ghost"
-								size="sm"
-								onClick={closeModal}
-								className="absolute -top-12 right-0 text-white hover:text-gray-300 z-10"
+							<X className="w-6 h-6" />
+						</Button>
+
+						{/* Main Swiper Container */}
+						<div className="relative w-full h-full flex items-center justify-center overflow-hidden">
+							{/* Left Arrow (Desktop) */}
+							{images.length > 1 && (
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={() => paginate(-1)}
+									className="hidden md:flex absolute left-4 bg-black/20 text-white hover:bg-black/40 hover:text-white rounded-full z-20 w-12 h-12 border border-white/10"
+								>
+									<ChevronLeft className="w-8 h-8" />
+								</Button>
+							)}
+
+							{/* Draggable Image */}
+							<motion.div
+								key={selectedImage} // Key changes trigger animation
+								custom={direction}
+								variants={variants}
+								initial="enter"
+								animate="center"
+								exit="exit"
+								transition={{
+									x: { type: "spring", stiffness: 300, damping: 30 },
+									opacity: { duration: 0.2 },
+								}}
+								drag="x"
+								dragConstraints={{ left: 0, right: 0 }}
+								dragElastic={1}
+								onDragEnd={(e, { offset, velocity }) => {
+									const swipe = swipePower(offset.x, velocity.x);
+
+									if (swipe < -swipeConfidenceThreshold) {
+										paginate(1);
+									} else if (swipe > swipeConfidenceThreshold) {
+										paginate(-1);
+									}
+								}}
+								className="absolute w-full h-full flex items-center justify-center p-4 md:p-12 cursor-grab active:cursor-grabbing"
 							>
-								<X className="w-6 h-6" />
-							</Button>
-
-							{/* Navigation buttons */}
-							{images.length > 1 && (
-								<>
-									<Button
-										variant="ghost"
-										size="icon"
-										onClick={prevImage}
-										className="absolute -left-3 md:left-4 top-1/2 -translate-y-1/2 bg-primary/80 text-white hover:bg-primary hover:text-white rounded-full z-10 transition-colors w-10 h-10 md:w-12 md:h-12 border-2 border-white/20"
-									>
-										<ChevronLeft className="w-5 h-5 md:w-8 md:h-8" />
-									</Button>
-									<Button
-										variant="ghost"
-										size="icon"
-										onClick={nextImage}
-										className="absolute -right-3 md:right-4 top-1/2 -translate-y-1/2 bg-primary/80 text-white hover:bg-primary hover:text-white rounded-full z-10 transition-colors w-10 h-10 md:w-12 md:h-12 border-2 border-white/20"
-									>
-										<ChevronRight className="w-5 h-5 md:w-8 md:h-8" />
-									</Button>
-								</>
-							)}
-
-							{/* Main image */}
-							<div className="relative">
 								<img
-									src={images[selectedImage].url}
-									alt={images[selectedImage].caption}
-									className="max-w-full max-h-[60vh] md:max-h-[80vh] object-contain rounded-lg mx-auto"
+									src={SafeImage.url}
+									alt={SafeImage.caption}
+									className="max-w-full max-h-full object-contain pointer-events-none drop-shadow-2xl"
 								/>
+							</motion.div>
 
-								{/* Caption */}
-								<div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 rounded-b-lg">
-									<p className="text-white text-lg font-medium mb-2">
-										{images[selectedImage].caption}
-									</p>
-									<p className="text-gray-300 text-sm">
-										រូបភាពទី {selectedImage + 1} ក្នុងចំណោម {images.length}
-									</p>
-								</div>
-							</div>
-
-							{/* Thumbnail navigation */}
+							{/* Right Arrow (Desktop) */}
 							{images.length > 1 && (
-								<div className="flex justify-center mt-4 space-x-2 max-w-full overflow-x-auto pb-2 scrollbar-hide px-2">
-									{images.map((image, index) => (
-										<button
-											key={index}
-											onClick={() => setSelectedImage(index)}
-											className={`flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all ${
-												index === selectedImage
-													? "border-primary scale-110 shadow-lg ring-2 ring-primary/20"
-													: "border-transparent hover:border-white/50 opacity-70 hover:opacity-100"
-											}`}
-										>
-											<img
-												src={image.url}
-												alt={image.caption}
-												className="w-full h-full object-cover"
-											/>
-										</button>
-									))}
-								</div>
+								<Button
+									variant="ghost"
+									size="icon"
+									onClick={() => paginate(1)}
+									className="hidden md:flex absolute right-4 bg-black/20 text-white hover:bg-black/40 hover:text-white rounded-full z-20 w-12 h-12 border border-white/10"
+								>
+									<ChevronRight className="w-8 h-8" />
+								</Button>
 							)}
-						</motion.div>
+						</div>
 
-						{/* Click outside to close */}
-						<div className="absolute inset-0 -z-10" onClick={closeModal} />
-					</div>
+						{/* Bottom Caption Bar */}
+						<div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pb-10 z-20 pointer-events-none">
+							<div className="max-w-4xl mx-auto text-center">
+								<p className="text-white text-lg font-medium mb-1 drop-shadow-md">
+									{SafeImage.caption}
+								</p>
+								<p className="text-white/60 text-sm">
+									{selectedImage + 1} / {images.length}
+								</p>
+							</div>
+						</div>
+					</motion.div>
 				)}
 			</AnimatePresence>
 		</>

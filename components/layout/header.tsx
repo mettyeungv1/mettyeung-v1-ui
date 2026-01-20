@@ -236,17 +236,15 @@ export function Header() {
 						</SheetTrigger>
 						<SheetContent side="right" className="w-full max-w-sm bg-white">
 							<div className="flex flex-col h-full">
-								<div className="flex items-center space-x-3 pb-6 border-b border-neutral-200 p-6">
-									<div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-										<span className="text-white font-bold text-lg">M</span>
-									</div>
-									<div>
-										<h2 className="text-xl font-bold text-blue-900">
-											Mettyerng
-										</h2>
-										<p className="text-sm text-gray-600">
-											ក្រុមអ្នកស្រឡាញ់សង្គម
-										</p>
+								<div className="flex flex-col items-center justify-center pb-6 border-b border-neutral-100 p-6 pt-10">
+									<div className="relative w-24 h-24 mb-2">
+										<Image
+											src="/logo.png"
+											alt="Mettyerng Logo"
+											fill
+											className="object-contain"
+											priority
+										/>
 									</div>
 								</div>
 								<nav className="flex-1 flex flex-col space-y-2 p-6">
