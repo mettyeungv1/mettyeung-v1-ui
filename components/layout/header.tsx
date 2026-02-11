@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { Menu, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
@@ -14,20 +14,27 @@ import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { getUserProfileAction } from "@/action/auth/user-action";
 import { UserProfile } from "@/service/auth/user-service";
+import { RawCategory } from "@/service/category/category-service";
 
-type SubNavItem = {
-	key: string;
-	href: string;
-};
-
+// === Recursive Navigation Types ===
 type NavItem = {
-	key: string;
+	key: string | Record<string, string>;
 	href: string;
-	submenu?: SubNavItem[];
+	submenu?: NavItem[];
 };
 
-// === Navigation Array with Type ===
-const navigation: NavItem[] = [
+// === Helper to Map Categories to NavItems ===
+function mapCategoriesToNavItems(categories: RawCategory[]): NavItem[] {
+    if (!categories) return [];
+	return categories.map((cat) => ({
+		key: typeof cat.name === "string" ? cat.name : cat.name,
+		href: `/news?category=${cat.id}`,
+		submenu: cat.children && cat.children.length > 0 ? mapCategoriesToNavItems(cat.children) : undefined,
+	}));
+}
+
+// === Static Navigation Base ===
+const staticNavigation: NavItem[] = [
 	{
 		key: "nav.home",
 		href: "/",
@@ -41,32 +48,244 @@ const navigation: NavItem[] = [
 			{ key: "nav.network", href: "/about#network" },
 		],
 	},
-	{ key: "nav.activity", href: "/news" },
+	// Activity/News will be dynamic
 	{
 		key: "nav.videos",
 		href: "/videos",
 	},
-	// {
-	// 	key: "nav.projects",
-	// 	href: "/s",
-	// 	submenu: [
-	// 		// { key: "nav.allProjects", href: "/s" },
-	// 		// { key: "nav.community", href: "/s?category=community" },
-	// 		// { key: "nav.education", href: "/s?category=education" },
-	// 		// { key: "nav.culture", href: "/s?category=culture" },
-	// 		// { key: "nav.sports", href: "/s?category=sports" },
-	// 	],
-	// },
 	{ key: "nav.contact", href: "/contact" },
 ];
 
-export function Header() {
+interface HeaderProps {
+	categories?: RawCategory[];
+}
+
+// === Recursive Desktop Menu Component ===
+const DesktopMenuItem = ({
+	item,
+	pathname,
+	t,
+	depth = 0,
+}: {
+	item: NavItem;
+	pathname: string;
+	t: any;
+	depth?: number;
+}) => {
+	const isActive =
+		item.href === "/"
+			? pathname === item.href
+			: pathname.startsWith(item.href) ||
+			  (item.href.includes("?category=") &&
+					pathname.startsWith("/news") &&
+					typeof window !== "undefined" &&
+					new URLSearchParams(window.location.search).get("category") ===
+						item.href.split("=")[1]);
+
+	const hasSubmenu = item.submenu && item.submenu.length > 0;
+
+	// Top-level items have different styling than nested items
+	if (depth === 0) {
+		return (
+			<div className="relative group/menuItem h-full flex items-center">
+				<Link
+					href={item.href}
+					className={cn(
+						"flex items-center space-x-1 text-neutral-800 hover:text-blue-600 transition-colors duration-200 py-2",
+						isActive && "text-blue-600"
+					)}
+				>
+					<span className="font-medium">{t(item.key)}</span>
+					{hasSubmenu && (
+						<ChevronDown className="w-4 h-4 group-hover/menuItem:rotate-180 transition-transform duration-200" />
+					)}
+				</Link>
+				{isActive && (
+					<motion.div
+						className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
+						layoutId="activeTab"
+						initial={false}
+						transition={{
+							type: "spring",
+							stiffness: 380,
+							damping: 30,
+						}}
+					/>
+				)}
+
+				{/* Dropdown */}
+				{hasSubmenu && (
+					<div className="absolute top-full left-0 mt-0 pt-2 opacity-0 invisible group-hover/menuItem:opacity-100 group-hover/menuItem:visible transition-all duration-200 z-50">
+						<div className="w-56 bg-white rounded-lg shadow-xl border border-neutral-100 overflow-visible py-2">
+							{item.submenu!.map((subItem, idx) => (
+								<DesktopMenuItem
+									key={`${subItem.href}-${idx}`}
+									item={subItem}
+									pathname={pathname}
+									t={t}
+									depth={depth + 1}
+								/>
+							))}
+						</div>
+					</div>
+				)}
+			</div>
+		);
+	}
+
+	// Nested items (depth > 0)
+	return (
+		<div className="relative group/subItem px-1">
+			<Link
+				href={item.href}
+				className={cn(
+					"flex items-center justify-between w-full px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200",
+					isActive && "text-blue-600 bg-blue-50"
+				)}
+			>
+				<span>{t(item.key)}</span>
+				{hasSubmenu && <ChevronRight className="w-4 h-4" />}
+			</Link>
+
+			{/* Nested Dropdown */}
+			{hasSubmenu && (
+				<div className="absolute top-0 left-full ml-1 opacity-0 invisible group-hover/subItem:opacity-100 group-hover/subItem:visible transition-all duration-200 z-50">
+					<div className="w-56 bg-white rounded-lg shadow-xl border border-neutral-100 overflow-visible py-2">
+						{item.submenu!.map((subItem, idx) => (
+							<DesktopMenuItem
+								key={`${subItem.href}-${idx}`}
+								item={subItem}
+								pathname={pathname}
+								t={t}
+								depth={depth + 1}
+							/>
+						))}
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
+
+// === Recursive Mobile Menu Component ===
+const MobileMenuItem = ({
+	item,
+	pathname,
+	t,
+	setIsOpen,
+	depth = 0,
+}: {
+	item: NavItem;
+	pathname: string;
+	t: any;
+	setIsOpen: (val: boolean) => void;
+	depth?: number;
+}) => {
+	const [isExpanded, setIsExpanded] = useState(false);
+	const hasSubmenu = item.submenu && item.submenu.length > 0;
+	const isActive =
+		item.href === "/"
+			? pathname === item.href
+			: pathname.startsWith(item.href) ||
+			  (item.href.includes("?category=") &&
+					pathname.startsWith("/news") &&
+					typeof window !== "undefined" &&
+					new URLSearchParams(window.location.search).get("category") ===
+						item.href.split("=")[1]);
+
+	return (
+		<div className="flex flex-col">
+			<div
+				className={cn(
+					"flex items-center justify-between py-2 px-4 rounded-md transition-colors duration-200",
+					isActive
+						? "text-blue-600 bg-blue-50"
+						: "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+				)}
+			>
+				<Link
+					href={item.href}
+					className={cn(
+						"flex-1",
+						depth === 0 ? "text-lg font-medium" : "text-sm",
+						depth > 0 && "ml-2"
+					)}
+					onClick={() => setIsOpen(false)}
+				>
+					{t(item.key)}
+				</Link>
+				{hasSubmenu && (
+					<button
+						onClick={(e) => {
+							e.stopPropagation();
+							setIsExpanded(!isExpanded);
+						}}
+						className="p-1 hover:bg-black/5 rounded-full"
+					>
+						<ChevronDown
+							className={cn(
+								"w-4 h-4 transition-transform duration-200",
+								isExpanded && "rotate-180"
+							)}
+						/>
+					</button>
+				)}
+			</div>
+			<AnimatePresence>
+				{hasSubmenu && isExpanded && (
+					<motion.div
+						initial={{ height: 0, opacity: 0 }}
+						animate={{ height: "auto", opacity: 1 }}
+						exit={{ height: 0, opacity: 0 }}
+						className="overflow-hidden ml-4 space-y-1 border-l border-neutral-200 pl-2"
+					>
+						{item.submenu!.map((subItem, idx) => (
+							<MobileMenuItem
+								key={`${subItem.href}-${idx}`}
+								item={subItem}
+								pathname={pathname}
+								t={t}
+								setIsOpen={setIsOpen}
+								depth={depth + 1}
+							/>
+						))}
+					</motion.div>
+				)}
+			</AnimatePresence>
+		</div>
+	);
+};
+
+export function Header({ categories = [] }: HeaderProps) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 	const pathname = usePathname();
 	const { t } = useTranslation();
 	const { data: session } = useSession();
+
+	// Construct dynamic navigation
+	const navigation = React.useMemo(() => {
+		const nav = [...staticNavigation];
+        
+        const categoryItems = mapCategoriesToNavItems(categories || []);
+        
+        // Add "All News" as the first item in the dropdown
+        const allNewsItem: NavItem = {
+            key: "nav.allNews", // Ensure translation exists or fallback
+            href: "/news?category=all"
+        };
+        
+		const activityItem: NavItem = {
+			key: "nav.activity",
+			href: "/news",
+			submenu: [allNewsItem, ...categoryItems],
+		};
+
+		// Insert Activity after About (index 2)
+		nav.splice(2, 0, activityItem);
+		return nav;
+	}, [categories]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -114,76 +333,14 @@ export function Header() {
 
 					{/* Desktop Navigation */}
 					<nav className="hidden lg:flex items-center space-x-8">
-						{navigation.map((item) => {
-							const isActive =
-								item.href === "/"
-									? pathname === item.href
-									: pathname.startsWith(item.href);
-
-							return (
-								<div key={item.key} className="relative group">
-									{item.submenu ? (
-										<div className="relative">
-											<Link
-												href={item.href}
-												className={cn(
-													"flex items-center space-x-1 text-neutral-800 hover:text-blue-600 transition-colors duration-200 py-2",
-													isActive && "text-blue-600"
-												)}
-											>
-												<span className="font-medium">{t(item.key)}</span>
-												<ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform duration-200" />
-											</Link>
-											{isActive && (
-												<motion.div
-													className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
-													layoutId="activeTab"
-													initial={false}
-													transition={{
-														type: "spring",
-														stiffness: 380,
-														damping: 30,
-													}}
-												/>
-											)}
-											<div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-neutral-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-20">
-												{item.submenu.map((subItem) => (
-													<Link
-														key={subItem.href}
-														href={subItem.href}
-														className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 first:rounded-t-lg last:rounded-b-lg transition-colors duration-200"
-													>
-														{t(subItem.key)}
-													</Link>
-												))}
-											</div>
-										</div>
-									) : (
-										<Link
-											href={item.href}
-											className={cn(
-												"text-neutral-800 hover:text-blue-600 transition-colors duration-200 font-medium relative py-2",
-												isActive && "text-blue-600"
-											)}
-										>
-											{t(item.key)}
-											{isActive && (
-												<motion.div
-													className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
-													layoutId="activeTab"
-													initial={false}
-													transition={{
-														type: "spring",
-														stiffness: 380,
-														damping: 30,
-													}}
-												/>
-											)}
-										</Link>
-									)}
-								</div>
-							);
-						})}
+						{navigation.map((item, idx) => (
+							<DesktopMenuItem
+								key={`${item.href}-${idx}`}
+								item={item}
+								pathname={pathname}
+								t={t}
+							/>
+						))}
 					</nav>
 
 					<div className="hidden lg:flex items-center space-x-4">
@@ -234,8 +391,11 @@ export function Header() {
 								<Menu className="w-6 h-6" />
 							</Button>
 						</SheetTrigger>
-						<SheetContent side="right" className="w-full max-w-sm bg-white">
-							<div className="flex flex-col h-full">
+						<SheetContent
+							side="right"
+							className="w-full max-w-sm bg-white overflow-y-auto"
+						>
+							<div className="flex flex-col min-h-full">
 								<div className="flex flex-col items-center justify-center pb-6 border-b border-neutral-100 p-6 pt-10">
 									<div className="relative w-24 h-24 mb-2">
 										<Image
@@ -248,37 +408,14 @@ export function Header() {
 									</div>
 								</div>
 								<nav className="flex-1 flex flex-col space-y-2 p-6">
-									{navigation.map((item) => (
-										<div key={item.href}>
-											<Link
-												href={item.href}
-												className={cn(
-													"block text-lg font-medium py-2 rounded-md px-4 transition-colors duration-200",
-													(pathname.startsWith(item.href) &&
-														item.href !== "/") ||
-														pathname === item.href
-														? "text-blue-600 bg-blue-50"
-														: "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-												)}
-												onClick={() => setIsMobileMenuOpen(false)}
-											>
-												{t(item.key)}
-											</Link>
-											{item.submenu && (
-												<div className="ml-8 mt-2 space-y-2">
-													{item.submenu.map((subItem) => (
-														<Link
-															key={subItem.href}
-															href={subItem.href}
-															className="block text-sm text-gray-600 hover:text-blue-600 py-1 transition-colors duration-200"
-															onClick={() => setIsMobileMenuOpen(false)}
-														>
-															{t(subItem.key)}
-														</Link>
-													))}
-												</div>
-											)}
-										</div>
+									{navigation.map((item, idx) => (
+										<MobileMenuItem
+											key={`${item.href}-${idx}`}
+											item={item}
+											pathname={pathname}
+											t={t}
+											setIsOpen={setIsMobileMenuOpen}
+										/>
 									))}
 								</nav>
 								<div className="p-6 mt-auto border-t border-neutral-200 space-y-4">

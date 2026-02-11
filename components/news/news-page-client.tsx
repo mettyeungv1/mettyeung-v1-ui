@@ -59,53 +59,87 @@ export function NewsPageClient({
 	const updateUrl = useCallback((term: string, cat: string, subCat: string | null) => {
 		const params = new URLSearchParams();
 		if (term) params.set("q", term);
-		if (cat !== "all") params.set("category", cat);
-		if (subCat) params.set("subCategory", subCat);
+		
+        // Simplification: Always use 'category' param for the active ID.
+        // If it's a subcategory, we put that ID here.
+        // The getCategoryStateFromUrl logic will resolve the parent/child relationship on load.
+        const activeId = subCat || cat;
+		if (activeId !== "all") params.set("category", activeId);
 		
 		router.push(`/news?${params.toString()}`, { scroll: false });
 	}, [router]);
 
-	// Initialize UI categories
-	useEffect(() => {
-		if (Array.isArray(initialCategories)) {
-			const uiCats = mapToUICategories(
-				initialCategories,
-				(initialPosts || []).map((p) => ({
-					categoryId: (p as any)?.category?.id,
-				}))
-			);
-			setCategories(uiCats);
-		}
-	}, [initialCategories, initialPosts]);
+	// ... categories init ...
 
-	// Handle filter changes
-	const handleSearchChange = (term: string) => {
-		setSearchTerm(term);
-		updateUrl(term, selectedCategory, selectedSubCategory);
+    const getCategoryStateFromUrl = useCallback((catParam: string | null, subCatParam: string | null) => {
+        if (!catParam || catParam === "all") return { cat: "all", sub: null };
+        if (subCatParam) return { cat: catParam, sub: subCatParam };
+
+        // If only catParam is provided, check if it's actually a subcategory ID
+        if (categories.length > 0) {
+             // Check if it's a top-level category
+             const topLevel = categories.find(c => c.id === catParam);
+             if (topLevel) return { cat: catParam, sub: null };
+
+             // Check if it's a subcategory
+             for (const c of categories) {
+                 if (c.subcategories?.find(s => s.id === catParam)) {
+                     return { cat: c.id, sub: catParam };
+                 }
+             }
+        }
+        
+        return { cat: catParam, sub: null };
+    }, [categories]);
+
+	// Atomic filter change handler
+    const handleFilterChange = (updates: {
+		term?: string;
+		category?: string;
+		subCategory?: string | null;
+	}) => {
+        const newTerm = updates.term !== undefined ? updates.term : searchTerm;
+        // Logic: if category changes, subCategory usually resets to null unless specified
+        let newCategory = updates.category !== undefined ? updates.category : selectedCategory;
+        let newSubCategory = updates.subCategory !== undefined ? updates.subCategory : selectedSubCategory;
+
+        // If category explicitly changed to something else, and subCategory wasn't specified, reset sub
+        if (updates.category !== undefined && updates.category !== selectedCategory && updates.subCategory === undefined) {
+            newSubCategory = null;
+        }
+
+        // Optimistic State Update (Optional/Redundant since URL effect will do it, but good for responsiveness)
+        // Actually, let's let the URL effect drive the state to ensure single source of truth.
+        // But we can update local state to generic instant feedback if needed. 
+        // For now, relying on URL effect is safer for consistency.
+
+		updateUrl(newTerm, newCategory, newSubCategory);
 	};
 
-	const handleCategoryChange = (cat: string) => {
-		setSelectedCategory(cat);
-		setSelectedSubCategory(null); // Reset subcategory when main category changes
-		updateUrl(searchTerm, cat, null);
-	};
+    // React to URL changes and Categories loading
+    useEffect(() => {
+        const rawCat = searchParams.get("category");
+        const rawSubCat = searchParams.get("subCategory");
+        const q = searchParams.get("q") || "";
 
-	const handleSubCategoryChange = (subCat: string | null) => {
-		setSelectedSubCategory(subCat);
-		updateUrl(searchTerm, selectedCategory, subCat);
-	};
+        const { cat, sub } = getCategoryStateFromUrl(rawCat, rawSubCat);
 
-	// Reset pagination when filters change (triggered by URL or state change)
+        setSelectedCategory(cat);
+        setSelectedSubCategory(sub);
+        setSearchTerm(q);
+    }, [searchParams, categories, getCategoryStateFromUrl]);
+
+	// Fetch data when filters change (triggered by state changes synced with URL)
 	useEffect(() => {
 		// Skip initial load if data matches
-		if (searchTerm === initialSearch && selectedCategory === initialCategory && selectedSubCategory === initialSubCategory && page === 1) {
-			return;
-		}
-
+		// Note: removed standard equality check to rely on more robust logic if needed, 
+        // but for now, we just want to ensure we fetch if the URL implies different data than initial.
+        
 		const resetPagination = async () => {
 			setLoading(true);
 			setPage(1);
 			setPosts([]);
+             // ... rest of logic ...
 			
 			const startTime = Date.now();
 
@@ -120,16 +154,20 @@ export function NewsPageClient({
 			}
 			
 			if (selectedCategory !== "all") {
+				// Use the specific ID if subcategory is selected, else main category
 				params.categoryId = selectedSubCategory || selectedCategory;
 			}
 
+            console.log("Fetching posts with params:", params);
 			const postRes = await listBlogsService(params);
 			
 			if (postRes.status_code === 200 && postRes.data?.data) {
 				setPosts(postRes.data.data);
 				setTotalPages(postRes.data.totalPages || 1);
 				setHasMore((postRes.data.page || 1) < (postRes.data.totalPages || 1));
-			}
+			} else {
+                setPosts([]);
+            }
 			
 			const elapsed = Date.now() - startTime;
 			const remaining = Math.max(0, 500 - elapsed);
@@ -277,12 +315,18 @@ export function NewsPageClient({
 							<AnimatedSection>
 								<NewsFilterSidebar
 									searchTerm={searchTerm}
-									onSearchChange={handleSearchChange}
+                                    // Adapter for backward compatibility or direct usage
+									onSearchChange={(term) => handleFilterChange({ term })}
 									categories={categories as any}
 									selectedCategory={selectedCategory}
-									onCategoryChange={handleCategoryChange}
+                                    // Pass standard handlers that use the new logic if the component still calls them, 
+                                    // but we will update the component to use onFilterChange preferably.
+                                    // For now, let's keep the props broadly compatible but backed by new logic
+									onCategoryChange={(cat) => handleFilterChange({ category: cat })}
+                                    // Special case: subcategory change logic is handled inside handleFilterChange (resetting logic)
 									selectedSubCategory={selectedSubCategory}
-									onSubCategoryChange={handleSubCategoryChange}
+									onSubCategoryChange={(sub) => handleFilterChange({ subCategory: sub })}
+                                    onFilterChange={handleFilterChange}
 									recentNews={recentNews as any}
 									onRecentNewsClick={handleArticleClick}
 								/>
