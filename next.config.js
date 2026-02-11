@@ -14,6 +14,10 @@ const nextConfig = {
 				hostname: "api.mettyeung27.org",
 			},
 			{
+				protocol: "https",
+				hostname: "api.uat.mettyeung27.org",
+			},
+			{
 				protocol: "http",
 				hostname: "backend",
 			},

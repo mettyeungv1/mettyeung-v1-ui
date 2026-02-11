@@ -17,6 +17,7 @@ interface NewsFilterSidebarProps {
 	onCategoryChange: (id: string) => void;
 	selectedSubCategory: string | null;
 	onSubCategoryChange: (id: string | null) => void;
+    onFilterChange?: (updates: { category?: string; subCategory?: string | null }) => void;
 	recentNews: NewsArticle[];
 	onRecentNewsClick: (id: string) => void;
 }
@@ -29,21 +30,34 @@ export function NewsFilterSidebar({
 	onCategoryChange,
 	selectedSubCategory,
 	onSubCategoryChange,
+    onFilterChange,
 	recentNews,
 	onRecentNewsClick,
 }: NewsFilterSidebarProps) {
 	const { t } = useTranslation();
 	// State to manage which categories are visually expanded
-	const [expandedCategories, setExpandedCategories] = useState<string[]>(
-		selectedCategory === "all" ? [] : [selectedCategory]
-	);
+	const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+
+    // Sync expanded state with selected category
+    React.useEffect(() => {
+        if (selectedCategory && selectedCategory !== "all") {
+             setExpandedCategories(prev => prev.includes(selectedCategory) ? prev : [...prev, selectedCategory]);
+        }
+    }, [selectedCategory]);
 
 	const handleCategoryClick = (categoryId: string) => {
 		const isAlreadySelected = selectedCategory === categoryId;
-
-		// Update parent state
-		onCategoryChange(isAlreadySelected ? "all" : categoryId);
-		onSubCategoryChange(null); // Always reset subcategory when a main category is clicked
+        
+        if (onFilterChange) {
+            onFilterChange({
+                category: isAlreadySelected ? "all" : categoryId,
+                subCategory: null // Reset sub
+            });
+        } else {
+    		// Fallback
+            onCategoryChange(isAlreadySelected ? "all" : categoryId);
+    		onSubCategoryChange(null);
+        }
 
 		// Update local UI state
 		setExpandedCategories(isAlreadySelected ? [] : [categoryId]);
@@ -53,9 +67,17 @@ export function NewsFilterSidebar({
 		parentCategoryId: string,
 		subCategoryId: string
 	) => {
-		// Update parent state
-		onCategoryChange(parentCategoryId);
-		onSubCategoryChange(subCategoryId);
+        if (onFilterChange) {
+            // Atomic update!
+            onFilterChange({
+                category: parentCategoryId,
+                subCategory: subCategoryId
+            });
+        } else {
+    		// Update parent state
+    		onCategoryChange(parentCategoryId);
+    		onSubCategoryChange(subCategoryId);
+        }
 	};
 
 	return (
@@ -71,16 +93,29 @@ export function NewsFilterSidebar({
 				/>
 			</div>
 
-			<h4 className="text-sm font-semibold text-gray-900 mb-3">Categories</h4>
+			{/* <h4 className="text-sm font-semibold text-gray-900 mb-3">Categories</h4>
 			<div className="space-y-1">
-				{categories.map((category) => (
+                <button
+                    onClick={() => handleCategoryClick("all")}
+                    className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 flex items-center justify-between ${
+                        selectedCategory === "all"
+                            ? "bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-100"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    }`}
+                >
+                    <div className="flex items-center">
+                        <span>{t("nav.allNews") || "All News"}</span>
+                    </div>
+                </button>
+
+				{categories.filter(c => c.id !== "all").map((category) => (
 					<div key={category.id}>
 						<button
 							onClick={() => handleCategoryClick(category.id)}
-							className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-between ${
-								selectedCategory === category.id && !selectedSubCategory
-									? "bg-khmer-gold text-white"
-									: "text-gray-600 hover:bg-gray-100"
+							className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 flex items-center justify-between ${
+								selectedCategory === category.id
+									? "bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-100"
+									: "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
 							}`}
 						>
 							<div className="flex items-center">
@@ -119,10 +154,10 @@ export function NewsFilterSidebar({
 													onClick={() =>
 														handleSubCategoryClick(category.id, sub.id)
 													}
-													className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
+													className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
 														selectedSubCategory === sub.id
-															? "font-semibold text-khmer-gold"
-															: "text-gray-500 hover:text-khmer-gold"
+															? "font-semibold text-blue-700 bg-blue-100/50"
+															: "text-gray-500 hover:text-blue-600 hover:bg-blue-50/50"
 													}`}
 												>
 													{sub.name_en}
@@ -134,7 +169,7 @@ export function NewsFilterSidebar({
 						</AnimatePresence>
 					</div>
 				))}
-			</div>
+			</div> */}
 
 			<div className="mt-8">
 				<h4 className="text-sm font-semibold text-gray-900 mb-3">

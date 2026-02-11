@@ -8,21 +8,28 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 export function ContactHeroSection() {
 	const { t } = useTranslation();
 	return (
-		<section className="relative py-24 bg-gradient-to-br from-khmer-gold/10 via-white to-khmer-red/10">
-			<div className="container">
-				<AnimatedSection className="text-center max-w-4xl mx-auto">
+		<section className="relative pt-32 pb-48 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 overflow-hidden">
+            {/* Abstract Pattern Background */}
+            <div className="absolute inset-0 opacity-10">
+                <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white" />
+                </svg>
+            </div>
+            
+			<div className="container relative z-10">
+				<AnimatedSection className="text-center max-w-3xl mx-auto">
 					<motion.div
 						initial={{ scale: 0.8, opacity: 0 }}
 						animate={{ scale: 1, opacity: 1 }}
 						transition={{ duration: 0.8 }}
-						className="w-20 h-20 bg-gradient-to-br from-khmer-gold to-khmer-red rounded-full flex items-center justify-center mx-auto mb-6"
+						className="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-sm rounded-2xl mb-8 border border-white/20"
 					>
-						<Mail className="w-10 h-10 text-white" />
+						<Mail className="w-8 h-8 text-white" />
 					</motion.div>
-					<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+					<h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
 						{t("contact.title")}
 					</h1>
-					<p className="text-xl md:text-2xl text-gray-600 leading-relaxed">
+					<p className="text-xl text-blue-100 leading-relaxed max-w-2xl mx-auto">
 						{t("contact.subtitle")}
 					</p>
 				</AnimatedSection>

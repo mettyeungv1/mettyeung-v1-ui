@@ -59,6 +59,22 @@ export function mapToUICategories(
 
 		// Sum counts of this parent (own id if posts can be assigned to parent) + its children
 		let parentCount = 0;
+        // Even if leafCounts is empty, we want to show categories, just with 0 count?
+        // The original logic had `if (leafCounts.size > 0)` wrapping the addition to total/parentCount, but NOT the push to UI.
+        // Wait, looking at previous file view:
+        /*
+        		if (leafCounts.size > 0) {
+			parentCount += leafCounts.get(cat.id) || 0;
+			for (const child of children)
+				parentCount += leafCounts.get(child.id) || 0;
+			total += parentCount;
+		}
+
+		ui.push({ ... });
+        */
+       // So it DOES push.
+       // Investigating further: maybe raw is empty?
+       
 		if (leafCounts.size > 0) {
 			parentCount += leafCounts.get(cat.id) || 0;
 			for (const child of children)

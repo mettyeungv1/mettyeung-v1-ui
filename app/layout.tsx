@@ -44,11 +44,15 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
+import { listCategoriesService } from "@/service/category/category-service";
+
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const { data: categories } = await listCategoriesService();
+
 	return (
 		<html
 			lang="km"
@@ -66,7 +70,7 @@ export default function RootLayout({
 						<AppInitializer />
 						<div className="min-h-screen flex flex-col">
 							<SessionProvider>
-								<Header />
+								<Header categories={categories} />
 								<main className="flex-1">{children}</main>
 								<Footer />
 							</SessionProvider>
