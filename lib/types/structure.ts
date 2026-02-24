@@ -47,7 +47,17 @@ export interface APIMemberResponse {
 	educations?: Education[];
 	experiences?: Experience[];
 	skills?: Skill[];
-	associationIds?: string[];
+	socials?: SocialLink[];
+	associations?: Array<{
+		associationId: string;
+		role?: string;
+		isHead: boolean;
+		association?: any;
+	}>;
+	bio?: LocalizedText;
+	dob?: string;
+	gender?: string;
+	nationality?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 }
@@ -78,7 +88,21 @@ export interface Member {
 	// API-specific fields
 	educations: Education[];
 	experiences: Experience[];
-	associationIds: string[];
+	socials: SocialLink[];
+	associations: Array<{
+		associationId: string;
+		name?: string;
+		role?: string;
+		isHead: boolean;
+		order?: number;
+		association?: any;
+	}>;
+	dob?: string;
+	gender?: string;
+	nationality?: string;
+	status?: string;
+	memberCode?: string;
+	languages?: string[];
 
 	// Legacy compatibility fields
 	education: Array<{
