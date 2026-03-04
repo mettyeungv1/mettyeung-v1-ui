@@ -1,40 +1,30 @@
 "use client";
 
 import { useTranslation } from "@/lib/i18n";
-import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 
-export function ContactHeroSection() {
+export function PartnersHeroSection() {
 	const { t } = useTranslation();
+
 	return (
 		<section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
 			{/* Decorative background elements */}
 			<div className="absolute inset-0 z-0 opacity-20">
 				<div className="absolute top-0 right-[-10%] w-96 h-96 bg-blue-500/30 rounded-full blur-3xl mix-blend-screen" />
-				<div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-cyan-500/30 rounded-full blur-3xl mix-blend-screen" />
+				<div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-purple-500/30 rounded-full blur-3xl mix-blend-screen" />
 			</div>
 
 			<div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
 				<AnimatedSection>
-					<motion.div
-						initial={{ scale: 0.8, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						transition={{ duration: 0.8 }}
-						className="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl mb-8 border border-white/20"
-					>
-						<Mail className="w-8 h-8 text-white" />
-					</motion.div>
-					<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight text-white">
-						{t("contact.title")}
+					<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight pt-10 text-white">
+						{t("partners.title")}
 					</h1>
 					<p className="text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-						{t("contact.subtitle")}
+						{t("partners.description")}
 					</p>
 				</AnimatedSection>
 			</div>
 
-			{/* Bottom wave transition */}
 			<div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none transform rotate-180">
 				<svg
 					className="relative block w-full h-[50px] md:h-[100px]"

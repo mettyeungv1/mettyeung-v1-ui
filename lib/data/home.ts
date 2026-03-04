@@ -11,29 +11,29 @@ import {
 
 export const stats: StatItem[] = [
 	{
-		titleKey: "stats.members",
-		value: 430,
+		titleKey: "stats.upskilling",
+		value: 15,
 		suffix: "",
-		icon: Users,
-		descriptionKey: "home.activeMembers",
+		icon: BookOpen,
+		descriptionKey: "home.upskillingDesc",
 	},
 	{
 		titleKey: "stats.projects",
-		value: 72,
+		value: 70,
 		suffix: "",
 		icon: Heart,
 		descriptionKey: "home.successfulProjects",
 	},
 	{
-		titleKey: "stats.training",
-		value: 12,
+		titleKey: "stats.eci",
+		value: 5,
 		suffix: "",
 		icon: GraduationCap,
-		descriptionKey: "home.helpedFamilies",
+		descriptionKey: "home.eciDesc",
 	},
 	{
 		titleKey: "stats.beneficiaries",
-		value: 10000,
+		value: 20000,
 		suffix: "+",
 		icon: Users2,
 		descriptionKey: "home.educatedChildren",

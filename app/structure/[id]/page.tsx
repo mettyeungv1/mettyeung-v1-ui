@@ -9,6 +9,8 @@ interface PersonDetailPageProps {
 	}>;
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function PersonDetailPage({ params }: PersonDetailPageProps) {
 	const { id } = await params;
 

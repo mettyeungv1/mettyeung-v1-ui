@@ -18,12 +18,12 @@ export function ArticleAuthor({ author }: { author: Author }) {
 					<p className="text-gray-600 text-sm leading-relaxed mb-3">
 						{/* {author.bio_en} */}
 					</p>
-					<div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500">
+					<div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
 						{
 							// author.email
 							true && (
 								<div className="flex items-center">
-									<Mail className="w-3 h-3 mr-1.5" />
+									<Mail className="w-3.5 h-3.5 mr-1.5" />
 									{/* {author.email} */}
 									info@mettyeung27.org
 								</div>
@@ -33,7 +33,7 @@ export function ArticleAuthor({ author }: { author: Author }) {
 							// author.phone
 							true && (
 								<div className="flex items-center">
-									<Phone className="w-3 h-3 mr-1.5" />
+									<Phone className="w-3.5 h-3.5 mr-1.5" />
 									{/* {author.phone} */}
 									(015) 22 03 20
 								</div>

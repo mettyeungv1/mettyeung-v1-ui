@@ -172,7 +172,7 @@ export function NewsFilterSidebar({
 			</div> */}
 
 			<div className="mt-8">
-				<h4 className="text-sm font-semibold text-gray-900 mb-3">
+				<h4 className="text-base font-semibold text-gray-900 mb-3">
 					{t("events.recentNews")}
 				</h4>
 				<div className="space-y-4">
@@ -193,7 +193,7 @@ export function NewsFilterSidebar({
 								<h5 className="text-sm font-medium text-gray-900 group-hover:text-khmer-gold line-clamp-2 mb-1">
 									{t(item.title)}
 								</h5>
-								<p className="text-xs text-gray-500">
+								<p className="text-sm text-gray-500">
 									{new Date(item.date).toLocaleDateString("en-GB")}
 								</p>
 							</div>

@@ -66,7 +66,7 @@ export function ItemCard<T extends GalleryItem>({
 				</motion.div>
 
 				{item.duration && (
-					<div className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-xs">
+					<div className="absolute bottom-2 right-2 bg-black/80 text-white px-2 py-1 rounded text-sm">
 						{item.duration}
 					</div>
 				)}
@@ -95,8 +95,8 @@ export function ItemCard<T extends GalleryItem>({
 						{item.description}
 					</p>
 					{item.date && (
-						<div className="flex items-center text-xs text-gray-500">
-							<Calendar className="w-3 h-3 mr-1" />
+						<div className="flex items-center text-sm text-gray-500">
+							<Calendar className="w-3.5 h-3.5 mr-1" />
 							{formatDate(item.date)}
 						</div>
 					)}

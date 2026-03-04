@@ -2,6 +2,7 @@ export interface ValueItem {
 	icon: React.ElementType;
 	titleKey: string;
 	descriptionKey1: string;
+	listKeys?: string[];
 	borderColor: string;
 	iconColor: string;
 }

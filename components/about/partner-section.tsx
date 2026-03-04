@@ -5,100 +5,20 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { GlowingCard } from "./glowing-card";
-import { useEffect, useState, useRef } from "react";
-import { getPartnersService } from "@/service/partner/partner-service";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import type { Partner } from "@/lib/types/partner";
 
 export function PartnersSection({ initialPartners = [] }: { initialPartners?: Partner[] }) {
 	const { t } = useTranslation();
-	const [partners, setPartners] = useState<Partner[]>(initialPartners);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-	
-	// Pagination state
-	const [page, setPage] = useState(1);
-	const [hasMore, setHasMore] = useState(true);
-	const [loadingMore, setLoadingMore] = useState(false);
-	const observerTarget = useRef<HTMLDivElement>(null);
 
-	// Load more partners
-	const loadMorePartners = async () => {
-		if (loadingMore || !hasMore) return;
-
-		setLoadingMore(true);
-		const nextPage = page + 1;
-
-		try {
-			const res = await getPartnersService({ page: nextPage, limit: 12, sort: "order" });
-			if (res.status_code === 200) {
-				const newPartners = res.data?.data || [];
-				if (newPartners.length > 0) {
-					setPartners((prev) => [...prev, ...newPartners]);
-					setPage(nextPage);
-					const totalPages = res.data?.totalPages || 1;
-					setHasMore(nextPage < totalPages);
-				} else {
-					setHasMore(false);
-				}
-			}
-		} catch (error) {
-			console.error("Failed to load more partners:", error);
-		} finally {
-			setLoadingMore(false);
-		}
-	};
-
-	// Intersection Observer
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
-					loadMorePartners();
-				}
-			},
-			{ threshold: 0.1 }
-		);
-
-		const currentTarget = observerTarget.current;
-		if (currentTarget) {
-			observer.observe(currentTarget);
-		}
-
-		return () => {
-			if (currentTarget) {
-				observer.unobserve(currentTarget);
-			}
-		};
-	}, [hasMore, loadingMore, loading]);
-
-	if (loading) {
-		return (
-			<section
-				className="section-padding bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5"
-				id="network"
-			>
-				<div className="container">
-					<AnimatedSection className="text-center mb-16">
-						<h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-red-600">
-							{t("about.partner.title")}
-						</h2>
-						<p className="mt-6 text-gray-500">{t("common.loading")}</p>
-					</AnimatedSection>
-				</div>
-			</section>
-		);
+	if (!initialPartners || initialPartners.length === 0) {
+		return null;
 	}
 
-	if (error) {
-		return (
-			<section className="section-padding" id="network">
-				<div className="container text-center text-red-600">{error}</div>
-			</section>
-		);
-	}
 	return (
 		<section
-			className="section-padding bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5"
+			className="section-padding bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5 flex flex-col items-center"
 			id="network"
 		>
 			<div className="container">
@@ -107,35 +27,74 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 						{t("about.partner.title")}
 					</h2>
 				</AnimatedSection>
-				<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-8">
-					{partners.map((partner, index) => (
-						<AnimatedSection key={partner.id} delay={index * 0.1}>
-							<GlowingCard>
-								<Card className="p-6 sm:p-8 border-0 shadow-2xl bg-white/80 backdrop-blur-sm hover:shadow-3xl transition-shadow duration-500">
-									<CardContent className="p-0 text-center">
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+					{initialPartners.map((partner, index) => {
+						const cardContent = (
+							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl ${partner.websiteUrl ? "hover:shadow-2xl cursor-pointer hover:-translate-y-2" : "hover:shadow-2xl hover:-translate-y-1"}`}>
+								<CardContent className="p-0 h-full flex items-center justify-center">
+									{/* Large Logo display */}
+									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 opacity-100">
 										<Image
 											src={partner.media?.url || "/my-cut.png"}
-											alt={partner.media?.altText || partner.id}
-											width={160}
-											height={160}
-											className="w-40 h-40 object-contain mx-auto"
+											alt={partner.name || partner.media?.altText || "Partner logo"}
+											fill
+											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+											className="object-contain p-8 md:p-12 drop-shadow-sm"
 										/>
-									</CardContent>
-								</Card>
-							</GlowingCard>
-						</AnimatedSection>
-					))}
+									</div>
+
+									{/* Hover Overlay with info */}
+									<div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/70 to-slate-900/80 opacity-0 group-hover:opacity-100 transition-all duration-700 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
+										<div className="transform translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-75 flex flex-col items-center h-full justify-center">
+											{partner.name && (
+												<h3 className="text-xl md:text-2xl font-bold text-white line-clamp-2 mb-3 drop-shadow-md tracking-wide">
+													{partner.name}
+												</h3>
+											)}
+											{partner.description && (
+												<p className="text-sm md:text-base text-slate-200 line-clamp-3 mb-6 leading-relaxed">
+													{partner.description}
+												</p>
+											)}
+											{partner.websiteUrl && (
+												<span className="inline-flex items-center gap-2 px-6 py-2.5 mt-2 text-sm font-bold tracking-widest text-white uppercase transition-all duration-300 bg-white/10 rounded-full hover:bg-blue-600 border border-white/20 backdrop-blur-md shadow-lg hover:shadow-blue-500/30">
+													{t("partners.visitWebsite") || "Visit"} <ArrowRight className="w-4 h-4 ml-1" />
+												</span>
+											)}
+										</div>
+									</div>
+								</CardContent>
+							</Card>
+						);
+
+						return (
+							<AnimatedSection key={partner.id} delay={(index % 8) * 0.1}>
+								<GlowingCard>
+									{partner.websiteUrl ? (
+										<a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer" className="block h-full">
+											{cardContent}
+										</a>
+									) : (
+										<div className="h-full">
+											{cardContent}
+										</div>
+									)}
+								</GlowingCard>
+							</AnimatedSection>
+						);
+					})}
 				</div>
-				
-				{/* Loading More Indicator */}
-				{loadingMore && (
-					<div className="flex justify-center items-center py-8">
-						<div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-					</div>
-				)}
-				
-				{/* Intersection Observer Target */}
-				<div ref={observerTarget} className="h-4" />
+                
+				{/* Navigate to full network page */}
+				<AnimatedSection className="mt-16 text-center flex justify-center w-full" delay={0.3}>
+					<Link href="/network">
+						<button className="inline-flex items-center justify-center gap-2 px-8 py-4 font-semibold text-white transition-all duration-300 transform rounded-full shadow-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-2xl hover:-translate-y-1 hover:from-blue-700 hover:to-indigo-700 w-full sm:w-auto overflow-hidden group">
+							<span className="relative z-10">{t("about.partner.view_all")}</span>
+							<ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1 relative z-10" />
+                            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+						</button>
+					</Link>
+				</AnimatedSection>
 			</div>
 		</section>
 	);

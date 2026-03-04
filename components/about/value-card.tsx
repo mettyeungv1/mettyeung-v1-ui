@@ -20,9 +20,16 @@ export function ValueCard({ item }: { item: ValueItem }) {
 						{t(item.titleKey)}
 					</h2>
 				</div>
-				<p className="text-gray-600 leading-relaxed space-y-4">
-					<span>{t(item.descriptionKey1)}</span>
-				</p>
+				<div className="text-base text-gray-600 leading-relaxed space-y-4">
+					<p>{t(item.descriptionKey1)}</p>
+					{item.listKeys && item.listKeys.length > 0 && (
+						<ul className="list-disc pl-5 mt-2 space-y-2">
+							{item.listKeys.map((key) => (
+								<li key={key}>{t(key)}</li>
+							))}
+						</ul>
+					)}
+				</div>
 			</CardContent>
 		</Card>
 	);

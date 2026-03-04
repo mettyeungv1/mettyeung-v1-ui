@@ -40,12 +40,12 @@ export function ContactMapSection() {
                                 </div>
                                 <div>
                                     <h4 className="font-semibold text-gray-900 text-sm">Mett Yeung Association</h4>
-                                    <p className="text-xs text-gray-500 mt-1">Phnom Penh, Cambodia</p>
+                                    <p className="text-sm text-gray-500 mt-1">Phnom Penh, Cambodia</p>
                                     <a 
                                         href="https://maps.google.com/maps?ll=11.595197,104.901852&z=17&t=m&hl=en&gl=KH&mapclient=embed&cid=9012019777218636172" 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="text-xs text-blue-600 font-medium mt-2 inline-block hover:underline"
+                                        className="text-sm text-blue-600 font-medium mt-2 inline-block hover:underline"
                                     >
                                         Get Directions
                                     </a>

@@ -80,8 +80,18 @@
 	body {
 		@apply bg-white text-text-primary antialiased;
 		font-feature-settings: "rlig" 1, "calt" 1;
+		font-size: 16px;
 		line-height: 1.6;
 	}
+
+	/* ─── Typography Scale ─────────────────────────────────── */
+	/* Minimum readable sizes enforced globally */
+	h1 { @apply text-3xl sm:text-4xl md:text-5xl; }
+	h2 { @apply text-2xl sm:text-3xl md:text-4xl; }
+	h3 { @apply text-xl sm:text-2xl; }
+	h4 { @apply text-lg sm:text-xl; }
+	h5 { @apply text-base sm:text-lg; }
+	h6 { @apply text-base; }
 
 	/* Font family switching logic */
 	html[data-language="en"] {
@@ -199,13 +209,30 @@
 		@apply transition-all duration-200 ease-in-out;
 	}
 
-	/* Text variants for better hierarchy */
+	/* ─── Text Variants / Typography Utilities ──────────── */
+	/* Use these for consistent sizing across all components */
 	.text-heading {
 		@apply text-text-primary font-semibold;
 	}
 
 	.text-body {
-		@apply text-text-primary;
+		@apply text-base text-text-primary leading-relaxed;
+	}
+
+	.text-body-sm {
+		@apply text-sm md:text-base text-gray-600 leading-relaxed;
+	}
+
+	.text-body-lg {
+		@apply text-lg text-text-primary leading-relaxed;
+	}
+
+	.text-caption {
+		@apply text-sm md:text-base text-gray-500;
+	}
+
+	.text-label {
+		@apply text-xs md:text-base font-semibold uppercase tracking-wider text-gray-500;
 	}
 
 	.text-muted {
@@ -355,4 +382,36 @@
 
 html {
 	scroll-behavior: smooth;
+}
+
+/* ─── Desktop minimum font-size (16px) ─────────────────── */
+/* Ensures no text on computer screens is smaller than 16px.
+   Only targets elements whose font-size would otherwise be < 16px.
+   Headings (h1-h6) are excluded since they're already ≥ 16px. */
+@media (min-width: 768px) {
+	body {
+		font-size: 16px;
+	}
+
+	/* Direct override for Tailwind text-xs (12px) and text-sm (14px) */
+	.text-xs {
+		font-size: 1rem !important;
+	}
+	.text-sm {
+		font-size: 1rem !important;
+	}
+
+	/* Direct override for arbitrary small font sizes */
+	[class*="text-\[9px\]"],
+	[class*="text-\[10px\]"],
+	[class*="text-\[11px\]"],
+	[class*="text-\[12px\]"],
+	[class*="text-\[13px\]"],
+	[class*="text-\[14px\]"],
+	[class*="text-\[15px\]"] {
+		font-size: 1rem !important;
+	}
+
+	/* Preserve responsive overrides: md:text-base etc still work 
+	   because they have higher specificity with breakpoint prefix */
 }

@@ -1,347 +1,416 @@
 {
-	"about": {
-		"title": "Mettyerngについて",
-		"subtitle": "私たちのフレンズ協会は、2021年に27人の創設メンバーによって設立された非営利の私的法人で、「友情、連帯、忠誠」というモットーのもと運営されています。主な目的は、自営業者、技術専門家、ビジネス実務者の国内外での生活水準、雇用機会、事業を向上させることです。メンバーを集め、強力なサポートネットワークを構築し、経験を共有し、トレーニングやアドバイスを提供することでこれを実現します。",
-		"badge1": "友情",
-		"badge2": "団結",
-		"badge3": "忠誠",
-		"mission": {
-			"title": "ミッション",
-			"desc1": "友人ネットワークを組織し、会員を一つにまとめて国内外の関心に基づいたインタレストグループを設立することで、より良い関係を築き、支援を提供し、経験や労働市場の情報を共有し、相談や研修を提供します。"
-		},
-		"vision": {
-			"title": "ビジョン",
-			"desc1": "私たちの友人ネットワークの統一された声を代表する存在となり、会員が活動するための基盤として、利便性を提供し、社会からの信頼を高めます。"
-		},
-		"values": {
-			"title": "私たちの価値観",
-			"desc1": "友情、団結、忠誠"
-		},
-		"timeline": {
-			"title": "歩み",
-			"title_en": "私たちの歩み",
-			"description": "2018年以来の成長と成果を辿ります。",
-			"founded": {
-				"title": "組織設立",
-				"title_en": "組織設立",
-				"description": "Mettyerngは、10名の献身的な初期ボランティアのグループによって結成されました。",
-				"achievements": {
-					"members": "10名の創設メンバー",
-					"firstProject": "最初のプロジェクトを開始"
-				}
-			},
-			"education": {
-				"title": "教育イニシアチブ",
-				"title_en": "教育イニシアチブ",
-				"description": "農村地域の子どもたちに教育を提供するプロジェクトを開始しました。",
-				"achievements": {
-					"children": "50人の子どもたちが教育を受ける",
-					"classrooms": "最初の5つの教室"
-				}
-			},
-			"covid": {
-				"title": "COVID-19救援",
-				"title_en": "COVID-19救援",
-				"description": "COVID-19パンデミック中に食料および医療支援を提供しました。",
-				"achievements": {
-					"families": "500世帯を支援",
-					"medicalKits": "医療キットを配布"
-				}
-			},
-			"haircut": {
-				"title": "無料ヘアカットプロジェクト",
-				"title_en": "無料ヘアカットプロジェクト",
-				"description": "コミュニティに無料ヘアカットを提供するプロジェクトを開始しました。",
-				"achievements": {
-					"people": "200人にサービス提供",
-					"monthlyService": "毎月のサービス"
-				}
-			},
-			"expansion": {
-				"title": "拡大",
-				"title_en": "拡大",
-				"description": "活動を他の州に拡大し、メンバーシップを増やしました。",
-				"achievements": {
-					"activeMembers": "100人以上の活動メンバー",
-					"provinces": "3つの州で活動中"
-				}
-			},
-			"recognition": {
-				"title": "認知",
-				"title_en": "認知",
-				"description": "私たちのフォーラムに対して、政府および市民社会から認知を受けました。",
-				"achievements": {
-					"nationalAward": "国家賞を受賞",
-					"acknowledgement": "公式な承認"
-				}
-			},
-			"newFuture": {
-				"title": "新しい未来",
-				"title_en": "新しい未来",
-				"description": "新しいウェブサイトを立ち上げ、デジタル技術分野への活動を拡大しました。",
-				"achievements": {
-					"newWebsite": "新しいウェブサイトを立ち上げ",
-					"digitalSystem": "デジタル管理システム"
-				}
-			}
-		},
-		"team": {
-			"title": "私たちのチーム",
-			"title_en": "私たちのコアチーム",
-			"description": "コミュニティの構築に専念しているコアメンバーです。",
-			"member1": { "name": "Mettyerng氏", "role": "会長" },
-			"member2": { "name": "Sokha氏", "role": "副会長" },
-			"member3": { "name": "Dara氏", "role": "書記" },
-			"member4": { "name": "Chanda氏", "role": "会計" }
-		},
-		"partner": {
-			"title": "私たちの友人ネットワーク"
-		}
-	},
-	"events": {
-		"heroDescription": "私たちの最新の活動とイベントを確認してください",
-		"recentNews": "最新ニュース"
-	},
-	"nav": {
-		"activity": "活動",
-		"allNews": "すべて",
-		"home": "ホーム",
-		"about": "協会概要",
-		"subMenuAbout": "私たちについて",
-		"network": "私たちのネットワーク",
-		"structure": "組織構造",
-		"news": "イベント",
-		"latestNews": "最新ニュース",
-		"events": "イベント",
-		"videos": "ビデオ",
-		"projects": "プロジェクト",
-		"allProjects": "すべてのプロジェクト",
-		"community": "コミュニティ",
-		"education": "教育",
-		"culture": "文化",
-		"sports": "スポーツ",
-		"gallery": "ギャラリー",
-		"contact": "お問い合わせ",
-		"joinUs": "参加する"
-	},
-	"hero": {
-		"title": "コミュニティビルダー",
-		"subtitle": "共に強力なコミュニティを築く",
-		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループです。",
-		"learnMore": "さらに詳しく",
-		"watchVideo": "ビデオを見る",
-		"videoDescription": "私たちの活動やプログラムを動画でご覧ください",
-		"projectTitle": "無料ヘアカットプロジェクト",
-		"projectSubtitle": "コミュニティサービスイニシアチブ",
-		"projectDescription": "支援が必要なコミュニティメンバーのための無料ヘアカット",
-		"viewProjects": "プロジェクトを見る",
-		"educationTitle": "教育と文化",
-		"educationSubtitle": "学習と遺産",
-		"educationDescription": "教育を推進し、クメール文化を保存する",
-		"joinUs": "参加する"
-	},
-	"home": {
-		"ourHistory": "当協会の歴史",
-		"ourHistoryDetail": "私たちの友人協会（Our Friends Association）は、27名の創立メンバーの発議により、2020年12月2日に設立された民間協会です。これら27名の創立メンバーは、カンボジアの社会的利益と福祉のために、生活水準、知識、雇用機会、そしてビジネスの向上に焦点を当て、定款および内部規則を共同で策定しました。その後、当協会は2021年1月27日付の内務省布告第245号により、「法人」として正式に登録されました。",
-		"achievements": "協会の実績",
-		"achievementsDesc": "様々な活動を通じて、私たちの友人協会は、国内外の自営業者、技術専門家、サービス従事者、そして様々な事業者に対し、保護を提供するとともに、生活水準の向上や雇用・ビジネスの機会を促進してきました。",
-		"missionTitle": "私たちの使命",
-		"missionDesc": "国内外の友人やメンバーのネットワークを関心グループにまとめ、より良い関係を育み、経験を共有し、雇用市場の情報を提供し、生活水準の向上に向けた助言とトレーニングを提供することです。",
-		"missionText": "私たちは、教育がカンボジアの子どもたちと若者にとって、発展と明るい未来を築くための最も重要な基盤であると信じています。",
-		"focusAreas": "友情・団結・忠誠",
-		"focusAreasDesc": "国内外の労働者、自営業者、技術専門家、サービス従事者、そして様々な事業者の保護と、生活水準、雇用、ビジネス機会の向上の重要性を認識し、私たちの友人協会（Our Friends Association）は、ある青年グループの共同の理念のもと、以下の方針に従って設立されました。",
-		"joinCommunity": "私たちのコミュニティに参加する",
-		"joinDesc": "ポジティブな変化の一部となり、強力なコミュニティの構築に参加しましょう。",
-		"becomeVolunteer": "ボランティアになる",
-		"becomeOurMember": "会員になる",
-		"viewProjects": "私たちのプロジェクトを見る",
-		"viewOurActivity": "私たちの活動を見る",
-		"education": "友情と連帯の強化",
-		"educationDesc": "労働者と企業の間で、絆、連帯、支援のネットワークを強化することに焦点を当てた私的な非営利法人。",
-		"culture": "核となる価値観：友情、連帯、忠誠心",
-		"cultureDesc": "メンバーが共通の目標を効果的かつ持続可能に達成するための希望と方向性を提供する協会の指導原則。",
-		"social": "労働者と企業への支援",
-		"socialDesc": "トレーニング、法律・ビジネスコンサルティング、雇用の機会提供、ビジネスネットワークの拡大を通じて生活水準を向上させるためのプラットフォーム。",
-		"activeMembers": "グループ内の活動メンバー数",
-		"successfulProjects": "成功裏に実施されたプロジェクト数",
-		"educatedChildren": "教育を受けた子どもたちと若者の数",
-		"helpedFamilies": "支援を受けた家族の数"
-	},
-	"projects": {
-		"title": "私たちのプロジェクト",
-		"subtitle": "影響力のある私たちのプロジェクトとコミュニティイニシアチブを発見してください。",
-		"impact": "私たちの影響",
-		"impactDesc": "私たちの功績",
-		"allProjects": "すべてのプロジェクト",
-		"showing": "表示中",
-		"of": "の",
-		"projects": "プロジェクト",
-		"noResults": "プロジェクトは見つかりませんでした",
-		"clearFilters": "すべてのフィルターをクリア",
-		"categories": {
-			"all": "すべてのプロジェクト",
-			"community": "コミュニティ",
-			"education": "教育",
-			"culture": "文化",
-			"sports": "スポーツ"
-		}
-	},
-	"contact": {
-		"title": "お問い合わせ",
-		"subtitle": "コラボレーション、参加、またはご質問については、お気軽にお問い合わせください。",
-		"info": "連絡先情報",
-		"sendMessage": "メッセージを送る",
-		"name": "氏名",
-		"email": "メールアドレス",
-		"phone": "電話番号",
-		"department": "部門",
-		"subject": "件名",
-		"message": "メッセージ",
-		"send": "メッセージを送る",
-		"sending": "送信中...",
-		"followUs": "ソーシャルメディアでフォローする",
-		"quickActions": "クイックアクション",
-		"volunteer": "ボランティアになる",
-		"donate": "寄付",
-		"location": "所在地"
-	},
-	"common": {
-		"readMore": "続きを読む",
-		"viewMore": "もっと見る",
-		"learnMore": "さらに詳しく",
-		"viewDetails": "詳細を見る",
-		"back": "戻る",
-		"next": "次へ",
-		"previous": "前へ",
-		"close": "閉じる",
-		"search": "検索",
-		"filter": "フィルター",
-		"all": "すべて",
-		"loading": "読み込み中...",
-		"error": "エラー",
-		"success": "成功"
-	},
-	"structure": {
-		"hero": {
-			"title": "組織体制",
-			"description": "私たちの使命を推進する献身的なチームとメンバーをご紹介します。"
-		},
-		"chart": "組織図",
-		"honorMember": "名誉会員",
-		"executiveCommittee": "執行委員会",
-		"boardOfDirectors": "理事会",
-		"seniorAdvisors": "上級顧問",
-		"associationBranches": "協会支部"
-	},
-	"contactUs": {
-		"phone": "電話番号",
-		"address": "住所",
-		"email": "メールアドレス"
-	},
-	"footer": {
-		"description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループであり、共に強力なコミュニティを築くことに尽力しています。",
-		"quickLinks": "クイックリンク",
-		"contactInfo": {
-			"title": "連絡先情報",
-			"phone": "+855 15 220 320",
-			"email": "mettyeung@gmail.com",
-			"address": "No. 3AF, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
-		},
-		"newsletter": {
-			"title": "ニュースレター",
-			"description": "最新のニュースと活動を受け取るために購読してください。"
-		},
-		"followUs": "フォローする",
-		"copyright": "全著作権所有。",
-		"aboutUs": "私たちについて",
-		"history": "沿革",
-		"mission": "使命",
-		"vision": "ビジョン",
-		"values": "価値観",
-		"activities": "活動",
-		"news": "ニュース",
-		"projects": "プロジェクト",
-		"videos": "ビデオ",
-		"gallery": "ギャラリー",
-		"contact": "お問い合わせ",
-		"contactUs": "お問い合わせ",
-		"joinUs": "参加する",
-		"volunteer": "ボランティア",
-		"support": "サポート",
-		"newsletterDesc": "最新のニュースと活動を受け取るために購読してください",
-		"emailPlaceholder": "メールアドレスを入力",
-		"subscribe": "購読する",
-		"privacy": "プライバシーポリシー",
-		"terms": "利用規約"
-	},
-	"stats": {
-		"members": "活動会員",
-		"projects": "慈善活動",
-		"beneficiaries": "受益者",
-		"volunteers": "ボランティア",
-		"training": "研修",
-		"years": "年",
-		"communities": "地域社会"
-	},
-	"auth": {
-		"login": "ログイン",
-		"register": "新規登録",
-		"logout": "ログアウト",
-		"loginSubtitle": "おかえりなさい！アカウントにサインインしてください",
-		"registerSubtitle": "始めるためにアカウントを作成してください",
-		"email": "メールアドレス",
-		"password": "パスワード",
-		"fullName": "氏名",
-		"confirmPassword": "パスワードを確認",
-		"newPassword": "新しいパスワード",
-		"confirmNewPassword": "新しいパスワードを確認",
-		"emailPlaceholder": "メールアドレスを入力",
-		"passwordPlaceholder": "パスワードを入力",
-		"fullNamePlaceholder": "氏名を入力",
-		"confirmPasswordPlaceholder": "パスワードを確認",
-		"newPasswordPlaceholder": "新しいパスワードを入力",
-		"confirmNewPasswordPlaceholder": "新しいパスワードを確認",
-		"rememberMe": "ログイン状態を保持",
-		"forgotPassword": "パスワードを忘れましたか？",
-		"noAccount": "アカウントをお持ちではありませんか？",
-		"haveAccount": "すでにアカウントをお持ちですか？",
-		"loggingIn": "サインイン中...",
-		"registering": "アカウント作成中...",
-		"continueWithGoogle": "Googleで続行",
-		"continueWithTelegram": "Telegramで続行",
-		"orContinueWith": "またはメールアドレスで続行",
-		"orRegisterWith": "またはメールアドレスで登録",
-		"agreeToTerms": "以下に同意します",
-		"termsOfService": "利用規約",
-		"privacyPolicy": "プライバシーポリシー",
-		"and": "および",
-		"passwordRequirements": "パスワードの要件",
-		"verifyOtp": "アカウントを確認",
-		"otpSubtitle": "メールアドレスに送信された6桁のコードを入力してください",
-		"sentTo": "送信先",
-		"resendIn": "コード再送まで",
-		"resendOtp": "コードを再送",
-		"resending": "再送中...",
-		"verify": "アカウントを確認",
-		"verifying": "確認中...",
-		"wrongEmail": "メールアドレスが間違っていますか？",
-		"changeEmail": "メールアドレスを変更",
-		"forgotPasswordSubtitle": "パスワードリセットリンクを受け取るためにメールアドレスを入力してください",
-		"sendResetLink": "リセットリンクを送信",
-		"sending": "送信中...",
-		"emailSent": "メールが送信されました！",
-		"emailSentDescription": "パスワードリセットリンクを以下に送信しました:",
-		"resendEmail": "メールを再送",
-		"backToLogin": "ログインに戻る",
-		"rememberPassword": "パスワードを覚えていますか？",
-		"resetPassword": "パスワードをリセット",
-		"resetPasswordSubtitle": "以下に新しいパスワードを入力してください",
-		"resetting": "リセット中...",
-		"passwordResetSuccess": "パスワードリセット成功！",
-		"passwordResetSuccessDescription": "パスワードが正常にリセットされました。新しいパスワードでログインできます。",
-		"loginWithNewPassword": "新しいパスワードでログイン",
-		"invalidResetLink": "無効なリセットリンク",
-		"invalidResetLinkDescription": "このパスワードリセットリンクは無効か期限切れです。新しいリンクをリクエストしてください。",
-		"requestNewLink": "新しいリンクをリクエスト"
-	}
+  "about": {
+    "title": "Mettyerngについて",
+    "subtitle": "私たちの友人協会（Mettyeung）は、国内外の自営業者、技術専門家、サービス従事者およびその他の事業者の間で、友情、連帯、忠誠心を強化し、支援ネットワークを構築するとともに、生活水準や雇用機会の向上、同じ目的を持つ関係者とのビジネス協力を目的として設立された民間非営利法人（NPO）です。",
+    "badge1": "友情",
+    "badge2": "団結",
+    "badge3": "忠誠",
+    "goals": {
+      "title": "私たちの目標",
+      "desc1": "Mettyeungの目標は以下の通りです：",
+      "list1": "国内外の自営業者、技術専門家、サービス従事者およびその他の事業者を結集する。",
+      "list2": "メンバーへのサポート、経験の共有、雇用市場情報の提供、相談対応、およびトレーニングを実施する。",
+      "list3": "関係者からの支援を求め、ビジネス支援ネットワークの構築に参加する。",
+      "list4": "MYAメンバーの利益を代表し、保護する。"
+    },
+    "mission": {
+      "title": "私たちの使命",
+      "desc1": "友人ネットワークを構築し、関心に基づいたインタレストグループに国内外のメンバーを集約することで、より良い関係を育み、支援を提供し、経験や雇用市場情報を共有し、相談対応や多岐にわたるスキル研修を実施する。"
+    },
+    "values": {
+      "title": "私たちの価値観",
+      "desc1": "友情、団結、忠誠"
+    },
+    "timeline": {
+      "title": "歩み",
+      "title_en": "私たちの歩み",
+      "description": "2018年以来の成長と成果を辿ります。",
+      "founded": {
+        "title": "組織設立",
+        "title_en": "組織設立",
+        "description": "Mettyerngは、10名の献身的な初期ボランティアのグループによって結成されました。",
+        "achievements": {
+          "members": "10名の創設メンバー",
+          "firstProject": "最初のプロジェクトを開始"
+        }
+      },
+      "education": {
+        "title": "教育イニシアチブ",
+        "title_en": "教育イニシアチブ",
+        "description": "農村地域の子どもたちに教育を提供するプロジェクトを開始しました。",
+        "achievements": {
+          "children": "50人の子どもたちが教育を受ける",
+          "classrooms": "最初の5つの教室"
+        }
+      },
+      "covid": {
+        "title": "COVID-19救援",
+        "title_en": "COVID-19救援",
+        "description": "COVID-19パンデミック中に食料および医療支援を提供しました。",
+        "achievements": {
+          "families": "500世帯を支援",
+          "medicalKits": "医療キットを配布"
+        }
+      },
+      "haircut": {
+        "title": "無料ヘアカットプロジェクト",
+        "title_en": "無料ヘアカットプロジェクト",
+        "description": "コミュニティに無料ヘアカットを提供するプロジェクトを開始しました。",
+        "achievements": {
+          "people": "200人にサービス提供",
+          "monthlyService": "毎月のサービス"
+        }
+      },
+      "expansion": {
+        "title": "拡大",
+        "title_en": "拡大",
+        "description": "活動を他の州に拡大し、メンバーシップを増やしました。",
+        "achievements": {
+          "activeMembers": "100人以上の活動メンバー",
+          "provinces": "3つの州で活動中"
+        }
+      },
+      "recognition": {
+        "title": "認知",
+        "title_en": "認知",
+        "description": "私たちのフォーラムに対して、政府および市民社会から認知を受けました。",
+        "achievements": {
+          "nationalAward": "国家賞を受賞",
+          "acknowledgement": "公式な承認"
+        }
+      },
+      "newFuture": {
+        "title": "新しい未来",
+        "title_en": "新しい未来",
+        "description": "新しいウェブサイトを立ち上げ、デジタル技術分野への活動を拡大しました。",
+        "achievements": {
+          "newWebsite": "新しいウェブサイトを立ち上げ",
+          "digitalSystem": "デジタル管理システム"
+        }
+      }
+    },
+    "team": {
+      "title": "私たちのチーム",
+      "title_en": "私たちのコアチーム",
+      "description": "コミュニティの構築に専念しているコアメンバーです。",
+      "member1": {
+        "name": "Mettyerng氏",
+        "role": "会長"
+      },
+      "member2": {
+        "name": "Sokha氏",
+        "role": "副会長"
+      },
+      "member3": {
+        "name": "Dara氏",
+        "role": "書記"
+      },
+      "member4": {
+        "name": "Chanda氏",
+        "role": "会計"
+      }
+    },
+    "partner": {
+      "title": "私たちの友人ネットワーク"
+    }
+  },
+  "events": {
+    "heroDescription": "私たちの最新の活動とイベントを確認してください",
+    "recentNews": "最新ニュース"
+  },
+  "nav": {
+    "activity": "活動",
+    "allNews": "すべて",
+    "home": "ホーム",
+    "about": "協会概要",
+    "subMenuAbout": "私たちについて",
+    "network": "私たちのネットワーク",
+    "structure": "組織構造",
+    "news": "イベント",
+    "latestNews": "最新ニュース",
+    "events": "イベント",
+    "videos": "ビデオ",
+    "projects": "プロジェクト",
+    "allProjects": "すべてのプロジェクト",
+    "community": "コミュニティ",
+    "education": "教育",
+    "culture": "文化",
+    "sports": "スポーツ",
+    "gallery": "ギャラリー",
+    "contact": "お問い合わせ",
+    "joinUs": "参加する"
+  },
+  "hero": {
+    "title": "コミュニティビルダー",
+    "subtitle": "共に強力なコミュニティを築く",
+    "description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループです。",
+    "learnMore": "さらに詳しく",
+    "watchVideo": "ビデオを見る",
+    "videoDescription": "私たちの活動やプログラムを動画でご覧ください",
+    "projectTitle": "無料ヘアカットプロジェクト",
+    "projectSubtitle": "コミュニティサービスイニシアチブ",
+    "projectDescription": "支援が必要なコミュニティメンバーのための無料ヘアカット",
+    "viewProjects": "プロジェクトを見る",
+    "educationTitle": "教育と文化",
+    "educationSubtitle": "学習と遺産",
+    "educationDescription": "教育を推進し、クメール文化を保存する",
+    "joinUs": "参加する"
+  },
+  "home": {
+    "ourHistory": "当協会の歴史",
+    "ourHistoryDetail": "私たちの友人協会（Our Friends Association）は、27名の創立メンバーの発議により、2020年12月2日に設立された民間協会です。これら27名の創立メンバーは、カンボジアの社会的利益と福祉のために、生活水準、知識、雇用機会、そしてビジネスの向上に焦点を当て、定款および内部規則を共同で策定しました。その後、当協会は2021年1月27日付の内務省布告第245号により、「法人」として正式に登録されました。",
+    "ourHistoryMembershipInfo": "MYA（私たちの友人協会）のメンバーシップには以下が含まれます：カンボジア王国の法律に従って登録され、国内外の自営業者、技術者、サービス従事者およびその他の事業者に関連する活動を行う組織、協会、連合、その他の法人は、協会の会員になるための申請を行うことができます。法人または個人である会員は、会員になるための申請書を提出し、実行委員長の同意を得ることで、MYAの会員として認められます。",
+    "membershipTypesTitle": "協会のメンバーシップには以下が含まれます：",
+    "membershipTypes": {
+      "founding": {
+        "title": "創設メンバー",
+        "description": "MYAの設立を発起した積極的なメンバーです。"
+      },
+      "honorary": {
+        "title": "名誉メンバー",
+        "description": "MYAの活動を支援および後援してくださるメンバーです。"
+      },
+      "active": {
+        "title": "正メンバー",
+        "description": "MYAの活動に積極的に参加するメンバーです。"
+      },
+      "supporting": {
+        "title": "賛助メンバー",
+        "description": "他の3つのメンバー区分には属さず、MYAのすべての活動を支援するメンバーです。"
+      }
+    },
+    "achievements": "協会の実績",
+    "achievementsDesc": "様々な活動を通じて、私たちの友人協会は、国内外の自営業者、技術専門家、サービス従事者、そして様々な事業者に対し、保護を提供するとともに、生活水準の向上や雇用・ビジネスの機会を促進してきました。",
+    "missionTitle": "私たちの使命",
+    "missionDesc": "国内外の友人やメンバーのネットワークを関心グループにまとめ、より良い関係を育み、経験を共有し、雇用市場の情報を提供し、生活水準の向上に向けた助言とトレーニングを提供することです。",
+    "missionText": "私たちは、教育がカンボジアの子どもたちと若者にとって、発展と明るい未来を築くための最も重要な基盤であると信じています。",
+    "focusAreas": "友情・団結・忠誠",
+    "focusAreasDesc": "国内外の労働者、自営業者、技術専門家、サービス従事者、そして様々な事業者の保護と、生活水準、雇用、ビジネス機会の向上の重要性を認識し、私たちの友人協会（Our Friends Association）は、ある青年グループの共同の理念のもと、以下の方針に従って設立されました。",
+    "joinCommunity": "私たちのコミュニティに参加する",
+    "joinDesc": "ポジティブな変化の一部となり、強力なコミュニティの構築に参加しましょう。",
+    "becomeVolunteer": "ボランティアになる",
+    "becomeOurMember": "会員になる",
+    "viewProjects": "私たちのプロジェクトを見る",
+    "viewOurActivity": "私たちの活動を見る",
+    "education": "友情と連帯の強化",
+    "educationDesc": "労働者と企業の間で、絆、連帯、支援のネットワークを強化することに焦点を当てた私的な非営利法人。",
+    "culture": "核となる価値観：友情、連帯、忠誠心",
+    "cultureDesc": "メンバーが共通の目標を効果的かつ持続可能に達成するための希望と方向性を提供する協会の指導原則。",
+    "social": "労働者と企業への支援",
+    "socialDesc": "トレーニング、法律・ビジネスコンサルティング、雇用の機会提供、ビジネスネットワークの拡大を通じて生活水準を向上させるためのプラットフォーム。",
+    "upskillingDesc": "スキルアップ訓練セッションを実施",
+    "successfulProjects": "成功裏に実施されたプロジェクト数",
+    "eciDesc": "ECI訓練プログラムを修了",
+    "educatedChildren": "教育を受けた子どもたちと若者の数"
+  },
+  "projects": {
+    "title": "私たちのプロジェクト",
+    "subtitle": "影響力のある私たちのプロジェクトとコミュニティイニシアチブを発見してください。",
+    "impact": "私たちの影響",
+    "impactDesc": "私たちの功績",
+    "allProjects": "すべてのプロジェクト",
+    "showing": "表示中",
+    "of": "の",
+    "projects": "プロジェクト",
+    "noResults": "プロジェクトは見つかりませんでした",
+    "clearFilters": "すべてのフィルターをクリア",
+    "categories": {
+      "all": "すべてのプロジェクト",
+      "community": "コミュニティ",
+      "education": "教育",
+      "culture": "文化",
+      "sports": "スポーツ"
+    }
+  },
+  "contact": {
+    "title": "お問い合わせ",
+    "subtitle": "コラボレーション、参加、またはご質問については、お気軽にお問い合わせください。",
+    "info": "連絡先情報",
+    "sendMessage": "メッセージを送る",
+    "name": "氏名",
+    "email": "メールアドレス",
+    "phone": "電話番号",
+    "department": "部門",
+    "subject": "件名",
+    "message": "メッセージ",
+    "send": "メッセージを送る",
+    "sending": "送信中...",
+    "followUs": "ソーシャルメディアでフォローする",
+    "quickActions": "クイックアクション",
+    "volunteer": "ボランティアになる",
+    "donate": "寄付",
+    "location": "所在地"
+  },
+  "common": {
+    "readMore": "続きを読む",
+    "viewMore": "もっと見る",
+    "learnMore": "さらに詳しく",
+    "viewDetails": "詳細を見る",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "close": "閉じる",
+    "search": "検索",
+    "filter": "フィルター",
+    "all": "すべて",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功"
+  },
+  "structure": {
+    "hero": {
+      "title": "組織体制",
+      "description": "私たちの使命を推進する献身的なチームとメンバーをご紹介します。"
+    },
+    "chart": "組織図",
+    "honorMember": "名誉会員",
+    "executiveCommittee": "執行委員会",
+    "boardOfDirectors": "理事会",
+    "seniorAdvisors": "上級顧問",
+    "associationBranches": "協会支部"
+  },
+  "contactUs": {
+    "phone": "電話番号",
+    "address": "住所",
+    "email": "メールアドレス"
+  },
+  "footer": {
+    "description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループであり、共に強力なコミュニティを築くことに尽力しています。",
+    "quickLinks": "クイックリンク",
+    "contactInfo": {
+      "title": "連絡先情報",
+      "phone": "+855 15 220 320",
+      "email": "mettyeung@gmail.com",
+      "address": "No. 3AF, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
+    },
+    "newsletter": {
+      "title": "ニュースレター",
+      "description": "最新のニュースと活動を受け取るために購読してください。"
+    },
+    "followUs": "フォローする",
+    "copyright": "全著作権所有。",
+    "aboutUs": "私たちについて",
+    "history": "沿革",
+    "mission": "使命",
+    "vision": "ビジョン",
+    "values": "価値観",
+    "activities": "活動",
+    "news": "ニュース",
+    "projects": "プロジェクト",
+    "videos": "ビデオ",
+    "gallery": "ギャラリー",
+    "contact": "お問い合わせ",
+    "contactUs": "お問い合わせ",
+    "joinUs": "参加する",
+    "volunteer": "ボランティア",
+    "support": "サポート",
+    "newsletterDesc": "最新のニュースと活動を受け取るために購読してください",
+    "emailPlaceholder": "メールアドレスを入力",
+    "subscribe": "購読する",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
+  },
+  "stats": {
+    "members": "活動会員",
+    "upskilling": "スキルアップ訓練",
+    "projects": "慈善活動",
+    "beneficiaries": "受益者",
+    "volunteers": "ボランティア",
+    "eci": "訓練 (ECI)",
+    "training": "研修",
+    "years": "年",
+    "communities": "地域社会"
+  },
+  "auth": {
+    "login": "ログイン",
+    "register": "新規登録",
+    "logout": "ログアウト",
+    "loginSubtitle": "おかえりなさい！アカウントにサインインしてください",
+    "registerSubtitle": "始めるためにアカウントを作成してください",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "fullName": "氏名",
+    "confirmPassword": "パスワードを確認",
+    "newPassword": "新しいパスワード",
+    "confirmNewPassword": "新しいパスワードを確認",
+    "emailPlaceholder": "メールアドレスを入力",
+    "passwordPlaceholder": "パスワードを入力",
+    "fullNamePlaceholder": "氏名を入力",
+    "confirmPasswordPlaceholder": "パスワードを確認",
+    "newPasswordPlaceholder": "新しいパスワードを入力",
+    "confirmNewPasswordPlaceholder": "新しいパスワードを確認",
+    "rememberMe": "ログイン状態を保持",
+    "forgotPassword": "パスワードを忘れましたか？",
+    "noAccount": "アカウントをお持ちではありませんか？",
+    "haveAccount": "すでにアカウントをお持ちですか？",
+    "loggingIn": "サインイン中...",
+    "registering": "アカウント作成中...",
+    "continueWithGoogle": "Googleで続行",
+    "continueWithTelegram": "Telegramで続行",
+    "orContinueWith": "またはメールアドレスで続行",
+    "orRegisterWith": "またはメールアドレスで登録",
+    "agreeToTerms": "以下に同意します",
+    "termsOfService": "利用規約",
+    "privacyPolicy": "プライバシーポリシー",
+    "and": "および",
+    "passwordRequirements": "パスワードの要件",
+    "verifyOtp": "アカウントを確認",
+    "otpSubtitle": "メールアドレスに送信された6桁のコードを入力してください",
+    "sentTo": "送信先",
+    "resendIn": "コード再送まで",
+    "resendOtp": "コードを再送",
+    "resending": "再送中...",
+    "verify": "アカウントを確認",
+    "verifying": "確認中...",
+    "wrongEmail": "メールアドレスが間違っていますか？",
+    "changeEmail": "メールアドレスを変更",
+    "forgotPasswordSubtitle": "パスワードリセットリンクを受け取るためにメールアドレスを入力してください",
+    "sendResetLink": "リセットリンクを送信",
+    "sending": "送信中...",
+    "emailSent": "メールが送信されました！",
+    "emailSentDescription": "パスワードリセットリンクを以下に送信しました:",
+    "resendEmail": "メールを再送",
+    "backToLogin": "ログインに戻る",
+    "rememberPassword": "パスワードを覚えていますか？",
+    "resetPassword": "パスワードをリセット",
+    "resetPasswordSubtitle": "以下に新しいパスワードを入力してください",
+    "resetting": "リセット中...",
+    "passwordResetSuccess": "パスワードリセット成功！",
+    "passwordResetSuccessDescription": "パスワードが正常にリセットされました。新しいパスワードでログインできます。",
+    "loginWithNewPassword": "新しいパスワードでログイン",
+    "invalidResetLink": "無効なリセットリンク",
+    "invalidResetLinkDescription": "このパスワードリセットリンクは無効か期限切れです。新しいリンクをリクエストしてください。",
+    "requestNewLink": "新しいリンクをリクエスト"
+  },
+  "partners": {
+    "title": "パートナー",
+    "description": "私たちが協力している組織",
+    "visitWebsite": "ウェブサイトを開く",
+    "noPartners": "表示するパートナーはいません"
+  },
+  "network": {
+    "mou": {
+      "title": "覚書（MOU）",
+      "description": "メット・ヨン（Mett Yeung）は、専門的なトレーニングや技術スキルの協力に関して、各機関や民間企業と覚書（MOU）を締結しました。協力内容は以下の通りです：",
+      "list": {
+        "item1": "MYAとAspire Design Academy Company間のMOU： 教育および人材育成に関する協力",
+        "item2": "MYAとCoffee Co., Ltd.間のMOU： 教育および人材育成に関する協力",
+        "item3": "MYAとカンボジア若手起業家協会（Young Entrepreneurs Association of Cambodia）間のMOU： 教育および人材育成に関する協力",
+        "item4": "MYAとDham Computer International Company間のMOU： 教育および人材育成に関する協力",
+        "item5": "MYAとRMA (Cambodia) Co., Ltd.間のMOU： 教育および人材育成に関する協力",
+        "item6": "MYAと国立労働研究所（National Institute of Labor）間のMOU： 教育および人材育成に関する協力",
+        "item7": "MYAとDigi Academy間のMOU： 教育および人材育成に関する協力",
+        "item8": "MYAとHFC (Cambodia) Microfinance Company Limited間のMOU： 教育および人材育成に関する協力",
+        "item9": "MYAとトラウマケア・研究センター（Center for Trauma Care and Research）間のMOU： メンタルウェルビーイング（精神的健康）の促進に関する協力",
+        "item10": "MYAと産業技術研究所（Institute of Industrial Technology）間のMOU： 教育および人材育成に関する協力",
+        "item11": "MYAとWestline Education Group間のMOU： 教育および人材育成に関する協力",
+        "item12": "MYAとOudong Express間のMOU： 教育および人道支援活動のための輸送サービス提供に関する協力",
+        "item13": "MYAとカンボジア電子技術協会（Cambodia Electronics and Technology Association）間のMOU： 電子・技術分野における教育および人材育成に関する協力",
+        "item14": "MYAとカンボジア技術・農業研究所（Cambodia Institute of Technology and Agriculture）間のMOU： 教育および人材育成に関する協力",
+        "item15": "MYAとAkhlem (Cambodia) Co., Ltd.間のMOU： 教育および人材育成に関する協力",
+        "item16": "MYAとカンボジア・レストラン協会（Cambodia Restaurant Association）間のMOU： 教育および人材育成に関する協力",
+        "item17": "MYAとMycut Firm Co., Ltd.間のMOU： 教育活動およびチャリティーイベントのための写真・動画制作サービス提供に関する協力"
+      }
+    }
+  }
 }

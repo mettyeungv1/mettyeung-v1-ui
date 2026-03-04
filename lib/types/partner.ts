@@ -6,7 +6,11 @@ export interface PartnerMedia {
 
 export interface Partner {
 	id: string;
+	name: string | null;
+	websiteUrl: string | null;
+	description: string | null;
 	order: number;
+	isActive: boolean;
 	createdAt: string | Date;
 	updatedAt: string | Date;
 	media: PartnerMedia | null;

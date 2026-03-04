@@ -14,25 +14,24 @@ import { Partner, ValueItem } from "../types/about";
 
 export const missionVisionValues: ValueItem[] = [
 	{
-		icon: Rocket,
-		titleKey: "about.mission.title",
-		descriptionKey1: "about.mission.desc1",
+		icon: Target,
+		titleKey: "about.goals.title",
+		descriptionKey1: "about.goals.desc1",
+		listKeys: [
+			"about.goals.list1",
+			"about.goals.list2",
+			"about.goals.list3",
+			"about.goals.list4"
+		],
 		borderColor: "border-l-blue-500",
 		iconColor: "text-indigo-500",
 	},
 	{
-		icon: Eye,
-		titleKey: "about.vision.title",
-		descriptionKey1: "about.vision.desc1",
+		icon: Rocket,
+		titleKey: "about.mission.title",
+		descriptionKey1: "about.mission.desc1",
 		borderColor: "border-l-blue-500",
 		iconColor: "text-amber-500",
-	},
-	{
-		icon: Handshake,
-		titleKey: "about.values.title",
-		descriptionKey1: "about.values.desc1",
-		borderColor: "border-l-blue-500",
-		iconColor: "text-emerald-500",
 	},
 ];
 

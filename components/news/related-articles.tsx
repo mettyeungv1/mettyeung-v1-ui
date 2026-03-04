@@ -119,9 +119,9 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 									{post.title[DEFAULT_LANGUAGE_CODE]}{" "}
 									{/* 3. This now works perfectly */}
 								</h4>
-								<div className="flex items-center text-xs text-gray-500 space-x-3">
+								<div className="flex items-center text-sm text-gray-500 space-x-3">
 									<div className="flex items-center">
-										<Calendar className="w-3 h-3 mr-1" />
+										<Calendar className="w-3.5 h-3.5 mr-1" />
 										{formatDate(post.publishedAt)}
 									</div>
 									{/* <div className="flex items-center">

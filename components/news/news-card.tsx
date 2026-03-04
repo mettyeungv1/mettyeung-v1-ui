@@ -34,19 +34,19 @@ export function NewsCard({ item, onClick }: NewsCardProps) {
 			<CardContent className="p-6 flex-grow flex flex-col">
 				<div className="flex items-center flex-wrap gap-x-4 gap-y-2 mb-3">
 					{/* Main Category Badge */}
-					<Badge variant="secondary" className="text-xs capitalize">
+					<Badge variant="secondary" className="text-sm capitalize">
 						{categoryName}
 					</Badge>
 
 					{/* Subcategory Badge (if it exists) */}
 					{subCategoryName && (
-						<Badge variant="outline" className="text-xs capitalize">
+						<Badge variant="outline" className="text-sm capitalize">
 							{subCategoryName}
 						</Badge>
 					)}
 
-					<div className="flex items-center text-xs text-gray-500 ml-auto">
-						<Calendar className="w-3 h-3 mr-1.5" />
+					<div className="flex items-center text-sm text-gray-500 ml-auto">
+						<Calendar className="w-3.5 h-3.5 mr-1.5" />
 						{new Date(item.date).toLocaleDateString("en-GB")}
 					</div>
 				</div>
@@ -56,9 +56,9 @@ export function NewsCard({ item, onClick }: NewsCardProps) {
 				<p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
 					{t(item.excerpt)}
 				</p>
-				<div className="flex items-center justify-between text-xs text-gray-500 mt-auto pt-4 border-t">
+				<div className="flex items-center justify-between text-sm text-gray-500 mt-auto pt-4 border-t">
 					<div className="flex items-center">
-						<User className="w-3 h-3 mr-1.5" />
+						<User className="w-3.5 h-3.5 mr-1.5" />
 						{/* Corrected to use the English author name for consistency */}
 						<span className="truncate">Mettyeung27</span>
 					</div>

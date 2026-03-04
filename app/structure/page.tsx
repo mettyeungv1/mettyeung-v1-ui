@@ -9,7 +9,7 @@ import { normalizeUrl } from "@/lib/utils/image";
 
 import type { Member } from "@/lib/types/structure";
 
-
+export const dynamic = "force-dynamic";
 
 export default async function StructurePage() {
 	const [membersRes, associationsRes] = await Promise.all([

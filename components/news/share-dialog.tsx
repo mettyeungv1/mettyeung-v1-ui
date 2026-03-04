@@ -113,7 +113,7 @@ export function ShareDialog({
 										<h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">
 											{article.title_en}
 										</h4>
-										<p className="text-xs text-gray-600 line-clamp-2">
+										<p className="text-sm text-gray-600 line-clamp-2">
 											{article.excerpt}
 										</p>
 									</div>

@@ -1,349 +1,407 @@
 {
-	"about": {
-		"title": "About Mettyerng",
-		"subtitle": "Our Friends Association is a private, non-profit legal entity established in 2021 by 27 founding members, operating under the motto Friendship, Solidarity, Loyalty. Our primary goal is to improve the living standards, job opportunities, and businesses of self-employed workers, technical experts, and business practitioners both domestically and internationally. We achieve this by gathering members, building a strong support network, sharing experiences, and providing training and advice.",
-		"badge1": "Friendship",
-		"badge2": "Solidarity",
-		"badge3": "Loyalty",
-		"mission": {
-			"title": "Mission",
-			"desc1": "To organize a network of friends and unite members into interest groups based on shared interests, both domestically and abroad, to foster better connections, provide support, share experiences and job market information, and offer consultation and training."
-		},
-		"vision": {
-			"title": "Vision",
-			"desc1": "To become the unified voice of Our Friends Network and the banner under which members operate, facilitating activities and building public trust."
-		},
-		"values": {
-			"title": "Our Values",
-			"desc1": "Friendship, Solidarity, Loyalty"
-		},
-		"timeline": {
-			"title": "Journey",
-			"title_en": "Our Journey",
-			"description": "Tracing our growth and achievements since 2018.",
-			"founded": {
-				"title": "ការបង្កើតក្រុម",
-				"title_en": "Organization Founded",
-				"description": "Mettyerng was formed by an initial group of 10 dedicated volunteers.",
-				"achievements": {
-					"members": "10 founding members",
-					"firstProject": "First project launched"
-				}
-			},
-			"education": {
-				"title": "ការអប់រំ",
-				"title_en": "Education Initiative",
-				"description": "Launched a project to provide education to children in rural areas.",
-				"achievements": {
-					"children": "50 children educated",
-					"classrooms": "5 first classrooms"
-				}
-			},
-			"covid": {
-				"title": "ជំនួយកូវីដ",
-				"title_en": "COVID-19 Relief",
-				"description": "Provided food and medical aid during the COVID-19 pandemic.",
-				"achievements": {
-					"families": "500 families assisted",
-					"medicalKits": "Medical kits distributed"
-				}
-			},
-			"haircut": {
-				"title": "គម្រោងកាត់សក់",
-				"title_en": "Free Haircut Project",
-				"description": "Started a project to provide free haircuts to the community.",
-				"achievements": {
-					"people": "200 people served",
-					"monthlyService": "Monthly service"
-				}
-			},
-			"expansion": {
-				"title": "ការរីកចម្រើន",
-				"title_en": "Expansion",
-				"description": "Expanded activities to other provinces and increased membership.",
-				"achievements": {
-					"activeMembers": "100+ active members",
-					"provinces": "Active in 3 provinces"
-				}
-			},
-			"recognition": {
-				"title": "ការទទួលស្គាល់",
-				"title_en": "Recognition",
-				"description": "Received recognition from the government and civil society for our forums.",
-				"achievements": {
-					"nationalAward": "National award received",
-					"acknowledgement": "Official acknowledgement"
-				}
-			},
-			"newFuture": {
-				"title": "អនាគតថ្មី",
-				"title_en": "New Future",
-				"description": "Launched a new website and expanded activities into the digital technology sphere.",
-				"achievements": {
-					"newWebsite": "New website launched",
-					"digitalSystem": "Digital management system"
-				}
-			}
-		},
-		"team": {
-			"title": "Our Structure",
-			"description": "Discover the dedicated teams and individuals driving our mission forward."
-		},
-		"partner": {
-			"title": "Our Friends Network"
-		}
-	},
-	"structure": {
-		"hero": {
-			"title": "Our Structure",
-			"description": "Discover the dedicated teams and individuals driving our mission forward."
-		},
-		"chart": "Organizational Chart",
-		"honorMember": "Honorary Member",
-		"executiveCommittee": "Executive Committee",
-		"boardOfDirectors": "Board of Directors",
-		"seniorAdvisors": "Senior Advisors",
-		"associationBranches": "Association Branches "
-	},
-	"events": {
-		"heroDescription": "Explore our latest activities and events",
-		"recentNews": "Recent News"
-	},
-	"nav": {
-		"home": "Home",
-		"about": "About",
-		"subMenuAbout": "About us",
-		"network": "Our network",
-		"structure": "Structure",
-		"news": "Events",
-		"latestNews": "Latest News",
-		"activity": "Activity",
-		"allNews": "All",
-		"events": "Events",
-		"videos": "Videos",
-		"projects": "Projects",
-		"allProjects": "All Projects",
-		"community": "Community",
-		"education": "Education",
-		"culture": "Culture",
-		"sports": "Sports",
-		"gallery": "Gallery",
-		"contact": "Contact",
-		"joinUs": "Join Us"
-	},
-	"hero": {
-		"title": "Community Builders",
-		"subtitle": "Building Stronger Communities Together",
-		"description": "We are a group of social enthusiasts focused on education, culture, and community development",
-		"learnMore": "Learn More",
-		"watchVideo": "Watch Video",
-		"videoDescription": "Explore our activities and programs through video",
-		"projectTitle": "Free Haircut Project",
-		"projectSubtitle": "Community Service Initiative",
-		"projectDescription": "Free haircuts for community members in need",
-		"viewProjects": "View Our Activities",
-		"educationTitle": "Education s& Culture",
-		"educationSubtitle": "Learning & Heritage",
-		"educationDescription": "Promoting education and preserving Khmer culture",
-		"joinUs": "Join Us"
-	},
-	"home": {
-		"ourHistory": "Our History",
-		"ourHistoryDetail": "Our Friends Association is a private association established on December 2, 2020, under the initiative of 27 founding members. The 27 founding members jointly organized and drafted the statute and internal regulations, focusing on promoting living standards, knowledge, employment opportunities, and business, which are for the benefit and social well-being of Cambodia. The association received legal registration from the Ministry of Interior through Proclamation No. 245 Prakas dated January 27, 2021, as a 'legal entity'.",
-		"achievements": "Association Achievements",
-		"achievementsDesc": "Through various activities, Our Friends Association has provided protection and promoted living standards, as well as employment and business opportunities for self-employed individuals, technical experts, service providers, and various business operators both domestically and abroad.",
-		"missionTitle": "Our Mission",
-		"missionDesc": "To compile a network of friends and members into interest groups, both domestically and internationally, to foster better relationships, share experiences, provide job market information, and offer advice and training to improve living standards.",
-		"missionText": "We believe that education is the most important foundation for development and building a bright future for Cambodian children and youth.",
-		"focusAreas": "Friendship, Solidarity, Loyalty",
-		"focusAreasDesc": "Recognizing the importance of protecting and promoting living standards, employment, and business opportunities for workers, self-employed individuals, technical experts, service providers, and various business operators both domestically and abroad, Our Friends Association was established through the collective vision of a group of youth under the approach:",
-
-		"joinCommunity": "Benefits of Membership",
-		"joinDesc1": "Receive consultation and participate in various training courses such as labor law, union law, and financial management knowledge.",
-		"joinDesc2": "Build a strong network of peers with shared values to represent a unified voice in discussing challenges and finding solutions.",
-		"joinDesc3": "Increase business opportunities, expand professional networks, and build new relationships for collective development.",
-		"becomeVolunteer": "Become a Volunteer",
-		"becomeOurMember": "Become Our Member",
-		"viewProjects": "View Our Projects",
-		"viewOurActivity": "View Our Activities",
-		"education": "Strengthening Friendship and Solidarity",
-		"educationDesc": "A private, non-profit legal entity focused on strengthening bonds, solidarity, and a network of support among workers and businesses.",
-		"culture": "The Core Values: Friendship, Solidarity, and Loyalty",
-		"cultureDesc": "The guiding principles of the association that provide hope and direction for members to achieve common goals effectively and sustainably.",
-		"social": "Support for Workers and Businesses",
-		"socialDesc": "A platform to improve living standards by providing training, legal/business consulting, job opportunities, and expanding business networks.",
-		"activeMembers": "Active members in the group",
-		"successfulProjects": "Successfully implemented projects",
-		"educatedChildren": "Children and youth who received education",
-		"helpedFamilies": "Families who received help"
-	},
-	"projects": {
-		"title": "Our Projects",
-		"subtitle": "Discover our impactful projects and community initiatives",
-		"impact": "Our Impact",
-		"impactDesc": "Our achievements",
-		"allProjects": "All Projects",
-		"showing": "Showing",
-		"of": "of",
-		"projects": "projects",
-		"noResults": "No projects found",
-		"clearFilters": "Clear all filters",
-		"categories": {
-			"all": "All Projects",
-			"community": "Community",
-			"education": "Education",
-			"culture": "Culture",
-			"sports": "Sports"
-		}
-	},
-	"contact": {
-		"title": "Contact Us",
-		"subtitle": "Get in touch for collaboration, participation, or any questions",
-		"info": "Contact Information",
-		"sendMessage": "Send us a Message",
-		"name": "Name",
-		"email": "Email",
-		"phone": "Phone",
-		"department": "Department",
-		"subject": "Subject",
-		"message": "Message",
-		"send": "Send Message",
-		"sending": "Sending...",
-		"followUs": "Follow Us on Social Media",
-		"quickActions": "Quick Actions",
-		"volunteer": "Become a Volunteer",
-		"donate": "Donation",
-		"location": "Our Location"
-	},
-	"common": {
-		"readMore": "Read More",
-		"viewMore": "View More",
-		"learnMore": "Learn More",
-		"viewDetails": "View Details",
-		"back": "Back",
-		"next": "Next",
-		"previous": "Previous",
-		"close": "Close",
-		"search": "Search",
-		"filter": "Filter",
-		"all": "All",
-		"loading": "Loading...",
-		"error": "Error",
-		"success": "Success"
-	},
-	"video": {
-		"category": "Category",
-		"about": "About"
-	},
-	"contactUs": {
-		"phone": "Phone",
-		"address": "Address",
-		"email": "Email"
-	},
-	"footer": {
-		"description": "We are a group of social enthusiasts focused on education, culture, and community development, committed to building stronger communities together.",
-		"quickLinks": "Quick Links",
-		"contactInfo": {
-			"title": "Contact Info",
-			"phone": "+855 15 220 320",
-			"email": "mettyeung@gmail.com",
-			"address": "No. 3AF, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
-		},
-		"newsletter": {
-			"title": "Newsletter",
-			"description": "Subscribe to receive our latest news and activities."
-		},
-		"followUs": "Follow Us",
-		"copyright": "All Rights Reserved.",
-		"aboutUs": "About Us",
-		"history": "History",
-		"mission": "Mission",
-		"vision": "Vision",
-		"values": "Values",
-		"activities": "Activities",
-		"news": "News",
-		"projects": "Projects",
-		"videos": "Videos",
-		"gallery": "Gallery",
-		"contact": "Contact",
-		"contactUs": "Contact Us",
-		"joinUs": "Join Us",
-		"volunteer": "Volunteer",
-		"support": "Support",
-		"newsletterDesc": "Subscribe to receive our latest news and activities",
-		"emailPlaceholder": "Enter your email",
-		"subscribe": "Subscribe",
-		"privacy": "Privacy Policy",
-		"terms": "Terms of Service"
-	},
-	"stats": {
-		"members": "Active Members",
-		"projects": "Charity Activities",
-		"beneficiaries": "Beneficiaries",
-		"volunteers": "Volunteers",
-		"training": "Trainings",
-		"years": "Years",
-		"communities": "Communities"
-	},
-	"auth": {
-		"login": "Login",
-		"register": "Register",
-		"logout": "Logout",
-		"loginSubtitle": "Welcome back! Please sign in to your account",
-		"registerSubtitle": "Create your account to get started",
-		"email": "Email",
-		"password": "Password",
-		"fullName": "Full Name",
-		"confirmPassword": "Confirm Password",
-		"newPassword": "New Password",
-		"confirmNewPassword": "Confirm New Password",
-		"emailPlaceholder": "Enter your email",
-		"passwordPlaceholder": "Enter your password",
-		"fullNamePlaceholder": "Enter your full name",
-		"confirmPasswordPlaceholder": "Confirm your password",
-		"newPasswordPlaceholder": "Enter new password",
-		"confirmNewPasswordPlaceholder": "Confirm new password",
-		"rememberMe": "Remember me",
-		"forgotPassword": "Forgot password?",
-		"noAccount": "Don't have an account?",
-		"haveAccount": "Already have an account?",
-		"loggingIn": "Signing in...",
-		"registering": "Creating account...",
-		"continueWithGoogle": "Continue with Google",
-		"continueWithTelegram": "Continue with Telegram",
-		"orContinueWith": "or continue with email",
-		"orRegisterWith": "or register with email",
-		"agreeToTerms": "I agree to the",
-		"termsOfService": "Terms of Service",
-		"privacyPolicy": "Privacy Policy",
-		"and": "and",
-		"passwordRequirements": "Password requirements",
-		"verifyOtp": "Verify Your Account",
-		"otpSubtitle": "Enter the 6-digit code sent to your email",
-		"sentTo": "Sent to",
-		"resendIn": "Resend code in",
-		"resendOtp": "Resend Code",
-		"resending": "Resending...",
-		"verify": "Verify Account",
-		"verifying": "Verifying...",
-		"wrongEmail": "Wrong email?",
-		"changeEmail": "Change email",
-		"forgotPasswordSubtitle": "Enter your email to receive a password reset link",
-		"sendResetLink": "Send Reset Link",
-		"sending": "Sending...",
-		"emailSent": "Email Sent!",
-		"emailSentDescription": "We've sent a password reset link to:",
-		"resendEmail": "Resend Email",
-		"backToLogin": "Back to Login",
-		"rememberPassword": "Remember your password?",
-		"resetPassword": "Reset Password",
-		"resetPasswordSubtitle": "Enter your new password below",
-		"resetting": "Resetting...",
-		"passwordResetSuccess": "Password Reset Successfully!",
-		"passwordResetSuccessDescription": "Your password has been reset successfully. You can now login with your new password.",
-		"loginWithNewPassword": "Login with New Password",
-		"invalidResetLink": "Invalid Reset Link",
-		"invalidResetLinkDescription": "This password reset link is invalid or has expired. Please request a new one.",
-		"requestNewLink": "Request New Link"
-	}
+  "about": {
+    "title": "About Mettyerng",
+    "subtitle": "Mett Yeung is a private non-profit legal entity established with the aim of strengthening friendship, solidarity, loyalty and building a support network between self-employed or self-employed workers, technical experts, service workers and other business practitioners both domestically and internationally, as well as improving the standard of living, job opportunities and business cooperation with relevant parties who have similar objectives.",
+    "badge1": "Friendship",
+    "badge2": "Solidarity",
+    "badge3": "Loyalty",
+    "goals": {
+      "title": "Our Goals",
+      "desc1": "Mett Yeung has the following goals:",
+      "list1": "Gathering people who work or earn their own money, technical experts, service workers and other business practitioners both domestically and internationally",
+      "list2": "Providing support, sharing experiences, Job opportunities, consulting and training to members",
+      "list3": "Seeking support from relevant parties and participating to building a business support network",
+      "list4": "Representing and protecting the interests of MYA members."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "desc1": "Compiling networking, gathering members together to form interest groups according to their interests to foster better relationships, provide support, share experiences, provide job opportunities, consulting and provide training in various skills"
+    },
+    "values": {
+      "title": "Our Values",
+      "desc1": "Friendship, Solidarity, Loyalty"
+    },
+    "timeline": {
+      "title": "Journey",
+      "title_en": "Our Journey",
+      "description": "Tracing our growth and achievements since 2018.",
+      "founded": {
+        "title": "ការបង្កើតក្រុម",
+        "title_en": "Organization Founded",
+        "description": "Mettyerng was formed by an initial group of 10 dedicated volunteers.",
+        "achievements": {
+          "members": "10 founding members",
+          "firstProject": "First project launched"
+        }
+      },
+      "education": {
+        "title": "ការអប់រំ",
+        "title_en": "Education Initiative",
+        "description": "Launched a project to provide education to children in rural areas.",
+        "achievements": {
+          "children": "50 children educated",
+          "classrooms": "5 first classrooms"
+        }
+      },
+      "covid": {
+        "title": "ជំនួយកូវីដ",
+        "title_en": "COVID-19 Relief",
+        "description": "Provided food and medical aid during the COVID-19 pandemic.",
+        "achievements": {
+          "families": "500 families assisted",
+          "medicalKits": "Medical kits distributed"
+        }
+      },
+      "haircut": {
+        "title": "គម្រោងកាត់សក់",
+        "title_en": "Free Haircut Project",
+        "description": "Started a project to provide free haircuts to the community.",
+        "achievements": {
+          "people": "200 people served",
+          "monthlyService": "Monthly service"
+        }
+      },
+      "expansion": {
+        "title": "ការរីកចម្រើន",
+        "title_en": "Expansion",
+        "description": "Expanded activities to other provinces and increased membership.",
+        "achievements": {
+          "activeMembers": "100+ active members",
+          "provinces": "Active in 3 provinces"
+        }
+      },
+      "recognition": {
+        "title": "ការទទួលស្គាល់",
+        "title_en": "Recognition",
+        "description": "Received recognition from the government and civil society for our forums.",
+        "achievements": {
+          "nationalAward": "National award received",
+          "acknowledgement": "Official acknowledgement"
+        }
+      },
+      "newFuture": {
+        "title": "អនាគតថ្មី",
+        "title_en": "New Future",
+        "description": "Launched a new website and expanded activities into the digital technology sphere.",
+        "achievements": {
+          "newWebsite": "New website launched",
+          "digitalSystem": "Digital management system"
+        }
+      }
+    },
+    "team": {
+      "title": "Our Structure",
+      "description": "Discover the dedicated teams and individuals driving our mission forward."
+    },
+    "partner": {
+      "title": "Our Friends Network",
+      "view_all": "View Complete Network"
+    }
+  },
+  "structure": {
+    "hero": {
+      "title": "Our Structure",
+      "description": "Discover the dedicated teams and individuals driving our mission forward."
+    },
+    "chart": "Organizational Chart",
+    "honorMember": "Honorary Member",
+    "executiveCommittee": "Executive Committee",
+    "boardOfDirectors": "Board of Directors",
+    "seniorAdvisors": "Senior Advisors",
+    "associationBranches": "Association Branches "
+  },
+  "events": {
+    "heroDescription": "Explore our latest activities and events",
+    "recentNews": "Recent News"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "subMenuAbout": "About us",
+    "network": "Our network",
+    "structure": "Structure",
+    "news": "Events",
+    "latestNews": "Latest News",
+    "activity": "Activity",
+    "allNews": "All",
+    "events": "Events",
+    "videos": "Videos",
+    "projects": "Projects",
+    "allProjects": "All Projects",
+    "community": "Community",
+    "education": "Education",
+    "culture": "Culture",
+    "sports": "Sports",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "joinUs": "Join Us"
+  },
+  "hero": {
+    "title": "Community Builders",
+    "subtitle": "Building Stronger Communities Together",
+    "description": "We are a group of social enthusiasts focused on education, culture, and community development",
+    "learnMore": "Learn More",
+    "watchVideo": "Watch Video",
+    "videoDescription": "Explore our activities and programs through video",
+    "projectTitle": "Free Haircut Project",
+    "projectSubtitle": "Community Service Initiative",
+    "projectDescription": "Free haircuts for community members in need",
+    "viewProjects": "View Our Activities",
+    "educationTitle": "Education s& Culture",
+    "educationSubtitle": "Learning & Heritage",
+    "educationDescription": "Promoting education and preserving Khmer culture",
+    "joinUs": "Join Us"
+  },
+  "home": {
+    "ourHistory": "Our History",
+    "ourHistoryDetail": "Mett Yeung Association (MYA) is a private association that was established on December 2, 2020, under the initiative of 27 founding members. The 27 founding members jointly prepared and drafted the statutes, internal regulations, and rules, focusing on Improving Living Standards, Knowledge, Job Opportunities, and Business, which are the welfare of Cambodian society. The association received legal registration with the Ministry of Interior through Prakas No. 245, dated January 27, 2021, as a “Legal Entity.”",
+    "ourHistoryMembershipInfo": "MYA Membership Including: Organizations, Associations, Federations, and other Legal Entities registered in accordance with the laws of the Kingdom of Cambodia and engage with activities related to self-employment, technical, service workers, and other business practitioners both domestically and, or individuals aged 18 years and older, may apply to become members of the association. Members who are legal entities or individuals may become members of the MYA by applying for membership and are recognized as members of the association through the agreement of the Chairman of the Executive Committee.",
+    "membershipTypesTitle": "The membership of the Association includes:",
+    "membershipTypes": {
+      "founding": {
+        "title": "Founding Members",
+        "description": "Active members who initiated the establishment of the MYA."
+      },
+      "honorary": {
+        "title": "Honorary Members",
+        "description": "Members who have supported the activities of the MYA."
+      },
+      "active": {
+        "title": "Active Members",
+        "description": "Members who actively participate in activities for the MYA."
+      },
+      "supporting": {
+        "title": "Supporting Members",
+        "description": "Members who are not in the three membership categories and support all activities of the MYA."
+      }
+    },
+    "achievements": "Association Achievements",
+    "achievementsDesc": "Through various activities, Our Friends Association has provided protection and promoted living standards, as well as employment and business opportunities for self-employed individuals, technical experts, service providers, and various business operators both domestically and abroad.",
+    "missionTitle": "Our Mission",
+    "missionDesc": "To compile a network of friends and members into interest groups, both domestically and internationally, to foster better relationships, share experiences, provide job market information, and offer advice and training to improve living standards.",
+    "missionText": "We believe that education is the most important foundation for development and building a bright future for Cambodian children and youth.",
+    "focusAreas": "Friendship, Solidarity, Loyalty",
+    "focusAreasDesc": "Recognizing the importance of protecting and promoting living standards, employment, and business opportunities for workers, self-employed individuals, technical experts, service providers, and various business operators both domestically and abroad, Our Friends Association was established through the collective vision of a group of youth under the approach:",
+    "joinCommunity": "Benefits of Membership",
+    "joinDesc1": "Receive consultation and participate in various training courses such as labor law, union law, and financial management knowledge.",
+    "joinDesc2": "Build a strong network of peers with shared values to represent a unified voice in discussing challenges and finding solutions.",
+    "joinDesc3": "Increase business opportunities, expand professional networks, and build new relationships for collective development.",
+    "becomeVolunteer": "Become a Volunteer",
+    "becomeOurMember": "Become Our Member",
+    "viewProjects": "View Our Projects",
+    "viewOurActivity": "View Our Activities",
+    "education": "Strengthening Friendship and Solidarity",
+    "educationDesc": "A private, non-profit legal entity focused on strengthening bonds, solidarity, and a network of support among workers and businesses.",
+    "culture": "The Core Values: Friendship, Solidarity, and Loyalty",
+    "cultureDesc": "The guiding principles of the association that provide hope and direction for members to achieve common goals effectively and sustainably.",
+    "social": "Support for Workers and Businesses",
+    "socialDesc": "A platform to improve living standards by providing training,",
+    "upskillingDesc": "Conducted upskilling training sessions",
+    "successfulProjects": "Successfully implemented projects",
+    "eciDesc": "Completed ECI training programs",
+    "educatedChildren": "Children and youth who received education"
+  },
+  "projects": {
+    "title": "Our Projects",
+    "subtitle": "Discover our impactful projects and community initiatives",
+    "impact": "Our Impact",
+    "impactDesc": "Our achievements",
+    "allProjects": "All Projects",
+    "showing": "Showing",
+    "of": "of",
+    "projects": "projects",
+    "noResults": "No projects found",
+    "clearFilters": "Clear all filters",
+    "categories": {
+      "all": "All Projects",
+      "community": "Community",
+      "education": "Education",
+      "culture": "Culture",
+      "sports": "Sports"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch for collaboration, participation, or any questions",
+    "info": "Contact Information",
+    "sendMessage": "Send us a Message",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "department": "Department",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "followUs": "Follow Us on Social Media",
+    "quickActions": "Quick Actions",
+    "volunteer": "Become a Volunteer",
+    "donate": "Donation",
+    "location": "Our Location"
+  },
+  "common": {
+    "readMore": "Read More",
+    "viewMore": "View More",
+    "learnMore": "Learn More",
+    "viewDetails": "View Details",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "video": {
+    "category": "Category",
+    "about": "About"
+  },
+  "contactUs": {
+    "phone": "Phone",
+    "address": "Address",
+    "email": "Email"
+  },
+  "footer": {
+    "description": "We are a group of social enthusiasts focused on education, culture, and community development, committed to building stronger communities together.",
+    "quickLinks": "Quick Links",
+    "contactInfo": {
+      "title": "Contact Info",
+      "phone": "+855 15 220 320",
+      "email": "mettyeung@gmail.com",
+      "address": "No. 3AF, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "description": "Subscribe to receive our latest news and activities."
+    },
+    "followUs": "Follow Us",
+    "copyright": "All Rights Reserved.",
+    "aboutUs": "About Us",
+    "history": "History",
+    "mission": "Mission",
+    "vision": "Vision",
+    "values": "Values",
+    "activities": "Activities",
+    "news": "News",
+    "projects": "Projects",
+    "videos": "Videos",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "contactUs": "Contact Us",
+    "joinUs": "Join Us",
+    "volunteer": "Volunteer",
+    "support": "Support",
+    "newsletterDesc": "Subscribe to receive our latest news and activities",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "stats": {
+    "members": "Active Members",
+    "upskilling": "Upskilling Training",
+    "projects": "Charity Activities",
+    "beneficiaries": "Beneficiaries",
+    "volunteers": "Volunteers",
+    "eci": "Training (ECI)",
+    "training": "Trainings",
+    "years": "Years",
+    "communities": "Communities"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "loginSubtitle": "Welcome back! Please sign in to your account",
+    "registerSubtitle": "Create your account to get started",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full Name",
+    "confirmPassword": "Confirm Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "fullNamePlaceholder": "Enter your full name",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmNewPasswordPlaceholder": "Confirm new password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "loggingIn": "Signing in...",
+    "registering": "Creating account...",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithTelegram": "Continue with Telegram",
+    "orContinueWith": "or continue with email",
+    "orRegisterWith": "or register with email",
+    "agreeToTerms": "I agree to the",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "and": "and",
+    "passwordRequirements": "Password requirements",
+    "verifyOtp": "Verify Your Account",
+    "otpSubtitle": "Enter the 6-digit code sent to your email",
+    "sentTo": "Sent to",
+    "resendIn": "Resend code in",
+    "resendOtp": "Resend Code",
+    "resending": "Resending...",
+    "verify": "Verify Account",
+    "verifying": "Verifying...",
+    "wrongEmail": "Wrong email?",
+    "changeEmail": "Change email",
+    "forgotPasswordSubtitle": "Enter your email to receive a password reset link",
+    "sendResetLink": "Send Reset Link",
+    "sending": "Sending...",
+    "emailSent": "Email Sent!",
+    "emailSentDescription": "We've sent a password reset link to:",
+    "resendEmail": "Resend Email",
+    "backToLogin": "Back to Login",
+    "rememberPassword": "Remember your password?",
+    "resetPassword": "Reset Password",
+    "resetPasswordSubtitle": "Enter your new password below",
+    "resetting": "Resetting...",
+    "passwordResetSuccess": "Password Reset Successfully!",
+    "passwordResetSuccessDescription": "Your password has been reset successfully. You can now login with your new password.",
+    "loginWithNewPassword": "Login with New Password",
+    "invalidResetLink": "Invalid Reset Link",
+    "invalidResetLinkDescription": "This password reset link is invalid or has expired. Please request a new one.",
+    "requestNewLink": "Request New Link"
+  },
+  "partners": {
+    "title": "Our Friends Network",
+    "view_all": "View Complete Network",
+    "description": "Organizations we collaborate with",
+    "visitWebsite": "Visit Website",
+    "noPartners": "No partners to display"
+  },
+  "network": {
+    "mou": {
+      "title": "Memorandum of Understanding (MOU)",
+      "description": "Mett Yeung has signed the MOU with institution and private companies for cooperation on professional training and technical skills. The cooperation including:",
+      "list": {
+        "item1": "MOU between MYA and Aspire Design Academy Company to cooperation on training and human resource development",
+        "item2": "MOU between MYA and Coffee Co., Ltd. to cooperation on training and human resource development",
+        "item3": "MOU between MYA and the Young Entrepreneurs Association of Cambodia to cooperation on training and human resource development",
+        "item4": "MOU between MYA and Dham Computer International Company to cooperation on training and human resource development",
+        "item5": "MOU between MYA and RMA (Cambodia) Co., Ltd. to cooperation on training and human resource development",
+        "item6": "MOU between MYA and the National Institute of Labor to cooperation on training and human resource development",
+        "item7": "MOU between MYA and Digi Academy to cooperation on training and human resource development",
+        "item8": "MOU between MYA and HFC (Cambodia) Microfinance Company Limited to cooperation on training and human resource development",
+        "item9": "MOU between MYA and the Center for Trauma Care and Research to cooperation on promoting mental well-being",
+        "item10": "MOU between MYA and the Institute of Industrial Technology to cooperation on training and human resource development",
+        "item11": "MOU between MYA and Westline Education Group to cooperation on training and Human Resource Development",
+        "item12": "MOU between MYA and the Company of Oudong Express to Cooperation on Providing Transportation Services for Training and Humanitarian Activities",
+        "item13": "MOU between MYA and the Cambodia Electronics and Technology Association to Cooperation on Training and Human Resource for Development in the Electronics and Technology Field",
+        "item14": "MOU between MYA and the Cambodia Institute of Technology and Agriculture to Cooperation on Training and Human Resource Development",
+        "item15": "MOU between MYA and Akhlem (Cambodia) Co., Ltd. to Cooperation on Training and Human Resource Development",
+        "item16": "MOU between MYA and Cambodia Restaurant Association to Cooperation on Training and Human Resource Development",
+        "item17": "MOU between MYA and Mycut Firm Co., Ltd. to Cooperation on Providing Photo and Video Production Services for Training Activities and charity event"
+      }
+    }
+  }
 }

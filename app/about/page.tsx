@@ -8,16 +8,11 @@ import { normalizeUrl } from "@/lib/utils/image";
 
 import type { Partner } from "@/lib/types/partner";
 
-
+export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
-	const res = await getPartnersService({ page: 1, limit: 12, sort: "order" });
-	const rawPartners = res.status_code === 200 ? (res.data?.data || (Array.isArray(res.data) ? res.data : [])) : [];
-	
-	const initialPartners = rawPartners.map((partner: Partner) => ({
-		...partner,
-		media: partner.media ? { ...partner.media, url: normalizeUrl(partner.media.url) } : null
-	}));
+	const res = await getPartnersService({ page: 1, limit: 12, sort: "order", isActive: true });
+	const initialPartners: Partner[] = res.status_code === 200 ? (res.data?.data || (Array.isArray(res.data) ? res.data : [])) : [];
 
 	return (
 		<div className="min-h-screen bg-white">

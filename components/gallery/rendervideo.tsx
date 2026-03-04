@@ -77,7 +77,7 @@ export const renderVideoModalContent = (video: Video) => {
 					<div className="space-y-6 pt-2">
 						{video.description && (
 							<div className="space-y-2">
-								<h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+								<h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
 									Description
 								</h4>
 								<p className="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line">
@@ -88,7 +88,7 @@ export const renderVideoModalContent = (video: Video) => {
 
 						{video.description_km && (
 							<div className="space-y-2">
-								<h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+								<h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
 									ការពិពណ៌នា
 								</h4>
 								<p className="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line font-khmer">

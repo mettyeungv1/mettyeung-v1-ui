@@ -53,6 +53,7 @@ const staticNavigation: NavItem[] = [
 		key: "nav.videos",
 		href: "/videos",
 	},
+	{ key: "nav.network", href: "/network" },
 	{ key: "nav.contact", href: "/contact" },
 ];
 
