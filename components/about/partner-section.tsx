@@ -30,8 +30,8 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
 					{initialPartners.map((partner, index) => {
 						const cardContent = (
-							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl ${partner.websiteUrl ? "hover:shadow-2xl cursor-pointer hover:-translate-y-2" : "hover:shadow-2xl hover:-translate-y-1"}`}>
-								<CardContent className="p-0 h-full flex items-center justify-center">
+							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl hover:shadow-2xl hover:-translate-y-2`}>
+								<CardContent className="p-0 h-full flex items-center justify-center relative">
 									{/* Large Logo display */}
 									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 opacity-100">
 										<Image
@@ -57,9 +57,9 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 												</p>
 											)}
 											{partner.websiteUrl && (
-												<span className="inline-flex items-center gap-2 px-6 py-2.5 mt-2 text-sm font-bold tracking-widest text-white uppercase transition-all duration-300 bg-white/10 rounded-full hover:bg-blue-600 border border-white/20 backdrop-blur-md shadow-lg hover:shadow-blue-500/30">
-													{t("partners.visitWebsite") || "Visit"} <ArrowRight className="w-4 h-4 ml-1" />
-												</span>
+												<a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-2.5 mt-2 text-sm font-bold tracking-widest text-white uppercase transition-all duration-300 bg-white/10 rounded-full hover:bg-blue-600 border border-white/20 backdrop-blur-md shadow-lg hover:shadow-blue-500/30 relative z-10 cursor-pointer">
+													{t("partners.visitWebsite")} <ArrowRight className="w-4 h-4 ml-1" />
+												</a>
 											)}
 										</div>
 									</div>
@@ -70,15 +70,9 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 						return (
 							<AnimatedSection key={partner.id} delay={(index % 8) * 0.1}>
 								<GlowingCard>
-									{partner.websiteUrl ? (
-										<a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer" className="block h-full">
-											{cardContent}
-										</a>
-									) : (
-										<div className="h-full">
-											{cardContent}
-										</div>
-									)}
+									<div className="h-full">
+										{cardContent}
+									</div>
 								</GlowingCard>
 							</AnimatedSection>
 						);

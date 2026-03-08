@@ -222,6 +222,10 @@ const config: Config = {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
+        'marquee': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(-100% - var(--gap)))' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -231,6 +235,8 @@ const config: Config = {
         'slide-in-right': 'slide-in-right 0.6s ease-out',
         'float': 'float 3s ease-in-out infinite',
         'shimmer': 'shimmer 2s linear infinite',
+        'marquee': 'marquee 40s linear infinite',
+        'marquee-fast': 'marquee 10s linear infinite',
       },
     },
   },

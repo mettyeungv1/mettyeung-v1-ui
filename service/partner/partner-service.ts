@@ -24,7 +24,6 @@ export const getPartnersService = async (
 
 	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}?${qs}`, {
 		skipAuth: true,
-		cache: 'no-store',
 		next: { revalidate: 0 },
 	});
 	

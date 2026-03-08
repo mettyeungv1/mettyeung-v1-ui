@@ -112,7 +112,13 @@
   },
   "events": {
     "heroDescription": "Explore our latest activities and events",
-    "recentNews": "Recent News"
+    "recentNews": "Recent News",
+    "featuredNews": "Featured News",
+    "allNewsGrid": "All News",
+    "foundArticles": "Found {{count}} articles",
+    "noNewsFound": "No News Found",
+    "trySearching": "Please try searching with different keywords or categories.",
+    "endOfFeed": "You've reached the end of the news feed"
   },
   "nav": {
     "home": "Home",
@@ -155,7 +161,10 @@
   "home": {
     "ourHistory": "Our History",
     "ourHistoryDetail": "Mett Yeung Association (MYA) is a private association that was established on December 2, 2020, under the initiative of 27 founding members. The 27 founding members jointly prepared and drafted the statutes, internal regulations, and rules, focusing on Improving Living Standards, Knowledge, Job Opportunities, and Business, which are the welfare of Cambodian society. The association received legal registration with the Ministry of Interior through Prakas No. 245, dated January 27, 2021, as a “Legal Entity.”",
-    "ourHistoryMembershipInfo": "MYA Membership Including: Organizations, Associations, Federations, and other Legal Entities registered in accordance with the laws of the Kingdom of Cambodia and engage with activities related to self-employment, technical, service workers, and other business practitioners both domestically and, or individuals aged 18 years and older, may apply to become members of the association. Members who are legal entities or individuals may become members of the MYA by applying for membership and are recognized as members of the association through the agreement of the Chairman of the Executive Committee.",
+    "ourHistoryMembershipInfo": {
+      "title": "MYA Membership Including:",
+      "content": "Organizations, Associations, Federations, and other Legal Entities registered in accordance with the laws of the Kingdom of Cambodia and engage with activities related to self-employment, technical, service workers, and other business practitioners both domestically and, or individuals aged 18 years and older, may apply to become members of the association. Members who are legal entities or individuals may become members of the MYA by applying for membership and are recognized as members of the association through the agreement of the Chairman of the Executive Committee."
+    },
     "membershipTypesTitle": "The membership of the Association includes:",
     "membershipTypes": {
       "founding": {
@@ -196,10 +205,11 @@
     "cultureDesc": "The guiding principles of the association that provide hope and direction for members to achieve common goals effectively and sustainably.",
     "social": "Support for Workers and Businesses",
     "socialDesc": "A platform to improve living standards by providing training,",
-    "upskillingDesc": "Conducted upskilling training sessions",
+    "upskillingDesc": "Conducted upskilling training sessions with total trainees",
     "successfulProjects": "Successfully implemented projects",
-    "eciDesc": "Completed ECI training programs",
-    "educatedChildren": "Children and youth who received education"
+    "eciDesc": "Seminars organized",
+    "educatedChildren": "Total participants",
+    "hairSalonDesc": "Hair and Salon events organized"
   },
   "projects": {
     "title": "Our Projects",
@@ -304,12 +314,15 @@
     "members": "Active Members",
     "upskilling": "Upskilling Training",
     "projects": "Charity Activities",
-    "beneficiaries": "Beneficiaries",
+    "beneficiaries": "Participants",
     "volunteers": "Volunteers",
-    "eci": "Training (ECI)",
+    "eci": "Exhibitions",
     "training": "Trainings",
     "years": "Years",
-    "communities": "Communities"
+    "communities": "Communities",
+    "myaProject": "MYA Project",
+    "seminar": "Seminar",
+    "hairAndSalon": "Hair and Salon"
   },
   "auth": {
     "login": "Login",
@@ -402,6 +415,47 @@
         "item16": "MOU between MYA and Cambodia Restaurant Association to Cooperation on Training and Human Resource Development",
         "item17": "MOU between MYA and Mycut Firm Co., Ltd. to Cooperation on Providing Photo and Video Production Services for Training Activities and charity event"
       }
+    }
+  },
+  "newsHighlight": {
+    "title": "Our Activities & Impact",
+    "subtitle": "Discover the milestones and programs we've accomplished together to strengthen the community.",
+    "myaProjects": {
+      "title": "MYA Projects",
+      "desc": "Key initiatives designed to enhance productivity and overall well-being in the community.",
+      "items": {
+        "p1": "Enhancing Productivity & Well-Being",
+        "p2": "MEP Installation & Maintenance",
+        "p3": "F&B Service Training",
+        "p4": "Ecosystem of Incubator (ECI)",
+        "p5": "Community Well-Being Project"
+      }
+    },
+    "training": {
+      "title": "Training Programs",
+      "desc": "Specialized vocational training and capacity building for career advancement.",
+      "juno": {
+        "title": "JUNO Academy Hairdresser Training",
+        "desc": "Professional training conducted in Seoul, Korea, specifically aimed at empowering local hairdressers."
+      },
+      "teams": {
+        "title": "T.E.A.M.S. Co., Ltd. Training",
+        "desc": "Focused technical and engineering skills training for employees."
+      }
+    },
+    "seminars": {
+      "title": "Featured Seminars",
+      "desc": "Mett Yeung organized 6 major seminars with partners, reaching 434 participants.",
+      "s1": "Seminar by Oknha Pech Bolen",
+      "s2": "Seminar by Ms. Nut Clara",
+      "s3": "Seminar by Ms. Yu Bory (General Manager, Talent Excellence Development Partner)",
+      "s4": "Seminar by Ms. Lim Hung (CEO, ETEC)",
+      "s5": "Seminar by Mr. Hean Sopheap",
+      "s6": "Special Topic Seminars"
+    },
+    "hairAndSalon": {
+      "title": "Hair and Salon Events",
+      "desc": "Mett Yeung organized 70 Hair and Salon events, providing direct services and support to the community."
     }
   }
 }

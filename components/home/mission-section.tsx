@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useTranslation } from "@/lib/i18n";
-import { ArrowRight, Users, Award, UserCheck, HeartHandshake, Play, Info } from "lucide-react";
+import { ArrowRight, Users, Award, UserCheck, HeartHandshake, Play, BookOpen } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { CTAButton } from "@/components/ui/cta-button";
 import { ItemModal } from "../gallery/item-modal";
@@ -21,7 +21,7 @@ export function MissionSection() {
 		title: null,
 		description: "",
 		description_km: "",
-		thumbnail: `https://i.ytimg.com/vi/nPYt27aA7bM/hqdefault.jpg`,
+		thumbnail: `https://i.ytimg.com/vi/nPYt27aA7bM/maxresdefault.jpg`,
 		date: "",
 		category: "",
 		categoryName: "",
@@ -88,13 +88,21 @@ export function MissionSection() {
 							</p>
                             
                             {/* Premium Callout Box */}
-                            <div className="mt-8 p-6 bg-blue-50/80 backdrop-blur-sm rounded-2xl border border-blue-100/80 flex items-start gap-4 shadow-sm group hover:shadow-md transition-shadow duration-300">
-                                <div className="p-2 bg-blue-100 rounded-xl shrink-0 text-blue-600 mt-0.5">
-                                    <Info className="w-5 h-5" />
+                            <div className="mt-8 relative overflow-hidden bg-white/80 backdrop-blur-md rounded-2xl border border-blue-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300">
+                                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-blue-500 to-indigo-600" />
+                                <div className="p-6 sm:p-7">
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="p-2.5 bg-blue-50 rounded-xl shrink-0 text-blue-600 shadow-sm border border-blue-100/50 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                                            <BookOpen className="w-6 h-6" />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 leading-snug mt-1">
+                                            {t("home.ourHistoryMembershipInfo.title")}
+                                        </h3>
+                                    </div>
+                                    <p className="text-base text-gray-600 leading-relaxed text-justify sm:pl-16">
+                                        {t("home.ourHistoryMembershipInfo.content")}
+                                    </p>
                                 </div>
-                                <p className="text-base text-gray-700 leading-relaxed text-justify">
-                                    {t("home.ourHistoryMembershipInfo")}
-                                </p>
                             </div>
 
 							<div className="pt-6 flex justify-center lg:justify-start">
@@ -114,7 +122,7 @@ export function MissionSection() {
                             
                             {/* Main Video Card */}
                             <div 
-                                className="relative z-10 aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white cursor-pointer bg-gray-900 transition-transform duration-500 group-hover:-translate-y-2"
+                                className="relative z-10 aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white cursor-pointer bg-gray-900 transition-transform duration-500 group-hover:-translate-y-2"
                                 onClick={onItemClick}
                             >
                                 <div className="absolute inset-0 bg-gray-900/20 group-hover:bg-transparent transition-colors duration-500 z-10" />

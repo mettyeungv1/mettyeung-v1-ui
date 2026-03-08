@@ -15,6 +15,13 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 	const [partners, setPartners] = useState<Partner[]>(initialPartners);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+
+	// Sync state when initialPartners prop changes (e.g. RSC re-renders with fresh data)
+	useEffect(() => {
+		setPartners(initialPartners);
+		setPage(1);
+		setHasMore(true);
+	}, [initialPartners]);
 	
 	// Pagination state
 	const [page, setPage] = useState(1);

@@ -335,6 +335,26 @@ export function NewsPageClient({
 
 						{/* News Grid */}
 						<div className="lg:col-span-3">
+							{/* Category Highlight Block */}
+							{selectedCategory !== "all" && (() => {
+								const activeCat = categories.find((c) => c.id === selectedCategory);
+								if (!activeCat?.description_en) return null;
+								return (
+									<AnimatedSection>
+										<div className="mb-8 p-6 md:p-8 bg-white rounded-2xl border border-blue-100 shadow-sm">
+											<h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+												<span className="w-1.5 h-6 bg-blue-600 rounded-full" />
+												{activeCat.name_en}
+											</h3>
+											<div
+												className="prose prose-sm md:prose-base max-w-none text-gray-700 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1 [&_p]:mb-2 [&_h1]:text-xl [&_h2]:text-lg [&_h3]:text-base [&_strong]:text-gray-900"
+												dangerouslySetInnerHTML={{ __html: activeCat.description_en }}
+											/>
+										</div>
+									</AnimatedSection>
+								);
+							})()}
+
 							<AnimatedSection>
 								<NewsGrid
 									items={filteredNews as any}

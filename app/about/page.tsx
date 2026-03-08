@@ -1,6 +1,7 @@
 import { AboutHeroSection } from "@/components/about/about-hero-section";
 import { MissionVisionSection } from "@/components/about/mission-vision-section";
 import { PartnersSection } from "@/components/about/partner-section";
+import { MouScrollerSection } from "@/components/about/mou-scroller-section";
 
 import { getPartnersService } from "@/service/partner/partner-service";
 
@@ -18,6 +19,7 @@ export default async function AboutPage() {
 		<div className="min-h-screen bg-white">
 			<AboutHeroSection />
 			<MissionVisionSection />
+			<MouScrollerSection />
 			<section id="network" className="scroll-mt-24">
 				<PartnersSection initialPartners={initialPartners} />
 			</section>

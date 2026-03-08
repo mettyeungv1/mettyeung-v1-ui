@@ -155,7 +155,10 @@
   "home": {
     "ourHistory": "협회 연혁",
     "ourHistoryDetail": "우리 친구 협회(Our Friends Association)는 27명의 창립 회원들의 발의로 2020년 12월 2일에 설립된 민간 협회입니다. 27명의 창립 회원들은 캄보디아의 사회적 안녕과 이익을 위하여 생활 수준, 지식, 취업 기회 및 비즈니스 증진에 중점을 두고 정관과 내부 규정을 함께 마련했습니다. 이후 본 협회는 2021년 1월 27일 내무부 공고 제245호에 따라 '법인'으로 정식 등록되었습니다.",
-    "ourHistoryMembershipInfo": "MYA 회원 자격: 캄보디아 왕국의 법률에 따라 등록되고 국내외 자영업자, 기술자, 서비스 종사자 및 기타 사업자와 관련된 활동을 하는 단체, 협회, 연맹 및 기타 법인은 협회 회원 가입을 신청할 수 있습니다. 법인 또는 개인인 회원은 회원 가입을 신청하고 집행위원장의 승인을 거쳐 MYA 회원으로 인정됩니다.",
+    "ourHistoryMembershipInfo": {
+      "title": "MYA 회원 자격:",
+      "content": "캄보디아 왕국의 법률에 따라 등록되고 국내외 자영업자, 기술자, 서비스 종사자 및 기타 사업자와 관련된 활동을 하는 단체, 협회, 연맹 및 기타 법인은 협회 회원 가입을 신청할 수 있습니다. 법인 또는 개인인 회원은 회원 가입을 신청하고 집행위원장의 승인을 거쳐 MYA 회원으로 인정됩니다."
+    },
     "membershipTypesTitle": "협회의 회원 구성은 다음과 같습니다:",
     "membershipTypes": {
       "founding": {
@@ -254,7 +257,13 @@
   },
   "events": {
     "heroDescription": "우리의 최신 활동과 이벤트를 살펴보세요",
-    "recentNews": "최근 소식"
+    "recentNews": "최근 소식",
+    "featuredNews": "추천 뉴스",
+    "allNewsGrid": "모든 뉴스",
+    "foundArticles": "{{count}}개의 기사 검색됨",
+    "noNewsFound": "뉴스를 찾을 수 없습니다",
+    "trySearching": "다른 키워드나 분류로 검색해 보세요.",
+    "endOfFeed": "뉴스 피드의 끝에 도달했습니다"
   },
   "structure": {
     "hero": {
@@ -398,6 +407,47 @@
         "item16": "MYA와 캄보디아 레스토랑 협회(Cambodia Restaurant Association) 간의 MOU: 교육 및 인적 자원 개발 협력",
         "item17": "MYA와 마이컷 펌(Mycut Firm Co., Ltd.) 간의 MOU: 교육 활동 및 자선 행사를 위한 사진 및 영상 제작 서비스 제공 협력"
       }
+    }
+  },
+  "newsHighlight": {
+    "title": "우리의 활동 및 영향력",
+    "subtitle": "커뮤니티를 강화하기 위해 우리가 함께 달성한 이정표와 프로그램들을 확인해 보세요.",
+    "myaProjects": {
+      "title": "MYA 프로젝트",
+      "desc": "커뮤니티의 생산성과 전반적인 복지를 향상시키기 위해 마련된 핵심 이니셔티브.",
+      "items": {
+        "p1": "생산성 및 복지 향상",
+        "p2": "MEP 설치 및 유지보수",
+        "p3": "F&B 서비스 교육",
+        "p4": "인큐베이터 생태계 (ECI)",
+        "p5": "커뮤니티 웰빙 프로젝트"
+      }
+    },
+    "training": {
+      "title": "교육 프로그램",
+      "desc": "경력 발전을 위한 전문 직업 교육 및 역량 강화.",
+      "juno": {
+        "title": "JUNO 아카데미 미용사 교육",
+        "desc": "현지 미용사들의 역량 강화를 위해 한국 서울에서 진행된 전문 교육."
+      },
+      "teams": {
+        "title": "T.E.A.M.S. Co., Ltd. 교육",
+        "desc": "직원들을 위한 집중 기술 및 엔지니어링 스킬 교육."
+      }
+    },
+    "seminars": {
+      "title": "주요 세미나",
+      "desc": "Mett Yeung은 파트너와 함께 6개의 주요 세미나를 주최하여 434명의 참가자를 모았습니다.",
+      "s1": "Oknha Pech Bolen 세미나",
+      "s2": "Ms. Nut Clara 세미나",
+      "s3": "Ms. Yu Bory (종합 관리자, Talent Excellence Development Partner) 세미나",
+      "s4": "Ms. Lim Hung (CEO, ETEC) 세미나",
+      "s5": "Mr. Hean Sopheap 세미나",
+      "s6": "스페셜 주제 세미나"
+    },
+    "hairAndSalon": {
+      "title": "헤어 및 살롱 이벤트",
+      "desc": "Mett Yeung은 70건의 헤어 및 살롱 행사를 주최하여 커뮤니티에 직접적인 서비스와 지원을 제공했습니다."
     }
   }
 }

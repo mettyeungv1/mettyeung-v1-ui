@@ -40,10 +40,9 @@ export async function fetchAPI<T>(
 	const controller = new AbortController();
 	const timeoutId = setTimeout(() => controller.abort(), 30000);
 	
-	// Default caching strategy: revalidate every hour (3600s)
-	// This enables Next.js request deduplication
+	// Default: no caching (Next.js 15 default is no-store).
+	// Callers can opt into caching by passing next: { revalidate: N }.
 	const defaultOptions: RequestInit = {
-		next: { revalidate: 3600 },
 		signal: controller.signal,
 	};
 

@@ -19,6 +19,7 @@ export interface UICategorySub {
 export interface UICategory {
 	id: string;
 	name_en: string;
+	description_en?: string;
 	count: number;
 	subcategories?: UICategorySub[];
 }
@@ -27,6 +28,13 @@ function getNameEn(name: Localized | string | undefined): string {
 	if (!name) return "";
 	if (typeof name === "string") return name;
 	return name.en || Object.values(name)[0] || "";
+}
+
+function getDescEn(desc: Localized | string | null | undefined): string | undefined {
+	if (!desc) return undefined;
+	if (typeof desc === "string") return desc || undefined;
+	const val = desc.en || Object.values(desc)[0] || "";
+	return val || undefined;
 }
 
 export async function listCategoriesService(): Promise<
@@ -85,6 +93,7 @@ export function mapToUICategories(
 		ui.push({
 			id: cat.id,
 			name_en: getNameEn(cat.name),
+			description_en: getDescEn(cat.description),
 			count: parentCount,
 			subcategories: uiChildren,
 		});
