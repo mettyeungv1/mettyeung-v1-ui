@@ -1,11 +1,13 @@
 import headerToken from "./header";
 
 export function getApiUrl(): string {
-	// Server-side: use internal Docker URL
+	// Server-side: prefer explicit internal Docker URL, then fall back to
+	// the build-time-baked NEXT_PUBLIC_ value (set via build-arg in CI/CD)
 	if (typeof window === "undefined") {
 		return (
 			process.env.AUTH_BASE_URL ||
 			process.env.INTERNAL_API_URL ||
+			process.env.NEXT_PUBLIC_AUTH_BASE_URL ||
 			"https://api.mettyeung27.org/api/v1"
 		);
 	}
