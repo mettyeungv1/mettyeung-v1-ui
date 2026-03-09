@@ -1,5 +1,7 @@
 import React from "react";
 import { listBlogsService } from "@/service/blog/blog-service";
+
+export const revalidate = 60;
 import { listCategoriesService } from "@/service/category/category-service";
 import { NewsPageClient } from "@/components/news/news-page-client";
 

@@ -1,5 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
+
+export const revalidate = 3600;
 import { Metadata } from "next";
 import {
 	getBlogByIdService,

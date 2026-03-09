@@ -3,6 +3,8 @@ import {
 	listVideosService,
 	getVideoCategoriesService,
 } from "@/service/video/video-service";
+
+export const revalidate = 3600;
 import type { Video } from "@/lib/types/video";
 
 

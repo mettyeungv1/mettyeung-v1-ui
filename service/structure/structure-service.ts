@@ -145,7 +145,7 @@ export const listMembersService = async (
 	const response = await fetchAPI<{
 		data: APIMemberResponse[];
 		meta_data: any;
-	}>(url, { skipAuth: true, cache: 'no-store', next: { revalidate: 0 } });
+	}>(url, { skipAuth: true, cache: "no-store" });
 
 	const paginatedData = response.data as any;
 	const normalizedMembers = Array.isArray(paginatedData)
@@ -163,10 +163,8 @@ export const getMemberByIdService = async (id: string): Promise<Member> => {
 		`${STRUCTURE_ENDPOINT}/${id}`,
 		{
 			skipAuth: true,
-			// Disable cache for detail pages — we need fresh data every time
-			cache: 'no-store',
-			next: undefined,
-		} as any
+			cache: "no-store",
+		}
 	);
 
 	// response = { status_code, data: { ...member } }
@@ -222,10 +220,9 @@ export const deleteMemberService = async (id: string): Promise<void> => {
 };
 
 export const getAssociationService = async (): Promise<any> => {
-	const response = await fetchAPI(`${STRUCTURE_ENDPOINT}/associations`, { 
-		skipAuth: true, 
-		cache: 'no-store', 
-		next: { revalidate: 0 } 
+	const response = await fetchAPI(`${STRUCTURE_ENDPOINT}/associations`, {
+		skipAuth: true,
+		cache: "no-store",
 	});
 	return response;
 };

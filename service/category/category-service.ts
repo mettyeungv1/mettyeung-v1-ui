@@ -40,7 +40,9 @@ function getDescEn(desc: Localized | string | null | undefined): string | undefi
 export async function listCategoriesService(): Promise<
 	APIResponse<RawCategory[]>
 > {
-	return fetchAPI<RawCategory[]>(CATEGORY_ENDPOINT);
+	return fetchAPI<RawCategory[]>(CATEGORY_ENDPOINT, {
+		next: { revalidate: 3600, tags: ["categories"] },
+	});
 }
 
 export function mapToUICategories(

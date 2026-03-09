@@ -38,7 +38,7 @@ export const listBlogsService = async (
 	).toString();
 
 	const url = qs ? `${BLOG_ENDPOINT}?${qs}` : BLOG_ENDPOINT;
-	const res = await fetchAPI<any>(url, { skipAuth: true });
+	const res = await fetchAPI<any>(url, { skipAuth: true, cache: "no-store" });
 
 	// Backend returns data: BlogPost[] directly
 	if (Array.isArray(res?.data)) {
@@ -69,6 +69,7 @@ export const getBlogByIdService = async (
 ): Promise<APIResponse<BlogPost>> => {
 	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/${id}`, {
 		skipAuth: true,
+		cache: "no-store",
 	});
 	if (res?.data) res.data = normalizeMediaUrls(res.data);
 	return res;
@@ -79,6 +80,7 @@ export const getBlogRelatedPostService = async (
 ): Promise<APIResponse<any>> => {
 	const res = await fetchAPI<any>(`${BLOG_ENDPOINT}/${id}/related`, {
 		skipAuth: true,
+		cache: "no-store",
 	});
 	if (res?.data) {
 		res.data = {
@@ -94,6 +96,7 @@ export const getFeaturedBlogService = async (): Promise<
 > => {
 	const res = await fetchAPI<BlogPost>(`${BLOG_ENDPOINT}/featured`, {
 		skipAuth: true,
+		cache: "no-store",
 	});
 	if (res?.data) res.data = normalizeMediaUrls(res.data);
 	return res;

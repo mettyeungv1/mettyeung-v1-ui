@@ -24,7 +24,7 @@ export const getPartnersService = async (
 
 	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}?${qs}`, {
 		skipAuth: true,
-		next: { revalidate: 0 },
+		cache: "no-store",
 	});
 	
 	// Helper to normalize a single partner
