@@ -131,8 +131,8 @@ export function MissionSection() {
                                     alt="Video Thumbnail" 
                                     className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100" 
                                 />
-                                {/* Play Button Overlay */}
-                                <div className="absolute inset-0 flex items-center justify-center z-20">
+                                {/* Play Button Overlay — visible on hover only */}
+                                <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div className="w-20 h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:bg-white text-blue-600 group-hover:shadow-[0_0_30px_rgba(37,99,235,0.4)]">
                                         <Play className="w-8 h-8 ml-1 fill-current" />
                                     </div>

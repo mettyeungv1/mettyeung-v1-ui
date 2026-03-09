@@ -237,7 +237,33 @@
     "quickActions": "빠른 행동",
     "volunteer": "자원봉사자 되기",
     "donate": "기부",
-    "location": "우리 위치"
+    "location": "우리 위치",
+    "hours": {
+      "title": "운영 시간",
+      "weekdays": "월 – 금",
+      "saturday": "토요일",
+      "sunday": "일요일",
+      "closed": "휴무"
+    },
+    "hoursWeekday": "오전 8:00 – 오후 5:00",
+    "hoursSaturday": "오전 8:00 – 오후 12:00",
+    "responseTime": "일반적으로 24시간 이내에 답변드립니다",
+    "joinUs": "회원 가입",
+    "joinDesc": "MYA 커뮤니티에 참여하여 캄보디아를 위한 의미 있는 일에 동참하세요",
+    "getDirections": "길 찾기",
+    "formTitle": "메시지 보내기",
+    "formDesc": "아래 양식을 작성해 주시면 팀이 최대한 빠르게 연락드리겠습니다",
+    "successMsg": "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다",
+    "required": "필수 항목",
+    "selectDept": "부서 선택",
+    "namePlaceholder": "성명",
+    "emailPlaceholder": "your@email.com",
+    "subjectPlaceholder": "메시지 주제를 입력하세요",
+    "messagePlaceholder": "메시지를 여기에 작성하세요…",
+    "statsMembers": "활성 회원",
+    "statsYears": "활동 연수",
+    "statsAssoc": "협력 기관",
+    "heroTagline": "언제든지 연락해 주세요"
   },
   "common": {
     "readMore": "더 읽기",
@@ -448,6 +474,32 @@
     "hairAndSalon": {
       "title": "헤어 및 살롱 이벤트",
       "desc": "Mett Yeung은 70건의 헤어 및 살롱 행사를 주최하여 커뮤니티에 직접적인 서비스와 지원을 제공했습니다."
+    }
+  },
+  "member": {
+    "detail": {
+      "backToOrg": "조직으로 돌아가기",
+      "back": "돌아가기",
+      "downloadCV": "CV 다운로드",
+      "generating": "생성 중…",
+      "skills": "기술 및 전문성",
+      "languages": "언어",
+      "experience": "경력 사항",
+      "education": "학력",
+      "organizations": "소속 기관 및 회원",
+      "emptyTitle": "프로필 상세 정보 준비 중",
+      "emptyDesc": "이 회원의 상세 프로필 정보가 아직 추가되지 않았습니다.",
+      "role": "역할",
+      "organization": "기관",
+      "present": "현재",
+      "affiliations": "소속",
+      "contact": "연락처",
+      "personal": "개인 정보",
+      "social": "소셜",
+      "department": "부서",
+      "head": "대표",
+      "joined": "가입",
+      "unknownMember": "알 수 없는 회원"
     }
   }
 }

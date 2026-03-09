@@ -1,233 +1,490 @@
 import { Member } from "@/lib/types/structure";
 import { normalizeUrl } from "@/lib/utils/image";
 
-/**
- * Helper to safely format dates
- */
-const formatDate = (dateStr: string | undefined): string => {
-	if (!dateStr) return "";
+// ─── A4 dimensions (mm) ──────────────────────────────────────────────────────
+const PW = 210;
+const PH = 297;
+
+// ─── Layout zones ────────────────────────────────────────────────────────────
+const HEADER_H    = 52;   // navy header band
+const BODY_Y      = HEADER_H + 10; // body content starts
+const BODY_BOTTOM = PH - 12;       // body ends (footer zone)
+
+const LEFT_X  = 14;        // main column left edge
+const LEFT_W  = 128;       // main column width
+const RIGHT_X = LEFT_X + LEFT_W + 10; // sidebar left edge
+const RIGHT_W = PW - RIGHT_X - 12;    // sidebar width ≈ 46mm
+
+// ─── Colors ──────────────────────────────────────────────────────────────────
+const NAVY    = "#00356B";
+const GOLD    = "#C9A432";
+const PRIMARY = "#004D8C";
+const DARK    = "#111827";
+const MED     = "#4B5563";
+const LIGHT   = "#9CA3AF";
+const BORDER  = "#E5E7EB";
+const BG_SOFT = "#F8FAFC";
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+/** Render a circular avatar via canvas → PNG data-URL */
+const makeCircularAvatar = (url: string): Promise<string | null> =>
+	new Promise((resolve) => {
+		const SIZE = 300;
+		const canvas = document.createElement("canvas");
+		canvas.width = SIZE;
+		canvas.height = SIZE;
+		const ctx = canvas.getContext("2d");
+		if (!ctx) return resolve(null);
+		const img = new Image();
+		img.crossOrigin = "anonymous";
+		img.onload = () => {
+			ctx.beginPath();
+			ctx.arc(SIZE / 2, SIZE / 2, SIZE / 2, 0, Math.PI * 2);
+			ctx.clip();
+			ctx.drawImage(img, 0, 0, SIZE, SIZE);
+			resolve(canvas.toDataURL("image/png"));
+		};
+		img.onerror = () => resolve(null);
+		img.src = url;
+	});
+
+/** Fetch any URL as base64 data-URL */
+const fetchDataUrl = async (url: string): Promise<string | null> => {
 	try {
-		return new Date(dateStr).toLocaleDateString("en-US", {
-			year: "numeric",
-			month: "short",
-			day: "numeric",
+		const r = await fetch(url, { cache: "no-cache" });
+		if (!r.ok) return null;
+		const blob = await r.blob();
+		return new Promise((resolve) => {
+			const reader = new FileReader();
+			reader.onloadend = () => resolve(reader.result as string);
+			reader.onerror   = () => resolve(null);
+			reader.readAsDataURL(blob);
 		});
 	} catch {
-		return dateStr;
+		return null;
 	}
 };
 
-/**
- * Builds simple, clean, professional CV HTML for PDF export.
- * Uses the project's primary Deep Blue (#004D8C) as the accent color.
- */
-const buildCVHtml = (person: Member): string => {
-	const PRIMARY     = "#004D8C";
-	const PRIMARY_L   = "#E6F2FF";
-	const TEXT_DARK   = "#1F2937";
-	const TEXT_MED    = "#4B5563";
-	const TEXT_LIGHT  = "#9CA3AF";
-	const BORDER      = "#E5E7EB";
+const fmtDate = (s: string): string => {
+	try {
+		return new Date(s).toLocaleDateString("en-US", {
+			year: "numeric", month: "short", day: "numeric",
+		});
+	} catch { return s; }
+};
 
-	const imageSrc = person.image ? normalizeUrl(person.image) : "";
-	const name     = person.name_en || person.name || "Unknown Member";
-	const title    = person.position_en || person.title_en || "";
-	const phone    = person.phone || person.phoneNumber || "";
+// ─── Draw header band (repeated on each page for background only) ─────────────
+const drawPageHeader = (doc: any, full: boolean, person?: Member, avatarDataUrl?: string | null, logoDataUrl?: string | null) => {
+	// Navy band
+	doc.setFillColor(NAVY);
+	doc.rect(0, 0, PW, HEADER_H, "F");
+	// Gold accent line at bottom of header
+	doc.setFillColor(GOLD);
+	doc.rect(0, HEADER_H - 1, PW, 1, "F");
 
-	const experiences  = person.experiences?.length  ? person.experiences  : null;
-	const educations   = person.educations?.length   ? person.educations   : null;
-	const skills       = person.skills?.length       ? person.skills       : null;
-	const associations = person.associations?.length ? person.associations : null;
-	const languages    = person.languages?.length    ? person.languages    : null;
+	if (!full || !person) return;
 
-	const initials = name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
+	// ── Avatar ────────────────────────────────────────────────────────────────
+	const AV_R  = 20;  // radius mm
+	const AV_CX = LEFT_X + AV_R;
+	const AV_CY = HEADER_H / 2;
 
-	const getAbsoluteUrl = (path: string) => {
-		if (!path) return "";
-		if (path.startsWith("http")) return path;
-		return window.location.origin + (path.startsWith("/") ? path : `/${path}`);
+	if (avatarDataUrl) {
+		// Draw circular image
+		doc.addImage(avatarDataUrl, "PNG", AV_CX - AV_R, AV_CY - AV_R, AV_R * 2, AV_R * 2);
+	} else {
+		// Initials fallback
+		const initials = (person.name_en || person.name || "?")
+			.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2);
+		doc.setFillColor("#1B5FA8");
+		doc.circle(AV_CX, AV_CY, AV_R, "F");
+		doc.setFont("helvetica", "bold");
+		doc.setFontSize(18);
+		doc.setTextColor("#FFFFFF");
+		doc.text(initials, AV_CX, AV_CY, { align: "center", baseline: "middle" });
+	}
+
+	// White ring around avatar
+	doc.setDrawColor("#FFFFFF");
+	doc.setLineWidth(0.8);
+	doc.circle(AV_CX, AV_CY, AV_R, "S");
+
+	// ── Name + title text ─────────────────────────────────────────────────────
+	const textX = AV_CX + AV_R + 8;
+	const maxW  = PW - textX - 14 - 35; // leave 35mm for logo
+
+	const name  = person.name_en || person.name || "Unknown Member";
+	const title = person.position_en || person.title_en || "";
+	const phone = person.phone || person.phoneNumber || "";
+
+	// Name
+	doc.setFont("helvetica", "bold");
+	doc.setFontSize(20);
+	doc.setTextColor("#FFFFFF");
+	const nameLines = doc.splitTextToSize(name, maxW);
+	doc.text(nameLines, textX, 14);
+
+	// Title
+	if (title) {
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(10);
+		doc.setTextColor("#A8C8E8");
+		const titleY = 14 + nameLines.length * 8;
+		doc.text(title, textX, titleY);
+	}
+
+	// Contact strip (email • phone • location)
+	const contactParts: string[] = [];
+	if (person.email)                               contactParts.push(person.email);
+	if (phone)                                      contactParts.push(phone);
+	if (person.location_en || person.location)      contactParts.push(person.location_en || person.location || "");
+	if (contactParts.length) {
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(8.5);
+		doc.setTextColor("#C5DEF0");
+		const contactStr = contactParts.join("   •   ");
+		const contactY   = HEADER_H - 9;
+		doc.text(contactStr, textX, contactY);
+	}
+
+	// ── Logo (top-right of header) ────────────────────────────────────────────
+	if (logoDataUrl) {
+		try {
+			doc.addImage(logoDataUrl, "PNG", PW - 44, 6, 32, 12);
+		} catch (_) { /* logo is optional */ }
+	}
+};
+
+// ─── Section title in body ────────────────────────────────────────────────────
+const drawSectionTitle = (doc: any, text: string, x: number, y: number, w: number) => {
+	doc.setFont("helvetica", "bold");
+	doc.setFontSize(9.5);
+	doc.setTextColor(PRIMARY);
+	doc.text(text.toUpperCase(), x, y);
+	doc.setDrawColor(PRIMARY);
+	doc.setLineWidth(0.4);
+	doc.line(x, y + 2, x + w, y + 2);
+};
+
+// ─── Bullet list item (sidebar) ────────────────────────────────────────────────
+const sidebarLabel = (doc: any, text: string, x: number, y: number) => {
+	doc.setFont("helvetica", "bold");
+	doc.setFontSize(7.5);
+	doc.setTextColor(LIGHT);
+	doc.text(text.toUpperCase(), x, y);
+};
+
+// ─── Main export ─────────────────────────────────────────────────────────────
+export const generateMemberPDF = async (member: Member): Promise<void> => {
+	const { jsPDF } = await import("jspdf");
+
+	// Resolve image URLs
+	const rawSrc = normalizeUrl(member.image || (member as any).avatarUrl || "");
+	const absSrc = rawSrc
+		? rawSrc.startsWith("http") ? rawSrc
+			: `${window.location.origin}${rawSrc.startsWith("/") ? "" : "/"}${rawSrc}`
+		: "";
+
+	const [avatarDataUrl, logoDataUrl] = await Promise.all([
+		absSrc ? makeCircularAvatar(absSrc) : Promise.resolve(null),
+		fetchDataUrl(`${window.location.origin}/logo.png`),
+	]);
+
+	const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+
+	// ── Page 1 header ─────────────────────────────────────────────────────────
+	drawPageHeader(doc, true, member, avatarDataUrl, logoDataUrl);
+
+	// ── Body Y cursors (left column and right sidebar advance independently) ──
+	let ly = BODY_Y; // left column Y
+	let ry = BODY_Y; // right sidebar Y
+
+	/** Add a new page and redraw the header band (no content) */
+	const newPage = () => {
+		doc.addPage();
+		drawPageHeader(doc, false);
+		ly = BODY_Y;
+		ry = BODY_Y;
 	};
 
-	/* ── Sidebar info row ── */
-	const infoRow = (label: string, value: string) =>
-		`<tr>
-			<td style="padding: 4px 0; font-size: 11px; color: #CBD5E1; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; width: 75px;">${label}</td>
-			<td style="padding: 4px 0 4px 8px; font-size: 12px; color: #F1F5F9; font-weight: 500; vertical-align: top;">${value}</td>
-		</tr>`;
+	/** Ensure at least `needed` mm remains in the left column; break if not */
+	const checkLeft = (needed: number) => {
+		if (ly + needed > BODY_BOTTOM) newPage();
+	};
 
-	/* ── Main content section title ── */
-	const sectionTitle = (text: string) =>
-		`<div style="font-size: 13px; font-weight: 700; color: ${PRIMARY}; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid ${PRIMARY};">${text}</div>`;
+	/** Ensure at least `needed` mm remains in the right sidebar */
+	const checkRight = (needed: number) => {
+		if (ry + needed > BODY_BOTTOM) {
+			// If left column also overflows, start new page
+			if (ly + needed > BODY_BOTTOM) newPage();
+			else ry = BODY_Y; // reset sidebar to top of body if it overflows independently
+		}
+	};
 
-	/* ── Build sidebar rows ── */
-	let contactHtml = "";
-	if (person.email)       contactHtml += infoRow("Email", person.email);
-	if (phone)              contactHtml += infoRow("Phone", phone);
-	if (person.location_en) contactHtml += infoRow("Location", person.location_en);
+	// ─────────────────────────────────────────────────────────────────────────
+	// LEFT COLUMN — Bio / Experience / Education / Organizations
+	// ─────────────────────────────────────────────────────────────────────────
 
-	let personalHtml = "";
-	if (person.dob)                            personalHtml += infoRow("DOB", formatDate(person.dob));
-	if (person.gender)                         personalHtml += infoRow("Gender", person.gender.charAt(0).toUpperCase() + person.gender.slice(1));
-	if (person.nationality)                    personalHtml += infoRow("Nationality", person.nationality);
-	if (person.joinDate || person.joinYear)     personalHtml += infoRow("Joined", String(person.joinDate || person.joinYear));
-	if (person.status)                          personalHtml += infoRow("Status", person.status.toUpperCase());
-	if (person.memberCode)                      personalHtml += infoRow("Code", person.memberCode);
+	// Bio
+	if (member.bio) {
+		const bioLines = doc.splitTextToSize(`"${member.bio}"`, LEFT_W - 6);
+		const bioH     = bioLines.length * 4.8 + 10;
+		checkLeft(bioH);
 
-	/* ── Section divider for sidebar ── */
-	const sidebarDivider = `<div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;"></div>`;
+		doc.setFillColor(BG_SOFT);
+		doc.roundedRect(LEFT_X, ly, LEFT_W, bioH, 2, 2, "F");
+		doc.setFillColor(PRIMARY);
+		doc.roundedRect(LEFT_X, ly, 2.5, bioH, 1, 1, "F");
 
-	/* ── Sidebar section label ── */
-	const sidebarLabel = (text: string) =>
-		`<div style="font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px;">${text}</div>`;
-
-	return `
-		<div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; display: flex; width: 794px; min-height: 1123px; margin: 0 auto; background: #fff;">
-
-			<!-- SIDEBAR -->
-			<div style="width: 250px; background: ${PRIMARY}; color: #fff; flex-shrink: 0; padding: 0;">
-
-				<!-- Avatar -->
-				<div style="padding: 44px 30px 28px; text-align: center;">
-					${imageSrc
-						? `<img src="${getAbsoluteUrl(imageSrc)}" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.25); display: block; margin: 0 auto;" crossorigin="anonymous" />`
-						: `<div style="width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,0.15); margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 2px;">${initials}</div>`
-					}
-					<div style="margin-top: 20px; font-size: 16px; font-weight: 700; letter-spacing: 0.3px;">${name}</div>
-					${title ? `<div style="margin-top: 4px; font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1.5px;">${title}</div>` : ""}
-				</div>
-
-				<!-- Sidebar content -->
-				<div style="padding: 0 28px 40px;">
-
-					${contactHtml ? `
-						${sidebarLabel("Contact")}
-						<table style="width: 100%; border-collapse: collapse;">${contactHtml}</table>
-					` : ""}
-
-					${personalHtml ? `
-						${sidebarDivider}
-						${sidebarLabel("Personal")}
-						<table style="width: 100%; border-collapse: collapse;">${personalHtml}</table>
-					` : ""}
-
-					${skills ? `
-						${sidebarDivider}
-						${sidebarLabel("Skills")}
-						<div style="display: flex; flex-wrap: wrap; gap: 5px;">
-							${skills.map((s: string) => `<span style="display: inline-block; padding: 3px 10px; font-size: 10px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.15); border-radius: 3px;">${s}</span>`).join("")}
-						</div>
-					` : ""}
-
-					${languages ? `
-						${sidebarDivider}
-						${sidebarLabel("Languages")}
-						<div style="display: flex; flex-wrap: wrap; gap: 5px;">
-							${languages.map((l: string) => `<span style="display: inline-block; padding: 3px 10px; font-size: 10px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.15); border-radius: 3px;">${l}</span>`).join("")}
-						</div>
-					` : ""}
-				</div>
-			</div>
-
-			<!-- MAIN CONTENT -->
-			<div style="flex: 1; padding: 44px 40px; box-sizing: border-box;">
-
-				<!-- Logo -->
-				<div style="text-align: right; margin-bottom: 30px;">
-					<img src="${getAbsoluteUrl("/logo.png")}" style="height: 48px; width: auto;" crossorigin="anonymous" />
-				</div>
-
-				<!-- Bio -->
-				${person.bio ? `
-				<div style="margin-bottom: 32px; padding: 14px 18px; background: ${PRIMARY_L}; border-left: 3px solid ${PRIMARY}; page-break-inside: avoid;">
-					<p style="margin: 0; font-size: 13px; color: ${TEXT_MED}; line-height: 1.7; font-style: italic;">"${person.bio}"</p>
-				</div>
-				` : ""}
-
-				<!-- Experience -->
-				${experiences ? `
-				<div style="margin-bottom: 30px;">
-					${sectionTitle("Experience")}
-					${[...experiences].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((exp) => `
-						<div style="margin-bottom: 18px; page-break-inside: avoid;">
-							<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
-								<div style="font-size: 14px; font-weight: 700; color: ${TEXT_DARK};">${exp.title?.en || exp.title?.km || "Role"}</div>
-								<div style="font-size: 11px; color: ${TEXT_LIGHT}; font-weight: 600; white-space: nowrap;">${exp.startYear || "—"} – ${exp.endYear || "Present"}</div>
-							</div>
-							<div style="font-size: 13px; color: ${PRIMARY}; font-weight: 600; margin-bottom: 4px;">${exp.organization?.en || exp.organization?.km || "Organization"}</div>
-							${(exp.description?.en || exp.description?.km) ? `<p style="margin: 0; font-size: 12px; color: ${TEXT_MED}; line-height: 1.65;">${exp.description?.en || exp.description?.km}</p>` : ""}
-						</div>
-					`).join("")}
-				</div>
-				` : ""}
-
-				<!-- Education -->
-				${educations ? `
-				<div style="margin-bottom: 30px;">
-					${sectionTitle("Education")}
-					${[...educations].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((edu) => `
-						<div style="margin-bottom: 14px; page-break-inside: avoid;">
-							<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;">
-								<div style="font-size: 14px; font-weight: 700; color: ${TEXT_DARK};">${edu.degree?.en || edu.degree?.km || "Degree"}</div>
-								<div style="font-size: 11px; color: ${TEXT_LIGHT}; font-weight: 600; white-space: nowrap;">${edu.startYear || "—"} – ${edu.endYear || "Present"}</div>
-							</div>
-							<div style="font-size: 13px; color: ${TEXT_MED};">${edu.schoolName?.en || edu.schoolName?.km || "Institution"}</div>
-						</div>
-					`).join("")}
-				</div>
-				` : ""}
-
-				<!-- Organizations -->
-				${associations ? `
-				<div style="margin-bottom: 30px;">
-					${sectionTitle("Organizations")}
-					${associations.map((assoc: any) => `
-						<div style="margin-bottom: 10px; padding: 10px 14px; background: #F9FAFB; border-left: 3px solid ${PRIMARY}; page-break-inside: avoid; display: flex; justify-content: space-between; align-items: center;">
-							<div>
-								<div style="font-size: 13px; font-weight: 700; color: ${TEXT_DARK};">${assoc.name || "Organization"}</div>
-								${assoc.role ? `<div style="font-size: 11px; color: ${TEXT_MED}; margin-top: 2px;">${assoc.role}</div>` : ""}
-							</div>
-							${assoc.isHead ? `<span style="font-size: 9px; font-weight: 700; padding: 2px 8px; background: ${PRIMARY_L}; color: ${PRIMARY}; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px;">Head</span>` : ""}
-						</div>
-					`).join("")}
-				</div>
-				` : ""}
-
-			</div>
-		</div>
-	`;
-};
-
-/**
- * Generates and downloads a professional A4 PDF for a member
- */
-export const generateMemberPDF = async (member: Member): Promise<void> => {
-	try {
-		const html2pdf = (await import("html2pdf.js")).default;
-		const htmlContent = buildCVHtml(member);
-		const filename = `${member.name_en || member.name || "Member"}_CV.pdf`.replace(/\s+/g, "_");
-
-		await html2pdf()
-			.set({
-				margin: [0, 0, 0, 0],
-				filename,
-				image: { type: "jpeg", quality: 0.98 },
-				html2canvas: {
-					scale: 2,
-					useCORS: true,
-					letterRendering: true,
-					logging: false,
-				},
-				jsPDF: {
-					unit: "mm",
-					format: "a4",
-					orientation: "portrait",
-				},
-				pagebreak: { mode: ["avoid-all", "css", "legacy"] },
-			} as any)
-			.from(htmlContent)
-			.save();
-	} catch (error) {
-		console.error("Failed to generate PDF CV:", error);
-		throw error;
+		doc.setFont("helvetica", "italic");
+		doc.setFontSize(9.5);
+		doc.setTextColor(MED);
+		doc.text(bioLines, LEFT_X + 7, ly + 5.5);
+		ly += bioH + 8;
 	}
+
+	// EXPERIENCE
+	const experiences = member.experiences?.length ? member.experiences : null;
+	if (experiences) {
+		checkLeft(16);
+		drawSectionTitle(doc, "Experience", LEFT_X, ly, LEFT_W);
+		ly += 8;
+
+		const sorted = [...experiences].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+		for (let i = 0; i < sorted.length; i++) {
+			const exp  = sorted[i];
+			const role = exp.title?.en       || exp.title?.km       || "Role";
+			const org  = exp.organization?.en || exp.organization?.km || "";
+			const desc = exp.description?.en  || exp.description?.km  || "";
+			const yr   = `${exp.startYear || "—"} – ${exp.endYear || "Present"}`;
+
+			const descLines = desc ? doc.splitTextToSize(desc, LEFT_W - 4) : [];
+			const blockH    = 6.5 + (org ? 5 : 0) + (desc ? descLines.length * 4.6 + 3 : 0) + 7;
+			checkLeft(blockH);
+
+			// Role + years on same row
+			doc.setFont("helvetica", "bold");
+			doc.setFontSize(11);
+			doc.setTextColor(DARK);
+			doc.text(role, LEFT_X, ly);
+
+			doc.setFont("helvetica", "normal");
+			doc.setFontSize(8.5);
+			doc.setTextColor(LIGHT);
+			doc.text(yr, LEFT_X + LEFT_W, ly, { align: "right" });
+			ly += 5.5;
+
+			// Organisation
+			if (org) {
+				doc.setFont("helvetica", "bold");
+				doc.setFontSize(9.5);
+				doc.setTextColor(PRIMARY);
+				doc.text(org, LEFT_X, ly);
+				ly += 5;
+			}
+
+			// Description
+			if (desc) {
+				doc.setFont("helvetica", "normal");
+				doc.setFontSize(9.5);
+				doc.setTextColor(MED);
+				doc.text(descLines, LEFT_X, ly);
+				ly += descLines.length * 4.6 + 2;
+			}
+
+			// Separator (except last)
+			if (i < sorted.length - 1) {
+				ly += 3;
+				doc.setDrawColor(BORDER);
+				doc.setLineWidth(0.2);
+				doc.line(LEFT_X, ly, LEFT_X + LEFT_W, ly);
+				ly += 4;
+			} else {
+				ly += 7;
+			}
+		}
+	}
+
+	// EDUCATION
+	const educations = member.educations?.length ? member.educations : null;
+	if (educations) {
+		checkLeft(16);
+		drawSectionTitle(doc, "Education", LEFT_X, ly, LEFT_W);
+		ly += 8;
+
+		const sorted = [...educations].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+		for (let i = 0; i < sorted.length; i++) {
+			const edu    = sorted[i];
+			const degree = edu.degree?.en     || edu.degree?.km     || "Degree";
+			const school = edu.schoolName?.en || edu.schoolName?.km || "";
+			const yr     = `${edu.startYear || "—"} – ${edu.endYear || "Present"}`;
+			checkLeft(18);
+
+			// Timeline dot
+			doc.setFillColor(PRIMARY);
+			doc.circle(LEFT_X + 1.5, ly + 1.5, 1.5, "F");
+			doc.setDrawColor("#DBEAFE");
+			doc.setLineWidth(0.3);
+
+			// Degree + years
+			doc.setFont("helvetica", "bold");
+			doc.setFontSize(11);
+			doc.setTextColor(DARK);
+			doc.text(degree, LEFT_X + 7, ly + 2);
+
+			doc.setFont("helvetica", "normal");
+			doc.setFontSize(8.5);
+			doc.setTextColor(LIGHT);
+			doc.text(yr, LEFT_X + LEFT_W, ly + 2, { align: "right" });
+			ly += 6;
+
+			// School
+			if (school) {
+				doc.setFont("helvetica", "normal");
+				doc.setFontSize(9.5);
+				doc.setTextColor(MED);
+				doc.text(school, LEFT_X + 7, ly);
+				ly += 5;
+			}
+
+			ly += (i < sorted.length - 1) ? 5 : 8;
+		}
+	}
+
+	// ORGANIZATIONS / MEMBERSHIPS
+	const associations = member.associations?.length ? member.associations : null;
+	if (associations) {
+		checkLeft(16);
+		drawSectionTitle(doc, "Organizations & Memberships", LEFT_X, ly, LEFT_W);
+		ly += 8;
+
+		for (const assoc of associations) {
+			const assocName = assoc.name || "Organization";
+			checkLeft(16);
+
+			const cardH = assoc.role ? 14 : 10;
+			doc.setFillColor(BG_SOFT);
+			doc.roundedRect(LEFT_X, ly, LEFT_W, cardH, 1.5, 1.5, "F");
+			doc.setFillColor(PRIMARY);
+			doc.roundedRect(LEFT_X, ly, 2.5, cardH, 1, 1, "F");
+
+			doc.setFont("helvetica", "bold");
+			doc.setFontSize(10);
+			doc.setTextColor(DARK);
+			doc.text(assocName, LEFT_X + 7, ly + (assoc.role ? 5.5 : 6));
+
+			if (assoc.role) {
+				doc.setFont("helvetica", "normal");
+				doc.setFontSize(8.5);
+				doc.setTextColor(MED);
+				doc.text(assoc.role, LEFT_X + 7, ly + 10);
+			}
+
+			if (assoc.isHead) {
+				doc.setFont("helvetica", "bold");
+				doc.setFontSize(7);
+				const badgeW = doc.getTextWidth("HEAD") + 5;
+				doc.setFillColor("#DBEAFE");
+				doc.roundedRect(LEFT_X + LEFT_W - badgeW, ly + (assoc.role ? 3 : 2.5), badgeW, 5, 1, 1, "F");
+				doc.setTextColor(PRIMARY);
+				doc.text("HEAD", LEFT_X + LEFT_W - badgeW / 2, ly + (assoc.role ? 5.5 : 5), {
+					align: "center", baseline: "middle",
+				});
+			}
+
+			ly += cardH + 4;
+		}
+	}
+
+	// ─────────────────────────────────────────────────────────────────────────
+	// RIGHT SIDEBAR — Skills / Languages / Personal
+	// ─────────────────────────────────────────────────────────────────────────
+
+	// Thin vertical separator
+	doc.setDrawColor(BORDER);
+	doc.setLineWidth(0.3);
+	doc.line(RIGHT_X - 6, BODY_Y, RIGHT_X - 6, Math.max(ly, ry));
+
+	// SKILLS
+	if (member.skills?.length) {
+		checkRight(14);
+		drawSectionTitle(doc, "Skills", RIGHT_X, ry, RIGHT_W);
+		ry += 8;
+
+		for (const skill of member.skills) {
+			checkRight(6);
+			const skillLines = doc.splitTextToSize(`• ${skill}`, RIGHT_W);
+			doc.setFont("helvetica", "normal");
+			doc.setFontSize(9);
+			doc.setTextColor(DARK);
+			doc.text(skillLines, RIGHT_X, ry);
+			ry += skillLines.length * 4.5 + 1;
+		}
+		ry += 8;
+	}
+
+	// LANGUAGES
+	if (member.languages?.length) {
+		checkRight(14);
+		drawSectionTitle(doc, "Languages", RIGHT_X, ry, RIGHT_W);
+		ry += 8;
+
+		for (const lang of member.languages) {
+			checkRight(6);
+			doc.setFont("helvetica", "normal");
+			doc.setFontSize(9);
+			doc.setTextColor(DARK);
+			doc.text(`• ${lang}`, RIGHT_X, ry);
+			ry += 5;
+		}
+		ry += 8;
+	}
+
+	// PERSONAL INFO
+	const hasPersonal =
+		member.dob || member.gender || member.nationality ||
+		member.joinDate || member.joinYear;
+
+	if (hasPersonal) {
+		checkRight(14);
+		drawSectionTitle(doc, "Personal", RIGHT_X, ry, RIGHT_W);
+		ry += 8;
+
+		const rows: [string, string][] = [];
+		if (member.dob)         rows.push(["Born",        fmtDate(member.dob)]);
+		if (member.gender)      rows.push(["Gender",      member.gender.charAt(0).toUpperCase() + member.gender.slice(1)]);
+		if (member.nationality) rows.push(["Nationality", member.nationality]);
+		if (member.joinDate || member.joinYear)
+			rows.push(["Joined", String(member.joinDate || member.joinYear)]);
+
+		for (const [label, value] of rows) {
+			checkRight(10);
+			sidebarLabel(doc, label, RIGHT_X, ry);
+			ry += 4;
+			doc.setFont("helvetica", "normal");
+			doc.setFontSize(9);
+			doc.setTextColor(DARK);
+			const lines = doc.splitTextToSize(value, RIGHT_W);
+			doc.text(lines, RIGHT_X, ry);
+			ry += lines.length * 4.5 + 4;
+		}
+	}
+
+	// ── Footer with page numbers ──────────────────────────────────────────────
+	const total = doc.getNumberOfPages();
+	for (let i = 1; i <= total; i++) {
+		doc.setPage(i);
+		doc.setFont("helvetica", "normal");
+		doc.setFontSize(7.5);
+		doc.setTextColor(LIGHT);
+		doc.text(
+			`Page ${i} of ${total}`,
+			PW / 2, PH - 5,
+			{ align: "center" }
+		);
+	}
+
+	const filename = `${(member.name_en || member.name || "Member").replace(/\s+/g, "_")}_CV.pdf`;
+	doc.save(filename);
 };

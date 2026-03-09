@@ -3,6 +3,7 @@
 import { Member } from "@/lib/types/structure";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { normalizeUrl } from "@/lib/utils/image";
+import { useTranslation } from "@/lib/i18n";
 import {
 	Mail,
 	Phone,
@@ -113,6 +114,8 @@ function ContactRow({
 /*  PROFILE CARD                                                      */
 /* ================================================================== */
 export function ProfileCard({ person }: ProfileCardProps) {
+	const { t } = useTranslation();
+
 	/* ---------- image ---------- */
 	const imageSrc = normalizeUrl(
 		person.image ||
@@ -153,7 +156,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 	const phoneText = person.phone || person.phoneNumber || "";
 
 	return (
-		<div className="sticky top-24 flex flex-col gap-5 print:static print:gap-3">
+		<div className="lg:sticky lg:top-24 flex flex-col gap-5 print:static print:gap-3">
 			{/* ═══════════════════════════════════════════════════════ */}
 			{/*  MAIN CARD                                            */}
 			{/* ═══════════════════════════════════════════════════════ */}
@@ -185,7 +188,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 
 					{/* Name — English */}
 					<h1 className="text-xl font-bold text-gray-900 leading-tight tracking-tight">
-						{person.name_en || person.name || "Unknown Member"}
+						{person.name_en || person.name || t("member.detail.unknownMember")}
 					</h1>
 
 					{/* Name — Khmer (if different) */}
@@ -224,7 +227,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 				{/* ──── Associations / Departments ──── */}
 				{hasAssociations && (
 					<div className="mx-5 mb-5">
-						<SectionLabel icon={Building2} label="Affiliations" />
+						<SectionLabel icon={Building2} label={t("member.detail.affiliations")} />
 						<div className="space-y-2">
 							{person.associations.map((assoc: any, idx: number) => (
 								<div
@@ -236,7 +239,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 									</div>
 									<div className="flex-1 min-w-0">
 										<p className="text-xs font-semibold text-gray-800 truncate">
-											{assoc.name || "Department"}
+											{assoc.name || t("member.detail.department")}
 										</p>
 										{assoc.role && (
 											<p className="text-[10px] text-gray-500 truncate">
@@ -247,7 +250,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 									{assoc.isHead && (
 										<span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider bg-khmer-gold/15 text-khmer-gold">
 											<Crown className="w-2.5 h-2.5" />
-											Head
+											{t("member.detail.head")}
 										</span>
 									)}
 								</div>
@@ -266,7 +269,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 				{/* ──── Contact Info ──── */}
 				{hasContactInfo && (
 					<div className="px-5 py-4 space-y-0.5">
-						<SectionLabel icon={User} label="Contact" />
+						<SectionLabel icon={User} label={t("member.detail.contact")} />
 
 						{person.email && (
 							<ContactRow
@@ -306,7 +309,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 								iconBg="bg-purple-50 group-hover/row:bg-purple-100"
 								iconColor="text-purple-600"
 							>
-								Joined {person.joinDate || person.joinYear}
+								{t("member.detail.joined")} {person.joinDate || person.joinYear}
 							</ContactRow>
 						)}
 					</div>
@@ -321,7 +324,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 							</div>
 						)}
 						<div className="px-5 py-4 space-y-0.5">
-							<SectionLabel icon={Users} label="Personal" />
+							<SectionLabel icon={Users} label={t("member.detail.personal")} />
 
 							{person.dob && (
 								<ContactRow
@@ -363,7 +366,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 							<div className="border-t border-gray-100" />
 						</div>
 						<div className="px-5 py-4">
-							<SectionLabel icon={Globe} label="Social" />
+							<SectionLabel icon={Globe} label={t("member.detail.social")} />
 							<div className="flex flex-wrap gap-2">
 								{(person.socials || person.socialLinks || []).map(
 									(social: any, idx: number) => (

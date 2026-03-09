@@ -248,7 +248,33 @@
     "quickActions": "クイックアクション",
     "volunteer": "ボランティアになる",
     "donate": "寄付",
-    "location": "所在地"
+    "location": "所在地",
+    "hours": {
+      "title": "営業時間",
+      "weekdays": "月～金",
+      "saturday": "土曜日",
+      "sunday": "日曜日",
+      "closed": "休業"
+    },
+    "hoursWeekday": "8:00 AM – 5:00 PM",
+    "hoursSaturday": "8:00 AM – 12:00 PM",
+    "responseTime": "通常24時間以内にご返答いたします",
+    "joinUs": "会員になる",
+    "joinDesc": "MYAコミュニティに参加して、カンボジアのために意義あることに貢献しましょう",
+    "getDirections": "道順を確認",
+    "formTitle": "メッセージを送る",
+    "formDesc": "以下のフォームにご記入ください。担当者がなるべく早くご連絡いたします",
+    "successMsg": "メッセージが正常に送信されました！近日中にご連絡いたします",
+    "required": "必須項目",
+    "selectDept": "部門を選択",
+    "namePlaceholder": "お名前（フルネーム）",
+    "emailPlaceholder": "your@email.com",
+    "subjectPlaceholder": "件名を入力してください",
+    "messagePlaceholder": "メッセージをここに入力してください…",
+    "statsMembers": "アクティブメンバー",
+    "statsYears": "活動年数",
+    "statsAssoc": "関連団体",
+    "heroTagline": "お気軽にご連絡ください"
   },
   "common": {
     "readMore": "続きを読む",
@@ -461,6 +487,32 @@
     "hairAndSalon": {
       "title": "ヘア＆サロンイベント",
       "desc": "Mett Yeungは70のヘア＆サロンイベントを開催し、コミュニティに直接的なサービスとサポートを提供しました。"
+    }
+  },
+  "member": {
+    "detail": {
+      "backToOrg": "組織に戻る",
+      "back": "戻る",
+      "downloadCV": "CVをダウンロード",
+      "generating": "生成中…",
+      "skills": "スキル・専門性",
+      "languages": "言語",
+      "experience": "職務経歴",
+      "education": "学歴",
+      "organizations": "所属組織・会員資格",
+      "emptyTitle": "プロフィール詳細は近日公開予定",
+      "emptyDesc": "このメンバーの詳細プロフィールはまだ追加されていません。",
+      "role": "役職",
+      "organization": "組織",
+      "present": "現在",
+      "affiliations": "所属",
+      "contact": "連絡先",
+      "personal": "個人情報",
+      "social": "ソーシャル",
+      "department": "部門",
+      "head": "代表",
+      "joined": "加入",
+      "unknownMember": "不明なメンバー"
     }
   }
 }

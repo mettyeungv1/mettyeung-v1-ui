@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { departments } from "@/lib/data/contact";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useTranslation } from "@/lib/i18n";
 import {
 	Select,
 	SelectContent,
@@ -15,135 +15,163 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Send } from "lucide-react";
+import { Send, CheckCircle2, Loader2, User, Mail, MessageSquare, BookOpen } from "lucide-react";
 
 export function ContactForm() {
+	const { t } = useTranslation();
 	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		phone: "",
-		department: "",
-		subject: "",
-		message: "",
+		name: "", email: "", department: "", subject: "", message: "",
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [statusMessage, setStatusMessage] = useState("");
+	const [success, setSuccess] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsSubmitting(true);
-		setStatusMessage("");
-
 		setTimeout(() => {
-			// Simulate API call
 			setIsSubmitting(false);
-			setStatusMessage("Message sent successfully!");
-			setFormData({
-				name: "",
-				email: "",
-				phone: "",
-				department: "",
-				subject: "",
-				message: "",
-			});
-			setTimeout(() => setStatusMessage(""), 5000); // Clear message after 5s
+			setSuccess(true);
+			setFormData({ name: "", email: "", department: "", subject: "", message: "" });
+			setTimeout(() => setSuccess(false), 6000);
 		}, 1500);
 	};
 
-	const handleInputChange = (field: string, value: string) => {
+	const set = (field: string, value: string) =>
 		setFormData((prev) => ({ ...prev, [field]: value }));
-	};
 
 	return (
-		<Card className="p-8 shadow-lg">
-			<CardHeader className="p-0 mb-6">
-				<CardTitle className="text-2xl font-bold">Send us a Message</CardTitle>
-			</CardHeader>
-			<form onSubmit={handleSubmit} className="space-y-6">
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div>
-						<Label htmlFor="name">Name *</Label>
+		<div id="contact-form" className="bg-white rounded-3xl border border-gray-100 shadow-lg overflow-hidden">
+			{/* Header — solid primary-900, no gradient */}
+			<div className="bg-primary-900 px-8 py-7">
+				<div className="flex items-center gap-3 mb-1">
+					<div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center">
+						<MessageSquare className="w-5 h-5 text-white" />
+					</div>
+					<h2 className="text-xl font-bold text-white">{t("contact.formTitle")}</h2>
+				</div>
+				<p className="text-primary-200 text-sm leading-relaxed pl-12">
+					{t("contact.formDesc")}
+				</p>
+			</div>
+
+			<div className="p-8">
+				{/* Success banner */}
+				<AnimatePresence>
+					{success && (
+						<motion.div
+							initial={{ opacity: 0, y: -8, height: 0 }}
+							animate={{ opacity: 1, y: 0, height: "auto" }}
+							exit={{ opacity: 0, y: -8, height: 0 }}
+							className="mb-6 flex items-center gap-3 px-5 py-4 bg-primary-50 border border-primary-200 rounded-2xl text-primary-900"
+						>
+							<CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0" />
+							<p className="text-sm font-medium">{t("contact.successMsg")}</p>
+						</motion.div>
+					)}
+				</AnimatePresence>
+
+				<form onSubmit={handleSubmit} className="space-y-5">
+					{/* Name + Email */}
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+						<div className="space-y-1.5">
+							<Label htmlFor="name" className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+								<User className="w-3.5 h-3.5 text-gray-400" />
+								{t("contact.name")} <span className="text-red-400">*</span>
+							</Label>
+							<Input
+								id="name"
+								value={formData.name}
+								onChange={(e) => set("name", e.target.value)}
+								placeholder={t("contact.namePlaceholder")}
+								required
+								className="rounded-xl border-gray-200 focus:border-primary-900 focus:ring-primary-900/20 h-11"
+							/>
+						</div>
+						<div className="space-y-1.5">
+							<Label htmlFor="email" className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+								<Mail className="w-3.5 h-3.5 text-gray-400" />
+								{t("contact.email")} <span className="text-red-400">*</span>
+							</Label>
+							<Input
+								id="email"
+								type="email"
+								value={formData.email}
+								onChange={(e) => set("email", e.target.value)}
+								placeholder={t("contact.emailPlaceholder")}
+								required
+								className="rounded-xl border-gray-200 focus:border-primary-900 focus:ring-primary-900/20 h-11"
+							/>
+						</div>
+					</div>
+
+					{/* Department */}
+					<div className="space-y-1.5">
+						<Label className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+							<BookOpen className="w-3.5 h-3.5 text-gray-400" />
+							{t("contact.department")} <span className="text-red-400">*</span>
+						</Label>
+						<Select value={formData.department} onValueChange={(v) => set("department", v)} required>
+							<SelectTrigger className="rounded-xl border-gray-200 h-11">
+								<SelectValue placeholder={t("contact.selectDept")} />
+							</SelectTrigger>
+							<SelectContent>
+								{departments.map((dept) => (
+									<SelectItem key={dept.value} value={dept.value}>
+										{dept.label}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+
+					{/* Subject */}
+					<div className="space-y-1.5">
+						<Label htmlFor="subject" className="text-sm font-semibold text-gray-700">
+							{t("contact.subject")} <span className="text-red-400">*</span>
+						</Label>
 						<Input
-							id="name"
-							value={formData.name}
-							onChange={(e) => handleInputChange("name", e.target.value)}
+							id="subject"
+							value={formData.subject}
+							onChange={(e) => set("subject", e.target.value)}
+							placeholder={t("contact.subjectPlaceholder")}
 							required
+							className="rounded-xl border-gray-200 focus:border-primary-900 focus:ring-primary-900/20 h-11"
 						/>
 					</div>
-					<div>
-						<Label htmlFor="email">Email *</Label>
-						<Input
-							id="email"
-							type="email"
-							value={formData.email}
-							onChange={(e) => handleInputChange("email", e.target.value)}
+
+					{/* Message */}
+					<div className="space-y-1.5">
+						<Label htmlFor="message" className="text-sm font-semibold text-gray-700 flex items-center justify-between">
+							<span>{t("contact.message")} <span className="text-red-400">*</span></span>
+							<span className="text-xs text-gray-400 font-normal">{formData.message.length}/500</span>
+						</Label>
+						<Textarea
+							id="message"
+							value={formData.message}
+							onChange={(e) => set("message", e.target.value)}
+							placeholder={t("contact.messagePlaceholder")}
+							rows={5}
+							maxLength={500}
 							required
+							className="rounded-xl border-gray-200 focus:border-primary-900 focus:ring-primary-900/20 resize-none"
 						/>
 					</div>
-				</div>
-				<div>
-					<Label htmlFor="department">Department *</Label>
-					<Select
-						value={formData.department}
-						onValueChange={(value) => handleInputChange("department", value)}
-						required
-					>
-						<SelectTrigger>
-							<SelectValue placeholder="Select a department" />
-						</SelectTrigger>
-						<SelectContent>
-							{departments.map((dept) => (
-								<SelectItem key={dept.value} value={dept.value}>
-									{dept.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
-				</div>
-				<div>
-					<Label htmlFor="subject">Subject *</Label>
-					<Input
-						id="subject"
-						value={formData.subject}
-						onChange={(e) => handleInputChange("subject", e.target.value)}
-						required
-					/>
-				</div>
-				<div>
-					<Label htmlFor="message">Message *</Label>
-					<Textarea
-						id="message"
-						value={formData.message}
-						onChange={(e) => handleInputChange("message", e.target.value)}
-						rows={5}
-						required
-					/>
-				</div>
-				<div className="flex items-center justify-between">
+
+					{/* Submit */}
 					<Button
 						type="submit"
 						size="lg"
 						disabled={isSubmitting}
-						className="w-full bg-blue-600"
+						className="w-full h-12 rounded-xl bg-primary-900 hover:bg-primary-950 text-white font-semibold text-base gap-2 shadow-md shadow-primary-900/20 hover:shadow-primary-900/30 transition-all duration-200 disabled:opacity-60"
 					>
 						{isSubmitting ? (
-							<motion.div
-								animate={{ rotate: 360 }}
-								transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-								className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-							/>
+							<><Loader2 className="w-5 h-5 animate-spin" />{t("contact.sending")}</>
 						) : (
-							<Send className="w-5 h-5 mr-2" />
+							<><Send className="w-5 h-5" />{t("contact.send")}</>
 						)}
-						<span className="ml-2">
-							{isSubmitting ? "Sending..." : "Send Message"}
-						</span>
 					</Button>
-				</div>
-				{statusMessage && (
-					<p className="text-green-600 text-sm mt-4">{statusMessage}</p>
-				)}
-			</form>
-		</Card>
+				</form>
+			</div>
+		</div>
 	);
 }

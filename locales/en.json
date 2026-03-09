@@ -247,7 +247,33 @@
     "quickActions": "Quick Actions",
     "volunteer": "Become a Volunteer",
     "donate": "Donation",
-    "location": "Our Location"
+    "location": "Our Location",
+    "hours": {
+      "title": "Working Hours",
+      "weekdays": "Mon – Fri",
+      "saturday": "Saturday",
+      "sunday": "Sunday",
+      "closed": "Closed"
+    },
+    "hoursWeekday": "8:00 AM – 5:00 PM",
+    "hoursSaturday": "8:00 AM – 12:00 PM",
+    "responseTime": "We typically respond within 24 hours",
+    "joinUs": "Become a Member",
+    "joinDesc": "Join our growing community and be part of something meaningful for Cambodia.",
+    "getDirections": "Get Directions",
+    "formTitle": "Send Us a Message",
+    "formDesc": "Fill in the form below and our team will get back to you as soon as possible.",
+    "successMsg": "Your message was sent successfully! We'll be in touch soon.",
+    "required": "Required fields",
+    "selectDept": "Select a department",
+    "namePlaceholder": "Your full name",
+    "emailPlaceholder": "your@email.com",
+    "subjectPlaceholder": "What is your message about?",
+    "messagePlaceholder": "Write your message here…",
+    "statsMembers": "Active Members",
+    "statsYears": "Years Active",
+    "statsAssoc": "Associations",
+    "heroTagline": "We'd love to hear from you"
   },
   "common": {
     "readMore": "Read More",
@@ -456,6 +482,32 @@
     "hairAndSalon": {
       "title": "Hair and Salon Events",
       "desc": "Mett Yeung organized 70 Hair and Salon events, providing direct services and support to the community."
+    }
+  },
+  "member": {
+    "detail": {
+      "backToOrg": "Back to Organization",
+      "back": "Back",
+      "downloadCV": "Download CV",
+      "generating": "Generating…",
+      "skills": "Skills & Expertise",
+      "languages": "Languages",
+      "experience": "Professional Experience",
+      "education": "Education",
+      "organizations": "Organizations & Memberships",
+      "emptyTitle": "Profile Details Coming Soon",
+      "emptyDesc": "This member's detailed profile information has not been added yet.",
+      "role": "Role",
+      "organization": "Organization",
+      "present": "Present",
+      "affiliations": "Affiliations",
+      "contact": "Contact",
+      "personal": "Personal",
+      "social": "Social",
+      "department": "Department",
+      "head": "Head",
+      "joined": "Joined",
+      "unknownMember": "Unknown Member"
     }
   }
 }

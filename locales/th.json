@@ -211,7 +211,33 @@
     "quickActions": "ดำเนินการด่วน",
     "volunteer": "มาเป็นอาสาสมัคร",
     "donate": "บริจาค",
-    "location": "ที่ตั้งของเรา"
+    "location": "ที่ตั้งของเรา",
+    "hours": {
+      "title": "เวลาทำการ",
+      "weekdays": "จันทร์ – ศุกร์",
+      "saturday": "วันเสาร์",
+      "sunday": "วันอาทิตย์",
+      "closed": "ปิด"
+    },
+    "hoursWeekday": "8:00 น. – 17:00 น.",
+    "hoursSaturday": "8:00 น. – 12:00 น.",
+    "responseTime": "เราตอบกลับภายใน 24 ชั่วโมง",
+    "joinUs": "เป็นสมาชิก",
+    "joinDesc": "เข้าร่วมชุมชน MYA และมีส่วนร่วมในสิ่งที่มีความหมายสำหรับกัมพูชา",
+    "getDirections": "รับเส้นทาง",
+    "formTitle": "ส่งข้อความถึงเรา",
+    "formDesc": "กรอกแบบฟอร์มด้านล่างและทีมงานของเราจะติดต่อกลับโดยเร็วที่สุด",
+    "successMsg": "ส่งข้อความเรียบร้อยแล้ว! เราจะติดต่อกลับในเร็วๆ นี้",
+    "required": "ช่องที่จำเป็น",
+    "selectDept": "เลือกแผนก",
+    "namePlaceholder": "ชื่อ-นามสกุล",
+    "emailPlaceholder": "your@email.com",
+    "subjectPlaceholder": "หัวข้อข้อความของคุณ",
+    "messagePlaceholder": "เขียนข้อความของคุณที่นี่…",
+    "statsMembers": "สมาชิกที่ใช้งาน",
+    "statsYears": "ปีที่ดำเนินงาน",
+    "statsAssoc": "สมาคม",
+    "heroTagline": "เรายินดีรับฟังคุณเสมอ"
   },
   "common": {
     "readMore": "อ่านต่อ",
@@ -363,5 +389,31 @@
     "description": "องค์กรที่เราร่วมมือด้วย",
     "visitWebsite": "เยี่ยมชมเว็บไซต์",
     "noPartners": "ไม่มีพันธมิตรให้แสดง"
+  },
+  "member": {
+    "detail": {
+      "backToOrg": "กลับไปที่องค์กร",
+      "back": "กลับ",
+      "downloadCV": "ดาวน์โหลด CV",
+      "generating": "กำลังสร้าง…",
+      "skills": "ทักษะและความเชี่ยวชาญ",
+      "languages": "ภาษา",
+      "experience": "ประสบการณ์วิชาชีพ",
+      "education": "การศึกษา",
+      "organizations": "องค์กรและสมาชิกภาพ",
+      "emptyTitle": "รายละเอียดโปรไฟล์จะมาเร็วๆ นี้",
+      "emptyDesc": "ยังไม่มีการเพิ่มข้อมูลโปรไฟล์โดยละเอียดของสมาชิกนี้",
+      "role": "บทบาท",
+      "organization": "องค์กร",
+      "present": "ปัจจุบัน",
+      "affiliations": "สังกัด",
+      "contact": "ติดต่อ",
+      "personal": "ส่วนตัว",
+      "social": "โซเชียล",
+      "department": "แผนก",
+      "head": "หัวหน้า",
+      "joined": "เข้าร่วม",
+      "unknownMember": "สมาชิกที่ไม่รู้จัก"
+    }
   }
 }

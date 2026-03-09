@@ -1,12 +1,4 @@
-import {
-	Phone,
-	Mail,
-	MapPin,
-	Clock,
-	Facebook,
-	Youtube,
-	Instagram,
-} from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Youtube } from "lucide-react";
 import {
 	ContactInfoItem,
 	DepartmentOption,
@@ -19,13 +11,11 @@ export const contactInfo: ContactInfoItem[] = [
 		icon: Phone,
 		title: "contactUs.phone",
 		details: ["015 220 320"],
-		color: "from-green-500 to-emerald-500",
 	},
 	{
 		icon: Mail,
 		title: "contactUs.email",
 		details: ["mettyeung@gmail.com"],
-		color: "from-blue-500 to-blue-500",
 	},
 	{
 		icon: MapPin,
@@ -34,14 +24,7 @@ export const contactInfo: ContactInfoItem[] = [
 			"ផ្ទះលេខ ៣AF, ផ្លូវលេខ ៥៩៨, ភូមិទួលថ្ងាន់",
 			"សង្កាត់ទួលសង្កែទី២, ខណ្ឌឫស្សីកែវ, រាជធានីភ្នំពេញ",
 		],
-		color: "from-red-500 to-red-500",
 	},
-	// {
-	// 	icon: Clock,
-	// 	title: "contactUs.workingHours",
-	// 	details: ["Mon-Fri: 9:00 AM - 4:30 PM"],
-	// 	color: "from-purple-500 to-indigo-600",
-	// },
 ];
 
 export const socialLinks: SocialLinkItem[] = [
@@ -61,14 +44,8 @@ export const socialLinks: SocialLinkItem[] = [
 		name: "Telegram",
 		icon: FaTelegram,
 		href: "https://t.me/mettyeung",
-		color: "hover:text-red-600",
+		color: "hover:text-sky-500",
 	},
-	// {
-	// 	name: "Instagram",
-	// 	icon: Instagram,
-	// 	href: "https://instagram.com",
-	// 	color: "hover:text-pink-600",
-	// },
 ];
 
 export const departments: DepartmentOption[] = [

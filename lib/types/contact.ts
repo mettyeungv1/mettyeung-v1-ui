@@ -2,7 +2,6 @@ export interface ContactInfoItem {
 	icon: React.ElementType;
 	title: string;
 	details: string[];
-	color: string;
 }
 
 export interface SocialLinkItem {

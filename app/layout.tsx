@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 };
 
 import { listCategoriesService } from "@/service/category/category-service";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 export default async function RootLayout({
 	children,
@@ -75,6 +76,7 @@ export default async function RootLayout({
 								<Footer />
 							</SessionProvider>
 						</div>
+						<ScrollToTop />
 						<Toaster />
 					</LanguageProvider>
 				</ThemeProvider>

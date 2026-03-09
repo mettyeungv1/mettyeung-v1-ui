@@ -82,6 +82,7 @@
 		font-feature-settings: "rlig" 1, "calt" 1;
 		font-size: 16px;
 		line-height: 1.6;
+		overflow-x: hidden;
 	}
 
 	/* ─── Typography Scale ─────────────────────────────────── */
@@ -317,6 +318,7 @@
 ::-webkit-scrollbar-thumb:hover {
 	@apply bg-accent-500;
 }
+
 
 /* Ensure proper responsive behavior */
 @media (max-width: 768px) {
