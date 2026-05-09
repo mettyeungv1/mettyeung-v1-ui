@@ -48,3 +48,28 @@ export const getPartnersService = async (
 	
 	return res;
 };
+
+export const getMousService = async (
+	params: PartnerParams = {}
+): Promise<APIResponse<any>> => {
+	const qsParams: Record<string, string> = {
+		sort: params.sort || "order",
+	};
+	if (params.page !== undefined) qsParams.page = String(params.page);
+	if (params.limit !== undefined) qsParams.limit = String(params.limit);
+	if (params.isActive !== undefined) qsParams.isActive = String(params.isActive);
+
+	const qs = new URLSearchParams(qsParams).toString();
+
+	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}/mou?${qs}`, {
+		skipAuth: true,
+		cache: "no-store",
+	});
+	
+	// Handle paginated response
+	if (res?.data?.data && Array.isArray(res.data.data)) {
+		return res;
+	}
+
+	return res;
+};

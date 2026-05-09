@@ -14,9 +14,9 @@ interface NewsGridProps {
 	loading?: boolean;
 }
 
-export function NewsGrid({ 
-	items, 
-	categories, 
+export function NewsGrid({
+	items,
+	categories,
 	onCardClick,
 	loadingMore = false,
 	hasMore = true,
@@ -35,10 +35,10 @@ export function NewsGrid({
 					</span>
 				</h2>
 			</div>
-			
+
 			<AnimatePresence mode="wait">
 				{loading ? (
-					<motion.div 
+					<motion.div
 						key="loader"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -58,7 +58,7 @@ export function NewsGrid({
 						))}
 					</motion.div>
 				) : items.length > 0 ? (
-					<motion.div 
+					<motion.div
 						layout
 						className="grid grid-cols-1 md:grid-cols-2 gap-6"
 					>
@@ -106,7 +106,7 @@ export function NewsGrid({
 							<Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
 						</div>
 					)}
-					
+
 					{!hasMore && !loadingMore && (
 						<div className="text-center py-8">
 							<p className="text-gray-500">You've reached the end of the news feed</p>

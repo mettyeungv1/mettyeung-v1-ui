@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 };
 
 import { listCategoriesService } from "@/service/category/category-service";
+import { getSocialLinksService } from "@/service/contact/contact-service";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 export default async function RootLayout({
@@ -52,7 +53,10 @@ export default async function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const { data: categories } = await listCategoriesService();
+	const [{ data: categories }, socialLinks] = await Promise.all([
+		listCategoriesService(),
+		getSocialLinksService(),
+	]);
 
 	return (
 		<html
@@ -73,7 +77,7 @@ export default async function RootLayout({
 							<SessionProvider>
 								<Header categories={categories} />
 								<main className="flex-1">{children}</main>
-								<Footer />
+								<Footer socialLinks={socialLinks} />
 							</SessionProvider>
 						</div>
 						<ScrollToTop />

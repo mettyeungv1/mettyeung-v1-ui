@@ -14,4 +14,6 @@ export interface Partner {
 	createdAt: string | Date;
 	updatedAt: string | Date;
 	media: PartnerMedia | null;
+	category?: string;
+	mouType?: string;
 }

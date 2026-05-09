@@ -59,9 +59,14 @@ export function NewsCard({ item, onClick }: NewsCardProps) {
 				<div className="flex items-center justify-between text-sm text-gray-500 mt-auto pt-4 border-t">
 					<div className="flex items-center">
 						<User className="w-3.5 h-3.5 mr-1.5" />
-						{/* Corrected to use the English author name for consistency */}
 						<span className="truncate">Mettyeung27</span>
 					</div>
+					{item.views > 0 && (
+						<div className="flex items-center">
+							<Eye className="w-3.5 h-3.5 mr-1.5" />
+							{item.views.toLocaleString()}
+						</div>
+					)}
 				</div>
 			</CardContent>
 		</Card>

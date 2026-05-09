@@ -9,16 +9,14 @@ import {
 	Mail,
 	Phone,
 	MapPin,
-	Facebook,
-	Youtube,
-	Instagram,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useTranslation } from "@/lib/i18n";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { FaTelegram } from "react-icons/fa";
+import type { ISocialLinkAPI } from "@/lib/types/contact";
+import { getSocialIcon } from "@/lib/utils/social-icon-map";
 
 // Data is moved outside the component for cleaner code
 const footerColumns = [
@@ -38,40 +36,18 @@ const footerColumns = [
 			{ nameKey: "nav.events", href: "/news?category=events" },
 		],
 	},
-	// {
-	// 	titleKey: "nav.projects",
-	// 	links: [
-	// 		{ nameKey: "nav.allProjects", href: "/s" },
-	// 		{ nameKey: "nav.community", href: "/s?category=community" },
-	// 		{ nameKey: "nav.education", href: "/s?category=education" },
-	// 		{ nameKey: "nav.culture", href: "/s?category=culture" },
-	// 	],
-	// },
 ];
 
-export const socialLinks: any = [
-	{
-		name: "Facebook",
-		icon: Facebook,
-		href: "https://web.facebook.com/profile.php?id=100091461679738",
-		color: "hover:text-blue-600",
-	},
-	{
-		name: "Youtube",
-		icon: Youtube,
-		href: "https://youtube.com/@_mettyeung8858",
-		color: "hover:text-red-600",
-	},
-	{
-		name: "Telegram",
-		icon: FaTelegram,
-		href: "https://t.me/mettyeung",
-		color: "hover:text-red-600",
-	},
-];
+interface FooterProps {
+	socialLinks: ISocialLinkAPI[];
+}
 
-export function Footer() {
+export function Footer({ socialLinks }: FooterProps) {
 	const { t } = useTranslation();
+
+	const activeLinks = [...socialLinks]
+		.filter((l) => l.isActive)
+		.sort((a, b) => a.order - b.order);
 
 	return (
 		<footer className="bg-blue-900 text-white relative overflow-hidden">
@@ -201,22 +177,25 @@ export function Footer() {
 							{t("footer.followUs")}
 						</h3>
 						<div className="flex space-x-2">
-							{socialLinks.map((social: any) => (
-								<Button
-									key={social.name}
-									size="icon"
-									asChild
-									className="text-blue-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
-								>
-									<Link
-										href={social.href}
-										target="_blank"
-										rel="noopener noreferrer"
+							{activeLinks.map((social) => {
+								const Icon = getSocialIcon(social.iconName ?? social.platform);
+								return (
+									<Button
+										key={social.id}
+										size="icon"
+										asChild
+										className="text-blue-200 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
 									>
-										<social.icon className="w-5 h-5" />
-									</Link>
-								</Button>
-							))}
+										<Link
+											href={social.url}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<Icon className="w-5 h-5" />
+										</Link>
+									</Button>
+								);
+							})}
 						</div>
 					</motion.div>
 				</div>

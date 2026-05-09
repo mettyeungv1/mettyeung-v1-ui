@@ -62,9 +62,9 @@ export function ContactForm() {
 							initial={{ opacity: 0, y: -8, height: 0 }}
 							animate={{ opacity: 1, y: 0, height: "auto" }}
 							exit={{ opacity: 0, y: -8, height: 0 }}
-							className="mb-6 flex items-center gap-3 px-5 py-4 bg-primary-50 border border-primary-200 rounded-2xl text-primary-900"
+							className="mb-6 flex items-center gap-3 px-5 py-4 bg-green-50 border border-green-200 rounded-2xl text-green-800"
 						>
-							<CheckCircle2 className="w-5 h-5 text-primary-600 shrink-0" />
+							<CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
 							<p className="text-sm font-medium">{t("contact.successMsg")}</p>
 						</motion.div>
 					)}

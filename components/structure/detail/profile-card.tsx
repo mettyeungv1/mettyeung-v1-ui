@@ -178,12 +178,17 @@ export function ProfileCard({ person }: ProfileCardProps) {
 								{initials}
 							</AvatarFallback>
 						</Avatar>
-						{/* Status indicator — reflects real member status */}
-						<span className={`absolute bottom-1.5 right-1.5 w-4 h-4 border-[3px] border-white rounded-full shadow-sm print:hidden ${
-							person.status === "active" ? "bg-emerald-500" :
-							person.status === "alumni" ? "bg-blue-500" :
-							"bg-gray-400"
-						}`} />
+						{/* C10: Status indicator with tooltip for accessibility */}
+						<span
+							className={`absolute bottom-1.5 right-1.5 w-4 h-4 border-[3px] border-white rounded-full shadow-sm print:hidden ${
+								person.status === "active" ? "bg-emerald-500" :
+								person.status === "alumni" ? "bg-blue-500" :
+								"bg-gray-400"
+							}`}
+							title={person.status === "active" ? "Active Member" : person.status === "alumni" ? "Alumni" : "Inactive"}
+							role="img"
+							aria-label={`Status: ${person.status || "unknown"}`}
+						/>
 					</div>
 
 					{/* Name — English */}

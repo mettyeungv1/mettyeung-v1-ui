@@ -1,7 +1,11 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import { Department } from "@/lib/types/structure";
-import { Search, Filter, Grid, List } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/lib/i18n";
 
 interface StructureFilterBarProps {
 	searchTerm: string;
@@ -9,8 +13,8 @@ interface StructureFilterBarProps {
 	selectedDepartment: string;
 	onDepartmentChange: (value: string) => void;
 	departments: Department[];
-	viewMode: "grid" | "list";
-	onViewModeChange: (mode: "grid" | "list") => void;
+	totalMembers: number;
+	filteredMemberCount: number;
 }
 
 export function StructureFilterBar({
@@ -19,55 +23,111 @@ export function StructureFilterBar({
 	selectedDepartment,
 	onDepartmentChange,
 	departments,
-	viewMode,
-	onViewModeChange,
+	totalMembers,
+	filteredMemberCount,
 }: StructureFilterBarProps) {
+	const { t } = useTranslation();
+	const [localSearch, setLocalSearch] = useState(searchTerm);
+	const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+
+	useEffect(() => {
+		debounceRef.current = setTimeout(() => {
+			onSearchChange(localSearch);
+		}, 300);
+		return () => clearTimeout(debounceRef.current);
+	}, [localSearch, onSearchChange]);
+
+	// Sync external changes
+	useEffect(() => {
+		setLocalSearch(searchTerm);
+	}, [searchTerm]);
+
+	const hasActiveFilters = searchTerm || selectedDepartment !== "all";
+
 	return (
-		<section className="py-8 bg-white border-b sticky top-0 z-10">
+		<section className="py-6 bg-white/80 backdrop-blur-sm border-b sticky top-16 z-10 transition-all duration-200">
 			<div className="container">
-				<div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-					<div className="flex flex-col sm:flex-row gap-4 flex-1 w-full lg:w-auto">
-						<div className="relative flex-1">
-							<Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-							<Input
-								placeholder="Search members, skills..."
-								value={searchTerm}
-								onChange={(e) => onSearchChange(e.target.value)}
-								className="pl-10 h-11"
-							/>
-						</div>
-						<div className="relative w-full sm:w-48">
-							<Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-							<select
-								value={selectedDepartment}
-								onChange={(e) => onDepartmentChange(e.target.value)}
-								className="pl-10 pr-8 py-2.5 w-full border rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-khmer-gold h-11 appearance-none"
+				<div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+					{/* Search */}
+					<div className="relative flex-1 max-w-md">
+						<Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+						<Input
+							placeholder={t("structure.filter.searchPlaceholder") || "Search members..."}
+							value={localSearch}
+							onChange={(e) => setLocalSearch(e.target.value)}
+							className="pl-10 pr-9 h-11 rounded-lg border-gray-200 focus:border-khmer-gold focus:ring-khmer-gold/20"
+						/>
+						{localSearch && (
+							<button
+								onClick={() => {
+									setLocalSearch("");
+									onSearchChange("");
+								}}
+								className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+								aria-label="Clear search"
 							>
-								<option value="all">All Departments</option>
-								{departments.map((section) => (
-									<option key={section.id} value={section.id}>
-										{section.title}
-									</option>
-								))}
-							</select>
+								<X className="w-4 h-4" />
+							</button>
+						)}
+					</div>
+
+					{/* Department filter */}
+					<div className="relative w-full sm:w-52">
+						<select
+							value={selectedDepartment}
+							onChange={(e) => onDepartmentChange(e.target.value)}
+							className="w-full px-4 py-2.5 border border-gray-200 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-khmer-gold/20 focus:border-khmer-gold h-11 appearance-none cursor-pointer"
+							aria-label="Filter by department"
+						>
+							<option value="all">
+								{t("structure.filter.allDepartments") || "All Departments"}
+							</option>
+							{departments.map((section) => (
+								<option key={section.id} value={section.id}>
+									{section.title}
+								</option>
+							))}
+						</select>
+						<div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+							<svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+							</svg>
 						</div>
 					</div>
-					{/* <div className="flex items-center space-x-2">
+				</div>
+
+				{/* Results count + clear filters */}
+				<div className="flex items-center justify-between mt-3">
+					<p className="text-sm text-gray-500">
+						{hasActiveFilters ? (
+							<>
+								Showing <span className="font-semibold text-gray-700">{filteredMemberCount}</span> of{" "}
+								<span className="font-semibold text-gray-700">{totalMembers}</span> members
+								{selectedDepartment !== "all" && (
+									<> in <span className="font-semibold text-gray-700">{departments.find(d => d.id === selectedDepartment)?.title}</span></>
+								)}
+							</>
+						) : (
+							<>
+								<span className="font-semibold text-gray-700">{totalMembers}</span> members across{" "}
+								<span className="font-semibold text-gray-700">{departments.length}</span> departments
+							</>
+						)}
+					</p>
+					{hasActiveFilters && (
 						<Button
-							variant={viewMode === "grid" ? "default" : "outline"}
-							size="icon"
-							onClick={() => onViewModeChange("grid")}
+							variant="ghost"
+							size="sm"
+							onClick={() => {
+								setLocalSearch("");
+								onSearchChange("");
+								onDepartmentChange("all");
+							}}
+							className="text-xs text-gray-500 hover:text-gray-700"
 						>
-							<Grid className="w-4 h-4" />
+							Clear filters
 						</Button>
-						<Button
-							variant={viewMode === "list" ? "default" : "outline"}
-							size="icon"
-							onClick={() => onViewModeChange("list")}
-						>
-							<List className="w-4 h-4" />
-						</Button>
-					</div> */}
+					)}
 				</div>
 			</div>
 		</section>

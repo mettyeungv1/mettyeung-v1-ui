@@ -37,3 +37,4 @@ export const MEDIA_ENDPOINT = `${API_BASE_URL}/media`;
 export const VIDEO_ENDPOINT = `${API_BASE_URL}/videos`;
 export const CATEGORY_ENDPOINT = `${API_BASE_URL}/categories`;
 export const STRUCTURE_ENDPOINT = `${API_BASE_URL}/structures`;
+export const CONTACT_ENDPOINT = `${API_BASE_URL}/contact`;

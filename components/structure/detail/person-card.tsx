@@ -74,6 +74,7 @@ export function PersonCard({ person, variant = "compact", index }: PersonCardPro
 			<Link
 				href={`/structure/${person.id}`}
 				className="block outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-2xl"
+				aria-label={`View ${displayName}'s profile`}
 			>
 				<Card
 					className={cn(
@@ -145,6 +146,11 @@ export function PersonCard({ person, variant = "compact", index }: PersonCardPro
 									{displayTitle}
 								</p>
 							)}
+
+							{/* C6: View Profile affordance */}
+							<p className="text-sm font-medium text-khmer-gold opacity-0 group-hover:opacity-100 transition-opacity duration-200 pt-1">
+								View Profile &rarr;
+							</p>
 						</div>
 
 					</CardContent>

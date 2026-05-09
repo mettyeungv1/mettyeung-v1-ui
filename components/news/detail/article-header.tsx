@@ -23,8 +23,7 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 				</div>
 				<div className="flex items-center text-sm text-gray-500">
 					<Clock className="w-4 h-4 mr-1" />
-					{/* {article.readTime} */}
-					20
+					{article.readTime} min
 				</div>
 				<div className="flex items-center text-sm text-gray-500">
 					<Eye className="w-4 h-4 mr-1" />
@@ -51,8 +50,7 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 			<div className="flex items-center justify-between py-4 border-t border-b mt-8">
 				<div className="flex items-center text-sm text-gray-500">
 					<MessageCircle className="w-4 h-4 mr-2" />
-					{/* {article.comments} */}
-					10 Comments
+					{article.comments} Comments
 				</div>
 				<Button
 					variant="outline"

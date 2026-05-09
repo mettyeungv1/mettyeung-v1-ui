@@ -47,7 +47,7 @@ export function NewsFilterSidebar({
 
 	const handleCategoryClick = (categoryId: string) => {
 		const isAlreadySelected = selectedCategory === categoryId;
-        
+
         if (onFilterChange) {
             onFilterChange({
                 category: isAlreadySelected ? "all" : categoryId,
@@ -93,7 +93,7 @@ export function NewsFilterSidebar({
 				/>
 			</div>
 
-			{/* <h4 className="text-sm font-semibold text-gray-900 mb-3">Categories</h4>
+			<h4 className="text-sm font-semibold text-gray-900 mb-3">Categories</h4>
 			<div className="space-y-1">
                 <button
                     onClick={() => handleCategoryClick("all")}
@@ -169,7 +169,7 @@ export function NewsFilterSidebar({
 						</AnimatePresence>
 					</div>
 				))}
-			</div> */}
+			</div>
 
 			<div className="mt-8">
 				<h4 className="text-base font-semibold text-gray-900 mb-3">

@@ -3,7 +3,7 @@ import { MissionVisionSection } from "@/components/about/mission-vision-section"
 import { PartnersSection } from "@/components/about/partner-section";
 import { MouScrollerSection } from "@/components/about/mou-scroller-section";
 
-import { getPartnersService } from "@/service/partner/partner-service";
+import { getPartnersService, getMousService } from "@/service/partner/partner-service";
 
 import { normalizeUrl } from "@/lib/utils/image";
 
@@ -15,11 +15,14 @@ export default async function AboutPage() {
 	const res = await getPartnersService({ page: 1, limit: 12, sort: "order", isActive: true });
 	const initialPartners: Partner[] = res.status_code === 200 ? (res.data?.data || (Array.isArray(res.data) ? res.data : [])) : [];
 
+	const mouRes = await getMousService({ page: 1, limit: 100, sort: "order", isActive: true });
+	const initialMous: Partner[] = mouRes.status_code === 200 ? (mouRes.data?.data || (Array.isArray(mouRes.data) ? mouRes.data : [])) : [];
+
 	return (
 		<div className="min-h-screen bg-white">
 			<AboutHeroSection />
 			<MissionVisionSection />
-			<MouScrollerSection />
+			<MouScrollerSection initialMous={initialMous} />
 			<section id="network" className="scroll-mt-24">
 				<PartnersSection initialPartners={initialPartners} />
 			</section>

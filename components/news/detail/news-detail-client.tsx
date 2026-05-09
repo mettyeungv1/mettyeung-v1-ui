@@ -57,7 +57,10 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 			})),
 			readTime: post.readTimes || 0,
 			comments: post.commentsCount || 0,
-			category: { name: "", name_en: "" },
+			category: {
+				name: typeof post.category?.name === "string" ? post.category.name : (post.category?.name as any)?.en || "",
+				name_en: typeof post.category?.name === "string" ? post.category.name : (post.category?.name as any)?.en || "",
+			},
 		};
 	}, [post]);
 

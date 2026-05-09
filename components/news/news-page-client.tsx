@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useState, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslation } from "@/lib/i18n";
+import { motion, AnimatePresence } from "framer-motion";
+import DOMPurify from "dompurify";
 
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { PageHero } from "@/components/gallery/page-hero";
@@ -15,6 +17,7 @@ import {
 	UICategory,
 } from "@/service/category/category-service";
 import type { BlogPost } from "@/lib/types/blog";
+import { BookOpen } from "lucide-react";
 
 const POSTS_PER_PAGE = 12;
 
@@ -40,7 +43,7 @@ export function NewsPageClient({
 	const [searchTerm, setSearchTerm] = useState(initialSearch);
 	const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 	const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(initialSubCategory);
-	
+
 	const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
 	const [categories, setCategories] = useState<UICategory[]>([]);
 	const [loading, setLoading] = useState(false);
@@ -55,40 +58,40 @@ export function NewsPageClient({
 		router.push(`/news/${id}`);
 	};
 
+	// Initialize categories from server data
+	useEffect(() => {
+		if (initialCategories && initialCategories.length > 0) {
+			const uiCats = mapToUICategories(initialCategories, initialPosts as any);
+			setCategories(uiCats);
+		}
+	}, [initialCategories]);
+
 	// Update URL when filters change
 	const updateUrl = useCallback((term: string, cat: string, subCat: string | null) => {
 		const params = new URLSearchParams();
 		if (term) params.set("q", term);
-		
-        // Simplification: Always use 'category' param for the active ID.
-        // If it's a subcategory, we put that ID here.
-        // The getCategoryStateFromUrl logic will resolve the parent/child relationship on load.
+
         const activeId = subCat || cat;
 		if (activeId !== "all") params.set("category", activeId);
-		
+
 		router.push(`/news?${params.toString()}`, { scroll: false });
 	}, [router]);
-
-	// ... categories init ...
 
     const getCategoryStateFromUrl = useCallback((catParam: string | null, subCatParam: string | null) => {
         if (!catParam || catParam === "all") return { cat: "all", sub: null };
         if (subCatParam) return { cat: catParam, sub: subCatParam };
 
-        // If only catParam is provided, check if it's actually a subcategory ID
         if (categories.length > 0) {
-             // Check if it's a top-level category
              const topLevel = categories.find(c => c.id === catParam);
              if (topLevel) return { cat: catParam, sub: null };
 
-             // Check if it's a subcategory
              for (const c of categories) {
                  if (c.subcategories?.find(s => s.id === catParam)) {
                      return { cat: c.id, sub: catParam };
                  }
              }
         }
-        
+
         return { cat: catParam, sub: null };
     }, [categories]);
 
@@ -99,19 +102,12 @@ export function NewsPageClient({
 		subCategory?: string | null;
 	}) => {
         const newTerm = updates.term !== undefined ? updates.term : searchTerm;
-        // Logic: if category changes, subCategory usually resets to null unless specified
         let newCategory = updates.category !== undefined ? updates.category : selectedCategory;
         let newSubCategory = updates.subCategory !== undefined ? updates.subCategory : selectedSubCategory;
 
-        // If category explicitly changed to something else, and subCategory wasn't specified, reset sub
         if (updates.category !== undefined && updates.category !== selectedCategory && updates.subCategory === undefined) {
             newSubCategory = null;
         }
-
-        // Optimistic State Update (Optional/Redundant since URL effect will do it, but good for responsiveness)
-        // Actually, let's let the URL effect drive the state to ensure single source of truth.
-        // But we can update local state to generic instant feedback if needed. 
-        // For now, relying on URL effect is safer for consistency.
 
 		updateUrl(newTerm, newCategory, newSubCategory);
 	};
@@ -129,38 +125,31 @@ export function NewsPageClient({
         setSearchTerm(q);
     }, [searchParams, categories, getCategoryStateFromUrl]);
 
-	// Fetch data when filters change (triggered by state changes synced with URL)
+	// Fetch data when filters change
 	useEffect(() => {
-		// Skip initial load if data matches
-		// Note: removed standard equality check to rely on more robust logic if needed, 
-        // but for now, we just want to ensure we fetch if the URL implies different data than initial.
-        
 		const resetPagination = async () => {
 			setLoading(true);
 			setPage(1);
 			setPosts([]);
-             // ... rest of logic ...
-			
+
 			const startTime = Date.now();
 
-			const params: any = { 
-				sort: "-publishedAt", 
-				limit: POSTS_PER_PAGE, 
-				page: 1 
+			const params: any = {
+				sort: "-publishedAt",
+				limit: POSTS_PER_PAGE,
+				page: 1
 			};
-			
+
 			if (searchTerm) {
 				params.q = searchTerm;
 			}
-			
+
 			if (selectedCategory !== "all") {
-				// Use the specific ID if subcategory is selected, else main category
 				params.categoryId = selectedSubCategory || selectedCategory;
 			}
 
-            console.log("Fetching posts with params:", params);
 			const postRes = await listBlogsService(params);
-			
+
 			if (postRes.status_code === 200 && postRes.data?.data) {
 				setPosts(postRes.data.data);
 				setTotalPages(postRes.data.totalPages || 1);
@@ -168,7 +157,7 @@ export function NewsPageClient({
 			} else {
                 setPosts([]);
             }
-			
+
 			const elapsed = Date.now() - startTime;
 			const remaining = Math.max(0, 500 - elapsed);
 			setTimeout(() => {
@@ -190,16 +179,16 @@ export function NewsPageClient({
 		setLoadingMore(true);
 		const nextPage = page + 1;
 
-		const params: any = { 
-			sort: "-publishedAt", 
-			limit: POSTS_PER_PAGE, 
-			page: nextPage 
+		const params: any = {
+			sort: "-publishedAt",
+			limit: POSTS_PER_PAGE,
+			page: nextPage
 		};
-		
+
 		if (searchTerm) {
 			params.q = searchTerm;
 		}
-		
+
 		if (selectedCategory !== "all") {
 			params.categoryId = selectedSubCategory || selectedCategory;
 		}
@@ -281,6 +270,14 @@ export function NewsPageClient({
 
 	const { filteredNews, featuredNews, recentNews } = normalized;
 
+	// Derive the active category for the description banner
+	const activeCategoryForBanner = useMemo(() => {
+		if (selectedCategory === "all") return null;
+		const cat = categories.find((c) => c.id === selectedCategory);
+		if (!cat?.description_en) return null;
+		return cat;
+	}, [selectedCategory, categories]);
+
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<PageHero title={t("nav.news")} subtitle={t("events.heroDescription")} />
@@ -315,15 +312,10 @@ export function NewsPageClient({
 							<AnimatedSection>
 								<NewsFilterSidebar
 									searchTerm={searchTerm}
-                                    // Adapter for backward compatibility or direct usage
 									onSearchChange={(term) => handleFilterChange({ term })}
 									categories={categories as any}
 									selectedCategory={selectedCategory}
-                                    // Pass standard handlers that use the new logic if the component still calls them, 
-                                    // but we will update the component to use onFilterChange preferably.
-                                    // For now, let's keep the props broadly compatible but backed by new logic
 									onCategoryChange={(cat) => handleFilterChange({ category: cat })}
-                                    // Special case: subcategory change logic is handled inside handleFilterChange (resetting logic)
 									selectedSubCategory={selectedSubCategory}
 									onSubCategoryChange={(sub) => handleFilterChange({ subCategory: sub })}
                                     onFilterChange={handleFilterChange}
@@ -335,25 +327,67 @@ export function NewsPageClient({
 
 						{/* News Grid */}
 						<div className="lg:col-span-3">
-							{/* Category Highlight Block */}
-							{selectedCategory !== "all" && (() => {
-								const activeCat = categories.find((c) => c.id === selectedCategory);
-								if (!activeCat?.description_en) return null;
-								return (
-									<AnimatedSection>
-										<div className="mb-8 p-6 md:p-8 bg-white rounded-2xl border border-blue-100 shadow-sm">
-											<h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-												<span className="w-1.5 h-6 bg-blue-600 rounded-full" />
-												{activeCat.name_en}
-											</h3>
-											<div
-												className="prose prose-sm md:prose-base max-w-none text-gray-700 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-1 [&_p]:mb-2 [&_h1]:text-xl [&_h2]:text-lg [&_h3]:text-base [&_strong]:text-gray-900"
-												dangerouslySetInnerHTML={{ __html: activeCat.description_en }}
-											/>
+							{/* ── Category Description Banner ── */}
+							<AnimatePresence mode="wait">
+								{activeCategoryForBanner && (
+									<motion.div
+										key={activeCategoryForBanner.id}
+										initial={{ opacity: 0, y: -12 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -12 }}
+										transition={{ duration: 0.35, ease: "easeOut" }}
+										className="mb-8"
+									>
+										<div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white shadow-lg shadow-blue-600/15">
+											{/* Decorative blurs */}
+											<div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+											<div className="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-400/15 rounded-full blur-3xl pointer-events-none" />
+
+											<div className="relative z-10 p-6 md:p-8 lg:p-10">
+												{/* Header row */}
+												<div className="flex items-start gap-4 mb-5">
+													<div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-xl bg-white/15 backdrop-blur-sm border border-white/10">
+														<BookOpen className="w-5 h-5 text-white" />
+													</div>
+													<div>
+														<h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight">
+															{activeCategoryForBanner.name_en}
+														</h3>
+														<p className="text-sm text-blue-200/80 mt-0.5">
+															Category Overview
+														</p>
+													</div>
+												</div>
+
+												{/* Divider */}
+												<div className="h-px w-full bg-gradient-to-r from-white/25 via-white/10 to-transparent mb-5" />
+
+												{/* Rich-text HTML content — styled without @tailwindcss/typography */}
+												<div
+													className="max-w-none text-blue-50/90 text-sm md:text-base leading-relaxed
+													[&_h1]:text-xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-6 [&_h1]:mb-3
+													[&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-5 [&_h2]:mb-2
+													[&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-4 [&_h3]:mb-2
+													[&_p]:mb-3 [&_p]:leading-relaxed
+													[&_strong]:text-white [&_strong]:font-semibold
+													[&_em]:italic
+													[&_a]:text-blue-200 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-white
+													[&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-3 [&_ul]:marker:text-blue-300/60
+													[&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-3 [&_ol]:marker:text-blue-300/60
+													[&_li]:mb-1.5 [&_li]:leading-relaxed
+													[&_blockquote]:border-l-4 [&_blockquote]:border-blue-300/40 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-blue-100/80 [&_blockquote]:my-4
+													[&_img]:rounded-lg [&_img]:my-4 [&_img]:max-w-full
+													[&_pre]:bg-black/20 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:my-4
+													[&_code]:bg-black/20 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
+													[&_table]:w-full [&_table]:my-4 [&_th]:text-left [&_th]:text-white [&_th]:pb-2 [&_th]:border-b [&_th]:border-white/20 [&_td]:py-2 [&_td]:border-b [&_td]:border-white/10
+													[&_hr]:border-white/20 [&_hr]:my-6"
+													dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(activeCategoryForBanner.description_en!) }}
+												/>
+											</div>
 										</div>
-									</AnimatedSection>
-								);
-							})()}
+									</motion.div>
+								)}
+							</AnimatePresence>
 
 							<AnimatedSection>
 								<NewsGrid

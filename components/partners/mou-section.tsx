@@ -4,28 +4,26 @@ import React, { useState } from "react";
 import { useTranslation } from "@/lib/i18n";
 import { Handshake, FileBadge, ChevronDown, ChevronUp } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { mouPartners } from "@/lib/data/mou";
+import type { Partner } from "@/lib/types/partner";
 
-const mapColors = (iconColor: string) => {
-    const colorMaps: Record<string, { hoverText: string, hoverRing: string, hoverGradient: string }> = {
-        "text-blue-600": { hoverText: "group-hover:text-blue-600", hoverRing: "group-hover:ring-blue-200", hoverGradient: "bg-gradient-to-r from-blue-500 to-blue-600" },
-        "text-amber-600": { hoverText: "group-hover:text-amber-600", hoverRing: "group-hover:ring-amber-200", hoverGradient: "bg-gradient-to-r from-amber-500 to-amber-600" },
-        "text-emerald-600": { hoverText: "group-hover:text-emerald-600", hoverRing: "group-hover:ring-emerald-200", hoverGradient: "bg-gradient-to-r from-emerald-500 to-emerald-600" },
-        "text-indigo-600": { hoverText: "group-hover:text-indigo-600", hoverRing: "group-hover:ring-indigo-200", hoverGradient: "bg-gradient-to-r from-indigo-500 to-indigo-600" },
-        "text-rose-600": { hoverText: "group-hover:text-rose-600", hoverRing: "group-hover:ring-rose-200", hoverGradient: "bg-gradient-to-r from-rose-500 to-rose-600" },
-        "text-cyan-600": { hoverText: "group-hover:text-cyan-600", hoverRing: "group-hover:ring-cyan-200", hoverGradient: "bg-gradient-to-r from-cyan-500 to-cyan-600" },
-        "text-violet-600": { hoverText: "group-hover:text-violet-600", hoverRing: "group-hover:ring-violet-200", hoverGradient: "bg-gradient-to-r from-violet-500 to-violet-600" },
-        "text-teal-600": { hoverText: "group-hover:text-teal-600", hoverRing: "group-hover:ring-teal-200", hoverGradient: "bg-gradient-to-r from-teal-500 to-teal-600" },
-        "text-pink-600": { hoverText: "group-hover:text-pink-600", hoverRing: "group-hover:ring-pink-200", hoverGradient: "bg-gradient-to-r from-pink-500 to-pink-600" },
-        "text-orange-600": { hoverText: "group-hover:text-orange-600", hoverRing: "group-hover:ring-orange-200", hoverGradient: "bg-gradient-to-r from-orange-500 to-orange-600" },
-        "text-fuchsia-600": { hoverText: "group-hover:text-fuchsia-600", hoverRing: "group-hover:ring-fuchsia-200", hoverGradient: "bg-gradient-to-r from-fuchsia-500 to-fuchsia-600" }
-    };
-    return colorMaps[iconColor] || colorMaps["text-blue-600"];
+const mapColors = (type: string | undefined | null) => {
+    switch (type) {
+		case "Private Company":
+			return { text: "text-blue-600", hoverText: "group-hover:text-blue-600", bg: "bg-blue-50/80", hoverBg: "group-hover:bg-blue-600", hoverRing: "group-hover:ring-blue-200", hoverGradient: "bg-gradient-to-r from-blue-500 to-blue-600", iconColor: "text-blue-600", bgClass: "bg-blue-50/80" };
+		case "Association":
+			return { text: "text-emerald-600", hoverText: "group-hover:text-emerald-600", bg: "bg-emerald-50", hoverBg: "group-hover:bg-emerald-600", hoverRing: "group-hover:ring-emerald-200", hoverGradient: "bg-gradient-to-r from-emerald-500 to-emerald-600", iconColor: "text-emerald-600", bgClass: "bg-emerald-50" };
+		case "Institution":
+			return { text: "text-violet-600", hoverText: "group-hover:text-violet-600", bg: "bg-violet-50", hoverBg: "group-hover:bg-violet-600", hoverRing: "group-hover:ring-violet-200", hoverGradient: "bg-gradient-to-r from-violet-500 to-violet-600", iconColor: "text-violet-600", bgClass: "bg-violet-50" };
+		default:
+			return { text: "text-slate-600", hoverText: "group-hover:text-slate-600", bg: "bg-slate-50", hoverBg: "group-hover:bg-slate-600", hoverRing: "group-hover:ring-slate-200", hoverGradient: "bg-gradient-to-r from-slate-500 to-slate-600", iconColor: "text-slate-600", bgClass: "bg-slate-50" };
+	}
 };
 
-export function MouSection() {
+export function MouSection({ initialMous }: { initialMous: Partner[] }) {
     const { t } = useTranslation();
     const [showAll, setShowAll] = useState(false);
+	
+	if (!initialMous || initialMous.length === 0) return null;
 
     return (
         <section className="section-padding bg-slate-50 relative overflow-hidden">
@@ -48,11 +46,11 @@ export function MouSection() {
                 </AnimatedSection>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-fr">
-                    {mouPartners.map((partner, index) => {
-                        const colors = mapColors(partner.iconColor);
+                    {initialMous.map((partner, index) => {
+                        const colors = mapColors(partner.mouType);
                         return (
                             <AnimatedSection 
-                                key={partner.key} 
+                                key={partner.id} 
                                 delay={index * 0.05} 
                                 direction="up" 
                                 className={`h-full ${!showAll && index >= 4 ? 'hidden md:block' : 'block'}`}
@@ -65,8 +63,8 @@ export function MouSection() {
                                     <div className="mb-6 md:mb-7 flex flex-col items-center w-full">
                                         {/* Icon Container with subtle glow */}
                                         <div className="relative mb-5 md:mb-6">
-                                            <div className={`absolute inset-0 ${partner.bg} blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
-                                            <div className={`relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-white ${partner.iconColor} rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center transition-all duration-500 ease-out group-hover:scale-110 shadow-[0_4px_20px_rgb(0,0,0,0.05)] ring-1 ring-gray-100 ${colors.hoverRing}`}>
+                                            <div className={`absolute inset-0 ${colors.bgClass} blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500`} />
+                                            <div className={`relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-white ${colors.iconColor} rounded-[1.5rem] md:rounded-[2rem] flex items-center justify-center transition-all duration-500 ease-out group-hover:scale-110 shadow-[0_4px_20px_rgb(0,0,0,0.05)] ring-1 ring-gray-100 ${colors.hoverRing}`}>
                                                 <Handshake className="w-7 h-7 md:w-9 md:h-9" />
                                             </div>
                                         </div>
@@ -78,11 +76,11 @@ export function MouSection() {
                                     </div>
 
                                     {/* Divider */}
-                                    <div className={`w-10 md:w-12 h-1 bg-gray-200 ${partner.hoverBg} rounded-full mb-5 md:mb-7 transition-colors duration-500`} />
+                                    <div className={`w-10 md:w-12 h-1 bg-gray-200 ${colors.hoverBg} rounded-full mb-5 md:mb-7 transition-colors duration-500`} />
                                     
                                     {/* Description */}
                                     <div className="text-sm sm:text-[15px] md:text-base text-gray-600 leading-relaxed font-medium mt-auto w-full">
-                                        {t(`network.mou.list.${partner.key}` as any)}
+                                        {partner.description || "Memorandum of Understanding"}
                                     </div>
                                 </div>
                             </AnimatedSection>
@@ -99,7 +97,7 @@ export function MouSection() {
                         {showAll ? (
                             <>Show Less <ChevronUp className="w-4 h-4" /></>
                         ) : (
-                            <>View All Partners ({mouPartners.length}) <ChevronDown className="w-4 h-4" /></>
+                            <>View All Partners ({initialMous.length}) <ChevronDown className="w-4 h-4" /></>
                         )}
                     </button>
                 </div>

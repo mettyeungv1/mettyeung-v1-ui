@@ -3,15 +3,25 @@
 import { useTranslation } from "@/lib/i18n";
 import { motion } from "framer-motion";
 import { Mail, MapPin, MessageCircle, Users, CalendarDays, Building2 } from "lucide-react";
+import type { IContactSettingsAPI } from "@/lib/types/contact";
 
-const stats = [
-	{ icon: Users,        labelKey: "contact.statsMembers", value: "200+" },
-	{ icon: CalendarDays, labelKey: "contact.statsYears",   value: "4+"   },
-	{ icon: Building2,    labelKey: "contact.statsAssoc",   value: "10+"  },
-];
+interface ContactHeroSectionProps {
+	settings: IContactSettingsAPI;
+}
 
-export function ContactHeroSection() {
+export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 	const { t } = useTranslation();
+
+	const stats = [
+		{ icon: Users,        labelKey: "contact.statsMembers", value: `${settings.statsMembersCount}+` },
+		{ icon: CalendarDays, labelKey: "contact.statsYears",   value: `${settings.statsYearsCount}+`   },
+		{ icon: Building2,    labelKey: "contact.statsAssoc",   value: `${settings.statsAssociationsCount}+`  },
+	];
+
+	const mapsHref =
+		settings.mapLat && settings.mapLng
+			? `https://maps.google.com/maps?ll=${settings.mapLat},${settings.mapLng}&z=17`
+			: "https://maps.google.com/maps?ll=11.595197,104.901852&z=17";
 
 	return (
 		<section className="relative pt-32 pb-32 md:pt-44 md:pb-40 overflow-hidden bg-primary-900">
@@ -78,7 +88,7 @@ export function ContactHeroSection() {
 						{t("contact.formTitle")}
 					</a>
 					<a
-						href="https://maps.google.com/maps?ll=11.595197,104.901852&z=17"
+						href={mapsHref}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-base transition-all duration-200 hover:-translate-y-0.5"

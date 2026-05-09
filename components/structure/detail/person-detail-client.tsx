@@ -26,10 +26,42 @@ import {
 	Briefcase,
 	FileText,
 	Languages,
+	ChevronRight,
+	CircleCheck,
+	CircleMinus,
 } from "lucide-react";
 
 interface PersonDetailClientProps {
 	person: Member;
+}
+
+/* ── Status Badge Component (C10) ── */
+function StatusBadge({ status }: { status?: string }) {
+	switch (status) {
+		case "active":
+			return (
+				<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+					<CircleCheck className="w-3.5 h-3.5" />
+					Active
+				</span>
+			);
+		case "alumni":
+			return (
+				<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
+					<GraduationCap className="w-3.5 h-3.5" />
+					Alumni
+				</span>
+			);
+		case "inactive":
+			return (
+				<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-gray-50 text-gray-600 border border-gray-200">
+					<CircleMinus className="w-3.5 h-3.5" />
+					Inactive
+				</span>
+			);
+		default:
+			return null;
+	}
 }
 
 export function PersonDetailClient({ person }: PersonDetailClientProps) {
@@ -80,11 +112,13 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 	const hasAnySections =
 		experiences || educations || skills || associations || languages;
 
+	const displayName = person.name_en || person.name || t("member.detail.unknownMember");
+
 	/* ================================================================ */
 	/*  RENDER                                                          */
 	/* ================================================================ */
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100/50 print:bg-white overflow-x-hidden pb-20 lg:pb-0">
+		<div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100/50 print:bg-white overflow-x-hidden pb-24 lg:pb-0">
 			{/* --- Top hero area --- */}
 			<section className="relative pt-24 lg:pt-28 pb-12 md:pb-16 bg-gradient-to-br from-khmer-gold/5 via-white to-khmer-gold/3 print:pt-4 print:pb-4 print:bg-white">
 				{/* Decorative blobs */}
@@ -92,33 +126,60 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 				<div className="absolute bottom-0 left-0 w-56 h-56 bg-khmer-gold/5 rounded-full blur-3xl translate-y-1/3 pointer-events-none print:hidden" />
 
 				<div className="container max-w-6xl relative z-10">
-					{/* ── Desktop-only top bar ── */}
-					<div className="hidden lg:flex items-center justify-between mb-8 print:hidden">
+					{/* C9: Breadcrumb navigation */}
+					<nav className="mb-6 print:hidden" aria-label="Breadcrumb">
+						<ol className="flex items-center gap-1.5 text-sm text-gray-500">
+							<li>
+								<Link
+									href="/structure"
+									className="hover:text-khmer-gold transition-colors font-medium"
+								>
+									{t("member.detail.backToOrg") || "Organization"}
+								</Link>
+							</li>
+							<li>
+								<ChevronRight className="w-3.5 h-3.5" />
+							</li>
+							<li className="text-gray-900 font-medium truncate max-w-[200px]">
+								{displayName}
+							</li>
+						</ol>
+					</nav>
+
+					{/* C12: Desktop top bar with back button always visible */}
+					<div className="flex items-center justify-between mb-8 print:hidden">
 						<Button
 							variant="ghost"
 							asChild
 							className="text-gray-500 hover:text-khmer-gold gap-2 px-3"
+							aria-label="Go back to organization page"
 						>
 							<Link href="/structure">
 								<ArrowLeft className="w-4 h-4" />
-								{t("member.detail.backToOrg")}
+								<span className="hidden sm:inline">{t("member.detail.back") || "Back"}</span>
 							</Link>
 						</Button>
 
-						<Button
-							onClick={handleDownloadPDF}
-							disabled={isGenerating}
-							className="bg-gray-900 hover:bg-gray-800 text-white shadow-lg shadow-gray-900/10 gap-2 px-5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-gray-900/15 disabled:opacity-60"
-						>
-							{isGenerating ? (
-								<Loader2 className="w-4 h-4 animate-spin" />
-							) : (
-								<Download className="w-4 h-4" />
-							)}
-							{isGenerating
-								? t("member.detail.generating")
-								: t("member.detail.downloadCV")}
-						</Button>
+						{/* C10: Status badge */}
+						<div className="flex items-center gap-3">
+							<StatusBadge status={person.status} />
+
+							<Button
+								onClick={handleDownloadPDF}
+								disabled={isGenerating}
+								className="bg-gray-900 hover:bg-gray-800 text-white shadow-lg shadow-gray-900/10 gap-2 px-5 rounded-xl transition-all duration-200 hover:shadow-xl hover:shadow-gray-900/15 disabled:opacity-60"
+								aria-label="Download CV as PDF"
+							>
+								{isGenerating ? (
+									<Loader2 className="w-4 h-4 animate-spin" />
+								) : (
+									<Download className="w-4 h-4" />
+								)}
+								{isGenerating
+									? t("member.detail.generating")
+									: t("member.detail.downloadCV")}
+							</Button>
+						</div>
 					</div>
 
 					{/* ── CV Content ── */}
@@ -302,18 +363,24 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								</DetailSection>
 							)}
 
-							{/* EMPTY STATE */}
+							{/* C15: Per-section empty states */}
 							{!hasAnySections && (
-								<div className="flex flex-col items-center justify-center py-16 text-center print:py-8">
-									<div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
-										<FileText className="w-7 h-7 text-gray-400" />
-									</div>
-									<h3 className="text-lg font-semibold text-gray-600 mb-1">
-										{t("member.detail.emptyTitle")}
-									</h3>
-									<p className="text-sm text-gray-400 max-w-sm">
-										{t("member.detail.emptyDesc")}
-									</p>
+								<div className="space-y-6">
+									{!skills && (
+										<DetailSection title={t("member.detail.skills")} icon={Star}>
+											<p className="text-sm text-gray-400 italic">No skills listed yet.</p>
+										</DetailSection>
+									)}
+									{!experiences && (
+										<DetailSection title={t("member.detail.experience")} icon={Briefcase} delay={0.1}>
+											<p className="text-sm text-gray-400 italic">No experience records.</p>
+										</DetailSection>
+									)}
+									{!educations && (
+										<DetailSection title={t("member.detail.education")} icon={GraduationCap} delay={0.2}>
+											<p className="text-sm text-gray-400 italic">No education records.</p>
+										</DetailSection>
+									)}
 								</div>
 							)}
 						</div>
@@ -321,12 +388,13 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 				</div>
 			</section>
 
-			{/* ── Mobile-only fixed bottom action bar ── */}
-			<div className="fixed bottom-0 inset-x-0 z-40 lg:hidden print:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] px-4 py-3 flex items-center gap-3">
+			{/* C11: Mobile-only fixed bottom action bar with safe bottom padding */}
+			<div className="fixed bottom-0 inset-x-0 z-40 lg:hidden print:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center gap-3">
 				<Button
 					variant="outline"
 					asChild
 					className="flex-1 gap-2 border-gray-200 text-gray-600 hover:text-khmer-gold hover:border-khmer-gold/40"
+					aria-label="Go back to organization page"
 				>
 					<Link href="/structure">
 						<ArrowLeft className="w-4 h-4" />
@@ -338,6 +406,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 					onClick={handleDownloadPDF}
 					disabled={isGenerating}
 					className="flex-1 gap-2 bg-gray-900 hover:bg-gray-800 text-white rounded-xl transition-all duration-200 disabled:opacity-60"
+					aria-label="Download CV as PDF"
 				>
 					{isGenerating ? (
 						<Loader2 className="w-4 h-4 animate-spin" />

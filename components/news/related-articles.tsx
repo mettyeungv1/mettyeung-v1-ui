@@ -55,7 +55,6 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 			setError(null);
 			try {
 				const res = await getBlogRelatedPostService(currentArticleId);
-				console.log("This is the related data", res);
 				if (res.data) {
 					setRelatedPosts(res.data.data.slice(0, 3));
 				} else {

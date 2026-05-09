@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Heart, MessageCircle, MoreHorizontal, Flag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
 	createCommentService,
@@ -13,6 +12,7 @@ import {
 } from "@/service/comment/comment-service";
 import { useSession } from "next-auth/react";
 import { LoginPromptModal } from "../comments/login-prompt-modal";
+import { useTranslation } from "@/lib/i18n";
 
 interface CommentSectionProps {
 	articleId: number;
@@ -22,8 +22,6 @@ type UIComment = {
 	id: string | number;
 	author: { name_en: string; avatar: string };
 	content_en: string;
-	likes: number;
-	replies: number;
 	timestamp: string;
 	isVerified: boolean;
 };
@@ -33,6 +31,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 	const [comments, setComments] = useState<UIComment[]>([]);
 	const [showLoginModal, setShowLoginModal] = useState(false);
 	const { data: session } = useSession();
+	const { t } = useTranslation();
 
 	useEffect(() => {
 		(async () => {
@@ -45,8 +44,6 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 						avatar: c.author?.avatarUrl || "",
 					},
 					content_en: c.content,
-					likes: 0,
-					replies: 0,
 					timestamp: (c as any).createdAt as string,
 					isVerified: !!(c as any).isApproved,
 				}));
@@ -68,8 +65,6 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 			id: `tmp-${Date.now()}`,
 			author: { name_en: "You", avatar: "" },
 			content_en: newComment,
-			likes: 0,
-			replies: 0,
 			timestamp: new Date().toISOString(),
 			isVerified: false,
 		};
@@ -86,8 +81,6 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 					avatar: res.data.author?.avatarUrl || "",
 				},
 				content_en: res.data.content,
-				likes: 0,
-				replies: 0,
 				timestamp: (res.data as any).createdAt as string,
 				isVerified: !!res.data.isApproved,
 			};
@@ -105,10 +98,10 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 			(now.getTime() - past.getTime()) / (1000 * 60 * 60)
 		);
 
-		if (diffInHours < 1) return "ម្តងៗនេះ";
-		if (diffInHours < 24) return `${diffInHours} ម៉ោងមុន`;
+		if (diffInHours < 1) return t("comments.justNow") || "Just now";
+		if (diffInHours < 24) return `${diffInHours}h ago`;
 		const diffInDays = Math.floor(diffInHours / 24);
-		return `${diffInDays} ថ្ងៃមុន`;
+		return `${diffInDays}d ago`;
 	};
 
 	return (
@@ -116,14 +109,14 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 			<Card>
 				<CardHeader>
 					<CardTitle className="text-lg">
-						មតិយោបល់ ({comments.length})
+						{t("comments.title") || "Comments"} ({comments.length})
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-6">
 					{/* Comment Form */}
 					<form onSubmit={handleSubmitComment} className="space-y-4">
 						<Textarea
-							placeholder="សរសេរមតិយោបល់របស់អ្នក..."
+							placeholder={t("comments.placeholder") || "Write a comment..."}
 							value={newComment}
 							onChange={(e) => setNewComment(e.target.value)}
 							onFocus={handleFocus}
@@ -131,20 +124,25 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 						/>
 						<div className="flex justify-between items-center">
 							<p className="text-sm text-gray-500">
-								សូមរក្សាមតិយោបល់ឱ្យបានសុភាព
+								{t("comments.keepRespectful") || "Please keep comments respectful."}
 							</p>
 							<Button
 								type="submit"
 								disabled={!newComment.trim()}
 								className="bg-khmer-gold hover:bg-khmer-gold-dark text-white"
 							>
-								បញ្ជូនមតិយោបល់
+								{t("comments.submit") || "Post Comment"}
 							</Button>
 						</div>
 					</form>
 
 					{/* Comments List */}
 					<div className="space-y-6">
+						{comments.length === 0 && (
+							<p className="text-center text-sm text-gray-400 py-6">
+								{t("comments.empty") || "No comments yet. Be the first to comment!"}
+							</p>
+						)}
 						{comments.map((comment) => (
 							<div key={comment.id} className="flex space-x-3">
 								<Avatar className="w-10 h-10">
@@ -165,7 +163,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 											</h4>
 											{comment.isVerified && (
 												<Badge variant="secondary" className="text-xs">
-													✓ បានបញ្ជាក់
+													Verified
 												</Badge>
 											)}
 											<span className="text-xs text-gray-500">
@@ -176,43 +174,10 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 											{comment.content_en}
 										</p>
 									</div>
-
-									<div className="flex items-center space-x-4 mt-2">
-										<button className="flex items-center space-x-1 text-xs text-gray-500 hover:text-red-500 transition-colors">
-											<Heart className="w-4 h-4" />
-											<span>{comment.likes}</span>
-										</button>
-
-										<button className="flex items-center space-x-1 text-xs text-gray-500 hover:text-blue-500 transition-colors">
-											<MessageCircle className="w-4 h-4" />
-											<span>ឆ្លើយតប</span>
-										</button>
-
-										<button className="text-xs text-gray-500 hover:text-gray-700 transition-colors">
-											<MoreHorizontal className="w-4 h-4" />
-										</button>
-									</div>
-
-									{comment.replies > 0 && (
-										<button className="text-xs text-khmer-gold hover:text-khmer-gold-dark mt-2 font-medium">
-											មើលការឆ្លើយតប {comment.replies} ទៀត
-										</button>
-									)}
 								</div>
 							</div>
 						))}
 					</div>
-
-					{comments.length > 5 && (
-						<div className="text-center pt-4 border-t border-gray-200">
-							<Button
-								variant="outline"
-								className="text-khmer-gold border-khmer-gold hover:bg-khmer-gold hover:text-white"
-							>
-								មើលមតិយោបល់បន្ថែម
-							</Button>
-						</div>
-					)}
 				</CardContent>
 			</Card>
 			<LoginPromptModal
