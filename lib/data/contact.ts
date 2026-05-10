@@ -76,6 +76,11 @@ export const FALLBACK_CONTACT_SETTINGS: IContactSettingsAPI = {
 	statsMembersCount: 200,
 	statsYearsCount: 4,
 	statsAssociationsCount: 10,
+	copyrightText: "Mett Yeung Association",
+	aboutShort: {
+		en: "Community association supporting jobs, training, and local events in Phnom Penh.",
+		km: "សមាគមសហគមន៍គាំទ្រការងារ ការបណ្តុះបណ្តាល និងព្រឹត្តិការណ៍ក្នុងស្រុកនៅភ្នំពេញ។",
+	},
 	updatedAt: new Date().toISOString(),
 };
 

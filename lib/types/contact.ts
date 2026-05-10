@@ -28,6 +28,8 @@ export interface IContactSettingsAPI {
 	statsMembersCount: number;
 	statsYearsCount: number;
 	statsAssociationsCount: number;
+	copyrightText: string | null;
+	aboutShort: Record<string, string> | null;
 	updatedAt: string;
 }
 

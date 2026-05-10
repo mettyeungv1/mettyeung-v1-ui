@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { useTranslation } from "@/lib/i18n";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import type { ISocialLinkAPI } from "@/lib/types/contact";
+import type { ISocialLinkAPI, IContactSettingsAPI } from "@/lib/types/contact";
 import { getSocialIcon } from "@/lib/utils/social-icon-map";
 
 // Data is moved outside the component for cleaner code
@@ -40,20 +40,24 @@ const footerColumns = [
 
 interface FooterProps {
 	socialLinks: ISocialLinkAPI[];
+	contactSettings: IContactSettingsAPI;
 }
 
-export function Footer({ socialLinks }: FooterProps) {
-	const { t } = useTranslation();
+export function Footer({ socialLinks, contactSettings }: FooterProps) {
+	const { t, language } = useTranslation();
 
 	const activeLinks = [...socialLinks]
 		.filter((l) => l.isActive)
 		.sort((a, b) => a.order - b.order);
 
+	const phone = contactSettings.phone;
+	const email = contactSettings.email;
+	const address = contactSettings.address?.[language] ?? contactSettings.address?.["km"] ?? null;
+	const copyrightName = contactSettings.copyrightText || "Mett Yeung Association";
+	const aboutShort = contactSettings.aboutShort?.[language] ?? contactSettings.aboutShort?.["km"] ?? null;
+
 	return (
 		<footer className="bg-blue-900 text-white relative overflow-hidden">
-			{/* Subtle background pattern */}
-			<div className="absolute inset-0 bg-[url('/path-to-your-subtle-pattern.svg')] opacity-5"></div>
-
 			<div className="container relative py-16 lg:py-24">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
 					{/* Brand Section */}
@@ -74,7 +78,7 @@ export function Footer({ socialLinks }: FooterProps) {
 								/>
 							</Link>
 							<p className="text-blue-200 text-sm leading-relaxed pr-4">
-								{t("footer.description")}
+								{aboutShort || t("footer.description")}
 							</p>
 						</motion.div>
 					</div>
@@ -120,28 +124,32 @@ export function Footer({ socialLinks }: FooterProps) {
 							{t("footer.contactInfo.title")}
 						</h3>
 						<div className="space-y-3">
-							<a
-								href="tel:+85512345678"
-								className="flex items-center space-x-3 text-blue-200 hover:text-white group"
-							>
-								<Phone className="w-5 h-5" />
-								<span className="text-sm">{t("footer.contactInfo.phone")}</span>
-							</a>
-							<a
-								href="mailto:mettyeung@gmail.com"
-								className="flex items-center space-x-3 text-blue-200 hover:text-white group"
-							>
-								<Mail className="w-5 h-5" />
-								<span className="text-sm">{t("footer.contactInfo.email")}</span>
-							</a>
-							<div className="flex w-full flex-col space-y-1 text-blue-200">
-								<div className="flex items-center space-x-3">
-									<MapPin className="w-5 h-5 shrink-0" />
-									<span className="text-sm">
-										{t("footer.contactInfo.address")}
-									</span>
+							{phone && (
+								<a
+									href={`tel:${phone.replace(/\s/g, "")}`}
+									className="flex items-center space-x-3 text-blue-200 hover:text-white group"
+								>
+									<Phone className="w-5 h-5" />
+									<span className="text-sm">{phone}</span>
+								</a>
+							)}
+							{email && (
+								<a
+									href={`mailto:${email}`}
+									className="flex items-center space-x-3 text-blue-200 hover:text-white group"
+								>
+									<Mail className="w-5 h-5" />
+									<span className="text-sm">{email}</span>
+								</a>
+							)}
+							{address && (
+								<div className="flex w-full flex-col space-y-1 text-blue-200">
+									<div className="flex items-center space-x-3">
+										<MapPin className="w-5 h-5 shrink-0" />
+										<span className="text-sm">{address}</span>
+									</div>
 								</div>
-							</div>
+							)}
 						</div>
 					</motion.div>
 					<motion.div
@@ -209,7 +217,7 @@ export function Footer({ socialLinks }: FooterProps) {
 					className="text-center text-blue-300 text-sm"
 				>
 					<p className="text-white">
-						© {new Date().getFullYear()} Mettyerng. {t("footer.copyright")}
+						&copy; {new Date().getFullYear()} {copyrightName}. {t("footer.copyright")}
 					</p>
 				</motion.div>
 			</div>
