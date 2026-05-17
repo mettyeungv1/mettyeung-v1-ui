@@ -41,6 +41,7 @@ export async function listCategoriesService(): Promise<
 	APIResponse<RawCategory[]>
 > {
 	return fetchAPI<RawCategory[]>(CATEGORY_ENDPOINT, {
+		skipAuth: true,
 		next: { revalidate: 3600, tags: ["categories"] },
 	});
 }

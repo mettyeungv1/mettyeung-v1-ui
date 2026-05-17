@@ -44,20 +44,41 @@ export const metadata: Metadata = {
 	},
 };
 
-import { listCategoriesService } from "@/service/category/category-service";
+import {
+	listCategoriesService,
+	type RawCategory,
+} from "@/service/category/category-service";
 import { getContactSettingsService, getSocialLinksService } from "@/service/contact/contact-service";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { FALLBACK_CONTACT_SETTINGS } from "@/lib/data/contact";
+import type { IContactSettingsAPI, ISocialLinkAPI } from "@/lib/types/contact";
 
 export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const [{ data: categories }, socialLinks, contactSettings] = await Promise.all([
-		listCategoriesService(),
-		getSocialLinksService(),
-		getContactSettingsService(),
-	]);
+	let categories: RawCategory[] = [];
+	let socialLinks: ISocialLinkAPI[] = [];
+	let contactSettings: IContactSettingsAPI = FALLBACK_CONTACT_SETTINGS;
+
+	try {
+		const [categoriesRes, fetchedSocialLinks, fetchedContactSettings] =
+			await Promise.all([
+				listCategoriesService(),
+				getSocialLinksService(),
+				getContactSettingsService(),
+			]);
+
+		categories =
+			categoriesRes.status_code === 200 && Array.isArray(categoriesRes.data)
+				? categoriesRes.data
+				: [];
+		socialLinks = fetchedSocialLinks;
+		contactSettings = fetchedContactSettings;
+	} catch (error) {
+		console.error("[RootLayout] Failed to load shared SSR data", error);
+	}
 
 	return (
 		<html

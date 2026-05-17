@@ -14,5 +14,7 @@ type ProfileResponseData = {
 export const getUserProfileService = async (): Promise<
 	APIResponse<ProfileResponseData>
 > => {
-	return fetchAPI<ProfileResponseData>(`${AUTH_ENDPOINT}/profile`);
+	return fetchAPI<ProfileResponseData>(`${AUTH_ENDPOINT}/profile`, {
+		requireAuth: true,
+	});
 };

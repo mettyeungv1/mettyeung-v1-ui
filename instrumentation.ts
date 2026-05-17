@@ -1,6 +1,8 @@
 export async function register() {
   // Only run on the server side (Node.js runtime)
   if (process.env.NEXT_RUNTIME === "nodejs") {
+    installFatalErrorExitHandlers();
+
     const { setGlobalDispatcher, Agent } = await import("undici");
     setGlobalDispatcher(
       new Agent({
@@ -18,4 +20,24 @@ export async function register() {
     
     console.log('[Instrumentation] ✅ Undici Agent Tuned for Docker');
   }
+}
+
+function installFatalErrorExitHandlers() {
+  const globalKey = "__myaFatalHandlersInstalled";
+  const globalState = globalThis as typeof globalThis & Record<string, boolean>;
+
+  if (globalState[globalKey]) return;
+  globalState[globalKey] = true;
+
+  const exitAfterLog = (type: string, error: unknown) => {
+    console.error(`[Fatal] ${type}`, error);
+    setImmediate(() => process.exit(1));
+  };
+
+  process.on("uncaughtException", (error) => {
+    exitAfterLog("uncaughtException", error);
+  });
+  process.on("unhandledRejection", (reason) => {
+    exitAfterLog("unhandledRejection", reason);
+  });
 }
