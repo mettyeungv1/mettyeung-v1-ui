@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useCallback } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Loader2 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -9,7 +9,6 @@ import type { Member, Department } from "@/lib/types/structure";
 
 // Components
 import { StructureHero } from "@/components/structure/structure-hero";
-import { StructureFilterBar } from "@/components/structure/structure-filterbar";
 import { DepartmentSection } from "@/components/structure/department-section";
 import { MEDIA_ENDPOINT } from "@/lib/static";
 import { getAssociationService, listMembersService, normalizeMemberData } from "@/service/structure/structure-service";
@@ -18,7 +17,6 @@ import { normalizeUrl } from "@/lib/utils/image";
 // Icons for departments
 import { Users, Award, BookOpen, Heart, Briefcase, Star, Building2, Flame, Feather } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
-import { Button } from "@/components/ui/button";
 
 interface StructurePageClientProps {
 	initialMembers: any[];
@@ -43,9 +41,6 @@ export function StructurePageClient({
 		{ icon: Feather, color: "from-teal-500 to-teal-600", bgColor: "bg-teal-50" },
 	];
 
-	// State for UI filters and interactions
-	const [searchTerm, setSearchTerm] = useState("");
-	const [selectedDepartment, setSelectedDepartment] = useState("all");
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
 	// Live API data states
@@ -112,46 +107,7 @@ export function StructurePageClient({
 			}) as any;
 	}, [members, associations, t]);
 
-	// Filtered data
-	const filteredStructure = useMemo(() => {
-		let finalDepartments = [...allOrganizationData];
-
-		if (selectedDepartment !== "all") {
-			finalDepartments = finalDepartments.filter(
-				(d) => d.id === selectedDepartment
-			);
-		}
-
-		if (searchTerm) {
-			const lowercasedQuery = searchTerm.toLowerCase();
-			finalDepartments = finalDepartments
-				.map((dept) => ({
-					...dept,
-					members: dept.members.filter(
-						(member: any) =>
-							(member.name_en || "").toLowerCase().includes(lowercasedQuery) ||
-							(member.position_en || "").toLowerCase().includes(lowercasedQuery)
-					),
-				}))
-				.filter((dept) => dept.members.length > 0);
-		}
-
-		return finalDepartments;
-	}, [allOrganizationData, searchTerm, selectedDepartment]);
-
 	const totalMembers = useMemo(() => members.length, [members]);
-	const filteredMemberCount = useMemo(
-		() => filteredStructure.reduce((sum, dept) => sum + dept.members.length, 0),
-		[filteredStructure]
-	);
-
-	const handleSearchChange = useCallback((value: string) => {
-		setSearchTerm(value);
-	}, []);
-
-	const handleDepartmentChange = useCallback((value: string) => {
-		setSelectedDepartment(value);
-	}, []);
 
 	return (
 		<div className="min-h-screen bg-gray-50">
@@ -160,18 +116,7 @@ export function StructurePageClient({
 				totalMembers={totalMembers}
 			/>
 
-			{/* Filter Bar - C1: Uncommented and redesigned */}
-			<StructureFilterBar
-				searchTerm={searchTerm}
-				onSearchChange={handleSearchChange}
-				selectedDepartment={selectedDepartment}
-				onDepartmentChange={handleDepartmentChange}
-				departments={allOrganizationData}
-				totalMembers={totalMembers}
-				filteredMemberCount={filteredMemberCount}
-			/>
-
-			{/* C2: Loading indicator */}
+			{/* Loading indicator */}
 			{isLoading && (
 				<div className="flex items-center justify-center gap-2 py-4 text-sm text-gray-500">
 					<Loader2 className="w-4 h-4 animate-spin" />
@@ -188,7 +133,7 @@ export function StructurePageClient({
 					</AnimatedSection>
 					<div className="space-y-16">
 						<AnimatePresence mode="popLayout">
-							{filteredStructure.map((section, index) => (
+							{allOrganizationData.map((section, index) => (
 								<motion.div
 									key={section.id}
 									initial={{ opacity: 0, y: 50 }}
@@ -206,8 +151,7 @@ export function StructurePageClient({
 						</AnimatePresence>
 					</div>
 
-					{/* Empty state with clear filters CTA */}
-					{filteredStructure.length === 0 && !isLoading && (
+					{allOrganizationData.length === 0 && !isLoading && (
 						<motion.div
 							className="text-center py-16"
 							initial={{ opacity: 0 }}
@@ -219,21 +163,6 @@ export function StructurePageClient({
 							<h3 className="text-lg font-semibold text-gray-900 mb-2">
 								No members found
 							</h3>
-							<p className="text-gray-600 mb-6">
-								Try adjusting your search or filter criteria.
-							</p>
-							{(searchTerm || selectedDepartment !== "all") && (
-								<Button
-									variant="outline"
-									onClick={() => {
-										setSearchTerm("");
-										setSelectedDepartment("all");
-									}}
-									className="rounded-lg"
-								>
-									Clear all filters
-								</Button>
-							)}
 						</motion.div>
 					)}
 				</div>

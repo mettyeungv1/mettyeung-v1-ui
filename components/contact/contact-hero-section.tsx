@@ -2,7 +2,13 @@
 
 import { useTranslation } from "@/lib/i18n";
 import { motion } from "framer-motion";
-import { Mail, MapPin, MessageCircle, Users, CalendarDays, Building2 } from "lucide-react";
+import {
+	ChevronRight,
+	Mail,
+	MapPin,
+	Phone,
+	Sparkles,
+} from "lucide-react";
 import type { IContactSettingsAPI } from "@/lib/types/contact";
 
 interface ContactHeroSectionProps {
@@ -10,120 +16,144 @@ interface ContactHeroSectionProps {
 }
 
 export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
-	const { t } = useTranslation();
+	const { t, language } = useTranslation();
 
-	const stats = [
-		{ icon: Users,        labelKey: "contact.statsMembers", value: `${settings.statsMembersCount}+` },
-		{ icon: CalendarDays, labelKey: "contact.statsYears",   value: `${settings.statsYearsCount}+`   },
-		{ icon: Building2,    labelKey: "contact.statsAssoc",   value: `${settings.statsAssociationsCount}+`  },
-	];
+	const addressText =
+		settings.address?.[language] ??
+		settings.address?.km ??
+		settings.address?.en ??
+		"Phnom Penh, Cambodia";
 
 	const mapsHref =
 		settings.mapLat && settings.mapLng
 			? `https://maps.google.com/maps?ll=${settings.mapLat},${settings.mapLng}&z=17`
 			: "https://maps.google.com/maps?ll=11.595197,104.901852&z=17";
 
+	const contactRows = [
+		{
+			icon: Phone,
+			label: "Phone",
+			value: settings.phone ?? "015 220 320",
+			href: `tel:${(settings.phone ?? "015 220 320").replace(/\s/g, "")}`,
+		},
+		{
+			icon: Mail,
+			label: "Email",
+			value: settings.email ?? "mettyeung@gmail.com",
+			href: `mailto:${settings.email ?? "mettyeung@gmail.com"}`,
+		},
+		{
+			icon: MapPin,
+			label: "Address",
+			value: addressText,
+			href: mapsHref,
+			external: true,
+		},
+	];
+
 	return (
-		<section className="relative pt-32 pb-32 md:pt-44 md:pb-40 overflow-hidden bg-primary-900">
-			{/* Subtle radial glow — on-brand only */}
+		<section className="relative overflow-hidden bg-primary-900 pt-28 pb-32 md:pt-36 md:pb-40">
 			<div className="absolute inset-0 pointer-events-none">
-				<div className="absolute top-[-15%] right-[-8%] w-[520px] h-[520px] rounded-full bg-primary-600/25 blur-[100px]" />
-				<div className="absolute bottom-[-15%] left-[-8%] w-[440px] h-[440px] rounded-full bg-primary-800/30 blur-[90px]" />
+				<div className="absolute top-[-18%] right-[-8%] h-[560px] w-[560px] rounded-full bg-khmer-gold/20 blur-[110px]" />
+				<div className="absolute bottom-[-20%] left-[-10%] h-[520px] w-[520px] rounded-full bg-primary-600/30 blur-[100px]" />
 			</div>
 
-			{/* Dot grid */}
 			<div
-				className="absolute inset-0 opacity-[0.05] pointer-events-none"
+				className="absolute inset-0 opacity-[0.06] pointer-events-none"
 				style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "32px 32px" }}
 			/>
+			<div
+				className="absolute inset-0 opacity-[0.03] pointer-events-none"
+				style={{
+					backgroundImage:
+						"linear-gradient(135deg, #fff 1px, transparent 1px), linear-gradient(45deg, #fff 1px, transparent 1px)",
+					backgroundSize: "52px 52px",
+				}}
+			/>
 
-			{/* Khmer-gold top accent bar */}
-			<div className="absolute top-0 left-0 right-0 h-1 bg-khmer-gold" />
+			<div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-khmer-gold to-transparent" />
 
-			<div className="container relative z-10 max-w-5xl mx-auto px-4 text-center">
-
-				{/* Badge */}
-				<motion.div
-					initial={{ opacity: 0, y: -16 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.5 }}
-					className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm font-medium mb-8"
-				>
-					<MessageCircle className="w-4 h-4 text-khmer-gold" />
-					{t("contact.heroTagline")}
-				</motion.div>
-
-				{/* Title */}
-				<motion.h1
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.1 }}
-					className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight tracking-tight mb-6"
-				>
-					{t("contact.title")}
-				</motion.h1>
-
-				{/* Subtitle */}
-				<motion.p
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.2 }}
-					className="text-lg md:text-xl text-primary-100 max-w-2xl mx-auto leading-relaxed mb-10"
-				>
-					{t("contact.subtitle")}
-				</motion.p>
-
-				{/* CTAs */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.6, delay: 0.3 }}
-					className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
-				>
-					<a
-						href="#contact-form"
-						className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-khmer-gold hover:bg-khmer-gold-600 text-gray-900 font-bold text-base transition-all duration-200 shadow-lg hover:-translate-y-0.5"
+			<div className="container relative z-10">
+				<div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(360px,0.9fr)]">
+					<motion.div
+						initial={{ opacity: 0, y: 24 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+						className="text-center lg:text-left"
 					>
-						<Mail className="w-5 h-5" />
-						{t("contact.formTitle")}
-					</a>
-					<a
-						href={mapsHref}
-						target="_blank"
-						rel="noopener noreferrer"
-						className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-base transition-all duration-200 hover:-translate-y-0.5"
-					>
-						<MapPin className="w-5 h-5" />
-						{t("contact.getDirections")}
-					</a>
-				</motion.div>
-
-				{/* Stats */}
-				<motion.div
-					initial={{ opacity: 0, y: 24 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.7, delay: 0.4 }}
-					className="grid grid-cols-3 gap-4 max-w-lg mx-auto"
-				>
-					{stats.map(({ icon: Icon, labelKey, value }) => (
-						<div
-							key={labelKey}
-							className="flex flex-col items-center gap-1 p-4 rounded-2xl bg-white/10 border border-white/15"
-						>
-							<Icon className="w-5 h-5 text-khmer-gold mb-1" />
-							<span className="text-2xl font-bold text-white">{value}</span>
-							<span className="text-xs text-primary-200 text-center leading-tight">
-								{t(labelKey as any)}
-							</span>
+						<div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur">
+							<Sparkles className="h-4 w-4 text-khmer-gold" />
+							{t("contact.heroTagline")}
 						</div>
-					))}
-				</motion.div>
+
+						<h1 className="mx-auto max-w-4xl text-balance text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl lg:mx-0 lg:text-7xl">
+							<span className="block">{t("contact.title")}</span>
+							<span className="block text-khmer-gold">Let&apos;s connect</span>
+						</h1>
+
+						<p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-100 sm:text-lg md:text-xl lg:mx-0">
+							{t("contact.subtitle")}
+						</p>
+					</motion.div>
+
+					<motion.div
+						initial={{ opacity: 0, y: 28, scale: 0.98 }}
+						animate={{ opacity: 1, y: 0, scale: 1 }}
+						transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+						className="relative mx-auto w-full max-w-md lg:mx-0"
+					>
+						<div className="absolute -inset-5 rounded-[2rem] bg-khmer-gold/25 blur-3xl" />
+						<div className="relative rounded-3xl border border-white/20 bg-white/10 p-2 shadow-2xl shadow-black/20 backdrop-blur-xl">
+							<div className="overflow-hidden rounded-[1.35rem] bg-white text-gray-900">
+								<div className="bg-primary-900 px-6 py-5">
+									<div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-khmer-gold text-primary-900">
+										<Mail className="h-5 w-5" />
+									</div>
+									<p className="text-xs font-bold uppercase text-khmer-gold">Reach Us</p>
+									<h2 className="mt-1 text-2xl font-bold text-white">Contact Information</h2>
+								</div>
+
+								<div className="space-y-3 p-4">
+									{contactRows.map(({ icon: Icon, label, value, href, external }) => (
+										<a
+											key={label}
+											href={href}
+											target={external ? "_blank" : undefined}
+											rel={external ? "noopener noreferrer" : undefined}
+											className="group/row flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50/80 p-4 text-left transition-all duration-300 hover:border-khmer-gold/40 hover:bg-khmer-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900"
+										>
+											<span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-900/10 text-primary-900">
+												<Icon className="h-5 w-5" />
+											</span>
+											<span className="min-w-0 flex-1">
+												<span className="block text-xs font-bold uppercase text-gray-500">{label}</span>
+												<span className="line-clamp-2 break-words text-sm font-semibold text-gray-950">
+													{value}
+												</span>
+											</span>
+											<ChevronRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform group-hover/row:translate-x-0.5 group-hover/row:text-khmer-gold" />
+										</a>
+									))}
+								</div>
+
+								<div className="border-t border-gray-100 bg-gray-50 px-6 py-4 text-sm font-medium text-gray-600">
+									Choose the best contact method above to reach our team.
+								</div>
+							</div>
+						</div>
+					</motion.div>
+				</div>
 			</div>
 
-			{/* Wave — matches bg-gray-50 of next section */}
 			<div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-				<svg viewBox="0 0 1200 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[60px] md:h-[80px]">
-					<path d="M0,40 C200,80 400,0 600,40 C800,80 1000,0 1200,40 L1200,80 L0,80 Z" fill="#f9fafb" />
+				<svg
+					viewBox="0 0 1200 90"
+					xmlns="http://www.w3.org/2000/svg"
+					preserveAspectRatio="none"
+					className="block h-[64px] w-full md:h-[90px]"
+					aria-hidden="true"
+				>
+					<polygon points="0,42 1200,0 1200,90 0,90" fill="#f9fafb" />
 				</svg>
 			</div>
 		</section>
