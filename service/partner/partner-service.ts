@@ -3,12 +3,40 @@ import { MEDIA_ENDPOINT, PARTNER_ENDPOINT } from "@/lib/static";
 import type { Partner } from "@/lib/types/partner";
 import { normalizeUrl } from "@/lib/utils/image";
 
+type LocalizedValue = Record<string, string> | string | null | undefined;
+
 type PartnerParams = {
 	page?: number;
 	limit?: number;
 	sort?: string;
 	isActive?: boolean;
 };
+
+function getLocalizedText(value: LocalizedValue, fallback = "") {
+	if (!value) return fallback;
+	if (typeof value === "string") return value;
+	return value.en || value.km || Object.values(value).find(Boolean) || fallback;
+}
+
+function normalizePartner(p: Partner) {
+	const nameTranslations =
+		p.name && typeof p.name === "object" ? p.name : p.nameTranslations || null;
+	const descriptionTranslations =
+		p.description && typeof p.description === "object"
+			? p.description
+			: p.descriptionTranslations || null;
+
+	return {
+		...p,
+		name: getLocalizedText(p.name, "Partner"),
+		nameTranslations,
+		description: getLocalizedText(p.description),
+		descriptionTranslations,
+		media: p.media
+			? { ...p.media, url: normalizeUrl(`${MEDIA_ENDPOINT}/view/${p.media.url}`) }
+			: null,
+	};
+}
 
 export const getPartnersService = async (
 	params: PartnerParams = {}
@@ -27,14 +55,6 @@ export const getPartnersService = async (
 		cache: "no-store",
 	});
 	
-	// Helper to normalize a single partner
-	const normalizePartner = (p: Partner) => ({
-		...p,
-		media: p.media
-			? { ...p.media, url: normalizeUrl(`${MEDIA_ENDPOINT}/view/${p.media.url}`) }
-			: null,
-	});
-
 	// Handle paginated response
 	if (res?.data?.data && Array.isArray(res.data.data)) {
 		res.data.data = res.data.data.map(normalizePartner);
@@ -68,7 +88,12 @@ export const getMousService = async (
 	
 	// Handle paginated response
 	if (res?.data?.data && Array.isArray(res.data.data)) {
+		res.data.data = res.data.data.map(normalizePartner);
 		return res;
+	}
+
+	if (Array.isArray(res?.data)) {
+		res.data = res.data.map(normalizePartner);
 	}
 
 	return res;

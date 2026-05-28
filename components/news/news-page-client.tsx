@@ -378,75 +378,66 @@ export function NewsPageClient({
 										transition={{ duration: 0.35, ease: "easeOut" }}
 										className="mb-8"
 									>
-										<div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white shadow-lg shadow-blue-600/15">
-											{/* Decorative blurs */}
-											<div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-											<div className="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-400/15 rounded-full blur-3xl pointer-events-none" />
-
+										<div className="relative overflow-hidden rounded-2xl bg-white border border-gray-200 shadow-sm">
 											<div className="relative z-10 p-6 md:p-8 lg:p-10">
 												{/* Header row */}
-												<div className="flex items-start gap-4 mb-5">
-													<div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-xl bg-white/15 backdrop-blur-sm border border-white/10">
-														<BookOpen className="w-5 h-5 text-white" />
+												<div className="flex items-start gap-4 mb-6">
+													<div className="shrink-0 flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600 border border-blue-100">
+														<BookOpen className="w-6 h-6" />
 													</div>
 													<div>
-														<h3 className="text-xl md:text-2xl font-bold tracking-tight leading-tight">
+														<h3 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight leading-tight">
 															{activeCategoryForBanner.name_en}
 														</h3>
-														<p className="text-sm text-blue-200/80 mt-0.5">
+														<p className="text-sm text-gray-500 mt-1">
 															Category Overview
 														</p>
 													</div>
 												</div>
 
-												{/* Divider */}
-												<div className="h-px w-full bg-gradient-to-r from-white/25 via-white/10 to-transparent mb-5" />
-
 												{/* Dynamic Stats Row (Extracted from Description) */}
 												{categoryContent.stats.length > 0 && (
-													<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 relative z-20">
-														{categoryContent.stats.map((stat, i) => (
-															<motion.div 
-																key={i} 
-																initial={{ opacity: 0, y: 10 }}
-																animate={{ opacity: 1, y: 0 }}
-																transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
-																className="relative group overflow-hidden rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]"
-															>
-																<div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-																<div className="relative z-10 flex flex-col items-center justify-center text-center h-full">
-																	<span className="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow-md">
-																		{stat.value}
-																	</span>
-																	<span className="text-xs md:text-sm font-medium text-blue-100/90 uppercase tracking-wider mt-1.5 leading-tight">
-																		{stat.label}
-																	</span>
-																</div>
-															</motion.div>
-														))}
-													</div>
+												  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+												    {categoryContent.stats.map((stat, i) => (
+												      <div
+												        key={i}
+												        className="bg-gray-50 rounded-2xl p-4 border border-gray-200 flex flex-col items-center justify-center text-center
+												          relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200
+												          before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[3px] before:bg-gradient-to-r before:from-blue-500 before:to-blue-400 before:rounded-t-2xl"
+												      >
+												        <span className="text-2xl md:text-3xl font-bold text-gray-900 mb-1 tracking-tight">
+												          {stat.value}
+												        </span>
+												        <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+												          {stat.label}
+												        </span>
+												      </div>
+												    ))}
+												  </div>
 												)}
 
-												{/* Rich-text HTML content (with the stats list removed) */}
+												<hr className="border-gray-100 mb-6" />
+
 												<div
-													className="max-w-none text-blue-50/90 text-sm md:text-base leading-relaxed relative z-20
-													[&_h1]:text-xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-6 [&_h1]:mb-3
-													[&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-5 [&_h2]:mb-2
-													[&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-4 [&_h3]:mb-2
-													[&_p]:mb-3 [&_p]:leading-relaxed
-													[&_strong]:text-white [&_strong]:font-semibold
-													[&_em]:italic
-													[&_a]:text-blue-200 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-white
-													[&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-3 [&_ul]:marker:text-blue-300/60
-													[&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-3 [&_ol]:marker:text-blue-300/60
-													[&_li]:mb-1.5 [&_li]:leading-relaxed
-													[&_blockquote]:border-l-4 [&_blockquote]:border-blue-300/40 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-blue-100/80 [&_blockquote]:my-4
-													[&_img]:rounded-lg [&_img]:my-4 [&_img]:max-w-full
-													[&_pre]:bg-black/20 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:my-4
-													[&_code]:bg-black/20 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
-													[&_table]:w-full [&_table]:my-4 [&_th]:text-left [&_th]:text-white [&_th]:pb-2 [&_th]:border-b [&_th]:border-white/20 [&_td]:py-2 [&_td]:border-b [&_td]:border-white/10
-													[&_hr]:border-white/20 [&_hr]:my-6"
-													dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(categoryContent.html) }}
+												  className="max-w-none text-gray-600 text-sm md:text-base leading-relaxed
+												  [&_h1]:font-serif [&_h1]:text-xl [&_h1]:font-bold [&_h1]:text-gray-900 [&_h1]:mt-6 [&_h1]:mb-3
+												  [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-gray-900 [&_h2]:mt-5 [&_h2]:mb-2 [&_h2]:pl-3 [&_h2]:border-l-[3px] [&_h2]:border-blue-500
+												  [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-gray-800 [&_h3]:mt-4 [&_h3]:mb-2
+												  [&_p]:mb-3 [&_p]:leading-relaxed
+												  [&_strong]:text-gray-900 [&_strong]:font-semibold
+												  [&_em]:italic [&_em]:text-gray-500
+												  [&_a]:text-blue-600 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-blue-800
+												  [&_ul]:list-none [&_ul]:pl-4 [&_ul]:my-3
+												  [&_ul_li]:relative [&_ul_li]:pl-4 [&_ul_li]:mb-2 [&_ul_li]:before:content-[''] [&_ul_li]:before:absolute [&_ul_li]:before:left-0 [&_ul_li]:before:top-[0.6em] [&_ul_li]:before:w-1.5 [&_ul_li]:before:h-1.5 [&_ul_li]:before:rounded-full [&_ul_li]:before:bg-blue-400
+												  [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-3 [&_ol]:marker:text-blue-400
+												  [&_li]:mb-1.5 [&_li]:leading-relaxed
+												  [&_blockquote]:border-l-4 [&_blockquote]:border-blue-200 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-500 [&_blockquote]:bg-blue-50/50 [&_blockquote]:py-2 [&_blockquote]:pr-4 [&_blockquote]:rounded-r-lg [&_blockquote]:my-4
+												  [&_img]:rounded-xl [&_img]:my-4 [&_img]:max-w-full [&_img]:shadow-sm
+												  [&_pre]:bg-gray-50 [&_pre]:border [&_pre]:border-gray-200 [&_pre]:rounded-xl [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:my-4
+												  [&_code]:bg-gray-100 [&_code]:text-gray-700 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded-md [&_code]:text-sm
+												  [&_table]:w-full [&_table]:my-4 [&_th]:text-left [&_th]:text-gray-900 [&_th]:font-semibold [&_th]:pb-2 [&_th]:px-3 [&_th]:border-b-2 [&_th]:border-gray-200 [&_th]:bg-gray-50 [&_td]:py-2 [&_td]:px-3 [&_td]:border-b [&_td]:border-gray-100
+												  [&_hr]:border-gray-100 [&_hr]:my-6"
+												  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(categoryContent.html) }}
 												/>
 											</div>
 										</div>
