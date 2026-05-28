@@ -22,6 +22,8 @@ const mapColors = (type: string | undefined | null) => {
 const MarqueeCard = ({ partner, cardKey }: { partner: Partner; cardKey: string }) => {
     const { t } = useTranslation();
     const colors = mapColors(partner.mouType);
+    const partnerName = t(partner.name) || "MOU Partner";
+    const partnerDescription = t(partner.description) || "Memorandum of Understanding";
     return (
         <div
             key={cardKey}
@@ -36,12 +38,12 @@ const MarqueeCard = ({ partner, cardKey }: { partner: Partner; cardKey: string }
                     </div>
                 </div>
                 <h3 className={`text-[17px] sm:text-[19px] font-bold tracking-tight text-gray-900 leading-snug ${colors.hoverText} transition-colors duration-300`}>
-                    {partner.name}
+                    {partnerName}
                 </h3>
             </div>
             <div className={`w-12 h-1 bg-gray-200 ${colors.hoverBg} rounded-full mb-7 transition-colors duration-500`} />
             <div className="text-[14px] sm:text-[15px] text-gray-600 leading-relaxed font-medium mt-auto w-full">
-                {partner.description || "Memorandum of Understanding"}
+                {partnerDescription}
             </div>
         </div>
     );
@@ -74,6 +76,8 @@ function MobileCarousel({ partners }: { partners: Partner[] }) {
 
     const partner = partners[current];
     const colors = mapColors(partner.mouType);
+    const partnerName = t(partner.name) || "MOU Partner";
+    const partnerDescription = t(partner.description) || "Memorandum of Understanding";
 
     return (
         <div className="px-4 w-full">
@@ -89,14 +93,14 @@ function MobileCarousel({ partners }: { partners: Partner[] }) {
                         </div>
                     </div>
                     <h3 className="text-lg font-bold tracking-tight text-gray-900 leading-snug">
-                        {partner.name}
+                        {partnerName}
                     </h3>
                 </div>
 
                 <div className="w-10 h-1 bg-gray-200 rounded-full mb-5" />
 
                 <div className="text-sm text-gray-600 leading-relaxed font-medium w-full">
-                    {partner.description || "Memorandum of Understanding"}
+                    {partnerDescription}
                 </div>
 
                 {/* Dot indicators */}

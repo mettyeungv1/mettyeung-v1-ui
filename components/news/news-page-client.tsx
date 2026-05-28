@@ -278,6 +278,46 @@ export function NewsPageClient({
 		return cat;
 	}, [selectedCategory, categories]);
 
+	// Parse the category description to extract stats from the first <ul>
+	const categoryContent = useMemo(() => {
+		const html = activeCategoryForBanner?.description_en || "";
+		if (!html) return { html: "", stats: [] };
+		
+		const ulMatch = html.match(/<ul[^>]*>([\s\S]*?)<\/ul>/i);
+		const stats: Array<{ label: string; value: string }> = [];
+		let modifiedHtml = html;
+		
+		if (ulMatch) {
+			const liMatches = ulMatch[1].match(/<li[^>]*>([\s\S]*?)<\/li>/gi);
+			if (liMatches) {
+				liMatches.forEach(li => {
+					// Strip HTML tags and decode basic entities manually
+					const text = li.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
+					if (!text) return;
+
+					if (text.includes(':')) {
+						const [label, ...valParts] = text.split(':');
+						stats.push({ label: label.trim(), value: valParts.join(':').trim() });
+					} else {
+						// Try to extract the first number as the value
+						const numMatch = text.match(/(\d+[\d,.]*[kKmMbB]?)/);
+						if (numMatch) {
+							const val = numMatch[1];
+							const label = text.replace(val, '').trim();
+							stats.push({ label, value: val });
+						} else {
+							stats.push({ label: text, value: '' });
+						}
+					}
+				});
+				// Remove the matched ul from HTML
+				modifiedHtml = html.replace(ulMatch[0], '');
+			}
+		}
+		
+		return { html: modifiedHtml, stats };
+	}, [activeCategoryForBanner]);
+
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<PageHero title={t("nav.news")} subtitle={t("events.heroDescription")} />
@@ -362,9 +402,34 @@ export function NewsPageClient({
 												{/* Divider */}
 												<div className="h-px w-full bg-gradient-to-r from-white/25 via-white/10 to-transparent mb-5" />
 
-												{/* Rich-text HTML content — styled without @tailwindcss/typography */}
+												{/* Dynamic Stats Row (Extracted from Description) */}
+												{categoryContent.stats.length > 0 && (
+													<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 relative z-20">
+														{categoryContent.stats.map((stat, i) => (
+															<motion.div 
+																key={i} 
+																initial={{ opacity: 0, y: 10 }}
+																animate={{ opacity: 1, y: 0 }}
+																transition={{ delay: 0.1 + i * 0.1, duration: 0.4 }}
+																className="relative group overflow-hidden rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-4 transition-all duration-300 hover:bg-white/20 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)]"
+															>
+																<div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+																<div className="relative z-10 flex flex-col items-center justify-center text-center h-full">
+																	<span className="text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow-md">
+																		{stat.value}
+																	</span>
+																	<span className="text-xs md:text-sm font-medium text-blue-100/90 uppercase tracking-wider mt-1.5 leading-tight">
+																		{stat.label}
+																	</span>
+																</div>
+															</motion.div>
+														))}
+													</div>
+												)}
+
+												{/* Rich-text HTML content (with the stats list removed) */}
 												<div
-													className="max-w-none text-blue-50/90 text-sm md:text-base leading-relaxed
+													className="max-w-none text-blue-50/90 text-sm md:text-base leading-relaxed relative z-20
 													[&_h1]:text-xl [&_h1]:font-bold [&_h1]:text-white [&_h1]:mt-6 [&_h1]:mb-3
 													[&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-white [&_h2]:mt-5 [&_h2]:mb-2
 													[&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-white [&_h3]:mt-4 [&_h3]:mb-2
@@ -381,7 +446,7 @@ export function NewsPageClient({
 													[&_code]:bg-black/20 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm
 													[&_table]:w-full [&_table]:my-4 [&_th]:text-left [&_th]:text-white [&_th]:pb-2 [&_th]:border-b [&_th]:border-white/20 [&_td]:py-2 [&_td]:border-b [&_td]:border-white/10
 													[&_hr]:border-white/20 [&_hr]:my-6"
-													dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(activeCategoryForBanner.description_en!) }}
+													dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(categoryContent.html) }}
 												/>
 											</div>
 										</div>

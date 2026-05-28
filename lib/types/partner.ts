@@ -1,3 +1,5 @@
+import type { LocalizedField } from "./languages";
+
 export interface PartnerMedia {
 	id: string;
 	url: string;
@@ -6,9 +8,9 @@ export interface PartnerMedia {
 
 export interface Partner {
 	id: string;
-	name: string | null;
+	name: LocalizedField | string | null;
 	websiteUrl: string | null;
-	description: string | null;
+	description: LocalizedField | string | null;
 	order: number;
 	isActive: boolean;
 	createdAt: string | Date;

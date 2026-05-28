@@ -130,6 +130,8 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 auto-rows-fr">
 					{partners.map((partner, index) => {
+						const partnerName = t(partner.name) || partner.media?.altText || "Partner";
+						const partnerDescription = t(partner.description);
 						const cardContent = (
 							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl ${partner.websiteUrl ? "hover:shadow-2xl cursor-pointer hover:-translate-y-2" : "hover:shadow-2xl hover:-translate-y-1"}`}>
 								<CardContent className="p-0 h-full flex items-center justify-center">
@@ -137,7 +139,7 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 opacity-100">
 										<Image
 											src={partner.media?.url || "/my-cut.png"}
-											alt={partner.name || partner.media?.altText || "Partner logo"}
+											alt={partnerName}
 											fill
 											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
 											className="object-contain p-8 md:p-12 drop-shadow-sm"
@@ -147,14 +149,14 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 									{/* Hover Overlay with info */}
 									<div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/70 to-slate-900/80 opacity-0 group-hover:opacity-100 transition-all duration-700 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
                                         <div className="transform translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-75 flex flex-col items-center h-full justify-center">
-                                            {partner.name && (
+                                            {partnerName && (
                                                 <h3 className="text-xl md:text-2xl font-bold text-white line-clamp-2 mb-3 drop-shadow-md tracking-wide">
-                                                    {partner.name}
+                                                    {partnerName}
                                                 </h3>
                                             )}
-                                            {partner.description && (
+                                            {partnerDescription && (
                                                 <p className="text-sm md:text-base text-slate-200 line-clamp-3 mb-6 leading-relaxed">
-                                                    {partner.description}
+                                                    {partnerDescription}
                                                 </p>
                                             )}
                                             {partner.websiteUrl && (

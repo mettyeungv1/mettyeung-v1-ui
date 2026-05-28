@@ -46,9 +46,12 @@ export function MouSection({ initialMous }: { initialMous: Partner[] }) {
                 </AnimatedSection>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-fr">
-                    {initialMous.map((partner, index) => {
-                        const colors = mapColors(partner.mouType);
-                        return (
+					{initialMous.map((partner, index) => {
+						const colors = mapColors(partner.mouType);
+						const partnerName = t(partner.name) || "MOU Partner";
+						const partnerDescription =
+							t(partner.description) || "Memorandum of Understanding";
+						return (
                             <AnimatedSection 
                                 key={partner.id} 
                                 delay={index * 0.05} 
@@ -71,7 +74,7 @@ export function MouSection({ initialMous }: { initialMous: Partner[] }) {
                                         
                                         {/* Company Name Title */}
                                         <h3 className={`text-lg sm:text-xl font-bold tracking-tight text-gray-900 leading-snug ${colors.hoverText} transition-colors duration-300`}>
-                                            {partner.name}
+                                            {partnerName}
                                         </h3>
                                     </div>
 
@@ -80,7 +83,7 @@ export function MouSection({ initialMous }: { initialMous: Partner[] }) {
                                     
                                     {/* Description */}
                                     <div className="text-sm sm:text-[15px] md:text-base text-gray-600 leading-relaxed font-medium mt-auto w-full">
-                                        {partner.description || "Memorandum of Understanding"}
+                                        {partnerDescription}
                                     </div>
                                 </div>
                             </AnimatedSection>
