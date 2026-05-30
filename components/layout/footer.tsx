@@ -159,20 +159,13 @@ export function Footer({ socialLinks, contactSettings }: FooterProps) {
 						className="space-y-4"
 					>
 						<h3 className="text-md font-semibold text-white tracking-wider uppercase">
-							{t("footer.newsletter.title")}
+							{t("about.mission.title")}
 						</h3>
-						<p className="text-blue-200 text-sm">
-							{t("footer.newsletter.description")}
-						</p>
-						<div className="flex space-x-2">
-							<Input
-								type="email"
-								placeholder={t("footer.emailPlaceholder")}
-								className="flex-1 bg-blue-800 border-blue-700 text-white placeholder-blue-300 focus:ring-white"
-							/>
-							<Button className="bg-white text-blue-700 hover:bg-blue-100">
-								{t("footer.subscribe")}
-							</Button>
+						<div className="bg-blue-800/50 p-5 rounded-xl border border-blue-700/50 relative mt-4">
+							<div className="absolute -top-4 -left-2 text-6xl text-khmer-gold opacity-40 font-serif leading-none">"</div>
+							<p className="text-blue-100 text-sm italic leading-relaxed relative z-10 pl-3">
+								{t("about.mission.desc1")}
+							</p>
 						</div>
 					</motion.div>
 					<motion.div

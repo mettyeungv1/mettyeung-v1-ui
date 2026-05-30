@@ -346,7 +346,7 @@ export function Header({ categories = [] }: HeaderProps) {
 
 					<div className="hidden lg:flex items-center space-x-4">
 						<LanguageSwitcher />
-						{session && userProfile ? (
+						{session && userProfile && (
 							<>
 								<span className="font-medium text-neutral-800">
 									{/* Displaying user ID as an example */}
@@ -361,7 +361,8 @@ export function Header({ categories = [] }: HeaderProps) {
 									{t("auth.logout")}
 								</Button>
 							</>
-						) : (
+						)}
+						{/* {!session && (
 							<>
 								<Button
 									asChild
@@ -378,7 +379,7 @@ export function Header({ categories = [] }: HeaderProps) {
 									<Link href="/auth/register">{t("auth.register")}</Link>
 								</Button>
 							</>
-						)}
+						)} */}
 					</div>
 
 					{/* Mobile Menu Button */}
@@ -421,7 +422,7 @@ export function Header({ categories = [] }: HeaderProps) {
 								</nav>
 								<div className="p-6 mt-auto border-t border-neutral-200 space-y-4">
 									<LanguageSwitcher variant="compact" />
-									<Button
+									{/* <Button
 										asChild
 										variant="outline"
 										className="w-full border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
@@ -443,7 +444,7 @@ export function Header({ categories = [] }: HeaderProps) {
 										>
 											{t("auth.register")}
 										</Link>
-									</Button>
+									</Button> */}
 								</div>
 							</div>
 						</SheetContent>

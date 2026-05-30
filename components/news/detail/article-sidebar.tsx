@@ -11,7 +11,7 @@ export function ArticleSidebar({ article }: ArticleSidebarProps) {
 	return (
 		<div className="sticky top-24 space-y-6">
 			{/* Quick Info Card */}
-			<Card className="border-l-4 border-l-khmer-gold">
+			{/* <Card className="border-l-4 border-l-khmer-gold">
 				<CardContent className="p-6">
 					<h3 className="text-lg font-semibold text-gray-900 mb-4">
 						Article Details
@@ -43,9 +43,9 @@ export function ArticleSidebar({ article }: ArticleSidebarProps) {
 						</div>
 					</div>
 				</CardContent>
-			</Card>
+			</Card> */}
 			<RelatedArticles currentArticleId={article.id} />
-			<Card className="bg-gradient-to-br from-khmer-gold/5 to-khmer-red/5 border-khmer-gold/20">
+			{/* <Card className="bg-gradient-to-br from-khmer-gold/5 to-khmer-red/5 border-khmer-gold/20">
 				<CardContent className="p-6 text-center">
 					<h3 className="text-lg font-semibold text-gray-900 mb-3">
 						Stay Updated
@@ -64,7 +64,7 @@ export function ArticleSidebar({ article }: ArticleSidebarProps) {
 						</Button>
 					</div>
 				</CardContent>
-			</Card>
+			</Card> */}
 		</div>
 	);
 }

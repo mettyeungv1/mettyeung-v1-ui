@@ -4,6 +4,7 @@ import React, { useState, useMemo } from "react";
 import { useTranslation } from "@/lib/i18n";
 
 import { normalizeUrl } from "@/lib/utils/image";
+import { useToast } from "@/hooks/use-toast";
 
 // Components
 import { Breadcrumbs } from "@/components/news/detail/bread-crumbs";
@@ -28,6 +29,41 @@ interface NewsDetailClientProps {
 export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 	const [showShareDialog, setShowShareDialog] = useState(false);
 	const { t } = useTranslation();
+	const { toast } = useToast();
+
+	const handleShare = async (platform: string) => {
+		const currentUrl = window.location.href;
+		const title = article?.title_en || "Check out this article!";
+		
+		switch (platform) {
+			case "facebook":
+				window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, "share-dialog", "width=600,height=400");
+				break;
+			case "linkedin":
+				window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`, "share-dialog", "width=600,height=400");
+				break;
+			case "whatsapp":
+				window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(title + " - " + currentUrl)}`, "_blank");
+				break;
+			case "telegram":
+				window.open(`https://t.me/share/url?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(title)}`, "share-dialog", "width=600,height=400");
+				break;
+			case "email":
+				window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(currentUrl)}`;
+				break;
+			case "copy":
+				try {
+					await navigator.clipboard.writeText(currentUrl);
+					toast({
+						title: "Link copied!",
+						description: "The article link has been copied to your clipboard.",
+					});
+				} catch (err) {
+					console.error("Failed to copy text: ", err);
+				}
+				break;
+		}
+	};
 
 	const article = useMemo(() => {
 		if (!post) return null;
@@ -96,9 +132,9 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 								/>
 							</article>
 						</AnimatedSection>
-						<div className="mt-16">
+						{/* <div className="mt-16">
 							<CommentSection articleId={article.id} />
-						</div>
+						</div> */}
 					</main>
 					<aside className="lg:col-span-4">
 						<div className="sticky top-24">
@@ -107,16 +143,16 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 					</aside>
 				</div>
 			</div>
-			{/* <ShareDialog
+			<ShareDialog
 				isOpen={showShareDialog}
 				onClose={() => setShowShareDialog(false)}
 				onShare={handleShare}
 				article={{
 					title_en: article.title_en,
-					excerpt: article.excerpt[DEFAULT_LANGUAGE_CODE] as string,
+					excerpt: typeof article.excerpt === 'string' ? article.excerpt : (article.excerpt[DEFAULT_LANGUAGE_CODE] as string || ''),
 					image: article.image,
 				}}
-			/> */}
+			/>
 		</div>
 	);
 }

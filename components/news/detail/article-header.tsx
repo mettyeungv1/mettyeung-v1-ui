@@ -14,9 +14,11 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 	return (
 		<header className="mb-8">
 			<div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
-				<Badge className="bg-khmer-gold text-white px-3 py-1 text-sm capitalize">
-					{article.category.name}
-				</Badge>
+				{article.category?.name && (
+					<Badge className="bg-khmer-gold text-white px-3 py-1 text-sm capitalize">
+						{article.category.name}
+					</Badge>
+				)}
 				<div className="flex items-center text-sm text-gray-500">
 					<Calendar className="w-4 h-4 mr-1" />
 					{new Date(article.date).toLocaleDateString("en-GB")}
@@ -25,10 +27,10 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 					<Clock className="w-4 h-4 mr-1" />
 					{article.readTime} min
 				</div>
-				<div className="flex items-center text-sm text-gray-500">
+				{/* <div className="flex items-center text-sm text-gray-500">
 					<Eye className="w-4 h-4 mr-1" />
 					{article.views.toLocaleString()} views
-				</div>
+				</div> */}
 			</div>
 			<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
 				{t(article.title)}
@@ -56,7 +58,7 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 					variant="outline"
 					size="sm"
 					onClick={onShareClick}
-					className="text-khmer-gold border-khmer-gold hover:bg-khmer-gold hover:text-white"
+					className="text-primary border-primary hover:bg-primary hover:text-white"
 				>
 					<Share2 className="w-4 h-4 mr-2" />
 					Share Article

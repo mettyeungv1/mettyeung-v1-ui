@@ -136,7 +136,7 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 				<div className="pt-4 border-t">
 					<Button
 						variant="outline"
-						className="w-full text-primary border-primary hover:bg-primary hover:text-primary-foreground"
+						className="w-full text-primary border-primary hover:bg-primary hover:text-white"
 						asChild
 					>
 						<Link href="/news">
