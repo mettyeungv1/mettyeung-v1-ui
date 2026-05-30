@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useTranslation } from "@/lib/i18n";
 import { ArrowRight, Users, Award, UserCheck, HeartHandshake, Play, BookOpen } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -10,7 +11,8 @@ import { renderVideoModalContent } from "../gallery/rendervideo";
 import type { Video } from "@/lib/types/video";
 
 export function MissionSection() {
-	const { t } = useTranslation();
+	const { language, t } = useTranslation();
+	const isKhmer = language === "km";
 	const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
 
 	const defaultVideo: Video = {
@@ -77,8 +79,8 @@ export function MissionSection() {
                     {/* History Text & Info Callout */}
                     <AnimatedSection direction="left" className="order-2 lg:order-1">
 						<div className="space-y-6">
-							<h2 className="text-4xl md:text-5xl font-bold leading-tight">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+							<h2 className="text-4xl md:text-5xl font-bold leading-[1.55]">
+                                <span className={isKhmer ? "inline-block pt-2 pb-4 text-blue-600" : "inline-block pt-2 pb-4 text-indigo-600"}>
                                     {t("home.ourHistory")}
                                 </span>
 							</h2>
@@ -126,10 +128,12 @@ export function MissionSection() {
                                 onClick={onItemClick}
                             >
                                 <div className="absolute inset-0 bg-gray-900/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
-                                <img 
+                                <Image
                                     src={defaultVideo.thumbnail} 
                                     alt="Video Thumbnail" 
-                                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100" 
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                    className="object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                                 />
                                 {/* Play Button Overlay — visible on hover only */}
                                 <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

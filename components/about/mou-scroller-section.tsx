@@ -119,7 +119,8 @@ function MobileCarousel({ partners }: { partners: Partner[] }) {
 
 /* ─── Section ─────────────────────────────────────────────────────────────── */
 export function MouScrollerSection({ initialMous }: { initialMous: Partner[] }) {
-    const { t } = useTranslation();
+    const { language, t } = useTranslation();
+    const isKhmer = language === "km";
 	if (!initialMous || initialMous.length === 0) return null;
 
     return (
@@ -127,7 +128,7 @@ export function MouScrollerSection({ initialMous }: { initialMous: Partner[] }) 
             <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
                 <div className="flex flex-col items-center text-center max-w-3xl mx-auto space-y-4">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-600">
+                        <span className={isKhmer ? "text-blue-700" : "text-indigo-600"}>
                             {t("network.mou.title")}
                         </span>
                     </h2>

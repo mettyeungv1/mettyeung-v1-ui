@@ -145,7 +145,7 @@ export const listMembersService = async (
 	const response = await fetchAPI<{
 		data: APIMemberResponse[];
 		meta_data: any;
-	}>(url, { skipAuth: true, cache: "no-store" });
+	}>(url, { skipAuth: true, next: { revalidate: 300, tags: ["structures"] } });
 
 	const paginatedData = response.data as any;
 	const normalizedMembers = Array.isArray(paginatedData)
@@ -163,7 +163,7 @@ export const getMemberByIdService = async (id: string): Promise<Member> => {
 		`${STRUCTURE_ENDPOINT}/${id}`,
 		{
 			skipAuth: true,
-			cache: "no-store",
+			next: { revalidate: 300, tags: ["structures", `member:${id}`] },
 		}
 	);
 
@@ -172,18 +172,6 @@ export const getMemberByIdService = async (id: string): Promise<Member> => {
 	let memberData = (response as any).data || response;
 	if (memberData && memberData.data && memberData.status_code) {
 		memberData = memberData.data; // unwrap double-nested
-	}
-
-	// Debug: log raw API fields to verify mapping
-	if (process.env.NODE_ENV === 'development') {
-		console.log('[getMemberByIdService] Raw API fields:', {
-			id: memberData?.id,
-			name: memberData?.name,
-			hasPersonalEducations: !!memberData?.personalEducations?.length,
-			hasPersonalExperiences: !!memberData?.personalExperiences?.length,
-			hasMemberSkills: !!memberData?.memberSkills?.length,
-			hasAssociationMembers: !!memberData?.associationMembers?.length,
-		});
 	}
 
 	return normalizeMemberData(memberData);
@@ -222,7 +210,7 @@ export const deleteMemberService = async (id: string): Promise<void> => {
 export const getAssociationService = async (): Promise<any> => {
 	const response = await fetchAPI(`${STRUCTURE_ENDPOINT}/associations`, {
 		skipAuth: true,
-		cache: "no-store",
+		next: { revalidate: 300, tags: ["structures", "associations"] },
 	});
 	return response;
 };

@@ -47,7 +47,7 @@ export const listVideosService = async (
 	const url = queryParams ? `${VIDEO_ENDPOINT}?${queryParams}` : VIDEO_ENDPOINT;
 	const response = await fetchAPI<{ data: APIVideoPost[]; meta_data: any }>(
 		url,
-		{ skipAuth: true, cache: "no-store" }
+		{ skipAuth: true, next: { revalidate: 60, tags: ["videos"] } }
 	);
 
 	// The API response structure from fetchAPI is { data: APIVideoPost[], meta_data: any, ... }

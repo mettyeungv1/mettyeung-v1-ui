@@ -10,6 +10,14 @@ import { useEffect, useState, useRef } from "react";
 import { getPartnersService } from "@/service/partner/partner-service";
 import type { Partner } from "@/lib/types/partner";
 
+function resolvePartnerText(
+	t: (key: string | Record<string, string> | null | undefined) => string,
+	primary: Partner["name"] | Partner["description"],
+	translations?: Partner["nameTranslations"] | Partner["descriptionTranslations"]
+) {
+	return t(primary) || t(translations);
+}
+
 export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partner[] }) {
 	const { t } = useTranslation();
 	const [partners, setPartners] = useState<Partner[]>(initialPartners);
@@ -130,13 +138,18 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 auto-rows-fr">
 					{partners.map((partner, index) => {
-						const partnerName = t(partner.name) || partner.media?.altText || "Partner";
-						const partnerDescription = t(partner.description);
+						const partnerName =
+							resolvePartnerText(t, partner.name, partner.nameTranslations) ||
+							partner.media?.altText ||
+							"Partner";
+						const partnerDescription =
+							resolvePartnerText(t, partner.description, partner.descriptionTranslations);
+						const websiteUrl = partner.websiteUrl?.trim();
 						const cardContent = (
-							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl ${partner.websiteUrl ? "hover:shadow-2xl cursor-pointer hover:-translate-y-2" : "hover:shadow-2xl hover:-translate-y-1"}`}>
-								<CardContent className="p-0 h-full flex items-center justify-center">
+							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl ${websiteUrl ? "hover:shadow-2xl hover:-translate-y-2 focus-within:shadow-2xl focus-within:-translate-y-2" : "hover:shadow-2xl hover:-translate-y-1"}`}>
+								<CardContent className="p-0 h-full flex items-center justify-center relative">
 									{/* Large Logo display */}
-									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 opacity-100">
+									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 group-focus-within:scale-110 group-focus-within:opacity-40 opacity-100">
 										<Image
 											src={partner.media?.url || "/my-cut.png"}
 											alt={partnerName}
@@ -147,8 +160,8 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 									</div>
 
 									{/* Hover Overlay with info */}
-									<div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/70 to-slate-900/80 opacity-0 group-hover:opacity-100 transition-all duration-700 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
-                                        <div className="transform translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-75 flex flex-col items-center h-full justify-center">
+									<div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/70 to-slate-900/80 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-700 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
+                                        <div className="transform translate-y-6 group-hover:translate-y-0 group-focus-within:translate-y-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-700 delay-75 flex flex-col items-center h-full justify-center">
                                             {partnerName && (
                                                 <h3 className="text-xl md:text-2xl font-bold text-white line-clamp-2 mb-3 drop-shadow-md tracking-wide">
                                                     {partnerName}
@@ -159,10 +172,15 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
                                                     {partnerDescription}
                                                 </p>
                                             )}
-                                            {partner.websiteUrl && (
-                                                <span className="inline-flex items-center gap-2 px-6 py-2.5 mt-2 text-xs font-bold tracking-widest text-white uppercase transition-all duration-300 bg-white/10 rounded-full hover:bg-blue-600 border border-white/20 backdrop-blur-md shadow-lg hover:shadow-blue-500/30">
+                                            {websiteUrl && (
+                                                <a
+													href={websiteUrl}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="relative z-10 inline-flex items-center gap-2 px-6 py-2.5 mt-2 text-xs font-bold tracking-widest text-white uppercase transition-all duration-300 bg-white/10 rounded-full hover:bg-blue-600 border border-white/20 backdrop-blur-md shadow-lg hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+												>
                                                     {t("partners.visitWebsite")} <ArrowRight className="w-4 h-4 ml-1" />
-                                                </span>
+                                                </a>
                                             )}
                                         </div>
 									</div>
@@ -173,15 +191,9 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 						return (
 							<AnimatedSection key={partner.id} delay={(index % 10) * 0.1}>
 								<GlowingCard>
-									{partner.websiteUrl ? (
-										<a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer" className="block h-full">
-											{cardContent}
-										</a>
-									) : (
-										<div className="h-full">
-											{cardContent}
-										</div>
-									)}
+									<div className="h-full">
+										{cardContent}
+									</div>
 								</GlowingCard>
 							</AnimatedSection>
 						);

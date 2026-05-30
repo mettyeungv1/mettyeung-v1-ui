@@ -9,6 +9,14 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { Partner } from "@/lib/types/partner";
 
+function resolvePartnerText(
+	t: (key: string | Record<string, string> | null | undefined) => string,
+	primary: Partner["name"] | Partner["description"],
+	translations?: Partner["nameTranslations"] | Partner["descriptionTranslations"]
+) {
+	return t(primary) || t(translations);
+}
+
 export function PartnersSection({ initialPartners = [] }: { initialPartners?: Partner[] }) {
 	const { t } = useTranslation();
 
@@ -29,8 +37,15 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 				</AnimatedSection>
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
 					{initialPartners.map((partner, index) => {
-						const partnerName = t(partner.name) || partner.media?.altText || "Partner";
-						const partnerDescription = t(partner.description);
+						const partnerName =
+							resolvePartnerText(t, partner.name, partner.nameTranslations) ||
+							partner.media?.altText ||
+							"Partner";
+						const partnerDescription = resolvePartnerText(
+							t,
+							partner.description,
+							partner.descriptionTranslations
+						);
 						const cardContent = (
 							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl hover:shadow-2xl hover:-translate-y-2`}>
 								<CardContent className="p-0 h-full flex items-center justify-center relative">

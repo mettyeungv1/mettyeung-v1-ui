@@ -17,8 +17,6 @@ export async function register() {
         pipelining: 0,
       })
     );
-    
-    console.log('[Instrumentation] ✅ Undici Agent Tuned for Docker');
   }
 }
 

@@ -1,4 +1,3 @@
-import nextDynamic from "next/dynamic";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { MissionSection } from "@/components/home/mission-section";
 import { StatsSection } from "@/components/home/states-section";
@@ -6,7 +5,7 @@ import { FeaturesSection } from "@/components/home/feature-section";
 import { HomeCTASection } from "@/components//home/home-cta-section";
 import { getBannersService } from "@/service/banner/banner-service";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function HomePage() {
 	const bannersRes = await getBannersService();

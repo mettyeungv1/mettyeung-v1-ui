@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Copy, ExternalLink, MapPin, Navigation, Phone } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 import type { IContactSettingsAPI } from "@/lib/types/contact";
 
@@ -16,21 +16,11 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 		settings.mapEmbedUrl ||
 		"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.287265969562!2d104.89966301136453!3d11.595197200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109539297965083%3A0x7d11e2074597e98c!2sMett%20Yeung%20Association!5e0!3m2!1sen!2skh!4v1707378900000!5m2!1sen!2skh";
 
-	const directionsHref =
-		settings.mapLat && settings.mapLng
-			? `https://maps.google.com/maps?ll=${settings.mapLat},${settings.mapLng}&z=17&t=m&hl=en&gl=KH&mapclient=embed`
-			: "https://maps.google.com/maps?ll=11.595197,104.901852&z=17&t=m&hl=en&gl=KH&mapclient=embed&cid=9012019777218636172";
-
 	const addressText =
 		settings.address?.[language] ??
 		settings.address?.km ??
 		settings.address?.en ??
 		"Phnom Penh, Cambodia";
-
-	const coordinates =
-		settings.mapLat && settings.mapLng
-			? `${settings.mapLat}, ${settings.mapLng}`
-			: "11.595197, 104.901852";
 
 	return (
 		<section className="relative w-full px-4 pb-20 md:px-0">
@@ -93,17 +83,7 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 										</p>
 									</div>
 
-									<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-										<div className="rounded-2xl border border-white/10 bg-white/[0.06] p-4">
-											<p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold uppercase text-primary-200">
-												<Copy className="h-3.5 w-3.5 text-khmer-gold" />
-												Coordinates
-											</p>
-											<p className="break-words font-mono text-xs leading-relaxed text-primary-50">
-												{coordinates}
-											</p>
-										</div>
-
+									<div className="grid gap-3">
 										{settings.phone && (
 											<a
 												href={`tel:${settings.phone.replace(/\s/g, "")}`}
@@ -119,27 +99,6 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 											</a>
 										)}
 									</div>
-								</div>
-
-								<div className="mt-auto pt-8">
-									<a
-										href={directionsHref}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-khmer-gold px-5 py-3.5 text-sm font-bold text-gray-950 shadow-lg shadow-khmer-gold/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-khmer-gold-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-khmer-gold focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
-									>
-										<Navigation className="h-4 w-4" />
-										Get Directions
-									</a>
-									<a
-										href={directionsHref}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="mt-4 inline-flex w-full items-center justify-center gap-2 text-sm font-semibold text-primary-100 transition-colors hover:text-khmer-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
-									>
-										Open in Google Maps
-										<ExternalLink className="h-4 w-4" />
-									</a>
 								</div>
 							</div>
 						</div>

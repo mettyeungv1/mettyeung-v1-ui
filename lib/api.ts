@@ -81,13 +81,8 @@ export async function fetchAPI<T>(
 	if (shouldAttachAuth) {
 		const tokenHeaders = await headerToken();
 		headers = { ...headers, ...tokenHeaders };
-	} else {
-		console.log("🚀 Skipping Auth Token for:", url);
 	}
-	console.log("🚀 Requesting API URL:", url);
 
-	// Default: no caching (Next.js 15 default is no-store).
-	// Callers can opt into caching by passing next: { revalidate: N }.
 	const { retries, retryDelayMs, skipAuth, requireAuth, ...fetchOptions } = options;
 	const maxRetries = retries ?? DEFAULT_RETRIES;
 	const baseDelayMs = retryDelayMs ?? DEFAULT_RETRY_DELAY_MS;

@@ -7,7 +7,6 @@ import {
 	Mail,
 	MapPin,
 	Phone,
-	Sparkles,
 } from "lucide-react";
 import type { IContactSettingsAPI } from "@/lib/types/contact";
 
@@ -81,11 +80,6 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 						transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
 						className="text-center lg:text-left"
 					>
-						<div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur">
-							<Sparkles className="h-4 w-4 text-khmer-gold" />
-							{t("contact.heroTagline")}
-						</div>
-
 						<h1 className="mx-auto max-w-4xl text-balance text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl lg:mx-0 lg:text-7xl">
 							<span className="block">{t("contact.title")}</span>
 							<span className="block text-khmer-gold">Let&apos;s connect</span>

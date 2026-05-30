@@ -4,7 +4,6 @@ export const verifyOtpService = async (payload: {
 	email: string;
 	otp: string;
 }) => {
-	console.log(payload);
 	try {
 		const res = await fetch(`${AUTH_ENDPOINT}/verify-otp`, {
 			method: "POST",

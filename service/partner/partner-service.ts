@@ -12,10 +12,10 @@ type PartnerParams = {
 	isActive?: boolean;
 };
 
-function getLocalizedText(value: LocalizedValue, fallback = "") {
-	if (!value) return fallback;
-	if (typeof value === "string") return value;
-	return value.en || value.km || Object.values(value).find(Boolean) || fallback;
+function normalizeLocalizedValue(value: LocalizedValue) {
+	if (!value) return null;
+	if (typeof value === "string") return { en: value };
+	return value;
 }
 
 function normalizePartner(p: Partner) {
@@ -28,9 +28,9 @@ function normalizePartner(p: Partner) {
 
 	return {
 		...p,
-		name: getLocalizedText(p.name, "Partner"),
+		name: nameTranslations ?? normalizeLocalizedValue(p.name),
 		nameTranslations,
-		description: getLocalizedText(p.description),
+		description: descriptionTranslations ?? normalizeLocalizedValue(p.description),
 		descriptionTranslations,
 		media: p.media
 			? { ...p.media, url: normalizeUrl(`${MEDIA_ENDPOINT}/view/${p.media.url}`) }
@@ -52,7 +52,7 @@ export const getPartnersService = async (
 
 	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}?${qs}`, {
 		skipAuth: true,
-		cache: "no-store",
+		next: { revalidate: 600, tags: ["partners"] },
 	});
 	
 	// Handle paginated response
@@ -83,7 +83,7 @@ export const getMousService = async (
 
 	const res = await fetchAPI<any>(`${PARTNER_ENDPOINT}/mou?${qs}`, {
 		skipAuth: true,
-		cache: "no-store",
+		next: { revalidate: 600, tags: ["partners", "mous"] },
 	});
 	
 	// Handle paginated response

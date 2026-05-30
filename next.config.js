@@ -1,13 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	output: "standalone",
-	experimental: {
-		instrumentationHook: true,
-	},
+	compress: true,
+	poweredByHeader: false,
 	eslint: {
 		ignoreDuringBuilds: true,
 	},
 	images: {
+		formats: ["image/avif", "image/webp"],
+		minimumCacheTTL: 60,
 		remotePatterns: [
 			{
 				protocol: "https",

@@ -95,9 +95,9 @@ export function StructurePageClient({
 
 				return {
 					id: assoc.id,
-					title_en: assoc.name,
-					title: assoc.name,
-					description: assoc.description,
+					title_en: t(assoc.name) || assoc.name?.en || "",
+					title: t(assoc.name) || assoc.name?.en || "",
+					description: t(assoc.description) || assoc.description?.en || "",
 					members: membersOfAssociation,
 					icon: theme.icon,
 					color: theme.color,

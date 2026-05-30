@@ -7,7 +7,8 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { Card } from "@/components/ui/card";
 
 export function MissionVisionSection() {
-	const { t } = useTranslation();
+	const { language, t } = useTranslation();
+	const isKhmer = language === "km";
 
 	const goalIcons = [
 		{ icon: Users, color: "text-blue-500", bg: "bg-blue-50" },
@@ -32,8 +33,8 @@ export function MissionVisionSection() {
 								<span>{t("about.mission.title")}</span>
 							</div>
 
-							<h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-								<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+							<h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-[1.55]">
+								<span className={isKhmer ? "inline-block py-2 text-blue-600" : "inline-block py-1 text-indigo-600"}>
 									{t("about.values.desc1")}
 								</span>
 							</h2>
