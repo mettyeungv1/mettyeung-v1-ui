@@ -14,11 +14,7 @@
     # Copy the rest of the project
     COPY . .
 
-    # [NEW] Install Debugging Tools (Run as root before switching user)
-    # curl: to test API endpoints from inside
-    # net-tools: gives us 'netstat' to see connection states
-    # iproute2: gives us 'ss' (modern netstat)
-    RUN apk add --no-cache curl net-tools iproute2
+
 
     # This ARG receives the public URL from the CI/CD workflow
     ARG NEXT_PUBLIC_AUTH_BASE_URL
