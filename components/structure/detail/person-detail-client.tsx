@@ -53,10 +53,11 @@ interface PersonDetailClientProps {
 /* ============================================================== */
 /*  Localized text helper                                          */
 /* ============================================================== */
-type Localized = { en?: string | null; km?: string | null } | null | undefined;
+type Localized = string | { en?: string | null; km?: string | null } | null | undefined;
 
 function pickLocalized(value: Localized, locale: string, fallback = ""): string {
 	if (!value) return fallback;
+	if (typeof value === "string") return value;
 	if (locale === "km") return value.km || value.en || fallback;
 	return value.en || value.km || fallback;
 }
@@ -188,6 +189,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 	const data = useMemo(() => {
 		const p = person as any;
 
+		const name = pickLocalized(p.name, locale, p.name_en || "Unknown Member");
 		const title = pickLocalized(p.title, locale);
 		const location = pickLocalized(p.location, locale);
 		const bio = pickLocalized(p.bio, locale);
@@ -221,13 +223,13 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 			.map((s: any) =>
 				typeof s === "string"
 					? { id: s, name: s }
-					: { id: s.skillId || s.id, name: s.skillName || s.name }
+					: { id: s.skillId || s.id, name: pickLocalized(s.skillName || s.name || s.skill?.name, locale, s.skillId || s.id || "") }
 			);
 
 		const associations = (p.associationMembers || p.associations || []).map((a: any) => ({
 			id: a.associationId || a.id,
-			name: a.name,
-			role: a.role,
+			name: pickLocalized(a.name || a.association?.name, locale, "Organization"),
+			role: pickLocalized(a.role, locale),
 			isHead: a.isHead ?? a.is_head,
 			order: a.order ?? 0,
 		}));
@@ -239,7 +241,9 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 			displayText: s.display_text || s.displayText,
 		}));
 
-		const languages = p.languages || [];
+		const languages = (p.memberLanguages || p.languages || [])
+			.map((lang: any) => pickLocalized(lang.name || lang.language?.name || lang.languageName || lang, locale))
+			.filter(Boolean);
 
 		const rawAvatar = p.image || p.avatarUrl || p.avatar_url || null;
 		const fullAvatarUrl =
@@ -265,7 +269,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 
 		return {
 			id: p.id,
-			name: p.name,
+			name,
 			email: p.email,
 			phone: p.phoneNumber || p.phone_number,
 			gender: p.gender,

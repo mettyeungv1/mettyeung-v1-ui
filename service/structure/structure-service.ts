@@ -6,11 +6,19 @@ import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
 /**
  * Normalizes a raw member from the API into a clean, consistent Member type for the frontend.
  */
+function localizedText(value: any, fallback = ""): string {
+	if (typeof value === "string") return value;
+	if (value && typeof value === "object") {
+		return value[DEFAULT_LANGUAGE_CODE] || value.en || value.km || fallback;
+	}
+	return fallback;
+}
+
 export function normalizeMemberData(member: any): Member {
-	const name_en = member.name || "Unknown Member";
-	const title_en = member.title?.[DEFAULT_LANGUAGE_CODE] || "Member";
-	const position_en = member.title?.[DEFAULT_LANGUAGE_CODE] || "Member";
-	const location_en = member.location?.[DEFAULT_LANGUAGE_CODE] || "";
+	const name_en = localizedText(member.name, "Unknown Member");
+	const title_en = localizedText(member.title, "Member");
+	const position_en = localizedText(member.title, "Member");
+	const location_en = localizedText(member.location);
 
 	// Join date — preserve full date, fallback to year-only
 	const joinDate = member.join_date
@@ -35,14 +43,14 @@ export function normalizeMemberData(member: any): Member {
 	// Normalize associations to a consistent shape
 	const associations = rawAssociations.map((assoc: any) => ({
 		associationId: assoc.associationId || assoc.association_id || "",
-		name: assoc.name || assoc.association?.name || "Department",
-		role: assoc.role || "",
+		name: localizedText(assoc.name || assoc.association?.name, "Department"),
+		role: localizedText(assoc.role),
 		isHead: assoc.isHead ?? assoc.is_head ?? false,
 		order: assoc.order ?? 0,
 	}));
 
 	// Normalize skills — extract skillName for display
-	const skills = rawSkills.map((s: any) => s.skillName || s.skill?.name || s.skillId || s.skill_id || "");
+	const skills = rawSkills.map((s: any) => localizedText(s.skillName || s.name || s.skill?.name, s.skillId || s.skill_id || ""));
 
 	// Normalize educations — convert snake_case to camelCase
 	const educations = rawEducations.map((edu: any) => ({
@@ -65,7 +73,7 @@ export function normalizeMemberData(member: any): Member {
 
 	// Normalize languages
 	const languages = rawLanguages.map((lang: any) =>
-		lang.name || lang.language?.name || lang.languageName || ""
+		localizedText(lang.name || lang.language?.name || lang.languageName)
 	).filter(Boolean);
 
 	// Capitalize nationality
@@ -75,7 +83,7 @@ export function normalizeMemberData(member: any): Member {
 
 	return {
 		id: member.id,
-		name: member.name,
+		name: name_en,
 		name_en,
 		title_en,
 		position_en,
@@ -92,7 +100,7 @@ export function normalizeMemberData(member: any): Member {
 		location_en,
 		joinDate,
 		joinYear: member.joinYear || member.join_year || (member.join_date ? new Date(member.join_date).getFullYear() : undefined),
-		bio: member.bio?.[DEFAULT_LANGUAGE_CODE] || (typeof member.bio === 'string' ? member.bio : ""),
+		bio: localizedText(member.bio),
 		department: associations.length > 0 ? associations[0].name : "",
 		skills,
 		socials: rawSocials,
