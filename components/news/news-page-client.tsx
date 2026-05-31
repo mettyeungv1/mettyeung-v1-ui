@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import DOMPurify from "dompurify";
 
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { PageHero } from "@/components/gallery/page-hero";
 import { NewsFilterSidebar } from "@/components/news/new-filter-sidebar";
 import { NewsGrid } from "@/components/news/news-grid";
 import { NewsCard } from "@/components/news/news-card";
@@ -74,8 +73,8 @@ export function NewsPageClient({
         const activeId = subCat || cat;
 		if (activeId !== "all") params.set("category", activeId);
 
-		router.push(`/news?${params.toString()}`, { scroll: false });
-	}, [router]);
+		window.history.pushState(null, "", `/news?${params.toString()}`);
+	}, []);
 
     const getCategoryStateFromUrl = useCallback((catParam: string | null, subCatParam: string | null) => {
         if (!catParam || catParam === "all") return { cat: "all", sub: null };
@@ -109,6 +108,10 @@ export function NewsPageClient({
             newSubCategory = null;
         }
 
+        setSearchTerm(newTerm);
+        setSelectedCategory(newCategory);
+        setSelectedSubCategory(newSubCategory);
+
 		updateUrl(newTerm, newCategory, newSubCategory);
 	};
 
@@ -120,15 +123,22 @@ export function NewsPageClient({
 
         const { cat, sub } = getCategoryStateFromUrl(rawCat, rawSubCat);
 
-        setSelectedCategory(cat);
-        setSelectedSubCategory(sub);
-        setSearchTerm(q);
+        setSelectedCategory(prev => prev !== cat ? cat : prev);
+        setSelectedSubCategory(prev => prev !== sub ? sub : prev);
+        setSearchTerm(prev => prev !== q ? q : prev);
     }, [searchParams, categories, getCategoryStateFromUrl]);
+
+	const isMounted = useRef(false);
 
 	// Fetch data when filters change
 	useEffect(() => {
+		if (!isMounted.current) {
+			isMounted.current = true;
+			return;
+		}
+
+		setLoading(true);
 		const resetPagination = async () => {
-			setLoading(true);
 			setPage(1);
 			setPosts([]);
 
@@ -155,8 +165,8 @@ export function NewsPageClient({
 				setTotalPages(postRes.data.totalPages || 1);
 				setHasMore((postRes.data.page || 1) < (postRes.data.totalPages || 1));
 			} else {
-                setPosts([]);
-            }
+				setPosts([]);
+			}
 
 			const elapsed = Date.now() - startTime;
 			const remaining = Math.max(0, 500 - elapsed);
@@ -319,8 +329,7 @@ export function NewsPageClient({
 	}, [activeCategoryForBanner]);
 
 	return (
-		<div className="min-h-screen bg-gray-50">
-			<PageHero title={t("nav.news")} subtitle={t("events.heroDescription")} />
+		<>
 
 			{featuredNews.length > 0 && (
 				<section className="section-padding bg-white">
@@ -461,6 +470,6 @@ export function NewsPageClient({
 					</div>
 				</div>
 			</section>
-		</div>
+		</>
 	);
 }
