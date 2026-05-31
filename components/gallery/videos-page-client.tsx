@@ -71,7 +71,7 @@ export function VideosPageClient({
 		// Update URL
 		const params = new URLSearchParams();
 		if (categoryId !== "all") params.set("category", categoryId);
-		router.push(`/videos?${params.toString()}`, { scroll: false });
+		window.history.pushState(null, "", `/videos?${params.toString()}`);
 
 		setLoading(true);
 		setPage(1);
@@ -138,28 +138,31 @@ export function VideosPageClient({
 		}
 	}, [loadingMore, hasMore, page, selectedCategory]);
 
+	const loadMoreRef = useRef(loadMoreVideos);
+	useEffect(() => {
+		loadMoreRef.current = loadMoreVideos;
+	}, [loadMoreVideos]);
+
 	// Intersection Observer for infinite scroll
 	useEffect(() => {
+		const currentTarget = observerTarget.current;
+		if (!currentTarget) return;
+
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
-					loadMoreVideos();
+				if (entries[0].isIntersecting) {
+					loadMoreRef.current();
 				}
 			},
-			{ threshold: 0.1 }
+			{ threshold: 0.1, rootMargin: "100px" }
 		);
 
-		const currentTarget = observerTarget.current;
-		if (currentTarget) {
-			observer.observe(currentTarget);
-		}
+		observer.observe(currentTarget);
 
 		return () => {
-			if (currentTarget) {
-				observer.unobserve(currentTarget);
-			}
+			observer.disconnect();
 		};
-	}, [hasMore, loadingMore, loading, loadMoreVideos]);
+	}, []);
 
 	// Transform API data into the format required by UI components
 	const normalizedItems = useMemo((): (GalleryItem & {

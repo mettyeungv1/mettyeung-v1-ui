@@ -213,28 +213,31 @@ export function NewsPageClient({
 		setLoadingMore(false);
 	}, [loadingMore, hasMore, page, searchTerm, selectedCategory, selectedSubCategory]);
 
+	const loadMoreRef = useRef(loadMorePosts);
+	useEffect(() => {
+		loadMoreRef.current = loadMorePosts;
+	}, [loadMorePosts]);
+
 	// Intersection Observer
 	useEffect(() => {
+		const currentTarget = observerTarget.current;
+		if (!currentTarget) return;
+
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
-					loadMorePosts();
+				if (entries[0].isIntersecting) {
+					loadMoreRef.current();
 				}
 			},
-			{ threshold: 0.1 }
+			{ threshold: 0.1, rootMargin: "100px" }
 		);
 
-		const currentTarget = observerTarget.current;
-		if (currentTarget) {
-			observer.observe(currentTarget);
-		}
+		observer.observe(currentTarget);
 
 		return () => {
-			if (currentTarget) {
-				observer.unobserve(currentTarget);
-			}
+			observer.disconnect();
 		};
-	}, [hasMore, loadingMore, loading, loadMorePosts]);
+	}, []);
 
 	const normalized = useMemo(() => {
 		const items = posts.map((p) => ({
