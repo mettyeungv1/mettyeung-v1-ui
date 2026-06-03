@@ -33,7 +33,7 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 
 	const handleShare = async (platform: string) => {
 		const currentUrl = window.location.href;
-		const title = article?.title_en || "Check out this article!";
+		const title = article?.title_en || t("news.shareFallbackTitle");
 		
 		switch (platform) {
 			case "facebook":
@@ -55,8 +55,8 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 				try {
 					await navigator.clipboard.writeText(currentUrl);
 					toast({
-						title: "Link copied!",
-						description: "The article link has been copied to your clipboard.",
+						title: t("news.linkCopiedTitle"),
+						description: t("news.linkCopiedDescription"),
 					});
 				} catch (err) {
 					console.error("Failed to copy text: ", err);

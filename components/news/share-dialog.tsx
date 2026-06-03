@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X as CloseIcon, Facebook, Linkedin, Send, MessageCircle, Link, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "@/lib/i18n";
 
 interface ShareDialogProps {
 	isOpen: boolean;
@@ -23,6 +24,7 @@ export function ShareDialog({
 	onShare,
 	article,
 }: ShareDialogProps) {
+	const { t } = useTranslation();
 	const shareOptions = [
 		{ id: "facebook", name: "Facebook", icon: Facebook },
 		{ id: "linkedin", name: "LinkedIn", icon: Linkedin },
@@ -52,7 +54,7 @@ export function ShareDialog({
 						<Card className="border-0 shadow-2xl overflow-hidden rounded-2xl">
 							<CardHeader className="pb-2 border-b border-gray-100 bg-gray-50/50">
 								<div className="flex items-center justify-between">
-									<CardTitle className="text-lg font-semibold text-gray-900">Share Article</CardTitle>
+									<CardTitle className="text-lg font-semibold text-gray-900">{t("news.shareArticle")}</CardTitle>
 									<Button
 										variant="ghost"
 										size="icon"
@@ -106,7 +108,7 @@ export function ShareDialog({
 								<div className="pt-4 border-t border-gray-100">
 									<div className="flex items-center space-x-2">
 										<div className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-500 truncate select-all">
-											{typeof window !== 'undefined' ? window.location.href : 'Loading...'}
+											{typeof window !== 'undefined' ? window.location.href : t("common.loading")}
 										</div>
 										<Button 
 											onClick={() => {
@@ -116,7 +118,7 @@ export function ShareDialog({
 											className="bg-primary hover:bg-primary/90 text-white shrink-0"
 										>
 											<Link className="w-4 h-4 mr-2" />
-											Copy
+											{t("common.copy")}
 										</Button>
 									</div>
 								</div>

@@ -5,10 +5,11 @@ import { formatDate } from "@/lib/utils";
 import { Calendar, Eye, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n";
 
+function VideoModalContent({ video }: { video: Video }) {
+	const { t } = useTranslation();
 
-export const renderVideoModalContent = (video: Video) => {
-	
 	return (
 		<div className="flex flex-col h-full sm:h-auto overflow-y-auto bg-white">
 			{/* Video Player - Full width on mobile */}
@@ -49,21 +50,21 @@ export const renderVideoModalContent = (video: Video) => {
 						
 						<div className="flex flex-wrap items-center gap-5 text-sm text-gray-500 font-medium">
 							{video.date && (
-								<div className="flex items-center gap-2" title="Published Date">
+								<div className="flex items-center gap-2" title={t("video.publishedDate")}>
 									<Calendar className="w-4 h-4 text-gray-400" />
 									<span>{formatDate(video.date)}</span>
 								</div>
 							)}
 
 							{video.viewCount >= 0 && (
-								<div className="flex items-center gap-2" title="Total Views">
+								<div className="flex items-center gap-2" title={t("video.totalViews")}>
 									<Eye className="w-4 h-4 text-gray-400" />
 									<span>{video.viewCount.toLocaleString()}</span>
 								</div>
 							)}
 
 							{video.duration && (
-								<div className="flex items-center gap-2" title="Duration">
+								<div className="flex items-center gap-2" title={t("video.duration")}>
 									<Clock className="w-4 h-4 text-gray-400" />
 									<span>{video.duration}</span>
 								</div>
@@ -78,7 +79,7 @@ export const renderVideoModalContent = (video: Video) => {
 						{video.description && (
 							<div className="space-y-2">
 								<h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
-									Description
+									{t("video.description")}
 								</h4>
 								<p className="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line">
 									{video.description}
@@ -89,7 +90,7 @@ export const renderVideoModalContent = (video: Video) => {
 						{video.description_km && (
 							<div className="space-y-2">
 								<h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
-									ការពិពណ៌នា
+									{t("video.description")}
 								</h4>
 								<p className="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line font-khmer">
 									{video.description_km}
@@ -101,4 +102,8 @@ export const renderVideoModalContent = (video: Video) => {
 			</div>
 		</div>
 	);
+}
+
+export const renderVideoModalContent = (video: Video) => {
+	return <VideoModalContent video={video} />;
 };

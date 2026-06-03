@@ -22,8 +22,8 @@ const mapColors = (type: string | undefined | null) => {
 const MarqueeCard = ({ partner, cardKey }: { partner: Partner; cardKey: string }) => {
     const { t } = useTranslation();
     const colors = mapColors(partner.mouType);
-    const partnerName = t(partner.name) || "MOU Partner";
-    const partnerDescription = t(partner.description) || "Memorandum of Understanding";
+    const partnerName = t(partner.name) || t("network.mou.partnerFallback");
+    const partnerDescription = t(partner.description) || t("network.mou.descriptionFallback");
     return (
         <div
             key={cardKey}
@@ -76,8 +76,8 @@ function MobileCarousel({ partners }: { partners: Partner[] }) {
 
     const partner = partners[current];
     const colors = mapColors(partner.mouType);
-    const partnerName = t(partner.name) || "MOU Partner";
-    const partnerDescription = t(partner.description) || "Memorandum of Understanding";
+    const partnerName = t(partner.name) || t("network.mou.partnerFallback");
+    const partnerDescription = t(partner.description) || t("network.mou.descriptionFallback");
 
     return (
         <div className="px-4 w-full">

@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import { Banner } from "@/lib/types/banner";
 import { API_BASE_URL } from "@/lib/static";
+import { useTranslation } from "@/lib/i18n";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -21,10 +22,12 @@ const kenBurnsVariants = {
 };
 
 export function HeroCarousel({ banners }: { banners: Banner[] }) {
+	const { t } = useTranslation();
+
 	if (banners.length === 0) {
 		return (
 			<div className="relative w-full h-[calc(100vh-5rem)] overflow-hidden group bg-gray-100 flex items-center justify-center">
-				<div className="text-lg text-gray-600">No banners available</div>
+				<div className="text-lg text-gray-600">{t("hero.noBanners")}</div>
 			</div>
 		);
 	}

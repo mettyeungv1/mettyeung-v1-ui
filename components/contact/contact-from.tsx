@@ -117,7 +117,7 @@ export function ContactForm() {
 							<SelectContent>
 								{departments.map((dept) => (
 									<SelectItem key={dept.value} value={dept.value}>
-										{dept.label}
+										{t(dept.label as any)}
 									</SelectItem>
 								))}
 							</SelectContent>

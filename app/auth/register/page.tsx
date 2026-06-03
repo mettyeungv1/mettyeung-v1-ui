@@ -56,10 +56,10 @@ export default function RegisterPage() {
 	// Password strength checker
 	const getPasswordStrength = (password: string) => {
 		const requirements = [
-			{ regex: /.{8,}/, text: "យ៉ាងហោចណាស់ 8 តួអក្សរ" },
-			{ regex: /[A-Z]/, text: "អក្សរធំ 1 តួ" },
-			{ regex: /[a-z]/, text: "អក្សរតូច 1 តួ" },
-			{ regex: /[0-9]/, text: "លេខ 1 តួ" },
+			{ regex: /.{8,}/, text: t("auth.passwordRules.minLength") },
+			{ regex: /[A-Z]/, text: t("auth.passwordRules.uppercase") },
+			{ regex: /[a-z]/, text: t("auth.passwordRules.lowercase") },
+			{ regex: /[0-9]/, text: t("auth.passwordRules.number") },
 		];
 
 		return requirements.map((req) => ({
@@ -79,22 +79,22 @@ export default function RegisterPage() {
 
 			// Check the response from your API. (Assuming 201 is success for creation)
 			if (result && result.status_code === 201) {
-				toast.success("ចុះឈ្មោះជោគជ័យ!", {
+				toast.success(t("auth.toast.registerSuccess"), {
 					description:
-						result.message || "សូមពិនិត្យអ៊ីមែលរបស់អ្នកដើម្បីបញ្ជាក់គណនី",
+						result.message || t("auth.toast.registerSuccessDescription"),
 				});
 				// Redirect to OTP verification on success
 				router.push(`/auth/verify-otp?email=${encodeURIComponent(data.email)}`);
 			} else {
 				// If the API returns an error (e.g., email exists), display it
-				toast.error("មានបញ្ហាក្នុងការចុះឈ្មោះ", {
-					description: result.message || "សូមព្យាយាមម្តងទៀត",
+				toast.error(t("auth.toast.registerError"), {
+					description: result.message || t("auth.toast.tryAgain"),
 				});
 			}
 		} catch (error) {
 			// This catches network failures or if the server action itself throws an error
-			toast.error("មានបញ្ហាប្រព័ន្ធ", {
-				description: "មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបានទេ។ សូមព្យាយាមម្តងទៀត។",
+			toast.error(t("auth.toast.systemError"), {
+				description: t("auth.toast.serverConnectionError"),
 			});
 		} finally {
 			setIsLoading(false);
@@ -106,10 +106,10 @@ export default function RegisterPage() {
 		try {
 			// Simulate social auth
 			await new Promise((resolve) => setTimeout(resolve, 1500));
-			toast.success(`ចុះឈ្មោះជាមួយ ${provider} ជោគជ័យ!`);
+			toast.success(t("auth.toast.socialRegisterSuccess").replace("{{provider}}", provider));
 			router.push("/");
 		} catch (error) {
-			toast.error(`មានបញ្ហាក្នុងការចុះឈ្មោះជាមួយ ${provider}`);
+			toast.error(t("auth.toast.socialRegisterError").replace("{{provider}}", provider));
 		} finally {
 			setIsLoading(false);
 		}

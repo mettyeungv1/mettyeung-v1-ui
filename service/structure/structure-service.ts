@@ -15,9 +15,23 @@ function localizedText(value: any, fallback = ""): string {
 }
 
 export function normalizeMemberData(member: any): Member {
+	const getTranslation = (arr: any[], field: string, lang = "en") => {
+		if (!Array.isArray(arr)) return null;
+		const t = arr.find((x: any) => x.languageCode === lang || x.language_code === lang);
+		return t ? t[field] : null;
+	};
+
 	const name_en = localizedText(member.name, "Unknown Member");
-	const title_en = localizedText(member.title, "Member");
-	const position_en = localizedText(member.title, "Member");
+	const name_km = localizedText(member.name, name_en);
+
+	const title_en = getTranslation(member.memberTranslations, "title", "en") 
+		|| member.role 
+		|| localizedText(member.title, "Member");
+		
+	const title_km = getTranslation(member.memberTranslations, "title", "km") 
+		|| title_en;
+
+	const position_en = title_en;
 	const location_en = localizedText(member.location);
 
 	// Join date — preserve full date, fallback to year-only
@@ -85,7 +99,9 @@ export function normalizeMemberData(member: any): Member {
 		id: member.id,
 		name: name_en,
 		name_en,
+		name_km,
 		title_en,
+		title_km,
 		position_en,
 		image: (() => {
 			const raw = member.avatarUrl || member.avatar_url;

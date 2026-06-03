@@ -11,6 +11,7 @@ import type { Video } from "@/lib/types/video";
 import type { Category } from "@/lib/types/category";
 import { VideosPageClient } from "@/components/gallery/videos-page-client";
 import { normalizeUrl } from "@/lib/utils/image";
+import Loading from "@/app/loading";
 
 export default async function VideosPage() {
 	const [videosRes, categoriesRes] = await Promise.all([
@@ -41,7 +42,7 @@ export default async function VideosPage() {
 	const initialCategories = [allCategory, ...categoriesRes];
 
 	return (
-		<React.Suspense fallback={<div>Loading...</div>}>
+		<React.Suspense fallback={<Loading />}>
 			<VideosPageClient
 				initialVideos={initialVideos}
 				initialCategories={initialCategories}

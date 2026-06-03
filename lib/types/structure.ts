@@ -70,7 +70,9 @@ export interface Member {
 	id: string;
 	name: string;
 	name_en: string;
+	name_km: string;
 	title_en: string;
+	title_km: string;
 	position_en: string;
 	image: string;
 	email: string;

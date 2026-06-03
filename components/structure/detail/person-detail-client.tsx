@@ -171,7 +171,8 @@ function InfoRow({
 /* ============================================================== */
 export function PersonDetailClient({ person }: PersonDetailClientProps) {
 	const [isGenerating, setIsGenerating] = useState(false);
-	const { t, locale = "en" } = useTranslation() as any;
+	const { t, language } = useTranslation();
+	const locale = language;
 
 	const handleDownloadPDF = async () => {
 		try {
@@ -294,7 +295,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 		};
 	}, [person, locale]);
 
-	const displayName = data.name || t("member.detail.unknownMember") || "Unknown Member";
+	const displayName = data.name || t("member.detail.unknownMember");
 	const initials = displayName
 		.split(" ")
 		.map((n: string) => n[0])
@@ -318,11 +319,11 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 
 			<div className="relative z-10 container max-w-6xl pt-24 lg:pt-28 pb-12 print:pt-4 print:pb-4">
 				{/* Breadcrumb */}
-				<nav className="mb-4 print:hidden" aria-label="Breadcrumb">
+				<nav className="mb-4 print:hidden" aria-label={t("common.breadcrumb")}>
 					<ol className="flex items-center gap-1.5 text-sm text-gray-500">
 						<li>
 							<Link href="/structure" className="hover:text-primary-900 transition-colors font-medium">
-								{t("member.detail.backToOrg") || "Organization"}
+								{t("member.detail.backToOrg")}
 							</Link>
 						</li>
 						<li><ChevronRight className="w-3.5 h-3.5" /></li>
@@ -335,7 +336,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 					<Button variant="ghost" asChild className="text-gray-600 hover:text-primary-900 gap-2 px-3 -ml-2">
 						<Link href="/structure">
 							<ArrowLeft className="w-4 h-4" />
-							<span className="hidden sm:inline">{t("member.detail.back") || "Back"}</span>
+							<span className="hidden sm:inline">{t("member.detail.back")}</span>
 						</Link>
 					</Button>
 
@@ -346,7 +347,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 							className="bg-primary-900 hover:bg-primary-950 text-white shadow-lg shadow-primary-900/20 gap-2 px-5 rounded-xl transition-all duration-200 hover:shadow-xl"
 						>
 							{isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-							{isGenerating ? t("member.detail.generating") || "Generating..." : t("member.detail.downloadCV") || "Download CV"}
+							{isGenerating ? t("member.detail.generating") : t("member.detail.downloadCV")}
 						</Button>
 					</div>
 				</div>
@@ -425,7 +426,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 										{data.headRole && (
 											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-accent-400/15 text-accent-300 border border-accent-400/30 backdrop-blur">
 												<Sparkles className="w-3 h-3" />
-												Head Member
+												{t("member.detail.headMember")}
 											</span>
 										)}
 									</div>
@@ -454,13 +455,13 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 										{data.joinDate && (
 											<span className="inline-flex items-center gap-1.5">
 												<Calendar className="w-3.5 h-3.5 text-primary-300/80" />
-												Since {data.joinDate}
+												{t("member.detail.since")} {data.joinDate}
 											</span>
 										)}
 										{data.yearsOfService !== null && data.yearsOfService > 0 && (
 											<span className="inline-flex items-center gap-1.5">
 												<Award className="w-3.5 h-3.5 text-primary-300/80" />
-												{data.yearsOfService} {data.yearsOfService === 1 ? "year" : "years"} of service
+												{data.yearsOfService} {data.yearsOfService === 1 ? t("member.detail.year") : t("member.detail.years")} {t("member.detail.ofService")}
 											</span>
 										)}
 									</div>
@@ -508,27 +509,27 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 						<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
 							{/* LEFT — Sidebar */}
 							<aside className="lg:col-span-4 space-y-8 print:space-y-5">
-								<Section title={t("member.detail.contact") || "Contact"} icon={User}>
+								<Section title={t("member.detail.contact")} icon={User}>
 									<div className="space-y-4">
-										<InfoRow icon={Mail} label="Email" value={data.email} href={data.email ? `mailto:${data.email}` : undefined} />
-										<InfoRow icon={Phone} label="Phone" value={data.phone} href={data.phone ? `tel:${data.phone}` : undefined} />
-										<InfoRow icon={MapPin} label="Location" value={data.location} />
+										<InfoRow icon={Mail} label={t("member.detail.email")} value={data.email} href={data.email ? `mailto:${data.email}` : undefined} />
+										<InfoRow icon={Phone} label={t("member.detail.phone")} value={data.phone} href={data.phone ? `tel:${data.phone}` : undefined} />
+										<InfoRow icon={MapPin} label={t("member.detail.location")} value={data.location} />
 									</div>
 								</Section>
 
 								{(data.dob || data.nationality || data.gender || data.joinDate) && (
-									<Section title={t("member.detail.personal") || "Personal"} icon={Award}>
+									<Section title={t("member.detail.personal")} icon={Award}>
 										<div className="space-y-4">
-											<InfoRow icon={Calendar} label="Date of Birth" value={data.dob} />
-											<InfoRow icon={Globe} label="Nationality" value={data.nationality} />
-											<InfoRow icon={User} label="Gender" value={data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : null} />
-											<InfoRow icon={Briefcase} label="Joined" value={data.joinDate} />
+											<InfoRow icon={Calendar} label={t("member.detail.dateOfBirth")} value={data.dob} />
+											<InfoRow icon={Globe} label={t("member.detail.nationality")} value={data.nationality} />
+											<InfoRow icon={User} label={t("member.detail.gender")} value={data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : null} />
+											<InfoRow icon={Briefcase} label={t("member.detail.joined")} value={data.joinDate} />
 										</div>
 									</Section>
 								)}
 
 								{data.skills.length > 0 && (
-									<Section title={t("member.detail.skills") || "Skills"} icon={Star} count={data.skills.length}>
+									<Section title={t("member.detail.skills")} icon={Star} count={data.skills.length}>
 										<div className="flex flex-wrap gap-2">
 											{data.skills.map((s: any) => (
 												<Badge
@@ -544,7 +545,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								)}
 
 								{data.languages.length > 0 && (
-									<Section title={t("member.detail.languages") || "Languages"} icon={Languages} count={data.languages.length}>
+									<Section title={t("member.detail.languages")} icon={Languages} count={data.languages.length}>
 										<div className="flex flex-wrap gap-2">
 											{data.languages.map((lang: string, idx: number) => (
 												<Badge
@@ -563,7 +564,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 							{/* RIGHT — Main */}
 							<main className="lg:col-span-8 space-y-10 print:space-y-6">
 								{data.experiences.length > 0 && (
-									<Section title={t("member.detail.experience") || "Professional Experience"} icon={Briefcase} count={data.experiences.length}>
+									<Section title={t("member.detail.experience")} icon={Briefcase} count={data.experiences.length}>
 										<div className="space-y-6">
 											{data.experiences.map((exp: any, index: number) => (
 												<article
@@ -574,17 +575,17 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-1.5">
 														<div className="flex-1 min-w-0">
 															<h4 className="font-bold text-base text-gray-900 leading-snug">
-																{exp.title || t("member.detail.role") || "Role"}
+																{exp.title || t("member.detail.role")}
 															</h4>
 															<p className="text-sm font-semibold text-primary-900 mt-0.5">
-																{exp.organization || t("member.detail.organization") || "Organization"}
+																{exp.organization || t("member.detail.organization")}
 															</p>
 														</div>
 														<Badge
 															variant="secondary"
 															className="bg-gray-100 text-gray-600 text-[11px] font-semibold px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
 														>
-															{exp.startYear || "—"} – {exp.endYear || t("member.detail.present") || "Present"}
+															{exp.startYear || "—"} – {exp.endYear || t("member.detail.present")}
 														</Badge>
 													</div>
 													{exp.description && (
@@ -597,7 +598,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								)}
 
 								{data.educations.length > 0 && (
-									<Section title={t("member.detail.education") || "Education"} icon={GraduationCap} count={data.educations.length}>
+									<Section title={t("member.detail.education")} icon={GraduationCap} count={data.educations.length}>
 										<div className="space-y-5">
 											{data.educations.map((edu: any, index: number) => (
 												<article
@@ -608,7 +609,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
 														<div className="flex-1 min-w-0">
 															<h4 className="font-bold text-base text-gray-900 leading-snug">
-																{edu.degree || t("member.detail.education") || "Degree"}
+																{edu.degree || t("member.detail.degree")}
 															</h4>
 															<p className="text-sm font-semibold text-primary-900 mt-0.5">{edu.school}</p>
 														</div>
@@ -616,7 +617,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 															variant="secondary"
 															className="bg-gray-100 text-gray-600 text-[11px] font-semibold px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
 														>
-															{edu.startYear || "—"} – {edu.endYear || t("member.detail.present") || "Present"}
+															{edu.startYear || "—"} – {edu.endYear || t("member.detail.present")}
 														</Badge>
 													</div>
 												</article>
@@ -626,7 +627,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								)}
 
 								{data.associations.length > 0 && (
-									<Section title={t("member.detail.organizations") || "Organizations"} icon={Building2} count={data.associations.length}>
+									<Section title={t("member.detail.organizations")} icon={Building2} count={data.associations.length}>
 										<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 											{data.associations.map((assoc: any, idx: number) => (
 												<div
@@ -638,7 +639,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													</div>
 													<div className="flex-1 min-w-0">
 														<p className="text-sm font-semibold text-gray-900 truncate">
-															{assoc.name || t("member.detail.organization") || "Organization"}
+															{assoc.name || t("member.detail.organization")}
 														</p>
 														{assoc.role && (
 															<p className="text-xs text-gray-500 truncate mt-0.5">{assoc.role}</p>
@@ -646,7 +647,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													</div>
 													{assoc.isHead && (
 														<Badge className="bg-primary-900 text-white border-0 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md flex-shrink-0">
-															Head
+															{t("member.detail.head")}
 														</Badge>
 													)}
 												</div>
@@ -659,7 +660,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 									<div className="text-center py-12 text-gray-400">
 										<FileTextEmpty />
 										<p className="mt-3 text-sm">
-											{t("member.detail.noContent") || "No additional information available."}
+											{t("member.detail.noContent")}
 										</p>
 									</div>
 								)}
@@ -674,7 +675,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 				<Button variant="outline" asChild className="flex-1 gap-2 border-gray-200 text-gray-600">
 					<Link href="/structure">
 						<ArrowLeft className="w-4 h-4" />
-						{t("member.detail.back") || "Back"}
+						{t("member.detail.back")}
 					</Link>
 				</Button>
 				<Button
@@ -683,7 +684,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 					className="flex-1 gap-2 bg-primary-900 hover:bg-primary-950 text-white rounded-xl"
 				>
 					{isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-					{isGenerating ? t("member.detail.generating") || "Generating..." : t("member.detail.downloadCV") || "Download CV"}
+					{isGenerating ? t("member.detail.generating") : t("member.detail.downloadCV")}
 				</Button>
 			</div>
 		</div>

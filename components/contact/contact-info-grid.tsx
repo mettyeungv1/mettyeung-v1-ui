@@ -41,7 +41,7 @@ export function ContactInfoGrid({ settings }: ContactInfoGridProps) {
 		{
 			icon: MapPin,
 			titleKey: "contactUs.address",
-			details: addressText ? [addressText] : ["Phnom Penh, Cambodia"],
+			details: addressText ? [addressText] : [t("contact.defaultAddress")],
 			isAddress: true,
 		},
 	];
@@ -58,10 +58,10 @@ export function ContactInfoGrid({ settings }: ContactInfoGridProps) {
 			<div className="container">
 				<div className="text-center mb-8">
 					<p className="text-xs font-bold text-primary-900 uppercase tracking-widest mb-2">
-						{t("contact.reachUs" as any) || "Reach Us"}
+						{t("contact.reachUs" as any)}
 					</p>
 					<h2 className="text-2xl font-bold text-gray-900">
-						{t("contact.infoTitle" as any) || "Get in Touch"}
+						{t("contact.infoTitle" as any)}
 					</h2>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-5">

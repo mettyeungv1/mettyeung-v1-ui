@@ -52,7 +52,7 @@ export function StructureFilterBar({
 					<div className="relative flex-1 max-w-md">
 						<Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
 						<Input
-							placeholder={t("structure.filter.searchPlaceholder") || "Search members..."}
+							placeholder={t("structure.filter.searchPlaceholder")}
 							value={localSearch}
 							onChange={(e) => setLocalSearch(e.target.value)}
 							className="pl-10 pr-9 h-11 rounded-lg border-gray-200 focus:border-khmer-gold focus:ring-khmer-gold/20"
@@ -64,7 +64,7 @@ export function StructureFilterBar({
 									onSearchChange("");
 								}}
 								className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-								aria-label="Clear search"
+								aria-label={t("structure.filter.clearSearch")}
 							>
 								<X className="w-4 h-4" />
 							</button>
@@ -77,10 +77,10 @@ export function StructureFilterBar({
 							value={selectedDepartment}
 							onChange={(e) => onDepartmentChange(e.target.value)}
 							className="w-full px-4 py-2.5 border border-gray-200 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-khmer-gold/20 focus:border-khmer-gold h-11 appearance-none cursor-pointer"
-							aria-label="Filter by department"
+							aria-label={t("structure.filter.byDepartment")}
 						>
 							<option value="all">
-								{t("structure.filter.allDepartments") || "All Departments"}
+								{t("structure.filter.allDepartments")}
 							</option>
 							{departments.map((section) => (
 								<option key={section.id} value={section.id}>
@@ -101,16 +101,16 @@ export function StructureFilterBar({
 					<p className="text-sm text-gray-500">
 						{hasActiveFilters ? (
 							<>
-								Showing <span className="font-semibold text-gray-700">{filteredMemberCount}</span> of{" "}
-								<span className="font-semibold text-gray-700">{totalMembers}</span> members
+								{t("structure.filter.showing")} <span className="font-semibold text-gray-700">{filteredMemberCount}</span> {t("structure.filter.of")}{" "}
+								<span className="font-semibold text-gray-700">{totalMembers}</span> {t("structure.filter.members")}
 								{selectedDepartment !== "all" && (
-									<> in <span className="font-semibold text-gray-700">{departments.find(d => d.id === selectedDepartment)?.title}</span></>
+									<> {t("structure.filter.in")} <span className="font-semibold text-gray-700">{departments.find(d => d.id === selectedDepartment)?.title}</span></>
 								)}
 							</>
 						) : (
 							<>
-								<span className="font-semibold text-gray-700">{totalMembers}</span> members across{" "}
-								<span className="font-semibold text-gray-700">{departments.length}</span> departments
+								<span className="font-semibold text-gray-700">{totalMembers}</span> {t("structure.filter.membersAcross")}{" "}
+								<span className="font-semibold text-gray-700">{departments.length}</span> {t("structure.filter.departments")}
 							</>
 						)}
 					</p>
@@ -125,7 +125,7 @@ export function StructureFilterBar({
 							}}
 							className="text-xs text-gray-500 hover:text-gray-700"
 						>
-							Clear filters
+							{t("structure.filter.clearFilters")}
 						</Button>
 					)}
 				</div>

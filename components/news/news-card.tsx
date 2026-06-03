@@ -53,7 +53,7 @@ export function NewsCard({ item, onClick }: NewsCardProps) {
 				<h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-khmer-gold transition-colors line-clamp-2">
 					{t(item.title)}
 				</h3>
-				<p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">
+				<p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2 flex-grow">
 					{t(item.excerpt)}
 				</p>
 				<div className="flex items-center justify-between text-sm text-gray-500 mt-auto pt-4 border-t">

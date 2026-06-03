@@ -39,12 +39,12 @@ export default function ForgotPasswordPage() {
       setSubmittedEmail(data.email);
       setIsSuccess(true);
       
-      toast.success("អ៊ីមែលកំណត់ពាក្យសម្ងាត់ថ្មីត្រូវបានផ្ញើ!", {
-        description: "សូមពិនិត្យអ៊ីមែលរបស់អ្នក",
+      toast.success(t("auth.toast.forgotEmailSent"), {
+        description: t("auth.toast.forgotEmailSentDescription"),
       });
     } catch (error) {
-      toast.error("មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល", {
-        description: "សូមព្យាយាមម្តងទៀត",
+      toast.error(t("auth.toast.forgotEmailError"), {
+        description: t("auth.toast.tryAgain"),
       });
     } finally {
       setIsLoading(false);
@@ -55,9 +55,9 @@ export default function ForgotPasswordPage() {
     setIsLoading(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      toast.success("អ៊ីមែលត្រូវបានផ្ញើម្តងទៀត!");
+      toast.success(t("auth.toast.forgotEmailResent"));
     } catch (error) {
-      toast.error("មានបញ្ហាក្នុងការផ្ញើអ៊ីមែល");
+      toast.error(t("auth.toast.forgotEmailError"));
     } finally {
       setIsLoading(false);
     }

@@ -94,18 +94,18 @@ export default function VerifyOtpForm({
 
 			// Check the response from the API (assuming 200 is success)
 			if (result && result.status_code === 200) {
-				toast.success("បញ្ជាក់គណនីជោគជ័យ!", {
-					description: result.message || "គណនីរបស់អ្នកត្រូវបានបញ្ជាក់ហើយ",
+				toast.success(t("auth.toast.otpVerified"), {
+					description: result.message || t("auth.toast.otpVerifiedDescription"),
 				});
 				router.push("/auth/login");
 			} else {
-				toast.error("កូដ OTP មិនត្រឹមត្រូវ", {
-					description: result.message || "សូមពិនិត្យកូដ OTP ហើយព្យាយាមម្តងទៀត",
+				toast.error(t("auth.toast.otpInvalid"), {
+					description: result.message || t("auth.toast.otpInvalidDescription"),
 				});
 			}
 		} catch (error) {
-			toast.error("មានបញ្ហាប្រព័ន្ធ", {
-				description: "មិនអាចបញ្ជាក់ OTP បានទេ។ សូមព្យាយាមម្តងទៀត។",
+			toast.error(t("auth.toast.systemError"), {
+				description: t("auth.toast.otpVerifyError"),
 			});
 		} finally {
 			setIsLoading(false);
@@ -119,8 +119,8 @@ export default function VerifyOtpForm({
 			const result = await resendOtpAction({ email });
 
 			if (result && result.status_code === 200) {
-				toast.success("កូដ OTP ថ្មីត្រូវបានផ្ញើ!", {
-					description: result.message || "សូមពិនិត្យអ៊ីមែលរបស់អ្នក",
+				toast.success(t("auth.toast.otpSent"), {
+					description: result.message || t("auth.toast.otpSentDescription"),
 				});
 				// Reset state on successful resend
 				setCountdown(300);
@@ -128,13 +128,13 @@ export default function VerifyOtpForm({
 				setValue("otp", "");
 				inputRefs.current[0]?.focus();
 			} else {
-				toast.error("មានបញ្ហាក្នុងការផ្ញើកូដ OTP", {
-					description: result.message || "សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។",
+				toast.error(t("auth.toast.otpSendError"), {
+					description: result.message || t("auth.toast.otpSendErrorDescription"),
 				});
 			}
 		} catch (error) {
-			toast.error("មានបញ្ហាប្រព័ន្ធ", {
-				description: "មិនអាចផ្ញើកូដ OTP បានទេ។",
+			toast.error(t("auth.toast.systemError"), {
+				description: t("auth.toast.otpSystemError"),
 			});
 		} finally {
 			setIsResending(false);

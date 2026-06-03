@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { normalizeUrl } from "@/lib/utils/image";
 import { Person } from "@/lib/stores/person-store";
 import { MEDIA_ENDPOINT } from "@/lib/static";
+import { useTranslation } from "@/lib/i18n";
 
 /* ── props ──────────────────────────────────────────────────────────── */
 
@@ -23,6 +24,10 @@ type PersonMediaFields = Person &
 		avatarUrl: string;
 		avatar_url: string;
 		title_en: string;
+		title_km: string;
+		name_en: string;
+		name_km: string;
+		position_en: string;
 	}>;
 
 /* ── helpers ─────────────────────────────────────────────────────────── */
@@ -50,6 +55,7 @@ function getInitials(name?: string): string {
 
 function PersonCardComponent({ person, variant = "compact", index }: PersonCardProps) {
 	const [errored, setErrored] = useState(false);
+	const { language } = useTranslation();
 
 	const {
 		displayName,
@@ -58,8 +64,13 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 		initials,
 	} = useMemo(() => {
 		const typedPerson = person as PersonMediaFields;
-		const name = typedPerson.name_en || typedPerson.name || "—";
-		const rawTitle = typedPerson.title_en || typedPerson.position_en || "";
+		const name = language === 'km' 
+			? (typedPerson.name_km || typedPerson.name_en || typedPerson.name || "—")
+			: (typedPerson.name_en || typedPerson.name || "—");
+			
+		const rawTitle = language === 'km'
+			? (typedPerson.title_km || typedPerson.title_en || typedPerson.position_en || "")
+			: (typedPerson.title_en || typedPerson.position_en || "");
 
 		return {
 			displayName: name,
@@ -67,7 +78,7 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 			imageSrc: resolveImage(typedPerson),
 			initials: getInitials(typedPerson.name_en || typedPerson.name),
 		};
-	}, [person]);
+	}, [person, language]);
 
 	useEffect(() => {
 		setErrored(false);
@@ -77,117 +88,76 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 		setErrored(true);
 	}, []);
 
-	const isDetailed = variant === "detailed";
-
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
-			whileHover={{ y: -4 }}
 			transition={{
-				duration: 0.45,
-				delay: Math.min(index * 0.05, 0.4),
-				ease: [0.22, 1, 0.36, 1],
+				duration: 0.4,
+				delay: Math.min(index * 0.05, 0.3),
+				ease: "easeOut",
 			}}
 			className="h-full"
 		>
 			<Link
 				href={`/structure/${person.id}`}
-				className="group block h-full rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+				className="group block h-full outline-none focus-visible:ring-2 focus-visible:ring-primary-900 rounded-xl"
 				aria-label={`View ${displayName}'s profile`}
 			>
 				<Card
-					className={cn(
-						"h-full overflow-hidden rounded-2xl border border-transparent bg-white/70 shadow-none",
-						"cursor-pointer transition-[background-color,border-color,box-shadow] duration-300 ease-out",
-						"group-hover:border-primary-900/10 group-hover:bg-[#FAF7F0] group-hover:shadow-[0_18px_45px_rgba(0,77,140,0.10)]",
-						"group-focus-visible:border-primary-900/20 group-focus-visible:bg-[#FAF7F0] group-focus-visible:shadow-[0_18px_45px_rgba(0,77,140,0.10)]",
-					)}
+					className="h-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-primary-200"
 				>
-					<CardContent
-						className={cn(
-							"flex h-full flex-col items-center px-5 py-7 text-center sm:px-6 md:px-8",
-							isDetailed ? "gap-5 sm:gap-6 md:py-9" : "gap-4",
-						)}
-					>
-
-						{/* ── Arc + avatar ─────────────────────────────── */}
-						<div
-							className={cn(
-								"relative aspect-square w-[clamp(8.75rem,42vw,12.5rem)] shrink-0",
-								"transition-transform duration-500 ease-out group-hover:scale-[1.025] group-focus-visible:scale-[1.025]",
-							)}
-						>
-
-							<svg
-								className="absolute inset-0 w-full h-full"
-								viewBox="0 0 200 200"
-								aria-hidden="true"
-							>
-								<circle
-									cx="100"
-									cy="100"
-									r="96"
-									fill="none"
-									strokeWidth="3.5"
-									strokeLinecap="round"
-									strokeDasharray="480 123"
-									transform="rotate(186, 100, 100)"
-									stroke="currentColor"
-									className="text-primary-900 transition-colors duration-500 ease-out group-hover:text-[#A87E5A] group-focus-visible:text-[#A87E5A]"
+					<div className="flex flex-col h-full">
+						{/* Image Section - Professional Portrait Style */}
+						<div className="relative w-full aspect-[4/5] bg-gray-100 overflow-hidden">
+							{imageSrc && !errored ? (
+								<Image
+									src={imageSrc}
+									alt={displayName}
+									fill
+									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+									className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+									onError={handleImageError}
 								/>
-							</svg>
-
-							<div className="absolute inset-[6%] overflow-hidden rounded-full bg-muted shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55)] ring-1 ring-black/5">
-								{imageSrc && !errored ? (
-									<Image
-										src={imageSrc}
-										alt={displayName}
-										fill
-										sizes="(max-width: 640px) 140px, (max-width: 1024px) 164px, 176px"
-										className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105 group-focus-visible:scale-105"
-										onError={handleImageError}
-									/>
-								) : (
-									<div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.22),transparent_32%),linear-gradient(135deg,#003B6D,#005A94)]">
-										<span
-											className="select-none text-[clamp(2rem,9vw,3rem)] font-bold text-white"
-											aria-hidden="true"
-										>
-											{initials}
-										</span>
-									</div>
-								)}
-							</div>
+							) : (
+								<div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+									<span
+										className="text-4xl font-semibold text-gray-400"
+										aria-hidden="true"
+									>
+										{initials}
+									</span>
+								</div>
+							)}
+							{/* Subtle gradient overlay at bottom of image for blending */}
+							<div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 						</div>
 
-						{/* ── Text ─────────────────────────────────────── */}
-						<div className="flex min-w-0 flex-1 flex-col items-center justify-start gap-2">
-							<p
+						{/* Info Section - Formal and Clean */}
+						<div className="flex flex-col flex-1 p-5 text-center bg-white border-t-4 border-primary-900">
+							<h4
 								title={displayName}
-								className={cn(
-									"max-w-full text-balance break-words text-lg font-bold leading-tight text-gray-950 sm:text-xl",
-									"line-clamp-2 transition-colors duration-200 group-hover:text-primary-900 group-focus-visible:text-primary-900",
-								)}
+								className="text-lg font-bold text-gray-900 mb-1 line-clamp-2 uppercase tracking-wide group-hover:text-primary-900 transition-colors"
 							>
 								{displayName}
-							</p>
+							</h4>
 
 							{displayTitle && (
 								<p
 									title={displayTitle}
-									className="max-w-full text-pretty break-words text-sm leading-snug text-muted-foreground line-clamp-2 sm:text-base"
+									className="text-sm font-medium text-gray-600 line-clamp-2 uppercase tracking-wider"
 								>
 									{displayTitle}
 								</p>
 							)}
 
-							<p className="pt-1 text-sm font-semibold text-[#A87E5A] opacity-100 transition-all duration-300 ease-out sm:translate-y-1 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-visible:translate-y-0 sm:group-focus-visible:opacity-100">
-								View Profile <span aria-hidden="true">&rarr;</span>
-							</p>
+							<div className="mt-auto pt-4">
+								<span className="inline-block px-4 py-1.5 border border-primary-900 text-primary-900 text-xs font-semibold rounded uppercase tracking-widest opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+									View Profile
+								</span>
+							</div>
 						</div>
-
-					</CardContent>
+					</div>
 				</Card>
 			</Link>
 		</motion.div>

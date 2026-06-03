@@ -108,7 +108,22 @@
     "executiveCommittee": "Executive Committee",
     "boardOfDirectors": "Board of Directors",
     "seniorAdvisors": "Senior Advisors",
-    "associationBranches": "Association Branches "
+    "associationBranches": "Association Branches ",
+    "updating": "Updating...",
+    "noMembersFound": "No members found",
+    "filter": {
+      "searchPlaceholder": "Search members...",
+      "clearSearch": "Clear search",
+      "byDepartment": "Filter by department",
+      "allDepartments": "All Departments",
+      "showing": "Showing",
+      "of": "of",
+      "members": "members",
+      "in": "in",
+      "membersAcross": "members across",
+      "departments": "departments",
+      "clearFilters": "Clear filters"
+    }
   },
   "events": {
     "heroDescription": "Explore our latest activities and events",
@@ -156,7 +171,8 @@
     "educationTitle": "Education s& Culture",
     "educationSubtitle": "Learning & Heritage",
     "educationDescription": "Promoting education and preserving Khmer culture",
-    "joinUs": "Join Us"
+    "joinUs": "Join Us",
+    "noBanners": "No banners available"
   },
   "home": {
     "ourHistory": "Our History",
@@ -222,6 +238,7 @@
     "projects": "projects",
     "noResults": "No projects found",
     "clearFilters": "Clear all filters",
+    "progress": "Progress",
     "categories": {
       "all": "All Projects",
       "community": "Community",
@@ -238,6 +255,7 @@
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
+    "address": "Address",
     "department": "Department",
     "subject": "Subject",
     "message": "Message",
@@ -254,6 +272,13 @@
       "saturday": "Saturday",
       "sunday": "Sunday",
       "closed": "Closed"
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday"
     },
     "hoursWeekday": "8:00 AM – 5:00 PM",
     "hoursSaturday": "8:00 AM – 12:00 PM",
@@ -273,7 +298,34 @@
     "statsMembers": "Active Members",
     "statsYears": "Years Active",
     "statsAssoc": "Associations",
-    "heroTagline": "We'd love to hear from you"
+    "heroTagline": "We'd love to hear from you",
+    "reachUs": "Reach Us",
+    "chooseMethod": "Choose the best contact method above to reach our team.",
+    "deptGeneral": "General Inquiry",
+    "deptVolunteer": "Volunteer",
+    "deptDonation": "Donation",
+    "deptPartnership": "Partnership",
+    "deptMedia": "Media",
+    "findUs": "Find Us",
+    "visitOffice": "Visit Our Office",
+    "officeAddress": "Office Address",
+    "callOffice": "Call Office",
+    "letsConnect": "Let's connect",
+    "infoTitle": "Get in Touch",
+    "mapTitle": "Mett Yeung Association map",
+    "organizationName": "Mett Yeung Association",
+    "defaultAddress": "Phnom Penh, Cambodia",
+    "sidebar": {
+      "officeHours": "Office Hours",
+      "followUs": "Follow Us",
+      "goodToKnow": "Good to know",
+      "followOn": "Follow us on {{platform}}",
+      "tips": {
+        "callUrgent": "Call directly for urgent matters",
+        "volunteer": "Volunteering requests go to our team",
+        "general": "Use the form for general questions"
+      }
+    }
   },
   "common": {
     "readMore": "Read More",
@@ -289,11 +341,27 @@
     "all": "All",
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "copy": "Copy",
+    "cancel": "Cancel",
+    "more": "More",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "previousPageLabel": "Go to previous page",
+    "nextPageLabel": "Go to next page",
+    "morePages": "More pages",
+    "scrollToTop": "Scroll to top",
+    "languageShort": "Lang",
+    "selectLanguage": "Select Language",
+    "breadcrumb": "Breadcrumb"
   },
   "video": {
     "category": "Category",
-    "about": "About"
+    "about": "About",
+    "publishedDate": "Published Date",
+    "totalViews": "Total Views",
+    "duration": "Duration",
+    "description": "Description"
   },
   "contactUs": {
     "phone": "Phone",
@@ -409,7 +477,47 @@
     "loginWithNewPassword": "Login with New Password",
     "invalidResetLink": "Invalid Reset Link",
     "invalidResetLinkDescription": "This password reset link is invalid or has expired. Please request a new one.",
-    "requestNewLink": "Request New Link"
+    "requestNewLink": "Request New Link",
+    "passwordRules": {
+      "minLength": "At least 8 characters",
+      "uppercase": "1 uppercase letter",
+      "lowercase": "1 lowercase letter",
+      "number": "1 number"
+    },
+    "toast": {
+      "loginError": "There was a problem signing in",
+      "loginErrorDescription": "Please check your email and password",
+      "loginSuccess": "Signed in successfully!",
+      "loginSuccessDescription": "You will be redirected to the home page",
+      "socialLoginSuccess": "Signed in with {{provider}} successfully!",
+      "socialLoginError": "There was a problem signing in with {{provider}}",
+      "registerSuccess": "Registered successfully!",
+      "registerSuccessDescription": "Please check your email to verify your account",
+      "registerError": "There was a problem registering",
+      "socialRegisterSuccess": "Registered with {{provider}} successfully!",
+      "socialRegisterError": "There was a problem registering with {{provider}}",
+      "tryAgain": "Please try again",
+      "systemError": "System error",
+      "serverConnectionError": "Could not connect to the server. Please try again.",
+      "otpVerified": "Account verified successfully!",
+      "otpVerifiedDescription": "Your account has been verified",
+      "otpInvalid": "Invalid OTP code",
+      "otpInvalidDescription": "Please check the OTP code and try again",
+      "otpVerifyError": "Could not verify OTP. Please try again.",
+      "otpSent": "A new OTP code has been sent!",
+      "otpSentDescription": "Please check your email",
+      "otpSendError": "There was a problem sending the OTP code",
+      "otpSendErrorDescription": "Please try again later.",
+      "otpSystemError": "Could not send OTP.",
+      "invalidResetToken": "Invalid password reset link",
+      "resetSuccess": "Password reset successfully!",
+      "resetSuccessDescription": "You can now sign in with your new password",
+      "resetError": "There was a problem resetting your password",
+      "forgotEmailSent": "Password reset email sent!",
+      "forgotEmailSentDescription": "Please check your email",
+      "forgotEmailError": "There was a problem sending the email",
+      "forgotEmailResent": "Email sent again!"
+    }
   },
   "partners": {
     "title": "Our Friends Network",
@@ -422,6 +530,15 @@
     "mou": {
       "title": "Memorandum of Understanding (MOU)",
       "description": "Mett Yeung has signed the MOU with institution and private companies for cooperation on professional training and technical skills. The cooperation including:",
+      "partnerFallback": "MOU Partner",
+      "descriptionFallback": "Memorandum of Understanding",
+      "showLess": "Show Less",
+      "viewAllPartners": "View All Partners",
+      "types": {
+        "privateCompany": "Private Company",
+        "association": "Association",
+        "institution": "Institution"
+      },
       "list": {
         "item1": "MOU between MYA and Aspire Design Academy Company to cooperation on training and human resource development",
         "item2": "MOU between MYA and Coffee Co., Ltd. to cooperation on training and human resource development",
@@ -507,7 +624,81 @@
       "department": "Department",
       "head": "Head",
       "joined": "Joined",
-      "unknownMember": "Unknown Member"
+      "unknownMember": "Unknown Member",
+      "noContent": "No additional information available.",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "dateOfBirth": "Date of Birth",
+      "nationality": "Nationality",
+      "gender": "Gender",
+      "degree": "Degree",
+      "headMember": "Head Member",
+      "year": "year",
+      "years": "years",
+      "ofService": "of service",
+      "since": "Since",
+      "statusLabel": "Status",
+      "status": {
+        "active": "Active Member",
+        "alumni": "Alumni",
+        "inactive": "Inactive",
+        "unknown": "unknown"
+      }
+    },
+    "pdf": {
+      "profile": "Profile",
+      "professionalExperience": "Professional Experience",
+      "education": "Education",
+      "organizations": "Organizations & Memberships",
+      "additionalInfo": "Additional Information",
+      "details": "Details",
+      "links": "Links",
+      "skills": "Skills",
+      "languages": "Languages",
+      "born": "Born",
+      "gender": "Gender",
+      "nationality": "Nationality",
+      "joined": "Joined",
+      "memberId": "Member ID",
+      "page": "Page",
+      "of": "of",
+      "link": "Link"
     }
+  },
+  "gallery": {
+    "allVideos": "All Videos",
+    "videoGallery": "Video Gallery",
+    "endOfList": "You've reached the end of the list",
+    "noItemsFound": "No Items Found",
+    "noItemsInCategory": "There are no items in the \"{{category}}\" category."
+  },
+  "news": {
+    "search": "Search",
+    "searchPlaceholder": "Search news...",
+    "categories": "Categories",
+    "relatedArticles": "Related Articles",
+    "viewAllArticles": "View All Articles",
+    "shareArticle": "Share Article",
+    "linkCopiedTitle": "Link copied!",
+    "linkCopiedDescription": "The article link has been copied to your clipboard.",
+    "relatedLoadError": "Could not load related articles.",
+    "shareFallbackTitle": "Check out this article!"
+  },
+  "comments": {
+    "title": "Comments",
+    "placeholder": "Write a comment...",
+    "keepRespectful": "Please keep comments respectful.",
+    "submit": "Post Comment",
+    "empty": "No comments yet. Be the first to comment!",
+    "justNow": "Just now",
+    "verified": "Verified",
+    "you": "You",
+    "user": "User",
+    "hourAgo": "h ago",
+    "dayAgo": "d ago",
+    "loginTitle": "Please Log In",
+    "loginDescription": "You need to be logged in to post a comment. Would you like to log in now?",
+    "goToLogin": "Go to Login Page"
   }
 }

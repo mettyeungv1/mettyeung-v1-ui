@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { LogIn } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
 
 interface LoginPromptModalProps {
 	open: boolean;
@@ -24,6 +25,7 @@ export function LoginPromptModal({
 	onOpenChange,
 }: LoginPromptModalProps) {
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const handleLoginRedirect = () => {
 		router.push("/auth/login");
@@ -35,17 +37,16 @@ export function LoginPromptModal({
 				<AlertDialogHeader>
 					<AlertDialogTitle className="flex items-center gap-2">
 						<LogIn className="h-5 w-5" />
-						Please Log In
+						{t("comments.loginTitle")}
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						You need to be logged in to post a comment. Would you like to log in
-						now?
+						{t("comments.loginDescription")}
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
 					<AlertDialogAction asChild>
-						<Button onClick={handleLoginRedirect}>Go to Login Page</Button>
+						<Button onClick={handleLoginRedirect}>{t("comments.goToLogin")}</Button>
 					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>

@@ -1,139 +1,150 @@
 {
   "about": {
     "title": "Mettyerngについて",
-    "subtitle": "私たちの友人協会（Mettyeung）は、国内外の自営業者、技術専門家、サービス従事者およびその他の事業者の間で、友情、連帯、忠誠心を強化し、支援ネットワークを構築するとともに、生活水準や雇用機会の向上、同じ目的を持つ関係者とのビジネス協力を目的として設立された民間非営利法人（NPO）です。",
+    "subtitle": "Mett Yeungは、国内外の自営業者、技術専門家、サービス従事者、その他のビジネス関係者間の友情、連帯、忠誠心を強化し、支援ネットワークを構築すること、ならびに関連当事者と協力して生活水準、雇用機会、ビジネス協力を向上させることを目的として設立された民間非営利法人です。",
     "badge1": "友情",
-    "badge2": "団結",
-    "badge3": "忠誠",
+    "badge2": "連帯",
+    "badge3": "忠誠心",
     "goals": {
       "title": "私たちの目標",
-      "desc1": "Mettyeungの目標は以下の通りです：",
-      "list1": "国内外の自営業者、技術専門家、サービス従事者およびその他の事業者を結集する。",
-      "list2": "メンバーへのサポート、経験の共有、雇用市場情報の提供、相談対応、およびトレーニングを実施する。",
-      "list3": "関係者からの支援を求め、ビジネス支援ネットワークの構築に参加する。",
+      "desc1": "Mett Yeungは以下の目標を掲げています:",
+      "list1": "国内外で働く、または自ら収入を得ている人々、技術専門家、サービス従事者、その他のビジネス関係者を集める",
+      "list2": "メンバーへのサポートの提供、経験の共有、雇用機会、コンサルティング、トレーニング",
+      "list3": "関係者からのサポートを求め、ビジネス支援ネットワークの構築に参加する",
       "list4": "MYAメンバーの利益を代表し、保護する。"
     },
     "mission": {
       "title": "私たちの使命",
-      "desc1": "友人ネットワークを構築し、関心に基づいたインタレストグループに国内外のメンバーを集約することで、より良い関係を育み、支援を提供し、経験や雇用市場情報を共有し、相談対応や多岐にわたるスキル研修を実施する。"
+      "desc1": "ネットワーキングを構築し、興味に応じてメンバーを集め、より良い関係を育み、サポートを提供し、経験を共有し、雇用機会を提供し、さまざまなスキルのコンサルティングとトレーニングを提供する"
     },
     "values": {
       "title": "私たちの価値観",
-      "desc1": "友情、団結、忠誠"
+      "desc1": "友情、連帯、忠誠心"
     },
     "timeline": {
-      "title": "歩み",
-      "title_en": "私たちの歩み",
-      "description": "2018年以来の成長と成果を辿ります。",
+      "title": "旅程",
+      "title_en": "Our Journey",
+      "description": "2018年からの私たちの成長と実績の軌跡。",
       "founded": {
         "title": "組織設立",
-        "title_en": "組織設立",
-        "description": "Mettyerngは、10名の献身的な初期ボランティアのグループによって結成されました。",
+        "title_en": "Organization Founded",
+        "description": "Mettyerngは10人の献身的なボランティアによる初期グループで結成されました。",
         "achievements": {
-          "members": "10名の創設メンバー",
-          "firstProject": "最初のプロジェクトを開始"
+          "members": "創立メンバー10名",
+          "firstProject": "最初のプロジェクトが開始されました"
         }
       },
       "education": {
         "title": "教育イニシアチブ",
-        "title_en": "教育イニシアチブ",
-        "description": "農村地域の子どもたちに教育を提供するプロジェクトを開始しました。",
+        "title_en": "Education Initiative",
+        "description": "農村部の子供たちに教育を提供するためのプロジェクトを開始しました。",
         "achievements": {
-          "children": "50人の子どもたちが教育を受ける",
+          "children": "50人の子供たちに教育",
           "classrooms": "最初の5つの教室"
         }
       },
       "covid": {
-        "title": "COVID-19救援",
-        "title_en": "COVID-19救援",
-        "description": "COVID-19パンデミック中に食料および医療支援を提供しました。",
+        "title": "COVID-19 救援",
+        "title_en": "COVID-19 Relief",
+        "description": "COVID-19パンデミックの間に食料と医療援助を提供しました。",
         "achievements": {
-          "families": "500世帯を支援",
-          "medicalKits": "医療キットを配布"
+          "families": "500家族への支援",
+          "medicalKits": "配布された医療キット"
         }
       },
       "haircut": {
         "title": "無料ヘアカットプロジェクト",
-        "title_en": "無料ヘアカットプロジェクト",
-        "description": "コミュニティに無料ヘアカットを提供するプロジェクトを開始しました。",
+        "title_en": "Free Haircut Project",
+        "description": "地域社会に無料のヘアカットを提供するプロジェクトを開始しました。",
         "achievements": {
-          "people": "200人にサービス提供",
-          "monthlyService": "毎月のサービス"
+          "people": "200人へのサービス提供",
+          "monthlyService": "月次サービス"
         }
       },
       "expansion": {
         "title": "拡大",
-        "title_en": "拡大",
+        "title_en": "Expansion",
         "description": "活動を他の州に拡大し、メンバーシップを増やしました。",
         "achievements": {
-          "activeMembers": "100人以上の活動メンバー",
+          "activeMembers": "100名以上のアクティブメンバー",
           "provinces": "3つの州で活動中"
         }
       },
       "recognition": {
-        "title": "認知",
-        "title_en": "認知",
-        "description": "私たちのフォーラムに対して、政府および市民社会から認知を受けました。",
+        "title": "認識",
+        "title_en": "Recognition",
+        "description": "私たちのフォーラムが政府および市民社会から認められました。",
         "achievements": {
-          "nationalAward": "国家賞を受賞",
+          "nationalAward": "国家賞受賞",
           "acknowledgement": "公式な承認"
         }
       },
       "newFuture": {
         "title": "新しい未来",
-        "title_en": "新しい未来",
-        "description": "新しいウェブサイトを立ち上げ、デジタル技術分野への活動を拡大しました。",
+        "title_en": "New Future",
+        "description": "新しいウェブサイトを立ち上げ、デジタル技術分野に活動を拡大しました。",
         "achievements": {
-          "newWebsite": "新しいウェブサイトを立ち上げ",
+          "newWebsite": "新しいウェブサイトの立ち上げ",
           "digitalSystem": "デジタル管理システム"
         }
       }
     },
     "team": {
-      "title": "私たちのチーム",
-      "title_en": "私たちのコアチーム",
-      "description": "コミュニティの構築に専念しているコアメンバーです。",
-      "member1": {
-        "name": "Mettyerng氏",
-        "role": "会長"
-      },
-      "member2": {
-        "name": "Sokha氏",
-        "role": "副会長"
-      },
-      "member3": {
-        "name": "Dara氏",
-        "role": "書記"
-      },
-      "member4": {
-        "name": "Chanda氏",
-        "role": "会計"
-      }
+      "title": "私たちの構造",
+      "description": "私たちの使命を推進する献身的なチームと個人をご覧ください。"
     },
     "partner": {
-      "title": "私たちの友人ネットワーク"
+      "title": "私たちの友人ネットワーク",
+      "view_all": "完全なネットワークを見る"
+    }
+  },
+  "structure": {
+    "hero": {
+      "title": "私たちの構造",
+      "description": "私たちの使命を推進する献身的なチームと個人をご覧ください。"
+    },
+    "chart": "組織図",
+    "honorMember": "名誉会員",
+    "executiveCommittee": "実行委員会",
+    "boardOfDirectors": "取締役会",
+    "seniorAdvisors": "上級顧問",
+    "associationBranches": "協会支部 ",
+    "updating": "更新中...",
+    "noMembersFound": "メンバーが見つかりません",
+    "filter": {
+      "searchPlaceholder": "メンバーを検索...",
+      "clearSearch": "検索をクリア",
+      "byDepartment": "部門で絞り込み",
+      "allDepartments": "すべての部門",
+      "showing": "表示中",
+      "of": "/",
+      "members": "メンバー",
+      "in": "-",
+      "membersAcross": "部門全体でのメンバー",
+      "departments": "部門",
+      "clearFilters": "フィルターをクリア"
     }
   },
   "events": {
-    "heroDescription": "私たちの最新の活動とイベントを確認してください",
-    "recentNews": "最新ニュース",
-    "featuredNews": "注目ニュース",
+    "heroDescription": "最新の活動とイベントを探索する",
+    "recentNews": "最近のニュース",
+    "featuredNews": "注目のニュース",
     "allNewsGrid": "すべてのニュース",
     "foundArticles": "{{count}}件の記事が見つかりました",
     "noNewsFound": "ニュースが見つかりません",
     "trySearching": "別のキーワードやカテゴリで検索してみてください。",
-    "endOfFeed": "ニュースフィードの最後まで到達しました"
+    "endOfFeed": "ニュースフィードの終わりに達しました"
   },
   "nav": {
-    "activity": "活動",
-    "allNews": "すべて",
     "home": "ホーム",
-    "about": "協会概要",
+    "about": "概要",
     "subMenuAbout": "私たちについて",
     "network": "私たちのネットワーク",
-    "structure": "組織構造",
+    "structure": "構造",
     "news": "イベント",
     "latestNews": "最新ニュース",
+    "activity": "活動",
+    "allNews": "すべて",
     "events": "イベント",
     "videos": "ビデオ",
     "projects": "プロジェクト",
@@ -143,86 +154,91 @@
     "culture": "文化",
     "sports": "スポーツ",
     "gallery": "ギャラリー",
-    "contact": "お問い合わせ",
+    "contact": "連絡先",
     "joinUs": "参加する"
   },
   "hero": {
     "title": "コミュニティビルダー",
-    "subtitle": "共に強力なコミュニティを築く",
-    "description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループです。",
-    "learnMore": "さらに詳しく",
+    "subtitle": "共に強いコミュニティを築く",
+    "description": "私たちは教育、文化、およびコミュニティ開発に焦点を当てた社会愛好家のグループです",
+    "learnMore": "もっと詳しく",
     "watchVideo": "ビデオを見る",
-    "videoDescription": "私たちの活動やプログラムを動画でご覧ください",
+    "videoDescription": "ビデオを通して私たちの活動とプログラムを探索してください",
     "projectTitle": "無料ヘアカットプロジェクト",
     "projectSubtitle": "コミュニティサービスイニシアチブ",
-    "projectDescription": "支援が必要なコミュニティメンバーのための無料ヘアカット",
-    "viewProjects": "プロジェクトを見る",
+    "projectDescription": "支援が必要なコミュニティメンバーのための無料のヘアカット",
+    "viewProjects": "私たちの活動を見る",
     "educationTitle": "教育と文化",
     "educationSubtitle": "学習と遺産",
-    "educationDescription": "教育を推進し、クメール文化を保存する",
-    "joinUs": "参加する"
+    "educationDescription": "教育の促進とクメール文化の保護",
+    "joinUs": "参加する",
+    "noBanners": "バナーはありません"
   },
   "home": {
-    "ourHistory": "当協会の歴史",
-    "ourHistoryDetail": "私たちの友人協会（Our Friends Association）は、27名の創立メンバーの発議により、2020年12月2日に設立された民間協会です。これら27名の創立メンバーは、カンボジアの社会的利益と福祉のために、生活水準、知識、雇用機会、そしてビジネスの向上に焦点を当て、定款および内部規則を共同で策定しました。その後、当協会は2021年1月27日付の内務省布告第245号により、「法人」として正式に登録されました。",
+    "ourHistory": "私たちの歴史",
+    "ourHistoryDetail": "Mett Yeung協会（MYA）は、2020年12月2日に27人の創設メンバーのイニシアチブのもとに設立された民間協会です。27人の創設メンバーは、カンボジア社会の福祉である生活水準の向上、知識、雇用機会、およびビジネスに焦点を当てた法令、内部規程、規則を共同で作成および起草しました。協会は、2021年1月27日付のPrakas No. 245を通じて「法人」として内務省に合法的に登録されました。",
     "ourHistoryMembershipInfo": {
-      "title": "MYA（私たちの友人協会）のメンバーシップには以下が含まれます：",
-      "content": "カンボジア王国の法律に従って登録され、国内外の自営業者、技術者、サービス従事者およびその他の事業者に関連する活動を行う組織、協会、連合、その他の法人は、協会の会員になるための申請を行うことができます。法人または個人である会員は、会員になるための申請書を提出し、実行委員長の同意を得ることで、MYAの会員として認められます。"
+      "title": "MYAメンバーシップに含まれるもの:",
+      "content": "カンボジア王国の法律に従って登録され、国内外の自営業、技術、サービス従事者、およびその他のビジネス関係者に関連する活動に従事する組織、協会、連合会、およびその他の法人、または18歳以上の個人は、協会のメンバーになることを申請できます。法人または個人であるメンバーは、メンバーシップを申請することによりMYAのメンバーになり、実行委員会委員長の合意を通じて協会のメンバーとして承認されます。"
     },
-    "membershipTypesTitle": "協会のメンバーシップには以下が含まれます：",
+    "membershipTypesTitle": "協会のメンバーシップには以下が含まれます:",
     "membershipTypes": {
       "founding": {
         "title": "創設メンバー",
-        "description": "MYAの設立を発起した積極的なメンバーです。"
+        "description": "MYAの設立を開始したアクティブメンバー。"
       },
       "honorary": {
-        "title": "名誉メンバー",
-        "description": "MYAの活動を支援および後援してくださるメンバーです。"
+        "title": "名誉会員",
+        "description": "MYAの活動を支援してきたメンバー。"
       },
       "active": {
-        "title": "正メンバー",
-        "description": "MYAの活動に積極的に参加するメンバーです。"
+        "title": "アクティブメンバー",
+        "description": "MYAの活動に積極的に参加するメンバー。"
       },
       "supporting": {
-        "title": "賛助メンバー",
-        "description": "他の3つのメンバー区分には属さず、MYAのすべての活動を支援するメンバーです。"
+        "title": "サポートメンバー",
+        "description": "3つのメンバーシップカテゴリには属さず、MYAのすべての活動をサポートするメンバー。"
       }
     },
     "achievements": "協会の実績",
-    "achievementsDesc": "様々な活動を通じて、私たちの友人協会は、国内外の自営業者、技術専門家、サービス従事者、そして様々な事業者に対し、保護を提供するとともに、生活水準の向上や雇用・ビジネスの機会を促進してきました。",
+    "achievementsDesc": "さまざまな活動を通じて、私たちの友人協会は保護を提供し、国内外の自営業者、技術専門家、サービスプロバイダー、およびさまざまなビジネスオペレーターの生活水準、雇用およびビジネスの機会を促進してきました。",
     "missionTitle": "私たちの使命",
-    "missionDesc": "国内外の友人やメンバーのネットワークを関心グループにまとめ、より良い関係を育み、経験を共有し、雇用市場の情報を提供し、生活水準の向上に向けた助言とトレーニングを提供することです。",
-    "missionText": "私たちは、教育がカンボジアの子どもたちと若者にとって、発展と明るい未来を築くための最も重要な基盤であると信じています。",
-    "focusAreas": "友情・団結・忠誠",
-    "focusAreasDesc": "国内外の労働者、自営業者、技術専門家、サービス従事者、そして様々な事業者の保護と、生活水準、雇用、ビジネス機会の向上の重要性を認識し、私たちの友人協会（Our Friends Association）は、ある青年グループの共同の理念のもと、以下の方針に従って設立されました。",
-    "joinCommunity": "私たちのコミュニティに参加する",
-    "joinDesc": "ポジティブな変化の一部となり、強力なコミュニティの構築に参加しましょう。",
+    "missionDesc": "より良い関係を育み、経験を共有し、雇用市場情報を提供し、生活水準を向上させるためのアドバイスとトレーニングを提供するために、国内外の友人やメンバーのネットワークを関心グループにまとめること。",
+    "missionText": "教育は、カンボジアの子供たちや若者の発展と明るい未来を築くための最も重要な基盤であると私たちは信じています。",
+    "focusAreas": "友情、連帯、忠誠心",
+    "focusAreasDesc": "国内外の労働者、自営業者、技術専門家、サービスプロバイダー、およびさまざまなビジネスオペレーターの生活水準、雇用、ビジネスの機会を保護および促進することの重要性を認識し、私たちの友人協会は、以下の考え方のもとに若者のグループの集団的なビジョンを通じて設立されました:",
+    "joinCommunity": "メンバーシップの特典",
+    "joinDesc1": "相談を受け、労働法、労働組合法、財務管理の知識など、さまざまなトレーニングコースに参加する。",
+    "joinDesc2": "課題を議論し、解決策を見つける上で統一された声を代表するために、価値観を共有する仲間の強力なネットワークを構築する。",
+    "joinDesc3": "ビジネスチャンスを増やし、プロフェッショナルネットワークを拡大し、集団的な発展のために新しい関係を築く。",
     "becomeVolunteer": "ボランティアになる",
-    "becomeOurMember": "会員になる",
+    "becomeOurMember": "私たちのメンバーになる",
     "viewProjects": "私たちのプロジェクトを見る",
     "viewOurActivity": "私たちの活動を見る",
-    "education": "友情と連帯の強化",
-    "educationDesc": "労働者と企業の間で、絆、連帯、支援のネットワークを強化することに焦点を当てた私的な非営利法人。",
-    "culture": "核となる価値観：友情、連帯、忠誠心",
-    "cultureDesc": "メンバーが共通の目標を効果的かつ持続可能に達成するための希望と方向性を提供する協会の指導原則。",
-    "social": "労働者と企業への支援",
-    "socialDesc": "トレーニング、法律・ビジネスコンサルティング、雇用の機会提供、ビジネスネットワークの拡大を通じて生活水準を向上させるためのプラットフォーム。",
-    "upskillingDesc": "スキルアップ訓練セッションを実施",
-    "successfulProjects": "成功裏に実施されたプロジェクト数",
-    "eciDesc": "ECI訓練プログラムを修了",
-    "educatedChildren": "教育を受けた子どもたちと若者の数"
+    "education": "友情と連帯を強める",
+    "educationDesc": "労働者や企業間の絆、連帯、支援のネットワークの強化に焦点を当てた民間非営利法人。",
+    "culture": "コアとなる価値観: 友情、連帯、忠誠心",
+    "cultureDesc": "メンバーが共通の目標を効果的かつ持続的に達成するための希望と方向性を提供する協会の指針。",
+    "social": "労働者と企業へのサポート",
+    "socialDesc": "トレーニングを提供することで生活水準を向上させるプラットフォーム、",
+    "upskillingDesc": "全研修生を対象としたスキルアップ研修を実施しました",
+    "successfulProjects": "成功裏に実施されたプロジェクト",
+    "eciDesc": "セミナーが開催されました",
+    "educatedChildren": "総参加者数",
+    "hairSalonDesc": "ヘア・サロンイベントの開催"
   },
   "projects": {
     "title": "私たちのプロジェクト",
-    "subtitle": "影響力のある私たちのプロジェクトとコミュニティイニシアチブを発見してください。",
+    "subtitle": "私たちの影響力のあるプロジェクトとコミュニティの取り組みを発見してください",
     "impact": "私たちの影響",
-    "impactDesc": "私たちの功績",
+    "impactDesc": "私たちの実績",
     "allProjects": "すべてのプロジェクト",
     "showing": "表示中",
-    "of": "の",
+    "of": "/",
     "projects": "プロジェクト",
-    "noResults": "プロジェクトは見つかりませんでした",
+    "noResults": "プロジェクトが見つかりません",
     "clearFilters": "すべてのフィルターをクリア",
+    "progress": "進捗",
     "categories": {
       "all": "すべてのプロジェクト",
       "community": "コミュニティ",
@@ -233,54 +249,89 @@
   },
   "contact": {
     "title": "お問い合わせ",
-    "subtitle": "コラボレーション、参加、またはご質問については、お気軽にお問い合わせください。",
+    "subtitle": "コラボレーション、参加、またはご質問等についてご連絡ください",
     "info": "連絡先情報",
     "sendMessage": "メッセージを送る",
-    "name": "氏名",
-    "email": "メールアドレス",
-    "phone": "電話番号",
+    "name": "名前",
+    "email": "メール",
+    "phone": "電話",
+    "address": "住所",
     "department": "部門",
     "subject": "件名",
     "message": "メッセージ",
-    "send": "メッセージを送る",
+    "send": "メッセージを送信",
     "sending": "送信中...",
     "followUs": "ソーシャルメディアでフォローする",
     "quickActions": "クイックアクション",
     "volunteer": "ボランティアになる",
     "donate": "寄付",
-    "location": "所在地",
+    "location": "私たちの場所",
     "hours": {
       "title": "営業時間",
-      "weekdays": "月～金",
+      "weekdays": "月 – 金",
       "saturday": "土曜日",
       "sunday": "日曜日",
       "closed": "休業"
     },
-    "hoursWeekday": "8:00 AM – 5:00 PM",
-    "hoursSaturday": "8:00 AM – 12:00 PM",
-    "responseTime": "通常24時間以内にご返答いたします",
-    "joinUs": "会員になる",
-    "joinDesc": "MYAコミュニティに参加して、カンボジアのために意義あることに貢献しましょう",
-    "getDirections": "道順を確認",
+    "days": {
+      "monday": "月曜日",
+      "tuesday": "火曜日",
+      "wednesday": "水曜日",
+      "thursday": "木曜日",
+      "friday": "金曜日"
+    },
+    "hoursWeekday": "午前8:00 – 午後5:00",
+    "hoursSaturday": "午前8:00 – 午後12:00",
+    "responseTime": "通常24時間以内に返信いたします",
+    "joinUs": "メンバーになる",
+    "joinDesc": "成長するコミュニティに参加し、カンボジアにとって意味のある何かの一部になりましょう。",
+    "getDirections": "道順を取得",
     "formTitle": "メッセージを送る",
-    "formDesc": "以下のフォームにご記入ください。担当者がなるべく早くご連絡いたします",
-    "successMsg": "メッセージが正常に送信されました！近日中にご連絡いたします",
-    "required": "必須項目",
+    "formDesc": "以下のフォームにご記入ください。担当チームがなるべく早くご連絡いたします。",
+    "successMsg": "メッセージが正常に送信されました！すぐにご連絡いたします。",
+    "required": "必須フィールド",
     "selectDept": "部門を選択",
-    "namePlaceholder": "お名前（フルネーム）",
+    "namePlaceholder": "あなたのフルネーム",
     "emailPlaceholder": "your@email.com",
-    "subjectPlaceholder": "件名を入力してください",
-    "messagePlaceholder": "メッセージをここに入力してください…",
+    "subjectPlaceholder": "メッセージの件名は何ですか？",
+    "messagePlaceholder": "ここにメッセージを書いてください...",
     "statsMembers": "アクティブメンバー",
     "statsYears": "活動年数",
-    "statsAssoc": "関連団体",
-    "heroTagline": "お気軽にご連絡ください"
+    "statsAssoc": "協会",
+    "heroTagline": "あなたからのご連絡をお待ちしております",
+    "reachUs": "お問い合わせ",
+    "chooseMethod": "チームに連絡するための最適な方法を上記から選択してください。",
+    "deptGeneral": "一般的なお問い合わせ",
+    "deptVolunteer": "ボランティア",
+    "deptDonation": "寄付",
+    "deptPartnership": "パートナーシップ",
+    "deptMedia": "メディア",
+    "findUs": "私たちを見つける",
+    "visitOffice": "オフィスを訪問",
+    "officeAddress": "オフィス住所",
+    "callOffice": "オフィスに電話する",
+    "letsConnect": "つながりましょう",
+    "infoTitle": "ご連絡ください",
+    "mapTitle": "Mett Yeung協会マップ",
+    "organizationName": "Mett Yeung協会",
+    "defaultAddress": "カンボジア・プノンペン",
+    "sidebar": {
+      "officeHours": "オフィスアワー",
+      "followUs": "フォローする",
+      "goodToKnow": "知っておくと良いこと",
+      "followOn": "{{platform}}でフォローする",
+      "tips": {
+        "callUrgent": "お急ぎの場合は直接お電話ください",
+        "volunteer": "ボランティアのリクエストは私たちのチームに送られます",
+        "general": "一般的な質問にはフォームをご使用ください"
+      }
+    }
   },
   "common": {
     "readMore": "続きを読む",
     "viewMore": "もっと見る",
-    "learnMore": "さらに詳しく",
-    "viewDetails": "詳細を見る",
+    "learnMore": "もっと詳しく",
+    "viewDetails": "詳細を表示",
     "back": "戻る",
     "next": "次へ",
     "previous": "前へ",
@@ -290,42 +341,50 @@
     "all": "すべて",
     "loading": "読み込み中...",
     "error": "エラー",
-    "success": "成功"
+    "success": "成功",
+    "copy": "コピー",
+    "cancel": "キャンセル",
+    "more": "さらに",
+    "previousSlide": "前のスライド",
+    "nextSlide": "次のスライド",
+    "previousPageLabel": "前のページへ",
+    "nextPageLabel": "次のページへ",
+    "morePages": "さらにページを表示",
+    "scrollToTop": "トップへスクロール",
+    "languageShort": "言語",
+    "selectLanguage": "言語を選択",
+    "breadcrumb": "パンくずリスト"
   },
-  "structure": {
-    "hero": {
-      "title": "組織体制",
-      "description": "私たちの使命を推進する献身的なチームとメンバーをご紹介します。"
-    },
-    "chart": "組織図",
-    "honorMember": "名誉会員",
-    "executiveCommittee": "執行委員会",
-    "boardOfDirectors": "理事会",
-    "seniorAdvisors": "上級顧問",
-    "associationBranches": "協会支部"
+  "video": {
+    "category": "カテゴリ",
+    "about": "概要",
+    "publishedDate": "公開日",
+    "totalViews": "総再生回数",
+    "duration": "再生時間",
+    "description": "説明"
   },
   "contactUs": {
-    "phone": "電話番号",
+    "phone": "電話",
     "address": "住所",
-    "email": "メールアドレス"
+    "email": "メール"
   },
   "footer": {
-    "description": "私たちは教育、文化、コミュニティ開発に焦点を当てた社会活動家グループであり、共に強力なコミュニティを築くことに尽力しています。",
+    "description": "私たちは教育、文化、およびコミュニティ開発に焦点を当てた社会愛好家のグループであり、共に強いコミュニティを築くことに尽力しています。",
     "quickLinks": "クイックリンク",
     "contactInfo": {
       "title": "連絡先情報",
       "phone": "+855 15 220 320",
       "email": "mettyeung@gmail.com",
-      "address": "No. 3AF, Street 598, Phum Tuol Thngan, Sangkat Tuol Sangke 2, Khan Russey Keo, Phnom Penh, Cambodia"
+      "address": "カンボジア・プノンペン ルセイケオ区 トゥールサンカエ2 トゥールサンアン村 ストリート598 No.3AF"
     },
     "newsletter": {
       "title": "ニュースレター",
-      "description": "最新のニュースと活動を受け取るために購読してください。"
+      "description": "最新のニュースや活動を受け取るために購読してください。"
     },
     "followUs": "フォローする",
-    "copyright": "全著作権所有。",
+    "copyright": "無断転載禁止。",
     "aboutUs": "私たちについて",
-    "history": "沿革",
+    "history": "歴史",
     "mission": "使命",
     "vision": "ビジョン",
     "values": "価値観",
@@ -334,185 +393,312 @@
     "projects": "プロジェクト",
     "videos": "ビデオ",
     "gallery": "ギャラリー",
-    "contact": "お問い合わせ",
+    "contact": "連絡先",
     "contactUs": "お問い合わせ",
     "joinUs": "参加する",
     "volunteer": "ボランティア",
     "support": "サポート",
-    "newsletterDesc": "最新のニュースと活動を受け取るために購読してください",
+    "newsletterDesc": "最新のニュースや活動を受け取るために購読してください",
     "emailPlaceholder": "メールアドレスを入力",
     "subscribe": "購読する",
     "privacy": "プライバシーポリシー",
     "terms": "利用規約"
   },
   "stats": {
-    "members": "活動会員",
-    "upskilling": "スキルアップ訓練",
+    "members": "アクティブメンバー",
+    "upskilling": "スキルアップトレーニング",
     "projects": "慈善活動",
-    "beneficiaries": "受益者",
+    "beneficiaries": "参加者",
     "volunteers": "ボランティア",
-    "eci": "訓練 (ECI)",
-    "training": "研修",
+    "eci": "展示会",
+    "training": "トレーニング",
     "years": "年",
-    "communities": "地域社会"
+    "communities": "コミュニティ",
+    "myaProject": "MYAプロジェクト",
+    "seminar": "セミナー",
+    "hairAndSalon": "ヘア・サロン"
   },
   "auth": {
     "login": "ログイン",
-    "register": "新規登録",
+    "register": "登録",
     "logout": "ログアウト",
-    "loginSubtitle": "おかえりなさい！アカウントにサインインしてください",
-    "registerSubtitle": "始めるためにアカウントを作成してください",
+    "loginSubtitle": "お帰りなさい！アカウントにサインインしてください",
+    "registerSubtitle": "開始するにはアカウントを作成してください",
     "email": "メールアドレス",
     "password": "パスワード",
-    "fullName": "氏名",
-    "confirmPassword": "パスワードを確認",
+    "fullName": "フルネーム",
+    "confirmPassword": "パスワードの確認",
     "newPassword": "新しいパスワード",
-    "confirmNewPassword": "新しいパスワードを確認",
+    "confirmNewPassword": "新しいパスワードの確認",
     "emailPlaceholder": "メールアドレスを入力",
     "passwordPlaceholder": "パスワードを入力",
-    "fullNamePlaceholder": "氏名を入力",
+    "fullNamePlaceholder": "フルネームを入力",
     "confirmPasswordPlaceholder": "パスワードを確認",
     "newPasswordPlaceholder": "新しいパスワードを入力",
     "confirmNewPasswordPlaceholder": "新しいパスワードを確認",
-    "rememberMe": "ログイン状態を保持",
-    "forgotPassword": "パスワードを忘れましたか？",
-    "noAccount": "アカウントをお持ちではありませんか？",
+    "rememberMe": "パスワードを記憶",
+    "forgotPassword": "パスワードを忘れた場合",
+    "noAccount": "アカウントをお持ちでないですか？",
     "haveAccount": "すでにアカウントをお持ちですか？",
     "loggingIn": "サインイン中...",
-    "registering": "アカウント作成中...",
+    "registering": "アカウントを作成中...",
     "continueWithGoogle": "Googleで続行",
     "continueWithTelegram": "Telegramで続行",
-    "orContinueWith": "またはメールアドレスで続行",
-    "orRegisterWith": "またはメールアドレスで登録",
-    "agreeToTerms": "以下に同意します",
+    "orContinueWith": "またはメールで続行",
+    "orRegisterWith": "またはメールで登録",
+    "agreeToTerms": "私は同意します",
     "termsOfService": "利用規約",
     "privacyPolicy": "プライバシーポリシー",
     "and": "および",
     "passwordRequirements": "パスワードの要件",
     "verifyOtp": "アカウントを確認",
-    "otpSubtitle": "メールアドレスに送信された6桁のコードを入力してください",
+    "otpSubtitle": "メールに送信された6桁のコードを入力してください",
     "sentTo": "送信先",
-    "resendIn": "コード再送まで",
-    "resendOtp": "コードを再送",
-    "resending": "再送中...",
+    "resendIn": "コードの再送",
+    "resendOtp": "コードを再送する",
+    "resending": "再送信中...",
     "verify": "アカウントを確認",
     "verifying": "確認中...",
-    "wrongEmail": "メールアドレスが間違っていますか？",
-    "changeEmail": "メールアドレスを変更",
-    "forgotPasswordSubtitle": "パスワードリセットリンクを受け取るためにメールアドレスを入力してください",
+    "wrongEmail": "間違ったメールアドレスですか？",
+    "changeEmail": "メールアドレスの変更",
+    "forgotPasswordSubtitle": "パスワードリセットリンクを受け取るにはメールアドレスを入力してください",
     "sendResetLink": "リセットリンクを送信",
     "sending": "送信中...",
-    "emailSent": "メールが送信されました！",
-    "emailSentDescription": "パスワードリセットリンクを以下に送信しました:",
+    "emailSent": "メール送信済み！",
+    "emailSentDescription": "以下の宛先にパスワードリセットリンクを送信しました：",
     "resendEmail": "メールを再送",
     "backToLogin": "ログインに戻る",
     "rememberPassword": "パスワードを覚えていますか？",
     "resetPassword": "パスワードをリセット",
     "resetPasswordSubtitle": "以下に新しいパスワードを入力してください",
     "resetting": "リセット中...",
-    "passwordResetSuccess": "パスワードリセット成功！",
+    "passwordResetSuccess": "パスワードのリセットに成功しました！",
     "passwordResetSuccessDescription": "パスワードが正常にリセットされました。新しいパスワードでログインできます。",
     "loginWithNewPassword": "新しいパスワードでログイン",
     "invalidResetLink": "無効なリセットリンク",
-    "invalidResetLinkDescription": "このパスワードリセットリンクは無効か期限切れです。新しいリンクをリクエストしてください。",
-    "requestNewLink": "新しいリンクをリクエスト"
+    "invalidResetLinkDescription": "このパスワードリセットリンクは無効であるか期限切れです。新しいリンクをリクエストしてください。",
+    "requestNewLink": "新しいリンクをリクエスト",
+    "passwordRules": {
+      "minLength": "8文字以上",
+      "uppercase": "大文字1文字",
+      "lowercase": "小文字1文字",
+      "number": "数字1文字"
+    },
+    "toast": {
+      "loginError": "サインイン中に問題が発生しました",
+      "loginErrorDescription": "メールアドレスとパスワードを確認してください",
+      "loginSuccess": "サインインに成功しました！",
+      "loginSuccessDescription": "ホームページにリダイレクトされます",
+      "socialLoginSuccess": "{{provider}}でのサインインに成功しました！",
+      "socialLoginError": "{{provider}}でのサインイン中に問題が発生しました",
+      "registerSuccess": "登録に成功しました！",
+      "registerSuccessDescription": "アカウントを確認するにはメールをチェックしてください",
+      "registerError": "登録中に問題が発生しました",
+      "socialRegisterSuccess": "{{provider}}での登録に成功しました！",
+      "socialRegisterError": "{{provider}}での登録中に問題が発生しました",
+      "tryAgain": "もう一度お試しください",
+      "systemError": "システムエラー",
+      "serverConnectionError": "サーバーに接続できませんでした。もう一度お試しください。",
+      "otpVerified": "アカウントの確認に成功しました！",
+      "otpVerifiedDescription": "アカウントが確認されました",
+      "otpInvalid": "無効なOTPコード",
+      "otpInvalidDescription": "OTPコードを確認してもう一度お試しください",
+      "otpVerifyError": "OTPを確認できませんでした。もう一度お試しください。",
+      "otpSent": "新しいOTPコードが送信されました！",
+      "otpSentDescription": "メールをチェックしてください",
+      "otpSendError": "OTPコードの送信中に問題が発生しました",
+      "otpSendErrorDescription": "後でもう一度お試しください。",
+      "otpSystemError": "OTPを送信できませんでした。",
+      "invalidResetToken": "無効なパスワードリセットリンク",
+      "resetSuccess": "パスワードのリセットに成功しました！",
+      "resetSuccessDescription": "新しいパスワードでサインインできるようになりました",
+      "resetError": "パスワードのリセット中に問題が発生しました",
+      "forgotEmailSent": "パスワードリセットメールが送信されました！",
+      "forgotEmailSentDescription": "メールをチェックしてください",
+      "forgotEmailError": "メールの送信中に問題が発生しました",
+      "forgotEmailResent": "メールが再度送信されました！"
+    }
   },
   "partners": {
-    "title": "パートナー",
+    "title": "私たちの友人ネットワーク",
+    "view_all": "完全なネットワークを見る",
     "description": "私たちが協力している組織",
-    "visitWebsite": "ウェブサイトを開く",
+    "visitWebsite": "ウェブサイトを訪問",
     "noPartners": "表示するパートナーはいません"
   },
   "network": {
     "mou": {
       "title": "覚書（MOU）",
-      "description": "メット・ヨン（Mett Yeung）は、専門的なトレーニングや技術スキルの協力に関して、各機関や民間企業と覚書（MOU）を締結しました。協力内容は以下の通りです：",
+      "description": "Mett Yeungは、専門的なトレーニングと技術的スキルの協力について、機関や民間企業とMOUに署名しました。協力には以下が含まれます:",
+      "partnerFallback": "MOUパートナー",
+      "descriptionFallback": "覚書",
+      "showLess": "少なく表示",
+      "viewAllPartners": "すべてのパートナーを表示",
+      "types": {
+        "privateCompany": "民間企業",
+        "association": "協会",
+        "institution": "機関"
+      },
       "list": {
-        "item1": "MYAとAspire Design Academy Company間のMOU： 教育および人材育成に関する協力",
-        "item2": "MYAとCoffee Co., Ltd.間のMOU： 教育および人材育成に関する協力",
-        "item3": "MYAとカンボジア若手起業家協会（Young Entrepreneurs Association of Cambodia）間のMOU： 教育および人材育成に関する協力",
-        "item4": "MYAとDham Computer International Company間のMOU： 教育および人材育成に関する協力",
-        "item5": "MYAとRMA (Cambodia) Co., Ltd.間のMOU： 教育および人材育成に関する協力",
-        "item6": "MYAと国立労働研究所（National Institute of Labor）間のMOU： 教育および人材育成に関する協力",
-        "item7": "MYAとDigi Academy間のMOU： 教育および人材育成に関する協力",
-        "item8": "MYAとHFC (Cambodia) Microfinance Company Limited間のMOU： 教育および人材育成に関する協力",
-        "item9": "MYAとトラウマケア・研究センター（Center for Trauma Care and Research）間のMOU： メンタルウェルビーイング（精神的健康）の促進に関する協力",
-        "item10": "MYAと産業技術研究所（Institute of Industrial Technology）間のMOU： 教育および人材育成に関する協力",
-        "item11": "MYAとWestline Education Group間のMOU： 教育および人材育成に関する協力",
-        "item12": "MYAとOudong Express間のMOU： 教育および人道支援活動のための輸送サービス提供に関する協力",
-        "item13": "MYAとカンボジア電子技術協会（Cambodia Electronics and Technology Association）間のMOU： 電子・技術分野における教育および人材育成に関する協力",
-        "item14": "MYAとカンボジア技術・農業研究所（Cambodia Institute of Technology and Agriculture）間のMOU： 教育および人材育成に関する協力",
-        "item15": "MYAとAkhlem (Cambodia) Co., Ltd.間のMOU： 教育および人材育成に関する協力",
-        "item16": "MYAとカンボジア・レストラン協会（Cambodia Restaurant Association）間のMOU： 教育および人材育成に関する協力",
-        "item17": "MYAとMycut Firm Co., Ltd.間のMOU： 教育活動およびチャリティーイベントのための写真・動画制作サービス提供に関する協力"
+        "item1": "トレーニングと人材開発に関するMYAとAspire Design Academy社間のMOU",
+        "item2": "トレーニングと人材開発に関するMYAとCoffee Co., Ltd.間のMOU",
+        "item3": "トレーニングと人材開発に関するMYAとカンボジア若手起業家協会間のMOU",
+        "item4": "トレーニングと人材開発に関するMYAとDham Computer International社間のMOU",
+        "item5": "トレーニングと人材開発に関するMYAとRMA (Cambodia) Co., Ltd.間のMOU",
+        "item6": "トレーニングと人材開発に関するMYAと国立労働研究所間のMOU",
+        "item7": "トレーニングと人材開発に関するMYAとDigi Academy間のMOU",
+        "item8": "トレーニングと人材開発に関するMYAとHFC (Cambodia) Microfinance Company Limited間のMOU",
+        "item9": "メンタルウェルビーイングの促進に関するMYAとトラウマケアおよび研究センター間のMOU",
+        "item10": "トレーニングと人材開発に関するMYAと産業技術研究所間のMOU",
+        "item11": "トレーニングと人材開発に関するMYAとWestline Education Group間のMOU",
+        "item12": "トレーニングと人道活動のための輸送サービスの提供に関するMYAとOudong Express社間のMOU",
+        "item13": "電子工学および技術分野のトレーニングと人材開発に関するMYAとカンボジア電子技術協会間のMOU",
+        "item14": "トレーニングと人材開発に関するMYAとカンボジア技術・農業研究所間のMOU",
+        "item15": "トレーニングと人材開発に関するMYAとAkhlem (Cambodia) Co., Ltd.間のMOU",
+        "item16": "トレーニングと人材開発に関するMYAとカンボジアレストラン協会間のMOU",
+        "item17": "トレーニング活動および慈善イベントのための写真および動画制作サービスの提供に関するMYAとMycut Firm Co., Ltd.間のMOU"
       }
     }
   },
   "newsHighlight": {
-    "title": "私たちの活動と影響力",
-    "subtitle": "コミュニティを強化するために私たちが共に達成したマイルストーンとプログラムをご覧ください。",
+    "title": "私たちの活動と影響",
+    "subtitle": "コミュニティを強化するために私たちが共同で達成したマイルストーンやプログラムを発見してください。",
     "myaProjects": {
       "title": "MYAプロジェクト",
-      "desc": "コミュニティの生産性と全体的な幸福を向上させるために設計された主要なイニシアチブ。",
+      "desc": "コミュニティにおける生産性と全体的な幸福を向上させるために設計された主要なイニシアチブ。",
       "items": {
         "p1": "生産性と幸福の向上",
         "p2": "MEPの設置と保守",
         "p3": "F&Bサービストレーニング",
-        "p4": "インキュベーターのエコシステム（ECI）",
-        "p5": "コミュニティ・ウェルビーイング・プロジェクト"
+        "p4": "インキュベーターのエコシステム (ECI)",
+        "p5": "コミュニティウェルビーイングプロジェクト"
       }
     },
     "training": {
       "title": "トレーニングプログラム",
-      "desc": "キャリアアップのための専門的な職業訓練と能力構築。",
+      "desc": "キャリア向上のための専門的な職業トレーニングと能力構築。",
       "juno": {
         "title": "JUNOアカデミー美容師トレーニング",
-        "desc": "地元の美容師に力を与えることを目的として、韓国のソウルで実施された専門的なトレーニング。"
+        "desc": "韓国・ソウルで実施された、地元の美容師のエンパワーメントに特化した専門トレーニング。"
       },
       "teams": {
         "title": "T.E.A.M.S. Co., Ltd. トレーニング",
-        "desc": "従業員向けの集中的な技術およびエンジニアリングスキルトレーニング。"
+        "desc": "従業員向けの集中的な技術・エンジニアリングスキルトレーニング。"
       }
     },
     "seminars": {
-      "title": "主要なセミナー",
-      "desc": "Mett Yeungはパートナーと共に6つの主要なセミナーを開催し、434名が参加しました。",
-      "s1": "オクニャ・ペチ・ボレン氏によるセミナー",
+      "title": "注目のセミナー",
+      "desc": "Mett Yeungはパートナーと協力して6つの主要なセミナーを開催し、434人の参加者を集めました。",
+      "s1": "オクニャ・ペク・ボレン氏によるセミナー",
       "s2": "ナット・クララ氏によるセミナー",
-      "s3": "ユー・ボリー氏（タレント・エクセレンス・デベロップメント・パートナー GM）によるセミナー",
+      "s3": "ユ・ボリー氏（Talent Excellence Development Partner ゼネラルマネージャー）によるセミナー",
       "s4": "リム・フン氏（ETEC CEO）によるセミナー",
-      "s5": "ヒアン・ソピア氏によるセミナー",
-      "s6": "特別トピックセミナー"
+      "s5": "ヒエン・ソフィアプ氏によるセミナー",
+      "s6": "特別トピックのセミナー"
     },
     "hairAndSalon": {
-      "title": "ヘア＆サロンイベント",
-      "desc": "Mett Yeungは70のヘア＆サロンイベントを開催し、コミュニティに直接的なサービスとサポートを提供しました。"
+      "title": "ヘア・サロンイベント",
+      "desc": "Mett Yeungは70のヘア・サロンイベントを開催し、コミュニティに直接サービスとサポートを提供しました。"
     }
   },
   "member": {
     "detail": {
       "backToOrg": "組織に戻る",
       "back": "戻る",
-      "downloadCV": "CVをダウンロード",
-      "generating": "生成中…",
-      "skills": "スキル・専門性",
+      "downloadCV": "履歴書をダウンロード",
+      "generating": "生成中...",
+      "skills": "スキルと専門知識",
       "languages": "言語",
       "experience": "職務経歴",
-      "education": "学歴",
-      "organizations": "所属組織・会員資格",
-      "emptyTitle": "プロフィール詳細は近日公開予定",
-      "emptyDesc": "このメンバーの詳細プロフィールはまだ追加されていません。",
-      "role": "役職",
+      "education": "教育",
+      "organizations": "組織とメンバーシップ",
+      "emptyTitle": "プロフィール詳細は近日公開",
+      "emptyDesc": "このメンバーの詳細なプロフィール情報はまだ追加されていません。",
+      "role": "役割",
       "organization": "組織",
       "present": "現在",
       "affiliations": "所属",
       "contact": "連絡先",
-      "personal": "個人情報",
+      "personal": "個人",
       "social": "ソーシャル",
       "department": "部門",
-      "head": "代表",
-      "joined": "加入",
-      "unknownMember": "不明なメンバー"
+      "head": "責任者",
+      "joined": "参加日",
+      "unknownMember": "未知のメンバー",
+      "noContent": "追加情報はありません。",
+      "email": "メールアドレス",
+      "phone": "電話番号",
+      "location": "場所",
+      "dateOfBirth": "生年月日",
+      "nationality": "国籍",
+      "gender": "性別",
+      "degree": "学位",
+      "headMember": "ヘッドメンバー",
+      "year": "年",
+      "years": "年",
+      "ofService": "勤続",
+      "since": "開始年",
+      "statusLabel": "ステータス",
+      "status": {
+        "active": "アクティブメンバー",
+        "alumni": "卒業生",
+        "inactive": "非アクティブ",
+        "unknown": "不明"
+      }
+    },
+    "pdf": {
+      "profile": "プロフィール",
+      "professionalExperience": "職務経歴",
+      "education": "教育",
+      "organizations": "組織とメンバーシップ",
+      "additionalInfo": "追加情報",
+      "details": "詳細",
+      "links": "リンク",
+      "skills": "スキル",
+      "languages": "言語",
+      "born": "生まれ",
+      "gender": "性別",
+      "nationality": "国籍",
+      "joined": "参加日",
+      "memberId": "メンバーID",
+      "page": "ページ",
+      "of": "/",
+      "link": "リンク"
     }
+  },
+  "gallery": {
+    "allVideos": "すべてのビデオ",
+    "videoGallery": "ビデオギャラリー",
+    "endOfList": "リストの終わりに達しました",
+    "noItemsFound": "アイテムが見つかりません",
+    "noItemsInCategory": "「{{category}}」カテゴリにアイテムはありません。"
+  },
+  "news": {
+    "search": "検索",
+    "searchPlaceholder": "ニュースを検索...",
+    "categories": "カテゴリー",
+    "relatedArticles": "関連記事",
+    "viewAllArticles": "すべての記事を表示",
+    "shareArticle": "記事をシェアする",
+    "linkCopiedTitle": "リンクがコピーされました！",
+    "linkCopiedDescription": "記事のリンクがクリップボードにコピーされました。",
+    "relatedLoadError": "関連記事を読み込めませんでした。",
+    "shareFallbackTitle": "この記事をチェックしてください！"
+  },
+  "comments": {
+    "title": "コメント",
+    "placeholder": "コメントを書く...",
+    "keepRespectful": "コメントは丁寧にお願いします。",
+    "submit": "コメントを投稿",
+    "empty": "まだコメントはありません。最初のコメントを投稿しましょう！",
+    "justNow": "たった今",
+    "verified": "認証済み",
+    "you": "あなた",
+    "user": "ユーザー",
+    "hourAgo": "時間前",
+    "dayAgo": "日前",
+    "loginTitle": "ログインしてください",
+    "loginDescription": "コメントを投稿するにはログインする必要があります。今すぐログインしますか？",
+    "goToLogin": "ログインページへ"
   }
 }

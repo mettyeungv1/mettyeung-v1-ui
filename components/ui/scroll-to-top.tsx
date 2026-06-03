@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { ChevronUp } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
 
 export function ScrollToTop() {
+	const { t } = useTranslation();
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
@@ -18,7 +20,7 @@ export function ScrollToTop() {
 	return (
 		<button
 			onClick={scrollToTop}
-			aria-label="Scroll to top"
+			aria-label={t("common.scrollToTop")}
 			className={[
 				// Position — sits above the mobile action bar on small screens
 				"fixed right-4 lg:right-6 z-50",

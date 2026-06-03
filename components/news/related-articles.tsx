@@ -12,6 +12,7 @@ import type { BlogPost } from "@/lib/types/blog";
 import { formatDate } from "@/lib/utils";
 import { MEDIA_ENDPOINT } from "@/lib/static";
 import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
+import { useTranslation } from "@/lib/i18n";
 
 interface RelatedArticlesProps {
 	currentArticleId: string;
@@ -39,6 +40,7 @@ const RelatedArticlesSkeleton = () => (
 );
 
 export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
+	const { t } = useTranslation();
 	// 1. Use strong typing, not 'any'
 	const [relatedPosts, setRelatedPosts] = useState<any>([]);
 	const [loading, setLoading] = useState(true);
@@ -62,7 +64,7 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 				}
 			} catch (err) {
 				console.error(err);
-				setError("Could not load related articles.");
+				setError("news.relatedLoadError");
 			} finally {
 				setLoading(false);
 			}
@@ -79,7 +81,7 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 		return (
 			<Card>
 				<CardContent className="pt-6 text-center text-sm text-destructive">
-					{error}
+					{t(error)}
 				</CardContent>
 			</Card>
 		);
@@ -93,7 +95,7 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="text-lg">Related Articles</CardTitle>
+				<CardTitle className="text-lg">{t("news.relatedArticles")}</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4">
 				{relatedPosts.map((post: any) => (
@@ -140,7 +142,7 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 						asChild
 					>
 						<Link href="/news">
-							View All Articles
+							{t("news.viewAllArticles")}
 							<ArrowRight className="w-4 h-4 ml-2" />
 						</Link>
 					</Button>

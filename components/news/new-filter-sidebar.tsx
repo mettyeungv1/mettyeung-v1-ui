@@ -82,18 +82,18 @@ export function NewsFilterSidebar({
 
 	return (
 		<Card className="p-6 sticky top-24">
-			<h3 className="text-lg font-semibold text-gray-900 mb-4">Search</h3>
+			<h3 className="text-lg font-semibold text-gray-900 mb-4">{t("news.search")}</h3>
 			<div className="relative mb-6">
 				<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
 				<Input
-					placeholder="Search news..."
+					placeholder={t("news.searchPlaceholder")}
 					value={searchTerm}
 					onChange={(e) => onSearchChange(e.target.value)}
 					className="pl-10"
 				/>
 			</div>
 
-			<h4 className="text-sm font-semibold text-gray-900 mb-3">Categories</h4>
+			<h4 className="text-sm font-semibold text-gray-900 mb-3">{t("news.categories")}</h4>
 			<div className="space-y-1">
                 <button
                     onClick={() => handleCategoryClick("all")}
@@ -104,7 +104,7 @@ export function NewsFilterSidebar({
                     }`}
                 >
                     <div className="flex items-center">
-                        <span>{t("nav.allNews") || "All News"}</span>
+                        <span>{t("nav.allNews")}</span>
                     </div>
                 </button>
 

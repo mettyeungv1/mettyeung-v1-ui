@@ -194,8 +194,8 @@ export function VideosPageClient({
 			) : (
 				<>
 					<ItemGallery
-						title="All Videos"
-						subtitle="Video Gallery"
+						title="gallery.allVideos"
+						subtitle="gallery.videoGallery"
 						items={normalizedItems}
 						categories={categories.map((c) => ({
 							id: c.id,

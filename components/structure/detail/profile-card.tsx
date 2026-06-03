@@ -185,9 +185,9 @@ export function ProfileCard({ person }: ProfileCardProps) {
 								person.status === "alumni" ? "bg-blue-500" :
 								"bg-gray-400"
 							}`}
-							title={person.status === "active" ? "Active Member" : person.status === "alumni" ? "Alumni" : "Inactive"}
+							title={person.status === "active" ? t("member.detail.status.active") : person.status === "alumni" ? t("member.detail.status.alumni") : t("member.detail.status.inactive")}
 							role="img"
-							aria-label={`Status: ${person.status || "unknown"}`}
+							aria-label={`${t("member.detail.statusLabel")}: ${person.status || t("member.detail.status.unknown")}`}
 						/>
 					</div>
 

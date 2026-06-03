@@ -48,9 +48,9 @@ export function MouSection({ initialMous }: { initialMous: Partner[] }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 auto-rows-fr">
 					{initialMous.map((partner, index) => {
 						const colors = mapColors(partner.mouType);
-						const partnerName = t(partner.name) || "MOU Partner";
+						const partnerName = t(partner.name) || t("network.mou.partnerFallback");
 						const partnerDescription =
-							t(partner.description) || "Memorandum of Understanding";
+							t(partner.description) || t("network.mou.descriptionFallback");
 						return (
                             <AnimatedSection 
                                 key={partner.id} 
@@ -98,9 +98,9 @@ export function MouSection({ initialMous }: { initialMous: Partner[] }) {
                         className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 shadow-sm rounded-full text-gray-700 font-medium hover:bg-gray-50 hover:text-blue-600 transition-colors"
                     >
                         {showAll ? (
-                            <>Show Less <ChevronUp className="w-4 h-4" /></>
+                            <>{t("network.mou.showLess")} <ChevronUp className="w-4 h-4" /></>
                         ) : (
-                            <>View All Partners ({initialMous.length}) <ChevronDown className="w-4 h-4" /></>
+                            <>{t("network.mou.viewAllPartners")} ({initialMous.length}) <ChevronDown className="w-4 h-4" /></>
                         )}
                     </button>
                 </div>

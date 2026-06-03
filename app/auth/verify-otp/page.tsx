@@ -3,7 +3,7 @@ import VerifyOtpForm from "./verify-otp-form";
 
 export default function VerifyOtpPage() {
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
+		<Suspense fallback={null}>
 			<VerifyOtpForm />;
 		</Suspense>
 	);

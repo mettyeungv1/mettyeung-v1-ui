@@ -53,16 +53,16 @@ export default function LoginPage() {
 			});
 
 			if (!res || res.error) {
-				toast.error("មានបញ្ហាក្នុងការចូលប្រើប្រាស់", {
-					description: "សូមពិនិត្យអ៊ីមែល និងពាក្យសម្ងាត់របស់អ្នក",
+				toast.error(t("auth.toast.loginError"), {
+					description: t("auth.toast.loginErrorDescription"),
 				});
 				return;
 			}
 
 			await update();
 
-			toast.success("ចូលប្រើប្រាស់ជោគជ័យ!", {
-				description: "អ្នកនឹងត្រូវបានបញ្ជូនទៅទំព័រដើម",
+			toast.success(t("auth.toast.loginSuccess"), {
+				description: t("auth.toast.loginSuccessDescription"),
 			});
 
 			router.push("/");
@@ -76,10 +76,10 @@ export default function LoginPage() {
 		try {
 			// Simulate social auth
 			await new Promise((resolve) => setTimeout(resolve, 1500));
-			toast.success(`ចូលប្រើប្រាស់ជាមួយ ${provider} ជោគជ័យ!`);
+			toast.success(t("auth.toast.socialLoginSuccess").replace("{{provider}}", provider));
 			router.push("/");
 		} catch (error) {
-			toast.error(`មានបញ្ហាក្នុងការចូលប្រើប្រាស់ជាមួយ ${provider}`);
+			toast.error(t("auth.toast.socialLoginError").replace("{{provider}}", provider));
 		} finally {
 			setIsLoading(false);
 		}

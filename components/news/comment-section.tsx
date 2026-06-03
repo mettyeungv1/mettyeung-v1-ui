@@ -40,7 +40,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 				const mapped: UIComment[] = res.data.map((c) => ({
 					id: c.id,
 					author: {
-						name_en: c.author?.name || "User",
+						name_en: c.author?.name || "",
 						avatar: c.author?.avatarUrl || "",
 					},
 					content_en: c.content,
@@ -63,7 +63,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 		if (!newComment.trim()) return;
 		const optimistic: UIComment = {
 			id: `tmp-${Date.now()}`,
-			author: { name_en: "You", avatar: "" },
+			author: { name_en: t("comments.you"), avatar: "" },
 			content_en: newComment,
 			timestamp: new Date().toISOString(),
 			isVerified: false,
@@ -77,7 +77,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 			const saved: UIComment = {
 				id: res.data.id,
 				author: {
-					name_en: res.data.author?.name || "You",
+					name_en: res.data.author?.name || t("comments.you"),
 					avatar: res.data.author?.avatarUrl || "",
 				},
 				content_en: res.data.content,
@@ -98,10 +98,10 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 			(now.getTime() - past.getTime()) / (1000 * 60 * 60)
 		);
 
-		if (diffInHours < 1) return t("comments.justNow") || "Just now";
-		if (diffInHours < 24) return `${diffInHours}h ago`;
+		if (diffInHours < 1) return t("comments.justNow");
+		if (diffInHours < 24) return `${diffInHours}${t("comments.hourAgo")}`;
 		const diffInDays = Math.floor(diffInHours / 24);
-		return `${diffInDays}d ago`;
+		return `${diffInDays}${t("comments.dayAgo")}`;
 	};
 
 	return (
@@ -109,14 +109,14 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 			<Card>
 				<CardHeader>
 					<CardTitle className="text-lg">
-						{t("comments.title") || "Comments"} ({comments.length})
+						{t("comments.title")} ({comments.length})
 					</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-6">
 					{/* Comment Form */}
 					<form onSubmit={handleSubmitComment} className="space-y-4">
 						<Textarea
-							placeholder={t("comments.placeholder") || "Write a comment..."}
+							placeholder={t("comments.placeholder")}
 							value={newComment}
 							onChange={(e) => setNewComment(e.target.value)}
 							onFocus={handleFocus}
@@ -124,14 +124,14 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 						/>
 						<div className="flex justify-between items-center">
 							<p className="text-sm text-gray-500">
-								{t("comments.keepRespectful") || "Please keep comments respectful."}
+								{t("comments.keepRespectful")}
 							</p>
 							<Button
 								type="submit"
 								disabled={!newComment.trim()}
 								className="bg-khmer-gold hover:bg-khmer-gold-dark text-white"
 							>
-								{t("comments.submit") || "Post Comment"}
+								{t("comments.submit")}
 							</Button>
 						</div>
 					</form>
@@ -140,7 +140,7 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 					<div className="space-y-6">
 						{comments.length === 0 && (
 							<p className="text-center text-sm text-gray-400 py-6">
-								{t("comments.empty") || "No comments yet. Be the first to comment!"}
+								{t("comments.empty")}
 							</p>
 						)}
 						{comments.map((comment) => (
@@ -148,10 +148,10 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 								<Avatar className="w-10 h-10">
 									<AvatarImage
 										src={comment.author.avatar}
-										alt={comment.author.name_en}
+										alt={comment.author.name_en || t("comments.user")}
 									/>
 									<AvatarFallback>
-										{comment.author.name_en.charAt(0)}
+										{(comment.author.name_en || t("comments.user")).charAt(0)}
 									</AvatarFallback>
 								</Avatar>
 
@@ -159,11 +159,11 @@ export function CommentSection({ articleId }: CommentSectionProps) {
 									<div className="bg-gray-50 rounded-lg p-4">
 										<div className="flex items-center space-x-2 mb-2">
 											<h4 className="font-semibold text-gray-900 text-sm">
-												{comment.author.name_en}
+												{comment.author.name_en || t("comments.user")}
 											</h4>
 											{comment.isVerified && (
 												<Badge variant="secondary" className="text-xs">
-													Verified
+													{t("comments.verified")}
 												</Badge>
 											)}
 											<span className="text-xs text-gray-500">

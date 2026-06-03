@@ -85,6 +85,7 @@ export function StructurePageClient({
 					? assoc.associationMembers.map((m: any) => {
 							const mappedMember = normalizeMemberData({
 								...m.member,
+								role: m.role,
 								department: assoc.name,
 							});
 							return { ...mappedMember, originalId: m.member.id, id: m.member.id };
@@ -120,7 +121,7 @@ export function StructurePageClient({
 			{isLoading && (
 				<div className="flex items-center justify-center gap-2 py-4 text-sm text-gray-500">
 					<Loader2 className="w-4 h-4 animate-spin" />
-					<span>Updating...</span>
+					<span>{t("structure.updating")}</span>
 				</div>
 			)}
 
@@ -161,7 +162,7 @@ export function StructurePageClient({
 								<Search className="w-8 h-8 text-gray-400" />
 							</div>
 							<h3 className="text-lg font-semibold text-gray-900 mb-2">
-								No members found
+								{t("structure.noMembersFound")}
 							</h3>
 						</motion.div>
 					)}

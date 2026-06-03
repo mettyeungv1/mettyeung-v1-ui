@@ -379,34 +379,4 @@ html {
 	scroll-behavior: smooth;
 }
 
-/* ─── Desktop minimum font-size (16px) ─────────────────── */
-/* Ensures no text on computer screens is smaller than 16px.
-   Only targets elements whose font-size would otherwise be < 16px.
-   Headings (h1-h6) are excluded since they're already ≥ 16px. */
-@media (min-width: 768px) {
-	body {
-		font-size: 16px;
-	}
 
-	/* Direct override for Tailwind text-xs (12px) and text-sm (14px) */
-	.text-xs {
-		font-size: 1rem !important;
-	}
-	.text-sm {
-		font-size: 1rem !important;
-	}
-
-	/* Direct override for arbitrary small font sizes */
-	[class*="text-\[9px\]"],
-	[class*="text-\[10px\]"],
-	[class*="text-\[11px\]"],
-	[class*="text-\[12px\]"],
-	[class*="text-\[13px\]"],
-	[class*="text-\[14px\]"],
-	[class*="text-\[15px\]"] {
-		font-size: 1rem !important;
-	}
-
-	/* Preserve responsive overrides: md:text-base etc still work 
-	   because they have higher specificity with breakpoint prefix */
-}

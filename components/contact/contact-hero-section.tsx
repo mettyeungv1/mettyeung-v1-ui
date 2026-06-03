@@ -21,7 +21,7 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 		settings.address?.[language] ??
 		settings.address?.km ??
 		settings.address?.en ??
-		"Phnom Penh, Cambodia";
+		t("contact.defaultAddress");
 
 	const mapsHref =
 		settings.mapLat && settings.mapLng
@@ -31,19 +31,19 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 	const contactRows = [
 		{
 			icon: Phone,
-			label: "Phone",
+			label: t("contact.phone"),
 			value: settings.phone ?? "015 220 320",
 			href: `tel:${(settings.phone ?? "015 220 320").replace(/\s/g, "")}`,
 		},
 		{
 			icon: Mail,
-			label: "Email",
+			label: t("contact.email"),
 			value: settings.email ?? "mettyeung@gmail.com",
 			href: `mailto:${settings.email ?? "mettyeung@gmail.com"}`,
 		},
 		{
 			icon: MapPin,
-			label: "Address",
+			label: t("contact.address"),
 			value: addressText,
 			href: mapsHref,
 			external: true,
@@ -82,7 +82,7 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 					>
 						<h1 className="mx-auto max-w-4xl text-balance text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl lg:mx-0 lg:text-7xl">
 							<span className="block">{t("contact.title")}</span>
-							<span className="block text-khmer-gold">Let&apos;s connect</span>
+							<span className="block text-khmer-gold">{t("contact.letsConnect")}</span>
 						</h1>
 
 						<p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-100 sm:text-lg md:text-xl lg:mx-0">
@@ -103,8 +103,8 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 									<div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-khmer-gold text-primary-900">
 										<Mail className="h-5 w-5" />
 									</div>
-									<p className="text-xs font-bold uppercase text-khmer-gold">Reach Us</p>
-									<h2 className="mt-1 text-2xl font-bold text-white">Contact Information</h2>
+									<p className="text-xs font-bold uppercase text-khmer-gold">{t("contact.reachUs")}</p>
+									<h2 className="mt-1 text-2xl font-bold text-white">{t("contact.info")}</h2>
 								</div>
 
 								<div className="space-y-3 p-4">
@@ -131,7 +131,7 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 								</div>
 
 								<div className="border-t border-gray-100 bg-gray-50 px-6 py-4 text-sm font-medium text-gray-600">
-									Choose the best contact method above to reach our team.
+									{t("contact.chooseMethod")}
 								</div>
 							</div>
 						</div>

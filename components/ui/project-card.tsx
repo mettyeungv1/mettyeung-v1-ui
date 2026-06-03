@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Project } from "@/lib/stores/project-store";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { useTranslation } from "@/lib/i18n";
 
 interface ProjectCardProps {
 	project: Project;
@@ -31,6 +32,7 @@ export function ProjectCard({
 	index,
 	variant = "default",
 }: ProjectCardProps) {
+	const { t } = useTranslation();
 	const getStatusColor = (status: string) => {
 		switch (status) {
 			case "ongoing":
@@ -127,7 +129,7 @@ export function ProjectCard({
 								{project.status === "ongoing" && (
 									<div>
 										<div className="flex justify-between text-sm mb-2">
-											<span className="text-gray-600">Progress</span>
+											<span className="text-gray-600">{t("projects.progress")}</span>
 											<span className="text-gray-900 font-medium">75%</span>
 										</div>
 										{/* ✅ FIX APPLIED HERE */}
@@ -170,7 +172,7 @@ export function ProjectCard({
 					{project.status === "ongoing" && (
 						<div className="mb-4">
 							<div className="flex justify-between text-sm mb-2">
-								<span className="text-gray-600">Progress</span>
+								<span className="text-gray-600">{t("projects.progress")}</span>
 								<span className="text-gray-900 font-medium">75%</span>
 							</div>
 							{/* ✅ FIX APPLIED HERE */}

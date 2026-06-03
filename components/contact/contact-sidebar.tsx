@@ -4,18 +4,19 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle, Clock, MessageCircle, X } from "lucide-react";
 import type { ISocialLinkAPI, IOfficeHourAPI } from "@/lib/types/contact";
 import { getSocialIcon } from "@/lib/utils/social-icon-map";
+import { useTranslation } from "@/lib/i18n";
 
-const DAY_LABELS: Record<number, string> = {
-	0: "Sunday",
-	1: "Monday",
-	2: "Tuesday",
-	3: "Wednesday",
-	4: "Thursday",
-	5: "Friday",
-	6: "Saturday",
+const DAY_LABEL_KEYS: Record<number, string> = {
+	0: "contact.hours.sunday",
+	1: "contact.days.monday",
+	2: "contact.days.tuesday",
+	3: "contact.days.wednesday",
+	4: "contact.days.thursday",
+	5: "contact.days.friday",
+	6: "contact.hours.saturday",
 };
 
-const MON_FRI_LABEL = "Mon – Fri";
+const MON_FRI_LABEL_KEY = "contact.hours.weekdays";
 
 const socialColors: Record<string, string> = {
 	facebook: "bg-[#1877F2] hover:bg-[#166FE5]",
@@ -28,9 +29,9 @@ const socialColors: Record<string, string> = {
 };
 
 const quickTips = [
-	"Call directly for urgent matters",
-	"Volunteering requests go to our team",
-	"Use the form for general questions",
+	"contact.sidebar.tips.callUrgent",
+	"contact.sidebar.tips.volunteer",
+	"contact.sidebar.tips.general",
 ];
 
 interface ContactSidebarProps {
@@ -46,7 +47,7 @@ function formatTime(time: string | null): string {
 	return `${hour}:${String(m).padStart(2, "0")} ${period}`;
 }
 
-function renderOfficeHours(officeHours: IOfficeHourAPI[]) {
+function renderOfficeHours(officeHours: IOfficeHourAPI[], t: (key: string) => string) {
 	const sorted = [...officeHours].sort((a, b) => a.dayOfWeek - b.dayOfWeek);
 
 	// Group Mon-Fri if they have the same hours
@@ -65,9 +66,9 @@ function renderOfficeHours(officeHours: IOfficeHourAPI[]) {
 	if (allSame && monFri.length === 5) {
 		const first = monFri[0];
 		rows.push({
-			label: MON_FRI_LABEL,
+			label: t(MON_FRI_LABEL_KEY),
 			time: first.isClosed
-				? "Closed"
+				? t("contact.hours.closed")
 				: `${formatTime(first.openTime)} – ${formatTime(first.closeTime)}`,
 			isClosed: first.isClosed,
 			days: [1, 2, 3, 4, 5],
@@ -75,9 +76,9 @@ function renderOfficeHours(officeHours: IOfficeHourAPI[]) {
 	} else {
 		for (const h of sorted.filter((h) => h.dayOfWeek >= 1 && h.dayOfWeek <= 5)) {
 			rows.push({
-				label: DAY_LABELS[h.dayOfWeek],
+				label: t(DAY_LABEL_KEYS[h.dayOfWeek]),
 				time: h.isClosed
-					? "Closed"
+					? t("contact.hours.closed")
 					: `${formatTime(h.openTime)} – ${formatTime(h.closeTime)}`,
 				isClosed: h.isClosed,
 				dayOfWeek: h.dayOfWeek,
@@ -89,9 +90,9 @@ function renderOfficeHours(officeHours: IOfficeHourAPI[]) {
 	const sat = sorted.find((h) => h.dayOfWeek === 6);
 	if (sat) {
 		rows.push({
-			label: "Saturday",
+			label: t("contact.hours.saturday"),
 			time: sat.isClosed
-				? "Closed"
+				? t("contact.hours.closed")
 				: `${formatTime(sat.openTime)} – ${formatTime(sat.closeTime)}`,
 			isClosed: sat.isClosed,
 			dayOfWeek: 6,
@@ -102,9 +103,9 @@ function renderOfficeHours(officeHours: IOfficeHourAPI[]) {
 	const sun = sorted.find((h) => h.dayOfWeek === 0);
 	if (sun) {
 		rows.push({
-			label: "Sunday",
+			label: t("contact.hours.sunday"),
 			time: sun.isClosed
-				? "Closed"
+				? t("contact.hours.closed")
 				: `${formatTime(sun.openTime)} – ${formatTime(sun.closeTime)}`,
 			isClosed: sun.isClosed,
 			dayOfWeek: 0,
@@ -115,6 +116,7 @@ function renderOfficeHours(officeHours: IOfficeHourAPI[]) {
 }
 
 export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps) {
+	const { t } = useTranslation();
 	const [now, setNow] = useState<Date | null>(null);
 
 	useEffect(() => {
@@ -131,7 +133,7 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 		[socialLinks]
 	);
 
-	const hoursRows = useMemo(() => renderOfficeHours(officeHours), [officeHours]);
+	const hoursRows = useMemo(() => renderOfficeHours(officeHours, t), [officeHours, t]);
 	const currentDay = now?.getDay();
 
 	return (
@@ -143,7 +145,7 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50">
 								<Clock className="h-4 w-4 text-primary-900" />
 							</div>
-							<h3 className="text-base font-bold text-gray-950">Office Hours</h3>
+							<h3 className="text-base font-bold text-gray-950">{t("contact.sidebar.officeHours")}</h3>
 						</div>
 
 						<div className="space-y-2">
@@ -183,7 +185,7 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50">
 								<MessageCircle className="h-4 w-4 text-primary-900" />
 							</div>
-							<h3 className="text-base font-bold text-gray-950">Follow Us</h3>
+							<h3 className="text-base font-bold text-gray-950">{t("contact.sidebar.followUs")}</h3>
 						</div>
 
 						<div className="grid grid-cols-4 gap-3">
@@ -200,7 +202,7 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 										target="_blank"
 										rel="noopener noreferrer"
 										title={social.platform}
-										aria-label={`Follow us on ${social.platform}`}
+										aria-label={t("contact.sidebar.followOn").replace("{{platform}}", social.platform)}
 										className={`flex aspect-square items-center justify-center rounded-xl text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900 focus-visible:ring-offset-2 ${colorClass}`}
 									>
 										<Icon className="h-5 w-5" />
@@ -217,7 +219,7 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 							<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-khmer-gold-50">
 								<CheckCircle className="h-4 w-4 text-khmer-gold-700" />
 							</div>
-							<h3 className="text-base font-bold text-gray-950">Good to know</h3>
+							<h3 className="text-base font-bold text-gray-950">{t("contact.sidebar.goodToKnow")}</h3>
 						</div>
 
 						<div className="space-y-3">
@@ -226,7 +228,7 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 									<span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary-50">
 										<CheckCircle className="h-3.5 w-3.5 text-primary-900" />
 									</span>
-									<span className="leading-snug">{tip}</span>
+									<span className="leading-snug">{t(tip)}</span>
 								</div>
 							))}
 						</div>

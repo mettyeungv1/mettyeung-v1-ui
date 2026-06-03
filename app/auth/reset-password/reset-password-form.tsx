@@ -57,10 +57,10 @@ export default function ResetPasswordForm({
 	// Password strength checker
 	const getPasswordStrength = (password: string) => {
 		const requirements = [
-			{ regex: /.{8,}/, text: "យ៉ាងហោចណាស់ 8 តួអក្សរ" },
-			{ regex: /[A-Z]/, text: "អក្សរធំ 1 តួ" },
-			{ regex: /[a-z]/, text: "អក្សរតូច 1 តួ" },
-			{ regex: /[0-9]/, text: "លេខ 1 តួ" },
+			{ regex: /.{8,}/, text: t("auth.passwordRules.minLength") },
+			{ regex: /[A-Z]/, text: t("auth.passwordRules.uppercase") },
+			{ regex: /[a-z]/, text: t("auth.passwordRules.lowercase") },
+			{ regex: /[0-9]/, text: t("auth.passwordRules.number") },
 		];
 
 		return requirements.map((req) => ({
@@ -73,7 +73,7 @@ export default function ResetPasswordForm({
 
 	const onSubmit = async (data: ResetPasswordFormData) => {
 		if (!token) {
-			toast.error("តំណកំណត់ពាក្យសម្ងាត់មិនត្រឹមត្រូវ");
+			toast.error(t("auth.toast.invalidResetToken"));
 			return;
 		}
 
@@ -84,12 +84,12 @@ export default function ResetPasswordForm({
 
 			setIsSuccess(true);
 
-			toast.success("ពាក្យសម្ងាត់ត្រូវបានកំណត់ថ្មីជោគជ័យ!", {
-				description: "អ្នកអាចចូលប្រើប្រាស់ដោយពាក្យសម្ងាត់ថ្មីបានហើយ",
+			toast.success(t("auth.toast.resetSuccess"), {
+				description: t("auth.toast.resetSuccessDescription"),
 			});
 		} catch (error) {
-			toast.error("មានបញ្ហាក្នុងការកំណត់ពាក្យសម្ងាត់ថ្មី", {
-				description: "សូមព្យាយាមម្តងទៀត",
+			toast.error(t("auth.toast.resetError"), {
+				description: t("auth.toast.tryAgain"),
 			});
 		} finally {
 			setIsLoading(false);

@@ -1,52 +1,52 @@
 {
   "about": {
     "title": "Mettyerng 소개",
-    "subtitle": "우리 친구 협회(Mettyeung)는 자영업자, 기술 전문가, 서비스 종사자 및 기타 사업자들 간의 우정, 연대, 충성을 강화하고 지원 네트워크를 구축하며, 국내외 생활 수준, 취업 기회 및 비즈니스 협력을 개선하기 위해 설립된 민간 비영리 법인입니다.",
+    "subtitle": "Mett Yeung은 자영업자, 기술 전문가, 서비스 종사자 및 국내외 기타 비즈니스 관계자 간의 우정, 연대, 충성심을 강화하고 지원 네트워크를 구축하며, 유사한 목표를 가진 관련 당사자와 협력하여 생활 수준, 취업 기회 및 비즈니스 협력을 향상시키는 것을 목표로 설립된 민간 비영리 법인입니다.",
     "badge1": "우정",
-    "badge2": "단결",
-    "badge3": "충성",
+    "badge2": "연대",
+    "badge3": "충성심",
     "goals": {
       "title": "우리의 목표",
-      "desc1": "Mettyeung의 목표는 다음과 같습니다:",
-      "list1": "국내외의 자영업자, 비즈니스 실무자, 기술 전문가, 서비스 종사자 및 기타 비즈니스 종사자를 한데 모읍니다.",
-      "list2": "회원에게 지원을 제공하고 경험, 직업 시장 정보, 상담 및 교육을 공유합니다.",
-      "list3": "관련 당사자의 지원을 구하고 비즈니스 지원 네트워크 구축에 참여합니다.",
-      "list4": "MYA 회원의 이익을 대표하고 보호합니다."
+      "desc1": "Mett Yeung은 다음과 같은 목표를 가지고 있습니다:",
+      "list1": "국내외에서 일하거나 스스로 수입을 얻는 사람들, 기술 전문가, 서비스 종사자 및 기타 비즈니스 관계자를 모읍니다.",
+      "list2": "회원에게 지원을 제공하고 경험을 공유하며 취업 기회, 컨설팅 및 교육을 제공합니다.",
+      "list3": "관련 당사자로부터 지원을 구하고 비즈니스 지원 네트워크 구축에 참여합니다.",
+      "list4": "MYA 회원의 이익을 대변하고 보호합니다."
     },
     "mission": {
-      "title": "우리의 미션",
-      "desc1": "친구 네트워크를 구축하고 공통의 관심사에 따라 국내외 회원을 관심 그룹으로 모아, 더 나은 관계를 조성하고, 지원을 제공하며, 경험 및 직업 시장 정보를 공유하고, 상담 및 기술 교육을 제공합니다."
+      "title": "우리의 사명",
+      "desc1": "네트워킹을 구축하고, 관심사에 따라 회원을 관심 그룹으로 모아 더 나은 관계를 형성하고, 지원을 제공하며, 경험을 공유하고, 취업 기회를 제공하며, 다양한 기술에 대한 컨설팅 및 교육을 제공합니다."
     },
     "values": {
-      "title": "핵심 가치",
-      "desc1": "우정, 단결, 충성"
+      "title": "우리의 가치",
+      "desc1": "우정, 연대, 충성심"
     },
     "timeline": {
       "title": "여정",
-      "title_en": "우리의 여정",
-      "description": "2018년 이후 우리의 성장과 성과를 추적합니다.",
+      "title_en": "Our Journey",
+      "description": "2018년 이후 우리의 성장과 성과의 궤적입니다.",
       "founded": {
         "title": "조직 설립",
-        "title_en": "조직 설립",
-        "description": "Mettyerng은 10명의 헌신적인 초기 자원봉사자 그룹에 의해 결성되었습니다.",
+        "title_en": "Organization Founded",
+        "description": "Mettyerng은 10명의 헌신적인 자원봉사자로 구성된 초기 그룹으로 결성되었습니다.",
         "achievements": {
-          "members": "10명의 창립 회원",
+          "members": "창립 멤버 10명",
           "firstProject": "첫 번째 프로젝트 시작"
         }
       },
       "education": {
         "title": "교육 이니셔티브",
-        "title_en": "교육 이니셔티브",
+        "title_en": "Education Initiative",
         "description": "농촌 지역 어린이들에게 교육을 제공하기 위한 프로젝트를 시작했습니다.",
         "achievements": {
-          "children": "50명의 어린이 교육",
-          "classrooms": "5개의 첫 번째 교실"
+          "children": "50명의 어린이 교육 지원",
+          "classrooms": "최초 5개의 교실 확보"
         }
       },
       "covid": {
-        "title": "코로나19 구호",
-        "title_en": "코로나19 구호",
-        "description": "코로나19 팬데믹 기간 동안 식량 및 의료 지원을 제공했습니다.",
+        "title": "COVID-19 구호",
+        "title_en": "COVID-19 Relief",
+        "description": "COVID-19 팬데믹 기간 동안 식량 및 의료 지원을 제공했습니다.",
         "achievements": {
           "families": "500가구 지원",
           "medicalKits": "의료 키트 배포"
@@ -54,167 +54,194 @@
       },
       "haircut": {
         "title": "무료 이발 프로젝트",
-        "title_en": "무료 이발 프로젝트",
-        "description": "공동체에 무료 이발을 제공하기 위한 프로젝트를 시작했습니다.",
+        "title_en": "Free Haircut Project",
+        "description": "지역 사회에 무료 이발을 제공하는 프로젝트를 시작했습니다.",
         "achievements": {
           "people": "200명에게 서비스 제공",
-          "monthlyService": "월별 서비스"
+          "monthlyService": "월간 서비스"
         }
       },
       "expansion": {
         "title": "확장",
-        "title_en": "확장",
-        "description": "다른 지방으로 활동을 확장하고 회원 수를 늘렸습니다.",
+        "title_en": "Expansion",
+        "description": "활동을 다른 지방으로 확장하고 회원 수를 늘렸습니다.",
         "achievements": {
-          "activeMembers": "100명 이상의 활동 회원",
-          "provinces": "3개 지방에서 활동"
+          "activeMembers": "100명 이상의 활성 회원",
+          "provinces": "3개 지방에서 활동 중"
         }
       },
       "recognition": {
         "title": "인정",
-        "title_en": "인정",
-        "description": "우리 포럼에 대해 정부와 시민 사회로부터 인정을 받았습니다.",
+        "title_en": "Recognition",
+        "description": "우리 포럼이 정부 및 시민 사회로부터 인정을 받았습니다.",
         "achievements": {
-          "nationalAward": "국가상 수상",
-          "acknowledgement": "공식 인정"
+          "nationalAward": "국가 표창 수상",
+          "acknowledgement": "공식 승인"
         }
       },
       "newFuture": {
         "title": "새로운 미래",
-        "title_en": "새로운 미래",
-        "description": "새로운 웹사이트를 출시하고 디지털 기술 분야로 활동을 확장했습니다.",
+        "title_en": "New Future",
+        "description": "새로운 웹사이트를 시작하고 디지털 기술 분야로 활동을 확장했습니다.",
         "achievements": {
-          "newWebsite": "새 웹사이트 출시",
+          "newWebsite": "새로운 웹사이트 개설",
           "digitalSystem": "디지털 관리 시스템"
         }
       }
     },
     "team": {
-      "title": "우리 팀",
-      "title_en": "우리의 핵심 팀",
-      "description": "우리 공동체를 건설하는 데 헌신한 핵심 구성원들입니다.",
-      "member1": {
-        "name": "Mettyerng 씨",
-        "role": "회장"
-      },
-      "member2": {
-        "name": "Sokha 씨",
-        "role": "부회장"
-      },
-      "member3": {
-        "name": "Dara 씨",
-        "role": "비서"
-      },
-      "member4": {
-        "name": "Chanda 씨",
-        "role": "회계"
-      }
+      "title": "우리의 구조",
+      "description": "우리의 사명을 추진하는 헌신적인 팀과 개인을 확인하세요."
     },
     "partner": {
-      "title": "우리 친구 네트워크"
+      "title": "우리의 친구 네트워크",
+      "view_all": "전체 네트워크 보기"
     }
   },
+  "structure": {
+    "hero": {
+      "title": "우리의 구조",
+      "description": "우리의 사명을 추진하는 헌신적인 팀과 개인을 확인하세요."
+    },
+    "chart": "조직도",
+    "honorMember": "명예 회원",
+    "executiveCommittee": "집행 위원회",
+    "boardOfDirectors": "이사회",
+    "seniorAdvisors": "고문",
+    "associationBranches": "협회 지부 ",
+    "updating": "업데이트 중...",
+    "noMembersFound": "회원을 찾을 수 없습니다",
+    "filter": {
+      "searchPlaceholder": "회원 검색...",
+      "clearSearch": "검색 지우기",
+      "byDepartment": "부서별 필터링",
+      "allDepartments": "모든 부서",
+      "showing": "표시 중",
+      "of": "/",
+      "members": "명",
+      "in": "부서 전체",
+      "membersAcross": "총",
+      "departments": "개 부서 중",
+      "clearFilters": "필터 지우기"
+    }
+  },
+  "events": {
+    "heroDescription": "우리의 최신 활동과 이벤트를 탐색하세요",
+    "recentNews": "최근 뉴스",
+    "featuredNews": "주요 뉴스",
+    "allNewsGrid": "모든 뉴스",
+    "foundArticles": "{{count}}개의 기사를 찾았습니다",
+    "noNewsFound": "뉴스를 찾을 수 없습니다",
+    "trySearching": "다른 키워드나 카테고리로 다시 검색해 보세요.",
+    "endOfFeed": "뉴스 피드의 끝에 도달했습니다"
+  },
   "nav": {
-    "activity": "활동",
-    "allNews": "전체",
     "home": "홈",
     "about": "소개",
-    "subMenuAbout": "협회 소개",
-    "network": "우리 네트워크",
-    "structure": "조직 구조",
+    "subMenuAbout": "우리에 대해",
+    "network": "우리의 네트워크",
+    "structure": "구조",
     "news": "이벤트",
-    "latestNews": "최신 소식",
+    "latestNews": "최신 뉴스",
+    "activity": "활동",
+    "allNews": "전체",
     "events": "이벤트",
     "videos": "비디오",
     "projects": "프로젝트",
     "allProjects": "모든 프로젝트",
-    "community": "공동체",
+    "community": "커뮤니티",
     "education": "교육",
     "culture": "문화",
     "sports": "스포츠",
     "gallery": "갤러리",
     "contact": "연락처",
-    "joinUs": "참여하기"
+    "joinUs": "가입하기"
   },
   "hero": {
-    "title": "공동체 건설자",
-    "subtitle": "함께 더 강한 공동체를 건설합니다",
-    "description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹입니다.",
+    "title": "커뮤니티 빌더",
+    "subtitle": "함께 더 강력한 커뮤니티 구축",
+    "description": "우리는 교육, 문화, 커뮤니티 개발에 중점을 둔 사회 활동가 그룹입니다",
     "learnMore": "더 알아보기",
     "watchVideo": "비디오 보기",
-    "videoDescription": "영상을 통해 우리의 활동과 프로그램을 확인해보세요",
+    "videoDescription": "비디오를 통해 우리의 활동과 프로그램을 탐색하세요",
     "projectTitle": "무료 이발 프로젝트",
-    "projectSubtitle": "공동체 봉사 이니셔티브",
-    "projectDescription": "어려운 공동체 구성원을 위한 무료 이발",
-    "viewProjects": "프로젝트 보기",
+    "projectSubtitle": "커뮤니티 서비스 이니셔티브",
+    "projectDescription": "도움이 필요한 지역 주민을 위한 무료 이발",
+    "viewProjects": "우리의 활동 보기",
     "educationTitle": "교육 및 문화",
     "educationSubtitle": "학습 및 유산",
-    "educationDescription": "교육을 증진하고 크메르 문화를 보존합니다.",
-    "joinUs": "참여하기"
+    "educationDescription": "교육 진흥 및 크메르 문화 보존",
+    "joinUs": "가입하기",
+    "noBanners": "사용 가능한 배너가 없습니다"
   },
   "home": {
-    "ourHistory": "협회 연혁",
-    "ourHistoryDetail": "우리 친구 협회(Our Friends Association)는 27명의 창립 회원들의 발의로 2020년 12월 2일에 설립된 민간 협회입니다. 27명의 창립 회원들은 캄보디아의 사회적 안녕과 이익을 위하여 생활 수준, 지식, 취업 기회 및 비즈니스 증진에 중점을 두고 정관과 내부 규정을 함께 마련했습니다. 이후 본 협회는 2021년 1월 27일 내무부 공고 제245호에 따라 '법인'으로 정식 등록되었습니다.",
+    "ourHistory": "우리의 역사",
+    "ourHistoryDetail": "Mett Yeung Association (MYA)는 2020년 12월 2일 27명의 창립 멤버가 시작한 민간 협회입니다. 창립 멤버들은 캄보디아 사회의 복지인 생활 수준 향상, 지식, 일자리 및 비즈니스에 초점을 맞춘 법령, 내부 규정 및 규칙을 공동으로 작성하고 초안을 작성했습니다. 이 협회는 2021년 1월 27일자 고시 제245호에 따라 내무부에 \"법인\"으로 합법적으로 등록되었습니다.",
     "ourHistoryMembershipInfo": {
-      "title": "MYA 회원 자격:",
-      "content": "캄보디아 왕국의 법률에 따라 등록되고 국내외 자영업자, 기술자, 서비스 종사자 및 기타 사업자와 관련된 활동을 하는 단체, 협회, 연맹 및 기타 법인은 협회 회원 가입을 신청할 수 있습니다. 법인 또는 개인인 회원은 회원 가입을 신청하고 집행위원장의 승인을 거쳐 MYA 회원으로 인정됩니다."
+      "title": "MYA 회원 자격 요건:",
+      "content": "캄보디아 왕국의 법률에 따라 등록되고 국내외의 자영업자, 기술, 서비스 종사자 및 기타 비즈니스 종사자와 관련된 활동에 종사하는 조직, 협회, 연합회 및 기타 법인, 또는 18세 이상의 개인은 협회의 회원이 되기 위해 신청할 수 있습니다. 법인 또는 개인 회원은 MYA 가입을 신청하고 집행위원회 위원장의 동의를 통해 협회의 회원으로 인정받습니다."
     },
-    "membershipTypesTitle": "협회의 회원 구성은 다음과 같습니다:",
+    "membershipTypesTitle": "협회의 회원 유형은 다음과 같습니다:",
     "membershipTypes": {
       "founding": {
-        "title": "창립 회원",
-        "description": "MYA 설립을 주도한 활동적인 회원입니다."
+        "title": "창립 멤버",
+        "description": "MYA 설립을 주도한 적극적인 회원."
       },
       "honorary": {
         "title": "명예 회원",
-        "description": "MYA의 활동을 지원하고 후원하는 회원입니다."
+        "description": "MYA의 활동을 지원해 온 회원."
       },
       "active": {
-        "title": "정회원",
-        "description": "MYA 활동에 적극적으로 참여하는 회원입니다."
+        "title": "활성 회원",
+        "description": "MYA의 활동에 적극적으로 참여하는 회원."
       },
       "supporting": {
         "title": "후원 회원",
-        "description": "위 세 가지 회원 범주에 속하지 않으며 MYA의 모든 활동을 지원하는 회원입니다."
+        "description": "세 가지 회원 범주에 속하지 않으며 MYA의 모든 활동을 지원하는 회원."
       }
     },
     "achievements": "협회 성과",
-    "achievementsDesc": "우리 친구 협회(Our Friends Association)는 다양한 활동을 통해 국내외 자영업자, 기술 전문가, 서비스 종사자 및 다양한 사업가들에게 보호를 제공하고, 생활 수준 향상과 고용 및 사업 기회를 증진시켰습니다.",
-    "missionTitle": "우리의 미션",
-    "missionDesc": "국내외 친구 및 회원 네트워크를 관심 그룹으로 통합하여 더 나은 관계를 조성하고, 경험을 공유하며, 직업 시장 정보를 제공하고, 생활 수준 향상을 위한 조언과 훈련을 제공하는 것입니다.",
-    "missionText": "우리는 교육이 캄보디아 어린이와 청소년의 발전과 밝은 미래를 건설하기 위한 가장 중요한 기반이라고 믿습니다.",
-    "focusAreas": "우정, 단결, 충성",
-    "focusAreasDesc": "국내외 근로자, 자영업자, 기술 전문가, 서비스 종사자 및 다양한 사업가의 보호와 생활 수준 향상, 고용 및 사업 기회 증진의 중요성을 인식하여, 우리 친구 협회(Our Friends Association)는 청년 그룹의 공동 비전을 바탕으로 다음과 같은 원칙 아래 설립되었습니다.",
-    "joinCommunity": "우리 공동체에 참여하세요",
-    "joinDesc": "긍정적인 변화의 일부가 되고, 강한 공동체 건설에 참여하십시오.",
+    "achievementsDesc": "다양한 활동을 통해 우리 친구 협회는 국내외 자영업자, 기술 전문가, 서비스 제공 업체 및 다양한 비즈니스 운영자의 보호와 생활 수준 향상은 물론 고용 및 비즈니스 기회를 촉진해 왔습니다.",
+    "missionTitle": "우리의 사명",
+    "missionDesc": "더 나은 관계를 육성하고, 경험을 공유하며, 고용 시장 정보를 제공하고, 생활 수준을 향상시키기 위한 조언과 교육을 제공하기 위해 국내외 친구 및 회원의 네트워크를 관심 그룹으로 구성합니다.",
+    "missionText": "우리는 교육이 캄보디아 어린이와 청소년의 발전과 밝은 미래를 구축하는 가장 중요한 토대라고 믿습니다.",
+    "focusAreas": "우정, 연대, 충성심",
+    "focusAreasDesc": "국내외 근로자, 자영업자, 기술 전문가, 서비스 제공업체 및 기타 사업자의 생활 수준, 고용 및 사업 기회를 보호하고 증진하는 것의 중요성을 인식하여, 우리 친구 협회는 다음과 같은 접근 방식 하에 청년 단체의 집단적 비전을 통해 설립되었습니다:",
+    "joinCommunity": "회원 혜택",
+    "joinDesc1": "상담을 받고 노동법, 노동조합법, 재무 관리 지식과 같은 다양한 교육 과정에 참여합니다.",
+    "joinDesc2": "가치를 공유하는 동료들과 강력한 네트워크를 구축하여 당면 과제를 논의하고 해결책을 모색하는 데 있어 하나 된 목소리를 냅니다.",
+    "joinDesc3": "비즈니스 기회를 늘리고 전문 네트워크를 확장하며 공동의 발전을 위한 새로운 관계를 구축합니다.",
     "becomeVolunteer": "자원봉사자 되기",
-    "becomeOurMember": "우리 친구 회원이 되세요",
-    "viewOurActivity": "우리 활동 보기",
+    "becomeOurMember": "회원 가입하기",
+    "viewProjects": "프로젝트 보기",
+    "viewOurActivity": "우리의 활동 보기",
     "education": "우정과 연대 강화",
-    "educationDesc": "근로자와 기업 간의 유대, 연대, 지원 네트워크 강화를 목표로 하는 사립 비영리 법인.",
+    "educationDesc": "근로자와 기업 간의 유대, 연대 및 지원 네트워크를 강화하는 데 중점을 둔 민간 비영리 법인.",
     "culture": "핵심 가치: 우정, 연대, 충성심",
-    "cultureDesc": "회원들이 공동의 목표를 효과적이고 지속 가능하게 달성할 수 있도록 희망과 방향을 제시하는 협회의 지도 원칙.",
+    "cultureDesc": "회원들이 효과적이고 지속적으로 공동의 목표를 달성할 수 있도록 희망과 방향을 제시하는 협회의 지도 원칙.",
     "social": "근로자 및 기업 지원",
-    "socialDesc": "훈련, 법률/사업 컨설팅, 일자리 기회 제공 및 사업 네트워크 확장을 통해 생활 수준을 향상시키는 플랫폼.",
-    "upskillingDesc": "기술 향상 훈련 세션 진행",
-    "successfulProjects": "성공적으로 실행된 프로젝트",
-    "eciDesc": "ECI 훈련 프로그램 완료",
-    "educatedChildren": "교육을 받은 어린이와 청소년 수"
+    "socialDesc": "교육을 제공하여 생활 수준을 향상시키는 플랫폼,",
+    "upskillingDesc": "수강생을 대상으로 한 직무 능력 향상 교육 진행",
+    "successfulProjects": "성공적으로 수행된 프로젝트",
+    "eciDesc": "조직된 세미나",
+    "educatedChildren": "총 참가자",
+    "hairSalonDesc": "헤어 및 살롱 행사 개최"
   },
   "projects": {
-    "title": "우리 프로젝트",
-    "subtitle": "우리의 영향력 있는 프로젝트와 공동체 이니셔티브를 발견하십시오.",
+    "title": "우리의 프로젝트",
+    "subtitle": "우리의 영향력 있는 프로젝트와 지역사회 이니셔티브를 찾아보세요",
     "impact": "우리의 영향력",
     "impactDesc": "우리의 성과",
     "allProjects": "모든 프로젝트",
     "showing": "표시 중",
-    "of": "중",
+    "of": "/",
     "projects": "프로젝트",
-    "noResults": "프로젝트를 찾을 수 없습니다.",
+    "noResults": "프로젝트를 찾을 수 없습니다",
     "clearFilters": "모든 필터 지우기",
+    "progress": "진행률",
     "categories": {
       "all": "모든 프로젝트",
-      "community": "공동체",
+      "community": "커뮤니티",
       "education": "교육",
       "culture": "문화",
       "sports": "스포츠"
@@ -222,48 +249,83 @@
   },
   "contact": {
     "title": "문의하기",
-    "subtitle": "협력, 참여 또는 질문을 위해 연락하십시오.",
+    "subtitle": "협력, 참여 또는 질문이 있으시면 연락주세요",
     "info": "연락처 정보",
     "sendMessage": "메시지 보내기",
     "name": "이름",
     "email": "이메일",
-    "phone": "전화",
+    "phone": "전화번호",
+    "address": "주소",
     "department": "부서",
     "subject": "제목",
     "message": "메시지",
     "send": "메시지 보내기",
-    "sending": "전송 중...",
-    "followUs": "소셜 미디어에서 팔로우",
-    "quickActions": "빠른 행동",
+    "sending": "보내는 중...",
+    "followUs": "소셜 미디어 팔로우",
+    "quickActions": "빠른 작업",
     "volunteer": "자원봉사자 되기",
     "donate": "기부",
-    "location": "우리 위치",
+    "location": "오시는 길",
     "hours": {
-      "title": "운영 시간",
+      "title": "업무 시간",
       "weekdays": "월 – 금",
       "saturday": "토요일",
       "sunday": "일요일",
       "closed": "휴무"
     },
+    "days": {
+      "monday": "월요일",
+      "tuesday": "화요일",
+      "wednesday": "수요일",
+      "thursday": "목요일",
+      "friday": "금요일"
+    },
     "hoursWeekday": "오전 8:00 – 오후 5:00",
     "hoursSaturday": "오전 8:00 – 오후 12:00",
-    "responseTime": "일반적으로 24시간 이내에 답변드립니다",
-    "joinUs": "회원 가입",
-    "joinDesc": "MYA 커뮤니티에 참여하여 캄보디아를 위한 의미 있는 일에 동참하세요",
+    "responseTime": "일반적으로 24시간 이내에 응답합니다",
+    "joinUs": "회원 가입하기",
+    "joinDesc": "성장하는 우리 커뮤니티에 합류하여 캄보디아를 위한 의미 있는 일에 참여하세요.",
     "getDirections": "길 찾기",
-    "formTitle": "메시지 보내기",
-    "formDesc": "아래 양식을 작성해 주시면 팀이 최대한 빠르게 연락드리겠습니다",
-    "successMsg": "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다",
-    "required": "필수 항목",
-    "selectDept": "부서 선택",
+    "formTitle": "메시지 남기기",
+    "formDesc": "아래 양식을 작성해 주시면 저희 팀이 최대한 빨리 연락드리겠습니다.",
+    "successMsg": "메시지가 성공적으로 전송되었습니다! 곧 연락드리겠습니다.",
+    "required": "필수 입력란",
+    "selectDept": "부서를 선택하세요",
     "namePlaceholder": "성명",
     "emailPlaceholder": "your@email.com",
-    "subjectPlaceholder": "메시지 주제를 입력하세요",
-    "messagePlaceholder": "메시지를 여기에 작성하세요…",
+    "subjectPlaceholder": "어떤 메시지입니까?",
+    "messagePlaceholder": "여기에 메시지를 작성하세요...",
     "statsMembers": "활성 회원",
-    "statsYears": "활동 연수",
-    "statsAssoc": "협력 기관",
-    "heroTagline": "언제든지 연락해 주세요"
+    "statsYears": "활동 연도",
+    "statsAssoc": "협회",
+    "heroTagline": "여러분의 연락을 기다립니다",
+    "reachUs": "문의처",
+    "chooseMethod": "우리 팀에 연락하기 가장 좋은 방법을 위에서 선택하세요.",
+    "deptGeneral": "일반 문의",
+    "deptVolunteer": "자원봉사",
+    "deptDonation": "기부",
+    "deptPartnership": "파트너십",
+    "deptMedia": "미디어",
+    "findUs": "찾아오시는 길",
+    "visitOffice": "사무실 방문",
+    "officeAddress": "사무실 주소",
+    "callOffice": "사무실에 전화하기",
+    "letsConnect": "연락합시다",
+    "infoTitle": "연락하기",
+    "mapTitle": "Mett Yeung 협회 지도",
+    "organizationName": "Mett Yeung 협회",
+    "defaultAddress": "캄보디아 프놈펜",
+    "sidebar": {
+      "officeHours": "업무 시간",
+      "followUs": "팔로우",
+      "goodToKnow": "알아두면 좋은 정보",
+      "followOn": "{{platform}}에서 팔로우하세요",
+      "tips": {
+        "callUrgent": "긴급한 사항은 직접 전화주세요",
+        "volunteer": "자원봉사 요청은 우리 팀으로 전달됩니다",
+        "general": "일반적인 질문은 양식을 이용해 주세요"
+      }
+    }
   },
   "common": {
     "readMore": "더 읽기",
@@ -276,32 +338,30 @@
     "close": "닫기",
     "search": "검색",
     "filter": "필터",
-    "all": "전체",
+    "all": "모두",
     "loading": "로딩 중...",
-    "error": "오류",
-    "success": "성공"
+    "error": "에러",
+    "success": "성공",
+    "copy": "복사",
+    "cancel": "취소",
+    "more": "더 보기",
+    "previousSlide": "이전 슬라이드",
+    "nextSlide": "다음 슬라이드",
+    "previousPageLabel": "이전 페이지로 이동",
+    "nextPageLabel": "다음 페이지로 이동",
+    "morePages": "더 많은 페이지",
+    "scrollToTop": "맨 위로 스크롤",
+    "languageShort": "언어",
+    "selectLanguage": "언어 선택",
+    "breadcrumb": "이동 경로"
   },
-  "events": {
-    "heroDescription": "우리의 최신 활동과 이벤트를 살펴보세요",
-    "recentNews": "최근 소식",
-    "featuredNews": "추천 뉴스",
-    "allNewsGrid": "모든 뉴스",
-    "foundArticles": "{{count}}개의 기사 검색됨",
-    "noNewsFound": "뉴스를 찾을 수 없습니다",
-    "trySearching": "다른 키워드나 분류로 검색해 보세요.",
-    "endOfFeed": "뉴스 피드의 끝에 도달했습니다"
-  },
-  "structure": {
-    "hero": {
-      "title": "조직 구조",
-      "description": "우리의 사명을 이끌어가는 헌신적인 팀과 구성원들을 만나보세요."
-    },
-    "chart": "조직도",
-    "honorMember": "명예 회원",
-    "executiveCommittee": "집행위원회",
-    "boardOfDirectors": "이사회",
-    "seniorAdvisors": "상임 고문",
-    "associationBranches": "협회 지부"
+  "video": {
+    "category": "카테고리",
+    "about": "정보",
+    "publishedDate": "게시일",
+    "totalViews": "총 조회수",
+    "duration": "지속 시간",
+    "description": "설명"
   },
   "contactUs": {
     "phone": "전화번호",
@@ -309,8 +369,8 @@
     "email": "이메일"
   },
   "footer": {
-    "description": "우리는 교육, 문화 및 공동체 개발에 중점을 둔 사회 활동가 그룹이며, 함께 더 강한 공동체를 건설하기 위해 헌신합니다.",
-    "quickLinks": "바로가기",
+    "description": "우리는 교육, 문화, 커뮤니티 개발에 중점을 둔 사회 활동가 그룹이며, 함께 더 강력한 커뮤니티를 구축하기 위해 최선을 다하고 있습니다.",
+    "quickLinks": "빠른 링크",
     "contactInfo": {
       "title": "연락처 정보",
       "phone": "+855 15 220 320",
@@ -319,187 +379,326 @@
     },
     "newsletter": {
       "title": "뉴스레터",
-      "description": "최신 소식 및 활동을 받으려면 구독하십시오."
+      "description": "우리의 최신 뉴스와 활동을 받아보려면 구독하세요."
     },
-    "followUs": "팔로우하세요",
+    "followUs": "팔로우하기",
     "copyright": "모든 권리 보유.",
-    "joinUs": "참여하기",
+    "aboutUs": "우리에 대해",
+    "history": "역사",
+    "mission": "사명",
+    "vision": "비전",
+    "values": "가치",
+    "activities": "활동",
+    "news": "뉴스",
+    "projects": "프로젝트",
+    "videos": "비디오",
+    "gallery": "갤러리",
+    "contact": "연락처",
+    "contactUs": "문의하기",
+    "joinUs": "가입하기",
     "volunteer": "자원봉사",
     "support": "지원",
-    "newsletterDesc": "최신 소식 및 활동을 받으려면 구독하십시오",
-    "emailPlaceholder": "이메일 입력",
-    "subscribe": "구독",
-    "privacy": "개인 정보 보호 정책",
+    "newsletterDesc": "우리의 최신 뉴스와 활동을 받아보려면 구독하세요",
+    "emailPlaceholder": "이메일 주소 입력",
+    "subscribe": "구독하기",
+    "privacy": "개인정보 보호정책",
     "terms": "서비스 약관"
   },
   "stats": {
-    "members": "활동 회원",
-    "upskilling": "기술 향상 훈련",
+    "members": "활성 회원",
+    "upskilling": "기술 향상 교육",
     "projects": "자선 활동",
-    "beneficiaries": "수혜자",
+    "beneficiaries": "참가자",
     "volunteers": "자원봉사자",
-    "eci": "훈련 (ECI)",
-    "training": "교육 훈련",
+    "eci": "전시회",
+    "training": "교육",
     "years": "년",
-    "communities": "지역사회"
+    "communities": "커뮤니티",
+    "myaProject": "MYA 프로젝트",
+    "seminar": "세미나",
+    "hairAndSalon": "헤어 & 살롱"
   },
   "auth": {
     "login": "로그인",
-    "register": "회원가입",
+    "register": "가입",
     "logout": "로그아웃",
-    "loginSubtitle": "다시 오신 것을 환영합니다! 계정에 로그인하십시오.",
-    "registerSubtitle": "시작하려면 계정을 만드십시오.",
+    "loginSubtitle": "환영합니다! 계정에 로그인하세요",
+    "registerSubtitle": "시작하려면 계정을 만드세요",
     "email": "이메일",
     "password": "비밀번호",
-    "fullName": "성명",
+    "fullName": "전체 이름",
     "confirmPassword": "비밀번호 확인",
     "newPassword": "새 비밀번호",
     "confirmNewPassword": "새 비밀번호 확인",
-    "emailPlaceholder": "이메일 주소 입력",
-    "passwordPlaceholder": "비밀번호 입력",
-    "fullNamePlaceholder": "성명 입력",
-    "confirmPasswordPlaceholder": "비밀번호 확인",
-    "newPasswordPlaceholder": "새 비밀번호 입력",
-    "confirmNewPasswordPlaceholder": "새 비밀번호 확인",
-    "rememberMe": "로그인 유지",
-    "forgotPassword": "비밀번호를 잊으셨습니까?",
-    "noAccount": "계정이 없으십니까?",
-    "haveAccount": "이미 계정이 있으십니까?",
+    "emailPlaceholder": "이메일을 입력하세요",
+    "passwordPlaceholder": "비밀번호를 입력하세요",
+    "fullNamePlaceholder": "전체 이름을 입력하세요",
+    "confirmPasswordPlaceholder": "비밀번호를 확인하세요",
+    "newPasswordPlaceholder": "새 비밀번호를 입력하세요",
+    "confirmNewPasswordPlaceholder": "새 비밀번호를 확인하세요",
+    "rememberMe": "로그인 상태 유지",
+    "forgotPassword": "비밀번호를 잊으셨나요?",
+    "noAccount": "계정이 없으신가요?",
+    "haveAccount": "이미 계정이 있으신가요?",
     "loggingIn": "로그인 중...",
     "registering": "계정 생성 중...",
-    "continueWithGoogle": "Google로 계속하기",
-    "continueWithTelegram": "Telegram으로 계속하기",
-    "orContinueWith": "또는 이메일로 계속하기",
-    "orRegisterWith": "또는 이메일로 등록하기",
-    "agreeToTerms": "다음에 동의합니다",
+    "continueWithGoogle": "Google로 계속",
+    "continueWithTelegram": "Telegram으로 계속",
+    "orContinueWith": "또는 이메일로 계속",
+    "orRegisterWith": "또는 이메일로 가입",
+    "agreeToTerms": "동의합니다",
     "termsOfService": "서비스 약관",
-    "privacyPolicy": "개인 정보 보호 정책",
+    "privacyPolicy": "개인정보 보호정책",
     "and": "및",
-    "passwordRequirements": "비밀번호 요구 사항",
-    "verifyOtp": "계정 인증",
-    "otpSubtitle": "이메일로 전송된 6자리 코드 입력",
-    "sentTo": "전송됨",
-    "resendIn": "코드 재전송까지 남은 시간",
+    "passwordRequirements": "비밀번호 요구사항",
+    "verifyOtp": "계정 확인",
+    "otpSubtitle": "이메일로 전송된 6자리 코드를 입력하세요",
+    "sentTo": "보낸 주소",
+    "resendIn": "코드 재전송",
     "resendOtp": "코드 재전송",
     "resending": "재전송 중...",
-    "verify": "계정 인증",
-    "verifying": "인증 중...",
-    "wrongEmail": "잘못된 이메일입니까?",
+    "verify": "계정 확인",
+    "verifying": "확인 중...",
+    "wrongEmail": "이메일이 잘못되었나요?",
     "changeEmail": "이메일 변경",
-    "forgotPasswordSubtitle": "비밀번호 재설정 링크를 받으려면 이메일을 입력하십시오.",
+    "forgotPasswordSubtitle": "비밀번호 재설정 링크를 받으려면 이메일을 입력하세요",
     "sendResetLink": "재설정 링크 보내기",
     "sending": "전송 중...",
     "emailSent": "이메일 전송 완료!",
-    "emailSentDescription": "다음 주소로 비밀번호 재설정 링크를 보냈습니다:",
+    "emailSentDescription": "다음으로 비밀번호 재설정 링크를 전송했습니다:",
     "resendEmail": "이메일 재전송",
     "backToLogin": "로그인으로 돌아가기",
-    "rememberPassword": "비밀번호를 기억하십니까?",
+    "rememberPassword": "비밀번호가 기억나시나요?",
     "resetPassword": "비밀번호 재설정",
-    "resetPasswordSubtitle": "아래에 새 비밀번호를 입력하십시오.",
+    "resetPasswordSubtitle": "아래에 새 비밀번호를 입력하세요",
     "resetting": "재설정 중...",
-    "passwordResetSuccess": "비밀번호 재설정 성공!",
+    "passwordResetSuccess": "비밀번호가 성공적으로 재설정되었습니다!",
     "passwordResetSuccessDescription": "비밀번호가 성공적으로 재설정되었습니다. 이제 새 비밀번호로 로그인할 수 있습니다.",
     "loginWithNewPassword": "새 비밀번호로 로그인",
     "invalidResetLink": "유효하지 않은 재설정 링크",
-    "invalidResetLinkDescription": "이 비밀번호 재설정 링크는 유효하지 않거나 만료되었습니다. 새 링크를 요청하십시오.",
-    "requestNewLink": "새 링크 요청"
+    "invalidResetLinkDescription": "이 비밀번호 재설정 링크는 유효하지 않거나 만료되었습니다. 새 링크를 요청하세요.",
+    "requestNewLink": "새 링크 요청",
+    "passwordRules": {
+      "minLength": "최소 8자",
+      "uppercase": "대문자 1자",
+      "lowercase": "소문자 1자",
+      "number": "숫자 1자"
+    },
+    "toast": {
+      "loginError": "로그인에 문제가 발생했습니다",
+      "loginErrorDescription": "이메일과 비밀번호를 확인하세요",
+      "loginSuccess": "성공적으로 로그인했습니다!",
+      "loginSuccessDescription": "홈 페이지로 리디렉션됩니다",
+      "socialLoginSuccess": "{{provider}} 계정으로 성공적으로 로그인했습니다!",
+      "socialLoginError": "{{provider}} 계정으로 로그인하는 데 문제가 발생했습니다",
+      "registerSuccess": "성공적으로 가입했습니다!",
+      "registerSuccessDescription": "계정을 확인하려면 이메일을 확인하세요",
+      "registerError": "가입에 문제가 발생했습니다",
+      "socialRegisterSuccess": "{{provider}} 계정으로 성공적으로 가입했습니다!",
+      "socialRegisterError": "{{provider}} 계정으로 가입하는 데 문제가 발생했습니다",
+      "tryAgain": "다시 시도해 주세요",
+      "systemError": "시스템 오류",
+      "serverConnectionError": "서버에 연결할 수 없습니다. 다시 시도해 주세요.",
+      "otpVerified": "계정이 성공적으로 확인되었습니다!",
+      "otpVerifiedDescription": "계정이 확인되었습니다",
+      "otpInvalid": "유효하지 않은 OTP 코드",
+      "otpInvalidDescription": "OTP 코드를 확인하고 다시 시도하세요",
+      "otpVerifyError": "OTP를 확인할 수 없습니다. 다시 시도해 주세요.",
+      "otpSent": "새 OTP 코드가 전송되었습니다!",
+      "otpSentDescription": "이메일을 확인하세요",
+      "otpSendError": "OTP 코드를 전송하는 데 문제가 발생했습니다",
+      "otpSendErrorDescription": "나중에 다시 시도해 주세요.",
+      "otpSystemError": "OTP를 전송할 수 없습니다.",
+      "invalidResetToken": "유효하지 않은 비밀번호 재설정 링크",
+      "resetSuccess": "비밀번호가 성공적으로 재설정되었습니다!",
+      "resetSuccessDescription": "이제 새 비밀번호로 로그인할 수 있습니다",
+      "resetError": "비밀번호를 재설정하는 데 문제가 발생했습니다",
+      "forgotEmailSent": "비밀번호 재설정 이메일 전송 완료!",
+      "forgotEmailSentDescription": "이메일을 확인하세요",
+      "forgotEmailError": "이메일을 전송하는 데 문제가 발생했습니다",
+      "forgotEmailResent": "이메일이 다시 전송되었습니다!"
+    }
   },
   "partners": {
-    "title": "파트너",
-    "description": "우리가 협력하는 조직들",
+    "title": "우리의 친구 네트워크",
+    "view_all": "전체 네트워크 보기",
+    "description": "협력 기관",
     "visitWebsite": "웹사이트 방문",
     "noPartners": "표시할 파트너가 없습니다"
   },
   "network": {
     "mou": {
-      "title": "양해각서 (MOU)",
-      "description": "멧 영(Mett Yeung)은 전문 교육 및 기술 분야의 협력을 위해 여러 기관 및 민간 기업들과 양해각서(MOU)를 체결했습니다. 협력 내용은 다음과 같습니다:",
+      "title": "양해각서(MOU)",
+      "description": "Mett Yeung은 전문 교육 및 기술적 기술 협력을 위해 기관 및 민간 기업과 MOU를 체결했습니다. 협력 내용은 다음과 같습니다:",
+      "partnerFallback": "MOU 파트너",
+      "descriptionFallback": "양해각서",
+      "showLess": "간단히 보기",
+      "viewAllPartners": "모든 파트너 보기",
+      "types": {
+        "privateCompany": "민간 기업",
+        "association": "협회",
+        "institution": "기관"
+      },
       "list": {
-        "item1": "MYA와 어스파이어 디자인 아카데미(Aspire Design Academy Company) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item2": "MYA와 커피 유한회사(Coffee Co., Ltd.) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item3": "MYA와 캄보디아 청년 기업가 협회(Young Entrepreneurs Association of Cambodia) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item4": "MYA와 담 컴퓨터 인터내셔널(Dham Computer International Company) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item5": "MYA와 RMA 캄보디아(RMA (Cambodia) Co., Ltd.) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item6": "MYA와 국립노동연구원(National Institute of Labor) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item7": "MYA와 디지 아카데미(Digi Academy) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item8": "MYA와 HFC 캄보디아 소액금융(HFC (Cambodia) Microfinance Company Limited) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item9": "MYA와 트라우마 치료 및 연구 센터(Center for Trauma Care and Research) 간의 MOU: 정신 건강 증진 협력",
-        "item10": "MYA와 산업기술연구원(Institute of Industrial Technology) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item11": "MYA와 웨스트라인 에듀케이션 그룹(Westline Education Group) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item12": "MYA와 우동 익스프레스(Company of Oudong Express) 간의 MOU: 교육 및 인도주의적 활동을 위한 운송 서비스 제공 협력",
-        "item13": "MYA와 캄보디아 전자 기술 협회(Cambodia Electronics and Technology Association) 간의 MOU: 전자 및 기술 분야의 교육 및 인적 자원 개발 협력",
-        "item14": "MYA와 캄보디아 기술 농업 연구원(Cambodia Institute of Technology and Agriculture) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item15": "MYA와 아클렘 캄보디아(Akhlem (Cambodia) Co., Ltd.) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item16": "MYA와 캄보디아 레스토랑 협회(Cambodia Restaurant Association) 간의 MOU: 교육 및 인적 자원 개발 협력",
-        "item17": "MYA와 마이컷 펌(Mycut Firm Co., Ltd.) 간의 MOU: 교육 활동 및 자선 행사를 위한 사진 및 영상 제작 서비스 제공 협력"
+        "item1": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 Aspire Design Academy Company 간의 MOU",
+        "item2": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 Coffee Co., Ltd. 간의 MOU",
+        "item3": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 캄보디아 청년 기업가 협회 간의 MOU",
+        "item4": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 Dham Computer International Company 간의 MOU",
+        "item5": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 RMA (Cambodia) Co., Ltd. 간의 MOU",
+        "item6": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 국립 노동 연구소 간의 MOU",
+        "item7": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 Digi Academy 간의 MOU",
+        "item8": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 HFC (Cambodia) Microfinance Company Limited 간의 MOU",
+        "item9": "정신 건강 증진에 대한 협력을 위한 MYA와 트라우마 관리 및 연구 센터 간의 MOU",
+        "item10": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 산업 기술 연구소 간의 MOU",
+        "item11": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 Westline Education Group 간의 MOU",
+        "item12": "교육 및 인도주의 활동을 위한 교통 서비스 제공에 대한 협력을 위한 MYA와 Oudong Express Company 간의 MOU",
+        "item13": "전자 및 기술 분야의 교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 캄보디아 전자 및 기술 협회 간의 MOU",
+        "item14": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 캄보디아 기술 및 농업 연구소 간의 MOU",
+        "item15": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 Akhlem (Cambodia) Co., Ltd. 간의 MOU",
+        "item16": "교육 및 인적 자원 개발에 대한 협력을 위한 MYA와 캄보디아 레스토랑 협회 간의 MOU",
+        "item17": "교육 활동 및 자선 행사를 위한 사진 및 비디오 제작 서비스 제공에 대한 협력을 위한 MYA와 Mycut Firm Co., Ltd. 간의 MOU"
       }
     }
   },
   "newsHighlight": {
-    "title": "우리의 활동 및 영향력",
-    "subtitle": "커뮤니티를 강화하기 위해 우리가 함께 달성한 이정표와 프로그램들을 확인해 보세요.",
+    "title": "우리의 활동과 영향",
+    "subtitle": "커뮤니티를 강화하기 위해 우리가 공동으로 달성한 이정표와 프로그램을 확인하세요.",
     "myaProjects": {
       "title": "MYA 프로젝트",
-      "desc": "커뮤니티의 생산성과 전반적인 복지를 향상시키기 위해 마련된 핵심 이니셔티브.",
+      "desc": "커뮤니티의 생산성과 전반적인 복지를 향상시키기 위해 설계된 주요 이니셔티브.",
       "items": {
         "p1": "생산성 및 복지 향상",
-        "p2": "MEP 설치 및 유지보수",
+        "p2": "MEP 설치 및 유지 관리",
         "p3": "F&B 서비스 교육",
-        "p4": "인큐베이터 생태계 (ECI)",
-        "p5": "커뮤니티 웰빙 프로젝트"
+        "p4": "인큐베이터 생태계(ECI)",
+        "p5": "커뮤니티 복지 프로젝트"
       }
     },
     "training": {
       "title": "교육 프로그램",
-      "desc": "경력 발전을 위한 전문 직업 교육 및 역량 강화.",
+      "desc": "경력 향상을 위한 전문적인 직업 교육 및 능력 구축.",
       "juno": {
         "title": "JUNO 아카데미 미용사 교육",
-        "desc": "현지 미용사들의 역량 강화를 위해 한국 서울에서 진행된 전문 교육."
+        "desc": "한국의 서울에서 진행된 현지 미용사들의 역량 강화에 초점을 맞춘 전문 교육."
       },
       "teams": {
         "title": "T.E.A.M.S. Co., Ltd. 교육",
-        "desc": "직원들을 위한 집중 기술 및 엔지니어링 스킬 교육."
+        "desc": "직원들을 위한 집중적인 기술 및 엔지니어링 기술 교육."
       }
     },
     "seminars": {
       "title": "주요 세미나",
-      "desc": "Mett Yeung은 파트너와 함께 6개의 주요 세미나를 주최하여 434명의 참가자를 모았습니다.",
-      "s1": "Oknha Pech Bolen 세미나",
-      "s2": "Ms. Nut Clara 세미나",
-      "s3": "Ms. Yu Bory (종합 관리자, Talent Excellence Development Partner) 세미나",
-      "s4": "Ms. Lim Hung (CEO, ETEC) 세미나",
-      "s5": "Mr. Hean Sopheap 세미나",
-      "s6": "스페셜 주제 세미나"
+      "desc": "Mett Yeung은 파트너와 함께 6개의 주요 세미나를 개최하여 434명의 참가자를 모았습니다.",
+      "s1": "옥나 페크 볼렌(Oknha Pech Bolen) 세미나",
+      "s2": "눗 클라라(Ms. Nut Clara) 세미나",
+      "s3": "유 보리(Ms. Yu Bory, Talent Excellence Development Partner 총괄 매니저) 세미나",
+      "s4": "림 훙(Ms. Lim Hung, ETEC CEO) 세미나",
+      "s5": "헨 소피앱(Mr. Hean Sopheap) 세미나",
+      "s6": "특별 주제 세미나"
     },
     "hairAndSalon": {
       "title": "헤어 및 살롱 이벤트",
-      "desc": "Mett Yeung은 70건의 헤어 및 살롱 행사를 주최하여 커뮤니티에 직접적인 서비스와 지원을 제공했습니다."
+      "desc": "Mett Yeung은 70회의 헤어 및 살롱 이벤트를 개최하여 커뮤니티에 직접 서비스와 지원을 제공했습니다."
     }
   },
   "member": {
     "detail": {
       "backToOrg": "조직으로 돌아가기",
-      "back": "돌아가기",
-      "downloadCV": "CV 다운로드",
-      "generating": "생성 중…",
-      "skills": "기술 및 전문성",
+      "back": "뒤로",
+      "downloadCV": "이력서 다운로드",
+      "generating": "생성 중...",
+      "skills": "기술 및 전문 지식",
       "languages": "언어",
-      "experience": "경력 사항",
-      "education": "학력",
-      "organizations": "소속 기관 및 회원",
-      "emptyTitle": "프로필 상세 정보 준비 중",
+      "experience": "경력",
+      "education": "교육",
+      "organizations": "조직 및 멤버십",
+      "emptyTitle": "프로필 세부 정보 곧 공개",
       "emptyDesc": "이 회원의 상세 프로필 정보가 아직 추가되지 않았습니다.",
       "role": "역할",
-      "organization": "기관",
+      "organization": "조직",
       "present": "현재",
       "affiliations": "소속",
       "contact": "연락처",
       "personal": "개인 정보",
       "social": "소셜",
       "department": "부서",
-      "head": "대표",
-      "joined": "가입",
-      "unknownMember": "알 수 없는 회원"
+      "head": "책임자",
+      "joined": "가입일",
+      "unknownMember": "알 수 없는 회원",
+      "noContent": "추가 정보가 없습니다.",
+      "email": "이메일",
+      "phone": "전화번호",
+      "location": "위치",
+      "dateOfBirth": "생년월일",
+      "nationality": "국적",
+      "gender": "성별",
+      "degree": "학위",
+      "headMember": "헤드 멤버",
+      "year": "년",
+      "years": "년",
+      "ofService": "근무",
+      "since": "시작",
+      "statusLabel": "상태",
+      "status": {
+        "active": "활성 회원",
+        "alumni": "졸업생",
+        "inactive": "비활성",
+        "unknown": "알 수 없음"
+      }
+    },
+    "pdf": {
+      "profile": "프로필",
+      "professionalExperience": "경력",
+      "education": "교육",
+      "organizations": "조직 및 멤버십",
+      "additionalInfo": "추가 정보",
+      "details": "세부 정보",
+      "links": "링크",
+      "skills": "기술",
+      "languages": "언어",
+      "born": "출생",
+      "gender": "성별",
+      "nationality": "국적",
+      "joined": "가입일",
+      "memberId": "회원 ID",
+      "page": "페이지",
+      "of": "/",
+      "link": "링크"
     }
+  },
+  "gallery": {
+    "allVideos": "모든 비디오",
+    "videoGallery": "비디오 갤러리",
+    "endOfList": "목록의 끝에 도달했습니다",
+    "noItemsFound": "항목을 찾을 수 없습니다",
+    "noItemsInCategory": "\"{{category}}\" 카테고리에 항목이 없습니다."
+  },
+  "news": {
+    "search": "검색",
+    "searchPlaceholder": "뉴스 검색...",
+    "categories": "카테고리",
+    "relatedArticles": "관련 기사",
+    "viewAllArticles": "모든 기사 보기",
+    "shareArticle": "기사 공유하기",
+    "linkCopiedTitle": "링크가 복사되었습니다!",
+    "linkCopiedDescription": "기사 링크가 클립보드에 복사되었습니다.",
+    "relatedLoadError": "관련 기사를 불러올 수 없습니다.",
+    "shareFallbackTitle": "이 기사를 확인해 보세요!"
+  },
+  "comments": {
+    "title": "댓글",
+    "placeholder": "댓글을 남겨주세요...",
+    "keepRespectful": "존중하는 마음으로 댓글을 작성해 주세요.",
+    "submit": "댓글 달기",
+    "empty": "아직 댓글이 없습니다. 첫 댓글을 남겨보세요!",
+    "justNow": "방금",
+    "verified": "인증됨",
+    "you": "나",
+    "user": "사용자",
+    "hourAgo": "시간 전",
+    "dayAgo": "일 전",
+    "loginTitle": "로그인해 주세요",
+    "loginDescription": "댓글을 작성하려면 로그인이 필요합니다. 지금 로그인하시겠습니까?",
+    "goToLogin": "로그인 페이지로 이동"
   }
 }

@@ -39,6 +39,8 @@ export function ItemGallery<T extends GalleryItem>({
 		categories.forEach((cat) => map.set(cat.id, cat.name_en));
 		return map;
 	}, [categories]);
+	const selectedCategoryName =
+		categoryMap.get(selectedCategory) || selectedCategory;
 
 	return (
 		<section className="section-padding bg-gray-50">
@@ -128,7 +130,7 @@ export function ItemGallery<T extends GalleryItem>({
 									{!hasMore && !loadingMore && items.length > 0 && (
 										<div className="text-center py-8">
 											<p className="text-gray-500">
-												You've reached the end of the list
+												{t("gallery.endOfList")}
 											</p>
 										</div>
 									)}
@@ -141,11 +143,12 @@ export function ItemGallery<T extends GalleryItem>({
 									exit={{ opacity: 0, y: -20 }}
 									className="text-center py-16 text-gray-500 bg-white rounded-lg border"
 								>
-									<h3 className="text-xl font-semibold">No Items Found</h3>
+									<h3 className="text-xl font-semibold">{t("gallery.noItemsFound")}</h3>
 									<p className="mt-2 text-sm">
-										There are no items in the "
-										{categoryMap.get(selectedCategory) || selectedCategory}"
-										category.
+										{t("gallery.noItemsInCategory").replace(
+											"{{category}}",
+											selectedCategoryName
+										)}
 									</p>
 								</motion.div>
 							)}

@@ -4,6 +4,7 @@ import { NewsArticle, NewsCategory } from "@/lib/types/news";
 import { NewsCard } from "./news-card";
 import { Search, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "@/lib/i18n";
 
 interface NewsGridProps {
 	items: NewsArticle[];
@@ -22,6 +23,7 @@ export function NewsGrid({
 	hasMore = true,
 	loading = false
 }: NewsGridProps) {
+	const { t } = useTranslation();
 	const getCategoryName = (id: string) =>
 		categories.find((c) => c.id === id)?.name_en;
 
@@ -29,9 +31,9 @@ export function NewsGrid({
 		<div>
 			<div className="flex items-center justify-between mb-8">
 				<h2 className="text-2xl font-bold text-gray-900">
-					All News
+					{t("events.allNewsGrid")}
 					<span className="block text-sm text-gray-500 mt-1">
-						Found {items.length} articles
+						{t("events.foundArticles").replace("{{count}}", String(items.length))}
 					</span>
 				</h2>
 			</div>
@@ -89,10 +91,10 @@ export function NewsGrid({
 							<Search className="w-8 h-8 text-gray-400" />
 						</div>
 						<h3 className="text-lg font-semibold text-gray-900 mb-2">
-							No News Found
+							{t("events.noNewsFound")}
 						</h3>
 						<p className="text-gray-600">
-							Please try searching with different keywords or categories.
+							{t("events.trySearching")}
 						</p>
 					</motion.div>
 				)}
@@ -109,7 +111,7 @@ export function NewsGrid({
 
 					{!hasMore && !loadingMore && (
 						<div className="text-center py-8">
-							<p className="text-gray-500">You've reached the end of the news feed</p>
+							<p className="text-gray-500">{t("events.endOfFeed")}</p>
 						</div>
 					)}
 				</>

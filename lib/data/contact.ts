@@ -52,11 +52,11 @@ export const socialLinks: SocialLinkItem[] = [
 ];
 
 export const departments: DepartmentOption[] = [
-	{ value: "general", label: "General Inquiry" },
-	{ value: "volunteer", label: "Volunteer" },
-	{ value: "donation", label: "Donation" },
-	{ value: "partnership", label: "Partnership" },
-	{ value: "media", label: "Media" },
+	{ value: "general", label: "contact.deptGeneral" },
+	{ value: "volunteer", label: "contact.deptVolunteer" },
+	{ value: "donation", label: "contact.deptDonation" },
+	{ value: "partnership", label: "contact.deptPartnership" },
+	{ value: "media", label: "contact.deptMedia" },
 ];
 
 // ─── Fallback values used when the API is unavailable ─────────────────────
