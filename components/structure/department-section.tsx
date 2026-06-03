@@ -14,7 +14,7 @@ export function DepartmentSection({
 	viewMode,
 }: DepartmentSectionProps) {
 	return (
-		<section className="relative group mb-16">
+		<section className="relative mb-16">
 			<div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 px-4 md:px-0 border-b border-dashed border-gray-300 pb-6">
 				<div className="flex-1">
 					<h3 className="text-3xl md:text-4xl font-black tracking-tight text-gray-900 uppercase">
