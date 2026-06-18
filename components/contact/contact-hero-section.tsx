@@ -80,12 +80,12 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 						transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
 						className="text-center lg:text-left"
 					>
-						<h1 className="mx-auto max-w-4xl text-balance text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl lg:mx-0 lg:text-7xl">
+						<h1 className="mx-auto max-w-4xl text-balance text-display-lg text-white lg:mx-0">
 							<span className="block">{t("contact.title")}</span>
 							<span className="block text-khmer-gold">{t("contact.letsConnect")}</span>
 						</h1>
 
-						<p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-primary-100 sm:text-lg md:text-xl lg:mx-0">
+						<p className="mx-auto mt-6 max-w-2xl text-body-lg text-primary-100 lg:mx-0">
 							{t("contact.subtitle")}
 						</p>
 					</motion.div>
@@ -103,8 +103,8 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 									<div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-khmer-gold text-primary-900">
 										<Mail className="h-5 w-5" />
 									</div>
-									<p className="text-xs font-bold uppercase text-khmer-gold">{t("contact.reachUs")}</p>
-									<h2 className="mt-1 text-2xl font-bold text-white">{t("contact.info")}</h2>
+									<p className="text-caption font-bold text-khmer-gold">{t("contact.reachUs")}</p>
+									<h2 className="mt-1 text-heading-3 text-white">{t("contact.info")}</h2>
 								</div>
 
 								<div className="space-y-3 p-4">
@@ -120,8 +120,8 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 												<Icon className="h-5 w-5" />
 											</span>
 											<span className="min-w-0 flex-1">
-												<span className="block text-xs font-bold uppercase text-gray-500">{label}</span>
-												<span className="line-clamp-2 break-words text-sm font-semibold text-gray-950">
+												<span className="block text-caption font-bold text-gray-500">{label}</span>
+												<span className="line-clamp-2 break-words text-body-sm font-semibold text-gray-950">
 													{value}
 												</span>
 											</span>
@@ -130,7 +130,7 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 									))}
 								</div>
 
-								<div className="border-t border-gray-100 bg-gray-50 px-6 py-4 text-sm font-medium text-gray-600">
+								<div className="border-t border-gray-100 bg-gray-50 px-6 py-4 text-body-sm font-medium text-gray-600">
 									{t("contact.chooseMethod")}
 								</div>
 							</div>

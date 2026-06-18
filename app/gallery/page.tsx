@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ZoomIn, Calendar, Tag, Eye } from "lucide-react";
+import { X, ZoomIn, Calendar, Eye } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useTranslation } from "@/lib/i18n";
+import { PageHero } from "@/components/ui/page-hero";
+import { EmptyState } from "@/components/ui/empty-state";
 
 const galleryData = [
 	{
@@ -182,7 +184,7 @@ export default function GalleryPage() {
 	const [selectedCategory, setSelectedCategory] = useState("all");
 	const [selectedImage, setSelectedImage] = useState<any>(null);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { t } = useTranslation();
+	const { t, language } = useTranslation();
 
 	const filteredImages =
 		selectedCategory === "all"
@@ -196,58 +198,20 @@ export default function GalleryPage() {
 
 	return (
 		<div className="min-h-screen">
-			{/* Hero Section */}
-			<section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 text-white">
-				{/* Decorative background elements */}
-				<div className="absolute inset-0 z-0 opacity-20">
-					<div className="absolute top-0 left-[-10%] w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl mix-blend-screen" />
-					<div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-400/30 rounded-full blur-3xl mix-blend-screen" />
-				</div>
-
-				<div className="container relative z-10 text-center max-w-4xl mx-auto px-4">
-					<AnimatedSection>
-						<motion.div
-							initial={{ scale: 0.8, opacity: 0 }}
-							animate={{ scale: 1, opacity: 1 }}
-							transition={{ duration: 0.8 }}
-							className="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl mb-8 border border-white/20"
-						>
-							<ZoomIn className="w-8 h-8 text-white" />
-						</motion.div>
-						<h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight text-white">
-							{t("nav.gallery")}
-						</h1>
-						<p className="text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-							ស្វែងយល់ពីសកម្មភាព និងការគម្រោងរបស់យើងតាមរយៈរូបភាព
-						</p>
-					</AnimatedSection>
-				</div>
-
-				{/* Bottom wave transition */}
-				<div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none transform rotate-180">
-					<svg
-						className="relative block w-full h-[50px] md:h-[100px]"
-						data-name="Layer 1"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 1200 120"
-						preserveAspectRatio="none"
-					>
-						<path
-							d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-							className="fill-white dark:fill-gray-900"
-						></path>
-					</svg>
-				</div>
-			</section>
+			<PageHero
+				title={t("nav.gallery")}
+				subtitle={t("gallery.subtitle")}
+				icon={ZoomIn}
+			/>
 
 			{/* Gallery Section */}
 			<section className="section-padding bg-white">
 				<div className="container">
 					<AnimatedSection className="mb-12">
 						<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
-							រូបភាពសកម្មភាព
+							{t("gallery.activityImages")}
 							<span className="block text-xl md:text-2xl gradient-text mt-2">
-								Activity Gallery
+								{t("gallery.activityGallery")}
 							</span>
 						</h2>
 					</AnimatedSection>
@@ -264,7 +228,7 @@ export default function GalleryPage() {
 									value={category.id}
 									className="text-sm"
 								>
-									{category.name_en}
+									{language === "km" ? category.name : category.name_en}
 								</TabsTrigger>
 							))}
 						</TabsList>
@@ -285,8 +249,10 @@ export default function GalleryPage() {
 											transition={{ duration: 0.3, delay: index * 0.05 }}
 										>
 											<Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer">
-												<div
-													className="relative aspect-square overflow-hidden"
+												<button
+													type="button"
+													aria-label={`${t("common.viewDetails")}: ${item.title_en}`}
+													className="relative block aspect-square w-full overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900 focus-visible:ring-offset-2"
 													onClick={() => handleImageClick(item)}
 												>
 													<img
@@ -315,11 +281,11 @@ export default function GalleryPage() {
 														<Badge className="bg-khmer-gold text-white text-sm">
 															{
 																categories.find((c) => c.id === item.category)
-																	?.name_en
+																	?.[language === "km" ? "name" : "name_en"]
 															}
 														</Badge>
 													</div>
-												</div>
+												</button>
 
 												<CardContent className="p-4">
 													<h3 className="font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-khmer-gold transition-colors">
@@ -350,15 +316,12 @@ export default function GalleryPage() {
 					</Tabs>
 
 					{filteredImages.length === 0 && (
-						<div className="text-center py-12">
-							<div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-								<ZoomIn className="w-8 h-8 text-gray-400" />
-							</div>
-							<h3 className="text-lg font-semibold text-gray-900 mb-2">
-								រកមិនឃើញរូបភាព
-							</h3>
-							<p className="text-gray-600">មិនមានរូបភាពក្នុងប្រភេទនេះនៅឡើយទេ</p>
-						</div>
+						<EmptyState
+							title={t("gallery.noImagesFound")}
+							description={t("gallery.noImagesInCategory")}
+							icon={ZoomIn}
+							className="mt-8"
+						/>
 					)}
 				</div>
 			</section>
@@ -371,6 +334,7 @@ export default function GalleryPage() {
 							<Button
 								variant="ghost"
 								size="icon"
+								aria-label={t("common.close")}
 								className="absolute top-4 right-4 z-10 bg-black/50 text-white hover:bg-black/70"
 								onClick={() => setIsModalOpen(false)}
 							>
@@ -390,7 +354,7 @@ export default function GalleryPage() {
 										<Badge className="bg-khmer-gold text-white">
 											{
 												categories.find((c) => c.id === selectedImage.category)
-													?.name_en
+													?.[language === "km" ? "name" : "name_en"]
 											}
 										</Badge>
 										<div className="flex items-center text-white/80 text-sm">
@@ -399,7 +363,7 @@ export default function GalleryPage() {
 										</div>
 										<div className="flex items-center text-white/80 text-sm">
 											<Eye className="w-4 h-4 mr-1" />
-											{selectedImage.views} views
+											{selectedImage.views} {t("gallery.views")}
 										</div>
 									</div>
 

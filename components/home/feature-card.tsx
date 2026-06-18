@@ -5,6 +5,7 @@ import { FeatureItem } from "@/lib/types/home";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 interface FeatureCardProps {
@@ -15,7 +16,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 	const { t } = useTranslation();
 
 	return (
-		<Card className="h-full flex flex-col overflow-hidden hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-2 bg-gray-50 border-gray-200">
+		<Card variant="interactive" className="h-full flex flex-col overflow-hidden">
 			<div className="aspect-video overflow-hidden relative">
 				<Image
 					src={feature.image}
@@ -27,41 +28,19 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 				/>
 			</div>
 			<CardContent className="p-6 flex flex-col flex-grow">
-				<h3 className="text-xl font-bold text-gray-800 mb-3">
+				<h3 className="text-heading-4 mb-3">
 					{t(feature.titleKey)}
 				</h3>
-				<p className="text-gray-600 leading-relaxed mb-6 flex-grow">
+				<p className="text-body-sm text-gray-600 mb-6 flex-grow">
 					{t(feature.descriptionKey)}
 				</p>
 
-				<Link
-					href={feature.link}
-					className="
-                        group/link 
-                        inline-flex items-center 
-                        text-blue-600 font-semibold 
-                        relative self-start
-                    "
-				>
-					<span>{t("common.learnMore")}</span>
-					<ArrowRight
-						className="
-                            ml-2 w-4 h-4 
-                            transition-transform duration-300 
-                            group-hover/link:translate-x-1
-                        "
-					/>
-					{/* Animated Underline */}
-					<span
-						className="
-                            absolute bottom-0 left-0 
-                            h-[2px] w-0 
-                            bg-blue-600 
-                            transition-all duration-300 ease-in-out
-                            group-hover/link:w-full
-                        "
-					></span>
-				</Link>
+				<Button asChild size="sm" className="self-start bg-primary-900 text-white hover:bg-primary-950">
+					<Link href={feature.link}>
+						{t("common.learnMore")}
+						<ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+					</Link>
+				</Button>
 			</CardContent>
 		</Card>
 	);

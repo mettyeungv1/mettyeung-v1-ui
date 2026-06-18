@@ -70,7 +70,7 @@ export function LanguageSwitcher({
 
 	if (variant === "floating") {
 		return (
-			<motion.div 
+			<motion.div
 				initial={{ x: -50, opacity: 0 }}
 				animate={{ x: 0, opacity: 1 }}
 				transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.5 }}
@@ -78,28 +78,28 @@ export function LanguageSwitcher({
 			>
 				<DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
 					<DropdownMenuTrigger asChild>
-						<button className="bg-primary-900/95 backdrop-blur-md text-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex flex-col items-center justify-center p-2 rounded-r-2xl border border-l-0 border-white/20 transition-all duration-300 hover:scale-105 hover:bg-primary-800 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] active:scale-95 min-w-[52px] group">
-							<motion.span 
+						<button className="surface-inverse flex min-w-[52px] flex-col items-center justify-center rounded-r-xl border border-l-0 border-border-inverse p-2 shadow-surface transition-all duration-300 hover:scale-105 hover:bg-primary-800 active:scale-95 focus-ring group">
+							<motion.span
 								className="text-[22px] mb-0.5 leading-none transition-transform duration-300 group-hover:-translate-y-0.5"
 							>
 								{currentLanguage?.flag || "🌐"}
 							</motion.span>
-							<span className="text-[9px] font-bold tracking-[0.2em] uppercase text-primary-100 group-hover:text-white transition-colors">
+							<span className="text-caption font-bold text-primary-100 group-hover:text-white transition-colors">
 								{t("common.languageShort")}
 							</span>
 						</button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent 
-						side="right" 
-						align="end" 
+					<DropdownMenuContent
+						side="right"
+						align="end"
 						sideOffset={12}
-						className="w-60 p-2.5 rounded-2xl shadow-2xl border-white/50 bg-white/80 backdrop-blur-xl"
+						className="w-60 rounded-xl border-border-subtle bg-surface-panel p-2.5 shadow-popover"
 					>
 						<div className="px-3 py-2 mb-1 flex items-center gap-2">
-							<div className="p-1.5 bg-primary-50 rounded-lg">
+							<div className="rounded-md bg-interactive-primaryMuted p-1.5">
 								<Globe className="w-4 h-4 text-primary-900" />
 							</div>
-							<span className="text-xs font-bold text-gray-800 uppercase tracking-wider">
+							<span className="text-label text-text-primary">
 								{t("common.selectLanguage")}
 							</span>
 						</div>
@@ -114,29 +114,29 @@ export function LanguageSwitcher({
 											setIsOpen(false);
 										}}
 										className={cn(
-											"flex items-center justify-between cursor-pointer p-3 rounded-xl transition-all duration-200 outline-none",
-											isActive 
-												? "bg-primary-50 text-primary-900" 
-												: "hover:bg-gray-50/80 text-gray-600 hover:text-gray-900"
+											"flex cursor-pointer items-center justify-between rounded-lg p-3 outline-none transition-all duration-200",
+											isActive
+												? "bg-interactive-primaryMuted text-primary-900"
+												: "text-text-secondary hover:bg-surface-muted hover:text-text-primary"
 										)}
 									>
 										<div className="flex items-center space-x-3.5">
 											<span className="text-2xl leading-none drop-shadow-sm">{lang.flag}</span>
 											<div className="flex flex-col">
-												<span className={cn("text-sm leading-none transition-colors", isActive ? "font-bold text-primary-900" : "font-medium")}>
+												<span className={cn("text-body-sm transition-colors", isActive ? "font-semibold text-primary-900" : "font-medium")}>
 													{lang.name}
 												</span>
-												<span className="text-[10px] text-gray-400 mt-1.5 leading-none font-medium">
+												<span className="mt-1.5 text-caption text-text-tertiary">
 													{lang.nativeName}
 												</span>
 											</div>
 										</div>
 										{isActive && (
-											<motion.div 
+											<motion.div
 												initial={{ scale: 0, rotate: -45 }}
 												animate={{ scale: 1, rotate: 0 }}
 												transition={{ type: "spring", stiffness: 300, damping: 20 }}
-												className="bg-primary-900 rounded-full p-1 shadow-md shadow-primary-900/20"
+												className="rounded-full bg-interactive-primary p-1 shadow-sm"
 											>
 												<Check className="w-3.5 h-3.5 text-white" />
 											</motion.div>
@@ -169,7 +169,7 @@ export function LanguageSwitcher({
 						<DropdownMenuItem
 							key={lang.code}
 							onClick={() => setLanguage(lang.code)}
-							className="flex items-center justify-between cursor-pointer p-2 rounded-md transition-colors hover:bg-blue-50 focus:bg-blue-50"
+							className="flex cursor-pointer items-center justify-between rounded-md p-2 transition-colors hover:bg-surface-muted focus:bg-surface-muted"
 						>
 							<div className="flex items-center space-x-3">
 								<span className="text-lg">{lang.flag}</span>
@@ -180,7 +180,7 @@ export function LanguageSwitcher({
 							</div>
 							{language === lang.code && (
 								<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-									<Check className="w-4 h-4 text-blue-600" />
+									<Check className="w-4 h-4 text-primary-900" />
 								</motion.div>
 							)}
 						</DropdownMenuItem>
@@ -197,7 +197,7 @@ export function LanguageSwitcher({
 					variant="ghost"
 					size="sm"
 					className={cn(
-						"flex items-center space-x-2 text-neutral-800 hover:text-blue-600",
+						"flex items-center space-x-2 text-text-primary hover:text-primary-900",
 						className
 					)}
 				>
@@ -210,7 +210,7 @@ export function LanguageSwitcher({
 					<DropdownMenuItem
 						key={lang.code}
 						onClick={() => setLanguage(lang.code)}
-						className="flex items-center justify-between cursor-pointer p-2 rounded-md transition-colors hover:bg-blue-50 focus:bg-blue-50"
+						className="flex cursor-pointer items-center justify-between rounded-md p-2 transition-colors hover:bg-surface-muted focus:bg-surface-muted"
 					>
 						<div className="flex items-center space-x-3">
 							<span className="text-lg">{lang.flag}</span>
@@ -225,7 +225,7 @@ export function LanguageSwitcher({
 								animate={{ scale: 1 }}
 								transition={{ duration: 0.2 }}
 							>
-								<Check className="w-4 h-4 text-blue-600" />
+							<Check className="w-4 h-4 text-primary-900" />
 							</motion.div>
 						)}
 					</DropdownMenuItem>

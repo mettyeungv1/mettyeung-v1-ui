@@ -12,13 +12,13 @@ export function FeaturesSection() {
 		<section className="py-20 lg:py-24 bg-gray-50">
 			<div className="container">
 				<AnimatedSection className="text-center mb-16">
-					<h2 className="text-4xl font-bold text-gray-900">
+					<h2 className="text-heading-2">
 						{t("home.focusAreas")}
 					</h2>
-					<p className="mt-4 text-lg text-start md:text-justify text-gray-600 max-w-3xl mx-auto">
+					<p className="mt-4 text-body-lg text-start md:text-justify text-gray-600 max-w-3xl mx-auto">
 						{t("home.focusAreasDesc")}{" "}
 						<span>
-							"<b>{t("home.focusAreas")}</b>"
+							&quot;<b>{t("home.focusAreas")}</b>&quot;
 						</span>
 					</p>
 				</AnimatedSection>

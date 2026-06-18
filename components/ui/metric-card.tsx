@@ -54,21 +54,18 @@ export function MetricCard({
 			viewport={{ once: true }}
 			className="h-full"
 		>
-			<Card className="text-center h-full hover:shadow-xl transition-all duration-300 group bg-white border-transparent hover:border-blue-100 border-2">
+			<Card variant="interactive" className="h-full text-center group">
 				<CardContent className="p-6 flex flex-col items-center justify-center">
-					{/* FIXED: Icon background now uses primary blue */}
-					<div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+					<div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-interactive-primary shadow-surface transition-transform duration-300 group-hover:scale-105">
 						<Icon className="w-8 h-8 text-white" />
 					</div>
 
-					<div className="text-4xl font-bold text-gray-900 mb-2">
-						{/* IMPROVED: Added number counting animation */}
+					<div className="mb-2 text-heading-2 text-text-primary">
 						<AnimatedNumber value={value} />
-						{/* FIXED: Suffix color is now primary blue */}
-						<span className="text-blue-600">{suffix}</span>
+						<span className="text-primary-900">{suffix}</span>
 					</div>
 
-					<h3 className="text-lg font-semibold text-gray-800 mb-1">{title}</h3>
+					<h3 className="mb-1 text-heading-5 text-text-primary">{title}</h3>
 					{/* <p className="text-gray-500 text-sm">{description}</p> */}
 				</CardContent>
 			</Card>

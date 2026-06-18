@@ -62,7 +62,7 @@ function SectionLabel({
 	return (
 		<div className="flex items-center gap-1.5 mb-3">
 			<Icon className="w-3.5 h-3.5 text-gray-400" />
-			<span className="text-[10px] font-semibold text-gray-400 uppercase tracking-[0.12em]">
+			<span className="text-caption font-semibold text-gray-400">
 				{label}
 			</span>
 		</div>
@@ -174,7 +174,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 								alt={person.name_en}
 								className="object-cover"
 							/>
-							<AvatarFallback className="bg-gradient-to-br from-gray-800 to-gray-900 text-white text-3xl font-bold tracking-wider">
+							<AvatarFallback className="bg-gradient-to-br from-gray-800 to-gray-900 text-white text-heading-3">
 								{initials}
 							</AvatarFallback>
 						</Avatar>
@@ -192,20 +192,20 @@ export function ProfileCard({ person }: ProfileCardProps) {
 					</div>
 
 					{/* Name — English */}
-					<h1 className="text-xl font-bold text-gray-900 leading-tight tracking-tight">
+					<h1 className="text-heading-4">
 						{person.name_en || person.name || t("member.detail.unknownMember")}
 					</h1>
 
 					{/* Name — Khmer (if different) */}
 					{person.name && person.name !== person.name_en && (
-						<p className="text-sm text-gray-400 mt-1 font-medium">
+					<p className="text-body-sm text-gray-400 mt-1">
 							{person.name}
 						</p>
 					)}
 
 					{/* Position badge */}
 					{(person.position_en || person.title_en) && (
-						<div className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-gray-900 text-white rounded-lg text-xs font-semibold tracking-wide uppercase print:bg-khmer-gold">
+						<div className="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-gray-900 text-white rounded-lg text-caption font-semibold print:bg-khmer-gold">
 							<Briefcase className="w-3.5 h-3.5 opacity-70" />
 							{person.position_en || person.title_en}
 						</div>
@@ -214,7 +214,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 					{/* Subtitle title — only if different from position */}
 					{person.title_en &&
 						person.title_en !== person.position_en && (
-							<p className="text-xs text-gray-500 mt-2.5 font-medium">
+							<p className="text-caption text-gray-500 mt-2.5">
 								{person.title_en}
 							</p>
 						)}
@@ -223,7 +223,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 				{/* ──── Bio ──── */}
 				{person.bio && (
 					<div className="mx-5 mb-5 px-4 py-3.5 bg-gradient-to-br from-gray-50 to-gray-50/60 rounded-xl border border-gray-100">
-						<p className="text-xs text-gray-600 leading-relaxed italic">
+						<p className="text-caption text-gray-600 italic">
 							&ldquo;{person.bio}&rdquo;
 						</p>
 					</div>
@@ -243,17 +243,17 @@ export function ProfileCard({ person }: ProfileCardProps) {
 										<Building2 className="w-4 h-4 text-khmer-gold" />
 									</div>
 									<div className="flex-1 min-w-0">
-										<p className="text-xs font-semibold text-gray-800 truncate">
+										<p className="text-caption font-semibold text-gray-800 truncate">
 											{assoc.name || t("member.detail.department")}
 										</p>
 										{assoc.role && (
-											<p className="text-[10px] text-gray-500 truncate">
+											<p className="text-caption text-gray-500 truncate">
 												{assoc.role}
 											</p>
 										)}
 									</div>
 									{assoc.isHead && (
-										<span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider bg-khmer-gold/15 text-khmer-gold">
+										<span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-md text-caption font-bold bg-khmer-gold/15 text-khmer-gold">
 											<Crown className="w-2.5 h-2.5" />
 											{t("member.detail.head")}
 										</span>

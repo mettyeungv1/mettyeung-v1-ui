@@ -84,26 +84,49 @@ const DesktopMenuItem = ({
 						item.href.split("=")[1]);
 
 	const hasSubmenu = item.submenu && item.submenu.length > 0;
+	const [isOpen, setIsOpen] = useState(false);
+
+	const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+		if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+			setIsOpen(false);
+		}
+	};
+
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		if (event.key === "Escape") {
+			setIsOpen(false);
+			(event.currentTarget.querySelector("a") as HTMLAnchorElement | null)?.focus();
+		}
+	};
 
 	// Top-level items have different styling than nested items
 	if (depth === 0) {
 		return (
-			<div className="relative group/menuItem h-full flex items-center">
+			<div
+				className="relative group/menuItem h-full flex items-center"
+				onMouseEnter={() => setIsOpen(true)}
+				onMouseLeave={() => setIsOpen(false)}
+				onBlur={handleBlur}
+				onKeyDown={handleKeyDown}
+			>
 				<Link
 					href={item.href}
+					aria-haspopup={hasSubmenu ? "menu" : undefined}
+					aria-expanded={hasSubmenu ? isOpen : undefined}
+					onFocus={() => hasSubmenu && setIsOpen(true)}
 					className={cn(
-						"flex items-center space-x-1 text-neutral-800 hover:text-blue-600 transition-colors duration-200 py-2",
-						isActive && "text-blue-600"
+						"flex items-center space-x-1 text-nav text-text-primary hover:text-primary-900 transition-colors duration-200 py-2",
+						isActive && "text-primary-900"
 					)}
 				>
-					<span className="font-medium">{t(item.key)}</span>
+					<span>{t(item.key)}</span>
 					{hasSubmenu && (
 						<ChevronDown className="w-4 h-4 group-hover/menuItem:rotate-180 transition-transform duration-200" />
 					)}
 				</Link>
 				{isActive && (
 					<motion.div
-						className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
+						className="absolute bottom-0 left-0 right-0 h-0.5 bg-interactive-primary"
 						layoutId="activeTab"
 						initial={false}
 						transition={{
@@ -116,8 +139,15 @@ const DesktopMenuItem = ({
 
 				{/* Dropdown */}
 				{hasSubmenu && (
-					<div className="absolute top-full left-0 mt-0 pt-2 opacity-0 invisible group-hover/menuItem:opacity-100 group-hover/menuItem:visible transition-all duration-200 z-50">
-						<div className="w-56 bg-white rounded-lg shadow-xl border border-neutral-100 overflow-visible py-2">
+					<div
+						className={cn(
+							"absolute top-full left-0 z-50 mt-0 pt-2 transition-all duration-200",
+							isOpen
+								? "visible opacity-100"
+								: "invisible opacity-0 group-hover/menuItem:visible group-hover/menuItem:opacity-100 group-focus-within/menuItem:visible group-focus-within/menuItem:opacity-100"
+						)}
+					>
+						<div className="w-56 overflow-visible rounded-lg border border-border bg-surface-panel py-2 shadow-sm" role="menu">
 							{item.submenu!.map((subItem, idx) => (
 								<DesktopMenuItem
 									key={`${subItem.href}-${idx}`}
@@ -136,12 +166,22 @@ const DesktopMenuItem = ({
 
 	// Nested items (depth > 0)
 	return (
-		<div className="relative group/subItem px-1">
+		<div
+			className="relative group/subItem px-1"
+			onMouseEnter={() => setIsOpen(true)}
+			onMouseLeave={() => setIsOpen(false)}
+			onBlur={handleBlur}
+			onKeyDown={handleKeyDown}
+		>
 			<Link
 				href={item.href}
+				role="menuitem"
+				aria-haspopup={hasSubmenu ? "menu" : undefined}
+				aria-expanded={hasSubmenu ? isOpen : undefined}
+				onFocus={() => hasSubmenu && setIsOpen(true)}
 				className={cn(
-					"flex items-center justify-between w-full px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md transition-colors duration-200",
-					isActive && "text-blue-600 bg-blue-50"
+					"flex items-center justify-between w-full px-4 py-2 text-body-sm text-text-primary hover:bg-interactive-primaryMuted hover:text-primary-900 rounded-md transition-colors duration-200",
+					isActive && "text-primary-900 bg-interactive-primaryMuted"
 				)}
 			>
 				<span>{t(item.key)}</span>
@@ -150,8 +190,15 @@ const DesktopMenuItem = ({
 
 			{/* Nested Dropdown */}
 			{hasSubmenu && (
-				<div className="absolute top-0 left-full ml-1 opacity-0 invisible group-hover/subItem:opacity-100 group-hover/subItem:visible transition-all duration-200 z-50">
-					<div className="w-56 bg-white rounded-lg shadow-xl border border-neutral-100 overflow-visible py-2">
+				<div
+					className={cn(
+						"absolute left-full top-0 z-50 ml-1 transition-all duration-200",
+						isOpen
+							? "visible opacity-100"
+							: "invisible opacity-0 group-hover/subItem:visible group-hover/subItem:opacity-100 group-focus-within/subItem:visible group-focus-within/subItem:opacity-100"
+					)}
+				>
+					<div className="w-56 overflow-visible rounded-lg border border-border bg-surface-panel py-2 shadow-sm" role="menu">
 						{item.submenu!.map((subItem, idx) => (
 							<DesktopMenuItem
 								key={`${subItem.href}-${idx}`}
@@ -200,15 +247,15 @@ const MobileMenuItem = ({
 				className={cn(
 					"flex items-center justify-between py-2 px-4 rounded-md transition-colors duration-200",
 					isActive
-						? "text-blue-600 bg-blue-50"
-						: "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+						? "text-primary-900 bg-interactive-primaryMuted"
+						: "text-text-primary hover:text-primary-900 hover:bg-interactive-primaryMuted"
 				)}
 			>
 				<Link
 					href={item.href}
 					className={cn(
 						"flex-1",
-						depth === 0 ? "text-lg font-medium" : "text-sm",
+						depth === 0 ? "text-nav" : "text-body-sm",
 						depth > 0 && "ml-2"
 					)}
 					onClick={() => setIsOpen(false)}
@@ -217,11 +264,14 @@ const MobileMenuItem = ({
 				</Link>
 				{hasSubmenu && (
 					<button
+						type="button"
+						aria-label={`${isExpanded ? t("common.close") : t("common.more")}: ${t(item.key)}`}
+						aria-expanded={isExpanded}
 						onClick={(e) => {
 							e.stopPropagation();
 							setIsExpanded(!isExpanded);
 						}}
-						className="p-1 hover:bg-black/5 rounded-full"
+						className="min-h-9 min-w-9 rounded-full p-1 hover:bg-interactive-neutral"
 					>
 						<ChevronDown
 							className={cn(
@@ -320,7 +370,7 @@ export function Header({ categories = [] }: HeaderProps) {
 		<motion.header
 			className={cn(
 				"fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-				isScrolled ? "bg-white/90 shadow-md backdrop-blur-sm" : "bg-white"
+				isScrolled ? "bg-surface-panel/90 shadow-surface backdrop-blur-sm" : "bg-surface-panel"
 			)}
 			initial={{ y: -100 }}
 			animate={{ y: 0 }}
@@ -329,7 +379,7 @@ export function Header({ categories = [] }: HeaderProps) {
 			<div className="container">
 				<div className="flex items-center justify-between h-16 lg:h-20">
 					<Link href="/" className="flex items-center space-x-3 group">
-						<Image src="/logo.png" alt="logo" width={150} height={150} />
+						<Image src="/logo.png" alt="Mett Yeung Association logo" width={150} height={150} />
 					</Link>
 
 					{/* Desktop Navigation */}
@@ -348,14 +398,14 @@ export function Header({ categories = [] }: HeaderProps) {
 						<LanguageSwitcher />
 						{session && userProfile && (
 							<>
-								<span className="font-medium text-neutral-800">
+								<span className="text-nav text-neutral-800">
 									{/* Displaying user ID as an example */}
 									User: {userProfile.id.substring(0, 8)}...
 								</span>
 
 								<Button
 									variant="outline"
-									className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+									className="border-error-DEFAULT text-error-DEFAULT hover:bg-error-DEFAULT hover:text-white"
 									onClick={() => signOut({ callbackUrl: "/" })}
 								>
 									{t("auth.logout")}
@@ -388,17 +438,18 @@ export function Header({ categories = [] }: HeaderProps) {
 							<Button
 								variant="ghost"
 								size="icon"
-								className="text-neutral-800 hover:text-blue-600"
+								aria-label={t("common.more")}
+								className="text-text-primary hover:text-primary-900"
 							>
 								<Menu className="w-6 h-6" />
 							</Button>
 						</SheetTrigger>
 						<SheetContent
 							side="right"
-							className="w-full max-w-sm bg-white overflow-y-auto"
+							className="w-full max-w-sm overflow-y-auto bg-surface-panel"
 						>
 							<div className="flex flex-col min-h-full">
-								<div className="flex flex-col items-center justify-center pb-6 border-b border-neutral-100 p-6 pt-10">
+								<div className="flex flex-col items-center justify-center border-b border-border-subtle p-6 pb-6 pt-10">
 									<div className="relative w-24 h-24 mb-2">
 										<Image
 											src="/logo.png"
@@ -409,7 +460,7 @@ export function Header({ categories = [] }: HeaderProps) {
 										/>
 									</div>
 								</div>
-								<nav className="flex-1 flex flex-col space-y-2 p-6">
+								<nav className="flex-1 flex flex-col space-y-2 p-card-md">
 									{navigation.map((item, idx) => (
 										<MobileMenuItem
 											key={`${item.href}-${idx}`}
@@ -420,7 +471,7 @@ export function Header({ categories = [] }: HeaderProps) {
 										/>
 									))}
 								</nav>
-								<div className="p-6 mt-auto border-t border-neutral-200 space-y-4">
+								<div className="mt-auto space-y-4 border-t border-border-subtle p-card-md">
 									<LanguageSwitcher variant="compact" />
 									{/* <Button
 										asChild

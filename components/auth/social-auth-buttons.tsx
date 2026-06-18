@@ -28,7 +28,7 @@ export function SocialAuthButtons({
         <Button
           type="button"
           variant="outline"
-          className="w-full h-12 border-2 hover:bg-red-50 hover:border-red-200 transition-all duration-200"
+          className="h-12 w-full border-2 transition-all duration-200"
           onClick={onGoogleAuth}
           disabled={isLoading}
         >
@@ -62,7 +62,7 @@ export function SocialAuthButtons({
         <Button
           type="button"
           variant="outline"
-          className="w-full h-12 border-2 hover:bg-blue-50 hover:border-blue-200 transition-all duration-200"
+          className="h-12 w-full border-2 transition-all duration-200"
           onClick={onTelegramAuth}
           disabled={isLoading}
         >

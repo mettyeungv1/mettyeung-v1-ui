@@ -2,9 +2,10 @@
 
 import { NewsArticle, NewsCategory } from "@/lib/types/news";
 import { NewsCard } from "./news-card";
-import { Search, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
+import { EmptyState } from "@/components/ui/empty-state";
 
 interface NewsGridProps {
 	items: NewsArticle[];
@@ -85,17 +86,11 @@ export function NewsGrid({
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						exit={{ opacity: 0, y: -20 }}
-						className="text-center py-12 border rounded-lg bg-white"
 					>
-						<div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-							<Search className="w-8 h-8 text-gray-400" />
-						</div>
-						<h3 className="text-lg font-semibold text-gray-900 mb-2">
-							{t("events.noNewsFound")}
-						</h3>
-						<p className="text-gray-600">
-							{t("events.trySearching")}
-						</p>
+						<EmptyState
+							title={t("events.noNewsFound")}
+							description={t("events.trySearching")}
+						/>
 					</motion.div>
 				)}
 			</AnimatePresence>
@@ -105,13 +100,13 @@ export function NewsGrid({
 				<>
 					{loadingMore && (
 						<div className="flex justify-center items-center py-8">
-							<Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+							<Loader2 className="h-8 w-8 animate-spin text-primary-900" />
 						</div>
 					)}
 
 					{!hasMore && !loadingMore && (
 						<div className="text-center py-8">
-							<p className="text-gray-500">{t("events.endOfFeed")}</p>
+							<p className="text-body-sm text-text-secondary">{t("events.endOfFeed")}</p>
 						</div>
 					)}
 				</>

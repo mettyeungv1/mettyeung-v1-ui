@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { AlertCircle, RefreshCw, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -26,15 +27,15 @@ export default function GlobalError({ error, reset }: ErrorProps) {
 
 				{/* Heading */}
 				<div className="space-y-2">
-					<h1 className="text-2xl font-bold text-foreground">
+					<h1 className="text-heading-3 text-foreground">
 						Something went wrong
 					</h1>
-					<p className="text-muted-foreground text-sm leading-relaxed">
+					<p className="text-body-sm text-muted-foreground">
 						An unexpected error occurred while loading this page. You can try
 						again or return to the home page.
 					</p>
 					{error.digest && (
-						<p className="text-xs text-muted-foreground/60 font-mono">
+						<p className="text-caption text-muted-foreground/60 font-mono">
 							Error ID: {error.digest}
 						</p>
 					)}
@@ -51,10 +52,10 @@ export default function GlobalError({ error, reset }: ErrorProps) {
 						asChild
 						className="w-full sm:w-auto gap-2"
 					>
-						<a href="/">
+						<Link href="/">
 							<Home className="h-4 w-4" />
 							Go to home
-						</a>
+						</Link>
 					</Button>
 				</div>
 			</div>

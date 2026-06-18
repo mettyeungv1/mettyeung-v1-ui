@@ -22,7 +22,7 @@ export function DetailSection({
 						<span className="flex items-center justify-center w-10 h-10 rounded-xl bg-khmer-gold/10 print:bg-khmer-gold/5">
 							<Icon className="w-5 h-5 text-khmer-gold" />
 						</span>
-						<span className="text-lg font-bold text-gray-900 tracking-tight">
+						<span className="text-heading-5">
 							{title}
 						</span>
 					</CardTitle>

@@ -49,14 +49,14 @@ export function AuthGuard({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="surface-page flex min-h-screen items-center justify-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center"
         >
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
-          <p className="text-gray-600">កំពុងពិនិត្យការចូលប្រើប្រាស់...</p>
+          <Loader2 className="mx-auto mb-4 h-8 w-8 animate-spin text-primary-900" />
+          <p className="text-body text-text-secondary">កំពុងពិនិត្យការចូលប្រើប្រាស់...</p>
         </motion.div>
       </div>
     );

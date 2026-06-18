@@ -20,21 +20,21 @@ export function ArticleContent({ content, tags }: ArticleContentProps) {
 		<>
 			{content && (
 				<article
-					className="max-w-none text-gray-700 leading-relaxed
-					[&_h1]:text-2xl sm:[&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-gray-900 [&_h1]:mt-8 sm:[&_h1]:mt-12 [&_h1]:mb-4 sm:[&_h1]:mb-6
-					[&_h2]:text-xl sm:[&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-gray-900 [&_h2]:mt-6 sm:[&_h2]:mt-10 [&_h2]:mb-3 sm:[&_h2]:mb-4
-					[&_h3]:text-lg sm:[&_h3]:text-xl [&_h3]:font-medium [&_h3]:text-gray-900 [&_h3]:mt-4 sm:[&_h3]:mt-8 [&_h3]:mb-2 sm:[&_h3]:mb-3
-					[&_h4]:text-base sm:[&_h4]:text-lg [&_h4]:font-medium [&_h4]:text-gray-900 [&_h4]:mt-4 [&_h4]:mb-2
-					[&_p]:text-sm sm:[&_p]:text-base [&_p]:leading-7 [&_p]:mb-4 sm:[&_p]:mb-6
+					className="max-w-none text-gray-700
+					[&_h1]:text-h2 [&_h1]:font-bold [&_h1]:text-gray-900 [&_h1]:mt-8 sm:[&_h1]:mt-12 [&_h1]:mb-4 sm:[&_h1]:mb-6
+					[&_h2]:text-h3 [&_h2]:font-semibold [&_h2]:text-gray-900 [&_h2]:mt-6 sm:[&_h2]:mt-10 [&_h2]:mb-3 sm:[&_h2]:mb-4
+					[&_h3]:text-h4 [&_h3]:font-semibold [&_h3]:text-gray-900 [&_h3]:mt-4 sm:[&_h3]:mt-8 [&_h3]:mb-2 sm:[&_h3]:mb-3
+					[&_h4]:text-h5 [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-4 [&_h4]:mb-2
+					[&_p]:text-body [&_p]:mb-4 sm:[&_p]:mb-6
 					[&_strong]:font-semibold [&_strong]:text-gray-900
 					[&_em]:italic
 					[&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-primary-800
 					[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-4 [&_ul]:space-y-2
 					[&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-4 [&_ol]:space-y-2
-					[&_li]:text-sm sm:[&_li]:text-base [&_li]:leading-7
+					[&_li]:text-body
 					[&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-4 sm:[&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-gray-500 [&_blockquote]:my-6
 					[&_img]:rounded-xl [&_img]:my-6 [&_img]:max-w-full [&_img]:shadow-sm
-					[&_figure]:my-6 [&_figcaption]:text-center [&_figcaption]:text-sm [&_figcaption]:text-gray-500 [&_figcaption]:mt-2
+					[&_figure]:my-6 [&_figcaption]:text-center [&_figcaption]:text-caption [&_figcaption]:text-gray-500 [&_figcaption]:mt-2
 					[&_pre]:bg-gray-100 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-x-auto [&_pre]:my-6 [&_pre]:text-sm
 					[&_code]:bg-gray-100 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
 					[&_table]:w-full [&_table]:my-6 [&_table]:border-collapse

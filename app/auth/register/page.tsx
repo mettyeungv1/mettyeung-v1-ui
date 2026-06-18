@@ -116,13 +116,7 @@ export default function RegisterPage() {
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4">
-			{/* Background decoration */}
-			<div className="absolute inset-0 overflow-hidden">
-				<div className="absolute -top-40 -right-40 w-80 h-80 bg-green-200 rounded-full opacity-20 blur-3xl" />
-				<div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-200 rounded-full opacity-20 blur-3xl" />
-			</div>
-
+		<div className="surface-page flex min-h-screen items-center justify-center p-4">
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
@@ -139,7 +133,7 @@ export default function RegisterPage() {
 					<Button
 						variant="ghost"
 						asChild
-						className="text-gray-600 hover:text-green-600"
+						className="text-text-secondary hover:text-primary-900"
 					>
 						<Link href="/" className="flex items-center">
 							<ArrowLeft className="w-4 h-4 mr-2" />
@@ -148,20 +142,20 @@ export default function RegisterPage() {
 					</Button>
 				</motion.div>
 
-				<Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+				<Card className="shadow-surface">
 					<CardHeader className="text-center pb-6">
 						<motion.div
 							initial={{ scale: 0.8, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ delay: 0.3 }}
-							className="w-16 h-16 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4"
+							className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-interactive-primary shadow-surface"
 						>
 							<UserPlus className="w-8 h-8 text-white" />
 						</motion.div>
-						<CardTitle className="text-2xl font-bold text-gray-900">
+						<CardTitle className="text-heading-3 text-text-primary">
 							{t("auth.register")}
 						</CardTitle>
-						<p className="text-gray-600 mt-2">{t("auth.registerSubtitle")}</p>
+						<p className="mt-2 text-body text-text-secondary">{t("auth.registerSubtitle")}</p>
 					</CardHeader>
 
 					<CardContent className="space-y-6">
@@ -189,11 +183,11 @@ export default function RegisterPage() {
 								transition={{ delay: 0.5 }}
 								className="space-y-2"
 							>
-								<Label htmlFor="name" className="text-gray-700">
+								<Label htmlFor="name">
 									{t("auth.fullName")}
 								</Label>
 								<div className="relative">
-									<User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+									<User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
 									<Input
 										id="name"
 										type="text"
@@ -203,7 +197,7 @@ export default function RegisterPage() {
 									/>
 								</div>
 								{errors.name && (
-									<p className="text-sm text-red-600">{errors.name.message}</p>
+									<p className="text-body-sm text-error">{errors.name.message}</p>
 								)}
 							</motion.div>
 
@@ -213,11 +207,11 @@ export default function RegisterPage() {
 								transition={{ delay: 0.6 }}
 								className="space-y-2"
 							>
-								<Label htmlFor="email" className="text-gray-700">
+								<Label htmlFor="email">
 									{t("auth.email")}
 								</Label>
 								<div className="relative">
-									<Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+									<Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
 									<Input
 										id="email"
 										type="email"
@@ -227,7 +221,7 @@ export default function RegisterPage() {
 									/>
 								</div>
 								{errors.email && (
-									<p className="text-sm text-red-600">{errors.email.message}</p>
+									<p className="text-body-sm text-error">{errors.email.message}</p>
 								)}
 							</motion.div>
 
@@ -237,11 +231,11 @@ export default function RegisterPage() {
 								transition={{ delay: 0.7 }}
 								className="space-y-2"
 							>
-								<Label htmlFor="password" className="text-gray-700">
+								<Label htmlFor="password">
 									{t("auth.password")}
 								</Label>
 								<div className="relative">
-									<Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+									<Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
 									<Input
 										id="password"
 										type={showPassword ? "text" : "password"}
@@ -252,7 +246,7 @@ export default function RegisterPage() {
 									<button
 										type="button"
 										onClick={() => setShowPassword(!showPassword)}
-										className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+										className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
 									>
 										{showPassword ? (
 											<EyeOff className="w-4 h-4" />
@@ -262,15 +256,15 @@ export default function RegisterPage() {
 									</button>
 								</div>
 								{errors.password && (
-									<p className="text-sm text-red-600">
+									<p className="text-body-sm text-error">
 										{errors.password.message}
 									</p>
 								)}
 
 								{/* Password Requirements */}
 								{password && (
-									<div className="mt-2 p-3 bg-gray-50 rounded-lg">
-										<p className="text-xs font-medium text-gray-700 mb-2">
+									<div className="mt-2 rounded-lg bg-surface-muted p-3">
+										<p className="mb-2 text-caption font-medium text-text-primary">
 											{t("auth.passwordRequirements")}:
 										</p>
 										<div className="space-y-1">
@@ -282,11 +276,11 @@ export default function RegisterPage() {
 													{req.met ? (
 														<Check className="w-3 h-3 text-green-600" />
 													) : (
-														<X className="w-3 h-3 text-gray-400" />
+														<X className="w-3 h-3 text-text-tertiary" />
 													)}
 													<span
 														className={`text-xs ${
-															req.met ? "text-green-600" : "text-gray-500"
+															req.met ? "text-success" : "text-text-secondary"
 														}`}
 													>
 														{req.text}
@@ -304,11 +298,11 @@ export default function RegisterPage() {
 								transition={{ delay: 0.8 }}
 								className="space-y-2"
 							>
-								<Label htmlFor="confirmPassword" className="text-gray-700">
+								<Label htmlFor="confirmPassword">
 									{t("auth.confirmPassword")}
 								</Label>
 								<div className="relative">
-									<Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+									<Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
 									<Input
 										id="confirmPassword"
 										type={showConfirmPassword ? "text" : "password"}
@@ -319,7 +313,7 @@ export default function RegisterPage() {
 									<button
 										type="button"
 										onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-										className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+										className="focus-ring absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
 									>
 										{showConfirmPassword ? (
 											<EyeOff className="w-4 h-4" />
@@ -329,7 +323,7 @@ export default function RegisterPage() {
 									</button>
 								</div>
 								{errors.confirmPassword && (
-									<p className="text-sm text-red-600">
+									<p className="text-body-sm text-error">
 										{errors.confirmPassword.message}
 									</p>
 								)}
@@ -352,26 +346,26 @@ export default function RegisterPage() {
 									/>
 									<Label
 										htmlFor="agreeToTerms"
-										className="text-sm text-gray-600 cursor-pointer leading-relaxed"
+										className="cursor-pointer text-body-sm leading-relaxed text-text-secondary"
 									>
 										{t("auth.agreeToTerms")}{" "}
 										<Link
 											href="/terms"
-											className="text-green-600 hover:text-green-700 hover:underline"
+											className="font-medium text-primary-900 hover:underline"
 										>
 											{t("auth.termsOfService")}
 										</Link>{" "}
 										{t("auth.and")}{" "}
 										<Link
 											href="/privacy"
-											className="text-green-600 hover:text-green-700 hover:underline"
+											className="font-medium text-primary-900 hover:underline"
 										>
 											{t("auth.privacyPolicy")}
 										</Link>
 									</Label>
 								</div>
 								{errors.agreeToTerms && (
-									<p className="text-sm text-red-600">
+									<p className="text-body-sm text-error">
 										{errors.agreeToTerms.message}
 									</p>
 								)}
@@ -384,7 +378,7 @@ export default function RegisterPage() {
 							>
 								<Button
 									type="submit"
-									className="w-full h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium"
+									className="h-12 w-full"
 									disabled={isLoading}
 								>
 									{isLoading ? (
@@ -411,11 +405,11 @@ export default function RegisterPage() {
 							transition={{ delay: 1.1 }}
 							className="text-center"
 						>
-							<p className="text-gray-600">
+							<p className="text-body-sm text-text-secondary">
 								{t("auth.haveAccount")}{" "}
 								<Link
 									href="/auth/login"
-									className="text-green-600 hover:text-green-700 font-medium hover:underline"
+									className="font-medium text-primary-900 hover:underline"
 								>
 									{t("auth.login")}
 								</Link>

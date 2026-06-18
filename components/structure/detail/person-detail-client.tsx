@@ -125,9 +125,9 @@ function Section({
 				<div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-900/10">
 					<Icon className="w-4 h-4 text-primary-900" />
 				</div>
-				<h3 className="text-base font-bold text-gray-900 tracking-tight uppercase">{title}</h3>
+				<h3 className="text-label text-gray-900">{title}</h3>
 				{count !== undefined && count > 0 && (
-					<span className="text-xs font-semibold text-gray-400 ml-1">({count})</span>
+					<span className="text-caption font-semibold text-gray-400 ml-1">({count})</span>
 				)}
 				<div className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent ml-2" />
 			</header>
@@ -157,8 +157,8 @@ function InfoRow({
 				<Icon className="w-3.5 h-3.5 text-gray-500 group-hover:text-primary-900 transition-colors" />
 			</div>
 			<div className="min-w-0 flex-1">
-				<p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-0.5">{label}</p>
-				<p className="text-sm text-gray-800 font-medium break-words">{value}</p>
+				<p className="text-caption font-semibold text-gray-400 mb-0.5">{label}</p>
+				<p className="text-body-sm text-gray-800 font-medium break-words">{value}</p>
 			</div>
 		</div>
 	);
@@ -417,14 +417,14 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 									{/* Top pills row: code + status + head role */}
 									<div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-4">
 										{data.memberCode && (
-											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-[#D4B49A]/15 text-[#E8D5B5] border border-[#D4B49A]/30 backdrop-blur">
+											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-caption font-bold bg-[#D4B49A]/15 text-[#E8D5B5] border border-[#D4B49A]/30 backdrop-blur">
 												<Hash className="w-3 h-3" />
 												{data.memberCode}
 											</span>
 										)}
 										<StatusBadge status={data.status} variant="dark" />
 										{data.headRole && (
-											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] bg-accent-400/15 text-accent-300 border border-accent-400/30 backdrop-blur">
+											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-caption font-bold bg-accent-400/15 text-accent-300 border border-accent-400/30 backdrop-blur">
 												<Sparkles className="w-3 h-3" />
 												{t("member.detail.headMember")}
 											</span>
@@ -432,14 +432,14 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 									</div>
 
 									{/* Name */}
-									<h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-[1.1]">
+									<h1 className="text-heading-1 text-white">
 										{displayName}
 									</h1>
 
 									{/* Title with accent underline */}
 									{data.title && (
 										<div className="mt-3 inline-block">
-											<p className="text-lg sm:text-xl text-[#E8D5B5] font-medium tracking-wide">{data.title}</p>
+											<p className="text-body-lg text-[#E8D5B5] font-medium">{data.title}</p>
 											<div className="mt-2 h-px w-20 bg-gradient-to-r from-[#D4B49A] via-[#D4B49A]/50 to-transparent mx-auto lg:mx-0" />
 										</div>
 									)}
@@ -535,7 +535,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 												<Badge
 													key={s.id}
 													variant="secondary"
-													className="bg-primary-50 text-primary-800 border border-primary-100 hover:bg-primary-100 hover:border-primary-200 px-3 py-1.5 text-xs font-semibold rounded-md tracking-wide transition-colors"
+													className="bg-primary-50 text-primary-800 border border-primary-100 hover:bg-primary-100 hover:border-primary-200 px-3 py-1.5 rounded-md transition-colors"
 												>
 													{s.name}
 												</Badge>
@@ -551,7 +551,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 												<Badge
 													key={idx}
 													variant="secondary"
-													className="bg-[#FAF7F0] text-[#8C6749] border border-[#D4B49A]/40 hover:border-[#D4B49A] px-3 py-1.5 text-xs font-semibold rounded-md tracking-wide transition-colors"
+													className="bg-[#FAF7F0] text-[#8C6749] border border-[#D4B49A]/40 hover:border-[#D4B49A] px-3 py-1.5 rounded-md transition-colors"
 												>
 													{lang}
 												</Badge>
@@ -574,22 +574,22 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<span className="absolute left-0 top-1.5 -translate-x-[5px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary-900 transition-colors ring-4 ring-white" />
 													<div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-1.5">
 														<div className="flex-1 min-w-0">
-															<h4 className="font-bold text-base text-gray-900 leading-snug">
+															<h4 className="text-label text-gray-900">
 																{exp.title || t("member.detail.role")}
 															</h4>
-															<p className="text-sm font-semibold text-primary-900 mt-0.5">
+															<p className="text-body-sm font-semibold text-primary-900 mt-0.5">
 																{exp.organization || t("member.detail.organization")}
 															</p>
 														</div>
 														<Badge
 															variant="secondary"
-															className="bg-gray-100 text-gray-600 text-[11px] font-semibold px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
+															className="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
 														>
 															{exp.startYear || "—"} – {exp.endYear || t("member.detail.present")}
 														</Badge>
 													</div>
 													{exp.description && (
-														<p className="text-sm text-gray-600 leading-relaxed mt-2">{exp.description}</p>
+														<p className="text-body-sm text-gray-600 mt-2">{exp.description}</p>
 													)}
 												</article>
 											))}
@@ -608,14 +608,14 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<span className="absolute left-0 top-1.5 -translate-x-[5px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary-900 transition-colors ring-4 ring-white" />
 													<div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
 														<div className="flex-1 min-w-0">
-															<h4 className="font-bold text-base text-gray-900 leading-snug">
+															<h4 className="text-label text-gray-900">
 																{edu.degree || t("member.detail.degree")}
 															</h4>
-															<p className="text-sm font-semibold text-primary-900 mt-0.5">{edu.school}</p>
+															<p className="text-body-sm font-semibold text-primary-900 mt-0.5">{edu.school}</p>
 														</div>
 														<Badge
 															variant="secondary"
-															className="bg-gray-100 text-gray-600 text-[11px] font-semibold px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
+															className="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
 														>
 															{edu.startYear || "—"} – {edu.endYear || t("member.detail.present")}
 														</Badge>
@@ -638,15 +638,15 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 														<Building2 className="w-4 h-4 text-primary-900" />
 													</div>
 													<div className="flex-1 min-w-0">
-														<p className="text-sm font-semibold text-gray-900 truncate">
+														<p className="text-body-sm font-semibold text-gray-900 truncate">
 															{assoc.name || t("member.detail.organization")}
 														</p>
 														{assoc.role && (
-															<p className="text-xs text-gray-500 truncate mt-0.5">{assoc.role}</p>
+															<p className="text-caption text-gray-500 truncate mt-0.5">{assoc.role}</p>
 														)}
 													</div>
 													{assoc.isHead && (
-														<Badge className="bg-primary-900 text-white border-0 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md flex-shrink-0">
+														<Badge className="bg-primary-900 text-white border-0 px-2 py-0.5 rounded-md flex-shrink-0">
 															{t("member.detail.head")}
 														</Badge>
 													)}

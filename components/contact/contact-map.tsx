@@ -26,7 +26,7 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 		<section className="relative w-full px-4 pb-20 md:px-0">
 			<div className="container mx-auto">
 				<div className="mb-8">
-					<p className="text-xs font-bold uppercase text-khmer-gold">{t("contact.findUs")}</p>
+					<p className="text-caption font-bold text-khmer-gold">{t("contact.findUs")}</p>
 					<h2 className="mt-2 text-3xl font-bold text-gray-950 md:text-4xl">
 						{t("contact.visitOffice")}
 					</h2>
@@ -66,7 +66,7 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 										<MapPin className="h-6 w-6" />
 									</div>
 									<div className="min-w-0">
-										<p className="text-xs font-bold uppercase text-khmer-gold">{t("contact.location")}</p>
+										<p className="text-caption font-bold text-khmer-gold">{t("contact.location")}</p>
 										<h3 className="mt-1 text-2xl font-bold leading-tight text-white">
 											{t("contact.organizationName")}
 										</h3>
@@ -75,7 +75,7 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 
 								<div className="mt-7 space-y-3">
 									<div className="rounded-2xl border border-white/10 bg-white/[0.07] p-4 backdrop-blur">
-										<p className="mb-1 text-[11px] font-bold uppercase text-primary-200">
+										<p className="mb-1 text-caption font-bold text-primary-200">
 											{t("contact.officeAddress")}
 										</p>
 										<p className="text-sm font-medium leading-relaxed text-white">
@@ -89,7 +89,7 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 												href={`tel:${settings.phone.replace(/\s/g, "")}`}
 												className="group/phone rounded-2xl border border-white/10 bg-white/[0.06] p-4 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-khmer-gold"
 											>
-												<p className="mb-1 flex items-center gap-1.5 text-[11px] font-bold uppercase text-primary-200">
+												<p className="mb-1 flex items-center gap-1.5 text-caption font-bold text-primary-200">
 													<Phone className="h-3.5 w-3.5 text-khmer-gold" />
 													{t("contact.callOffice")}
 												</p>

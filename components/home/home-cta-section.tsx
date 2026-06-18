@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { useTranslation } from "@/lib/i18n";
 import { Heart, Award } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { CTAButton } from "@/components/ui/cta-button";
+import { Button } from "@/components/ui/button";
 
 export function HomeCTASection() {
 	const { t } = useTranslation();
@@ -41,23 +41,28 @@ export function HomeCTASection() {
 						</li>
 					</ul>
 					<div className="flex flex-col sm:flex-row gap-6 justify-center">
-						<CTAButton
-							href="/contact"
-							size="lg"
-							className="bg-white text-primary-900 hover:bg-neutral-100 text-lg px-8 py-4"
-						>
-							<Heart className="mr-2 w-6 h-6" />
-							{t("home.becomeOurMember")}
-						</CTAButton>
-						<CTAButton
-							href="/news"
+						<Button
+							asChild
+							size="xl"
 							variant="outline"
-							size="lg"
-							className="border-white text-white hover:bg-white hover:text-primary-900 text-lg px-8 py-4"
+							className="bg-white text-primary-900 hover:bg-neutral-100"
 						>
-							<Award className="mr-2 w-6 h-6" />
-							{t("home.viewOurActivity")}
-						</CTAButton>
+							<Link href="/contact">
+								<Heart className="mr-2 w-6 h-6" aria-hidden="true" />
+								{t("home.becomeOurMember")}
+							</Link>
+						</Button>
+						<Button
+							asChild
+							size="xl"
+							variant="outline"
+							className="border-white bg-transparent text-white hover:bg-white hover:text-primary-900"
+						>
+							<Link href="/news">
+								<Award className="mr-2 w-6 h-6" aria-hidden="true" />
+								{t("home.viewOurActivity")}
+							</Link>
+						</Button>
 					</div>
 				</AnimatedSection>
 			</div>

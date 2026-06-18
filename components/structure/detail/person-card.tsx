@@ -137,7 +137,7 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 						<div className="flex flex-col flex-1 p-5 text-center bg-white border-t-4 border-primary-900">
 							<h4
 								title={displayName}
-								className="text-lg font-bold text-gray-900 mb-1 line-clamp-2 uppercase tracking-wide group-hover:text-primary-900 transition-colors"
+								className="text-heading-5 mb-1 line-clamp-2 group-hover:text-primary-900 transition-colors"
 							>
 								{displayName}
 							</h4>
@@ -145,14 +145,14 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 							{displayTitle && (
 								<p
 									title={displayTitle}
-									className="text-sm font-medium text-gray-600 line-clamp-2 uppercase tracking-wider"
+									className="text-body-sm text-gray-600 line-clamp-2"
 								>
 									{displayTitle}
 								</p>
 							)}
 
 							<div className="mt-auto pt-4">
-								<span className="inline-block px-4 py-1.5 border border-primary-900 text-primary-900 text-xs font-semibold rounded uppercase tracking-widest opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+								<span className="inline-block px-4 py-1.5 border border-primary-900 text-primary-900 text-caption font-semibold rounded opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
 									View Profile
 								</span>
 							</div>

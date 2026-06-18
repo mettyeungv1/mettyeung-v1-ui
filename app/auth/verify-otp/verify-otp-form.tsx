@@ -142,13 +142,7 @@ export default function VerifyOtpForm({
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-indigo-50 flex items-center justify-center p-4">
-			{/* Background decoration */}
-			<div className="absolute inset-0 overflow-hidden">
-				<div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl" />
-				<div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-200 rounded-full opacity-20 blur-3xl" />
-			</div>
-
+		<div className="surface-page flex min-h-screen items-center justify-center p-4">
 			<motion.div
 				initial={{ opacity: 0, y: 20 }}
 				animate={{ opacity: 1, y: 0 }}
@@ -165,7 +159,7 @@ export default function VerifyOtpForm({
 					<Button
 						variant="ghost"
 						asChild
-						className="text-gray-600 hover:text-purple-600"
+						className="text-text-secondary hover:text-primary-900"
 					>
 						<Link href="/auth/register" className="flex items-center">
 							<ArrowLeft className="w-4 h-4 mr-2" />
@@ -174,20 +168,20 @@ export default function VerifyOtpForm({
 					</Button>
 				</motion.div>
 
-				<Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+				<Card className="shadow-surface">
 					<CardHeader className="text-center pb-6">
 						<motion.div
 							initial={{ scale: 0.8, opacity: 0 }}
 							animate={{ scale: 1, opacity: 1 }}
 							transition={{ delay: 0.3 }}
-							className="w-16 h-16 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4"
+							className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-interactive-primary shadow-surface"
 						>
 							<Shield className="w-8 h-8 text-white" />
 						</motion.div>
-						<CardTitle className="text-2xl font-bold text-gray-900">
+						<CardTitle className="text-heading-3 text-text-primary">
 							{t("auth.verifyOtp")}
 						</CardTitle>
-						<p className="text-gray-600 mt-2">{t("auth.otpSubtitle")}</p>
+						<p className="mt-2 text-body text-text-secondary">{t("auth.otpSubtitle")}</p>
 					</CardHeader>
 
 					<CardContent className="space-y-6">
@@ -196,10 +190,10 @@ export default function VerifyOtpForm({
 							initial={{ opacity: 0, y: 10 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ delay: 0.4 }}
-							className="flex items-center justify-center space-x-2 p-4 bg-purple-50 rounded-lg"
+							className="flex items-center justify-center space-x-2 rounded-lg bg-interactive-primaryMuted p-4"
 						>
-							<Mail className="w-5 h-5 text-purple-600" />
-							<span className="text-sm text-gray-700">
+							<Mail className="h-5 w-5 text-primary-900" />
+							<span className="text-body-sm text-text-primary">
 								{t("auth.sentTo")}: <strong>{email}</strong>
 							</span>
 						</motion.div>
@@ -223,12 +217,12 @@ export default function VerifyOtpForm({
 											value={value}
 											onChange={(e) => handleOtpChange(index, e.target.value)}
 											onKeyDown={(e) => handleKeyDown(index, e)}
-											className="w-12 h-12 text-center text-lg font-bold border-2 focus:border-purple-500"
+											className="h-12 w-12 border-2 text-center text-lg font-bold"
 										/>
 									))}
 								</div>
 								{errors.otp && (
-									<p className="text-sm text-red-600 text-center">
+									<p className="text-center text-body-sm text-error">
 										{errors.otp.message}
 									</p>
 								)}
@@ -242,7 +236,7 @@ export default function VerifyOtpForm({
 								className="text-center space-y-3"
 							>
 								{countdown > 0 ? (
-									<p className="text-sm text-gray-600">
+									<p className="text-body-sm text-text-secondary">
 										{t("auth.resendIn")}{" "}
 										<strong>{formatTime(countdown)}</strong>
 									</p>
@@ -252,7 +246,7 @@ export default function VerifyOtpForm({
 										variant="outline"
 										onClick={handleResendOtp}
 										disabled={isResending}
-										className="text-purple-600 border-purple-600 hover:bg-purple-50"
+										className="text-primary-900"
 									>
 										{isResending ? (
 											<motion.div
@@ -262,7 +256,7 @@ export default function VerifyOtpForm({
 													repeat: Infinity,
 													ease: "linear",
 												}}
-												className="w-4 h-4 border-2 border-purple-600 border-t-transparent rounded-full mr-2"
+												className="mr-2 h-4 w-4 rounded-full border-2 border-primary-900 border-t-transparent"
 											/>
 										) : (
 											<RefreshCw className="w-4 h-4 mr-2" />
@@ -279,7 +273,7 @@ export default function VerifyOtpForm({
 							>
 								<Button
 									type="submit"
-									className="w-full h-12 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-medium"
+									className="h-12 w-full"
 									disabled={isLoading || otpValues.join("").length !== 6}
 								>
 									{isLoading ? (
@@ -307,11 +301,11 @@ export default function VerifyOtpForm({
 							transition={{ delay: 0.8 }}
 							className="text-center"
 						>
-							<p className="text-gray-600 text-sm">
+							<p className="text-body-sm text-text-secondary">
 								{t("auth.wrongEmail")}{" "}
 								<Link
 									href="/auth/register"
-									className="text-purple-600 hover:text-purple-700 font-medium hover:underline"
+									className="font-medium text-primary-900 hover:underline"
 								>
 									{t("auth.changeEmail")}
 								</Link>

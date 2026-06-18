@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Sparkles, Star } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { FloatingElement } from "../ui/floating-element";
 import { Badge } from "@/components/ui/badge";
 
 export function AboutHeroSection() {
@@ -17,18 +16,7 @@ export function AboutHeroSection() {
 	];
 
 	return (
-		<section className="relative py-20 sm:py-24 md:py-32 lg:py-40 bg-gradient-to-br from-yellow-500/5 via-white to-red-500/5 overflow-hidden">
-			<div className="absolute inset-0">
-				<FloatingElement delay={0}>
-					<div className="absolute top-20 left-10 w-4 h-4 bg-yellow-400 rounded-full opacity-60"></div>
-				</FloatingElement>
-				<FloatingElement delay={1}>
-					<div className="absolute top-40 right-20 w-6 h-6 bg-red-400 rounded-full opacity-40"></div>
-				</FloatingElement>
-				<FloatingElement delay={2}>
-					<div className="absolute bottom-40 left-1/4 w-3 h-3 bg-blue-400 rounded-full opacity-50"></div>
-				</FloatingElement>
-			</div>
+		<section className="section-lg surface-page relative overflow-hidden">
 			<div className="container relative">
 				<AnimatedSection className="text-center max-w-4xl mx-auto">
 					<motion.div
@@ -38,24 +26,24 @@ export function AboutHeroSection() {
 						className="relative mb-8"
 					>
 						<div className="w-64 h-64 sm:w-72 sm:h-72 mx-auto relative">
-							<div className="absolute inset-2 rounded-full bg-white flex items-center justify-center shadow-2xl">
+							<div className="absolute inset-2 rounded-full bg-surface-panel flex items-center justify-center shadow-surface border border-border-subtle">
 								<Image
 									src="/logo.png"
-									alt="logo"
+									alt="Mett Yeung Association logo"
 									width={200}
 									height={200}
 									className="w-48 h-48 object-contain"
 								/>
 							</div>
-							<Sparkles className="absolute -top-4 -right-4 w-8 h-8 text-yellow-400 animate-pulse" />
-							<Star className="absolute -bottom-2 -left-2 w-6 h-6 text-red-400 animate-bounce" />
+							<Sparkles className="absolute -top-4 -right-4 w-8 h-8 text-khmer-gold" />
+							<Star className="absolute -bottom-2 -left-2 w-6 h-6 text-accent-400" />
 						</div>
 					</motion.div>
 					<motion.h1
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.3 }}
-						className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-blue-800"
+						className="text-display-md mb-6 text-primary-900"
 					>
 						MettYeung
 					</motion.h1>
@@ -63,7 +51,7 @@ export function AboutHeroSection() {
 						initial={{ y: 50, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.8, delay: 0.4 }}
-						className="text-lg text-start md:text-justify sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl mx-auto"
+						className="text-body-lg text-start md:text-justify text-gray-600 mb-8 max-w-3xl mx-auto"
 					>
 						{t("about.subtitle")}
 					</motion.p>
@@ -79,7 +67,7 @@ export function AboutHeroSection() {
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 							>
-								<Badge className="text-sm px-6 py-2 border-0 shadow-md hover:shadow-lg transition-shadow">
+								<Badge variant="secondary" className="px-6 py-2">
 									{badge.text}
 								</Badge>
 							</motion.div>

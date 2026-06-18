@@ -19,9 +19,50 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      fontFamily: {
+        sans: ['var(--font-mi-sans-khmer)', 'var(--font-google-sans)', 'system-ui', 'sans-serif'],
+        latin: ['var(--font-google-sans)', 'system-ui', 'sans-serif'],
+        khmer: ['var(--font-mi-sans-khmer)', 'var(--font-google-sans)', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        'display-lg': ['clamp(2.75rem,5vw,4.5rem)', { lineHeight: '1.22', letterSpacing: '0' }],
+        'display-md': ['clamp(2.25rem,4vw,3.75rem)', { lineHeight: '1.24', letterSpacing: '0' }],
+        'display-sm': ['clamp(2rem,3vw,3rem)', { lineHeight: '1.28', letterSpacing: '0' }],
+        h1: ['clamp(2rem,3.2vw,3.5rem)', { lineHeight: '1.3', letterSpacing: '0' }],
+        h2: ['clamp(1.75rem,2.4vw,2.5rem)', { lineHeight: '1.35', letterSpacing: '0' }],
+        h3: ['clamp(1.5rem,1.8vw,2rem)', { lineHeight: '1.4', letterSpacing: '0' }],
+        h4: ['1.25rem', { lineHeight: '1.45', letterSpacing: '0' }],
+        h5: ['1.125rem', { lineHeight: '1.5', letterSpacing: '0' }],
+        h6: ['1rem', { lineHeight: '1.55', letterSpacing: '0' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.8', letterSpacing: '0' }],
+        body: ['1rem', { lineHeight: '1.75', letterSpacing: '0' }],
+        'body-sm': ['0.9375rem', { lineHeight: '1.7', letterSpacing: '0' }],
+        caption: ['0.8125rem', { lineHeight: '1.55', letterSpacing: '0' }],
+        label: ['0.875rem', { lineHeight: '1.5', letterSpacing: '0' }],
+        button: ['0.9375rem', { lineHeight: '1.45', letterSpacing: '0' }],
+        table: ['0.9375rem', { lineHeight: '1.65', letterSpacing: '0' }],
+        nav: ['0.9375rem', { lineHeight: '1.5', letterSpacing: '0' }],
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        surface: {
+          page: '#FAFAFA',
+          panel: '#FFFFFF',
+          muted: '#F5F5F5',
+          elevated: '#FFFFFF',
+          inverse: '#004D8C',
+        },
+        interactive: {
+          primary: '#004D8C',
+          primaryHover: '#003D73',
+          primaryMuted: '#E6F2FF',
+          accent: '#6FBF73',
+          accentHover: '#4CAF50',
+          accentMuted: '#F0F9F1',
+          neutral: '#F5F5F5',
+          neutralHover: '#EEEEEE',
+        },
         
         // Khmer Gold
         'khmer-gold': {
@@ -135,7 +176,9 @@ const config: Config = {
         // Text Colors - Optimized for readability
         text: {
           primary: '#1F1F1F',    // Main content text
-          secondary: '#FFFFFF',   // Header/Footer text
+          secondary: '#616161',   // Supporting body text
+          tertiary: '#9E9E9E',    // Low-emphasis text and icons
+          inverse: '#FFFFFF',     // Text on dark surfaces
           muted: '#757575',      // Subtle text
           disabled: '#BDBDBD',   // Disabled text
         },
@@ -180,7 +223,13 @@ const config: Config = {
           DEFAULT: '#F44336',
           foreground: '#FFFFFF',
         },
-        border: '#E0E0E0',
+        border: {
+          DEFAULT: '#E0E0E0',
+          subtle: '#EEEEEE',
+          strong: '#BDBDBD',
+          focus: '#004D8C',
+          inverse: 'rgba(255,255,255,0.18)',
+        },
         input: '#F5F5F5',
         ring: '#153D6F',
         
@@ -192,6 +241,20 @@ const config: Config = {
           '4': '#2196F3',
           '5': '#9C27B0',
         },
+      },
+      spacing: {
+        'section-sm': '3rem',
+        'section-md': '4rem',
+        'section-lg': '5rem',
+        'card-sm': '1rem',
+        'card-md': '1.5rem',
+        'card-lg': '2rem',
+      },
+      boxShadow: {
+        surface: '0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06)',
+        popover: '0 12px 24px rgba(16, 24, 40, 0.10), 0 2px 6px rgba(16, 24, 40, 0.06)',
+        modal: '0 24px 64px rgba(16, 24, 40, 0.18)',
+        focus: '0 0 0 3px rgba(0, 77, 140, 0.14)',
       },
       keyframes: {
         'accordion-down': {

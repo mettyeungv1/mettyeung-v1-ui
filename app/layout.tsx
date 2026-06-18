@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { AppInitializer } from "@/components/providers/app-initializer";
-import { googleSans, miSansKhmer } from "@/lib/fonts"; // Assuming your fonts are in lib/fonts
+import { googleSans, miSansKhmer } from "@/lib/fonts";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {

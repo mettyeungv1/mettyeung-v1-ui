@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 interface AnimatedSectionProps {
@@ -19,7 +19,13 @@ export function AnimatedSection({
   direction = 'up',
   duration = 0.6,
 }: AnimatedSectionProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   const getInitialPosition = () => {
+    if (shouldReduceMotion) {
+      return { opacity: 1, x: 0, y: 0 };
+    }
+
     switch (direction) {
       case 'up':
         return { opacity: 0, y: 30 };
@@ -38,7 +44,7 @@ export function AnimatedSection({
     <motion.div
       initial={getInitialPosition()}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      transition={{ duration, delay }}
+      transition={{ duration: shouldReduceMotion ? 0 : duration, delay: shouldReduceMotion ? 0 : delay }}
       viewport={{ once: true, margin: "-100px" }}
       className={cn(className)}
     >

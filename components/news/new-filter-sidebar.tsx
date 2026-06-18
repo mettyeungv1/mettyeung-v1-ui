@@ -81,8 +81,8 @@ export function NewsFilterSidebar({
 	};
 
 	return (
-		<Card className="p-6 sticky top-24">
-			<h3 className="text-lg font-semibold text-gray-900 mb-4">{t("news.search")}</h3>
+		<Card className="sticky top-24 p-6">
+			<h3 className="mb-4 text-heading-5 text-text-primary">{t("news.search")}</h3>
 			<div className="relative mb-6">
 				<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
 				<Input
@@ -93,14 +93,14 @@ export function NewsFilterSidebar({
 				/>
 			</div>
 
-			<h4 className="text-sm font-semibold text-gray-900 mb-3">{t("news.categories")}</h4>
+			<h4 className="mb-3 text-label text-text-primary">{t("news.categories")}</h4>
 			<div className="space-y-1">
                 <button
                     onClick={() => handleCategoryClick("all")}
-                    className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 flex items-center justify-between ${
+                    className={`focus-ring flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-left text-body-sm font-medium transition-all duration-200 ${
                         selectedCategory === "all"
-                            ? "bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-100"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                            ? "bg-interactive-primaryMuted text-primary-900 shadow-sm ring-1 ring-border-focus/20"
+                            : "text-text-secondary hover:bg-surface-muted hover:text-text-primary"
                     }`}
                 >
                     <div className="flex items-center">
@@ -112,10 +112,10 @@ export function NewsFilterSidebar({
 					<div key={category.id}>
 						<button
 							onClick={() => handleCategoryClick(category.id)}
-							className={`w-full text-left px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 flex items-center justify-between ${
+							className={`focus-ring flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-left text-body-sm font-medium transition-all duration-200 ${
 								selectedCategory === category.id
-									? "bg-blue-50 text-blue-700 shadow-sm ring-1 ring-blue-100"
-									: "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+									? "bg-interactive-primaryMuted text-primary-900 shadow-sm ring-1 ring-border-focus/20"
+									: "text-text-secondary hover:bg-surface-muted hover:text-text-primary"
 							}`}
 						>
 							<div className="flex items-center">
@@ -147,17 +147,17 @@ export function NewsFilterSidebar({
 										transition={{ duration: 0.3, ease: "easeInOut" }}
 										className="overflow-hidden pl-4 pt-1"
 									>
-										<div className="space-y-1 border-l-2 border-gray-200 pl-4 py-1">
+										<div className="space-y-1 border-l-2 border-border-subtle py-1 pl-4">
 											{category.subcategories.map((sub) => (
 												<button
 													key={sub.id}
 													onClick={() =>
 														handleSubCategoryClick(category.id, sub.id)
 													}
-													className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
+													className={`focus-ring w-full rounded-md px-3 py-2 text-left text-body-sm transition-all duration-200 ${
 														selectedSubCategory === sub.id
-															? "font-semibold text-blue-700 bg-blue-100/50"
-															: "text-gray-500 hover:text-blue-600 hover:bg-blue-50/50"
+															? "bg-interactive-primaryMuted font-semibold text-primary-900"
+															: "text-text-secondary hover:bg-surface-muted hover:text-primary-900"
 													}`}
 												>
 													{sub.name_en}
@@ -172,14 +172,15 @@ export function NewsFilterSidebar({
 			</div>
 
 			<div className="mt-8">
-				<h4 className="text-base font-semibold text-gray-900 mb-3">
+				<h4 className="mb-3 text-heading-6 text-text-primary">
 					{t("events.recentNews")}
 				</h4>
 				<div className="space-y-4">
 					{recentNews.map((item) => (
-						<div
+						<button
+							type="button"
 							key={item.id}
-							className="flex space-x-3 cursor-pointer group"
+							className="focus-ring group flex w-full space-x-3 text-left"
 							onClick={() => onRecentNewsClick(item.id)}
 						>
 							<div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
@@ -190,14 +191,14 @@ export function NewsFilterSidebar({
 								/>
 							</div>
 							<div className="flex-1 min-w-0">
-								<h5 className="text-sm font-medium text-gray-900 group-hover:text-khmer-gold line-clamp-2 mb-1">
+								<h5 className="mb-1 line-clamp-2 text-body-sm font-medium text-text-primary transition-colors group-hover:text-primary-900">
 									{t(item.title)}
 								</h5>
-								<p className="text-sm text-gray-500">
+								<p className="text-caption text-text-secondary">
 									{new Date(item.date).toLocaleDateString("en-GB")}
 								</p>
 							</div>
-						</div>
+						</button>
 					))}
 				</div>
 			</div>

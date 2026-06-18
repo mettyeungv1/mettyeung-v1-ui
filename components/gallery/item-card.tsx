@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Play, Calendar } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatDate } from "@/lib/utils";
 
 import Image from "next/image";
+import { MediaFallback } from "@/components/ui/media-fallback";
+import { useTranslation } from "@/lib/i18n";
 
 // A generic type for any item the card can display
 export interface GalleryItem {
@@ -30,21 +32,28 @@ export function ItemCard<T extends GalleryItem>({
 	onCardClick,
 	isFeatured = false,
 }: ItemCardProps<T>) {
+	const { t } = useTranslation();
+	const [imageFailed, setImageFailed] = useState(false);
+
 	return (
-		<Card
-			className={`overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer ${
-				isFeatured ? "hover:shadow-2xl" : ""
-			}`}
+		<button
+			type="button"
+			className="group flex h-full w-full flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white text-left text-text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900 focus-visible:ring-offset-2"
 			onClick={() => onCardClick(item)}
 		>
 			<div className="relative aspect-video overflow-hidden">
-				<Image
-					src={item.thumbnail}
-					alt={item.title_en}
-					fill
-					className="object-cover group-hover:scale-105 transition-transform duration-300"
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-				/>
+				{imageFailed ? (
+					<MediaFallback label={t("common.mediaUnavailable")} className="h-full min-h-0" />
+				) : (
+					<Image
+						src={item.thumbnail}
+						alt={item.title_en}
+						fill
+						className="object-cover group-hover:scale-105 transition-transform duration-300"
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						onError={() => setImageFailed(true)}
+					/>
+				)}
 				<div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
 
 				<motion.div
@@ -73,7 +82,7 @@ export function ItemCard<T extends GalleryItem>({
 			</div>
 
 			{item.date && categoryName && (
-				<CardContent className="p-4">
+				<div className="p-4">
 					<div className="flex items-center space-x-2 mb-2">
 						{categoryName && (
 							<Badge
@@ -100,8 +109,8 @@ export function ItemCard<T extends GalleryItem>({
 							{formatDate(item.date)}
 						</div>
 					)}
-				</CardContent>
+				</div>
 			)}
-		</Card>
+		</button>
 	);
 }

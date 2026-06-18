@@ -47,9 +47,9 @@ export function ContactForm() {
 					<div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center">
 						<MessageSquare className="w-5 h-5 text-white" />
 					</div>
-					<h2 className="text-xl font-bold text-white">{t("contact.formTitle")}</h2>
+					<h2 className="text-heading-4 text-white">{t("contact.formTitle")}</h2>
 				</div>
-				<p className="text-primary-200 text-sm leading-relaxed pl-12">
+				<p className="text-body-sm text-primary-200 pl-12">
 					{t("contact.formDesc")}
 				</p>
 			</div>
@@ -65,7 +65,7 @@ export function ContactForm() {
 							className="mb-6 flex items-center gap-3 px-5 py-4 bg-green-50 border border-green-200 rounded-2xl text-green-800"
 						>
 							<CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />
-							<p className="text-sm font-medium">{t("contact.successMsg")}</p>
+							<p className="text-body-sm font-medium">{t("contact.successMsg")}</p>
 						</motion.div>
 					)}
 				</AnimatePresence>
@@ -74,7 +74,7 @@ export function ContactForm() {
 					{/* Name + Email */}
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 						<div className="space-y-1.5">
-							<Label htmlFor="name" className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+							<Label htmlFor="name" className="flex items-center gap-1.5">
 								<User className="w-3.5 h-3.5 text-gray-400" />
 								{t("contact.name")} <span className="text-red-400">*</span>
 							</Label>
@@ -88,7 +88,7 @@ export function ContactForm() {
 							/>
 						</div>
 						<div className="space-y-1.5">
-							<Label htmlFor="email" className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+							<Label htmlFor="email" className="flex items-center gap-1.5">
 								<Mail className="w-3.5 h-3.5 text-gray-400" />
 								{t("contact.email")} <span className="text-red-400">*</span>
 							</Label>
@@ -106,7 +106,7 @@ export function ContactForm() {
 
 					{/* Department */}
 					<div className="space-y-1.5">
-						<Label className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+						<Label className="flex items-center gap-1.5">
 							<BookOpen className="w-3.5 h-3.5 text-gray-400" />
 							{t("contact.department")} <span className="text-red-400">*</span>
 						</Label>
@@ -126,7 +126,7 @@ export function ContactForm() {
 
 					{/* Subject */}
 					<div className="space-y-1.5">
-						<Label htmlFor="subject" className="text-sm font-semibold text-gray-700">
+						<Label htmlFor="subject">
 							{t("contact.subject")} <span className="text-red-400">*</span>
 						</Label>
 						<Input
@@ -141,9 +141,9 @@ export function ContactForm() {
 
 					{/* Message */}
 					<div className="space-y-1.5">
-						<Label htmlFor="message" className="text-sm font-semibold text-gray-700 flex items-center justify-between">
+						<Label htmlFor="message" className="flex items-center justify-between">
 							<span>{t("contact.message")} <span className="text-red-400">*</span></span>
-							<span className="text-xs text-gray-400 font-normal">{formData.message.length}/500</span>
+							<span className="text-caption text-gray-400 font-normal">{formData.message.length}/500</span>
 						</Label>
 						<Textarea
 							id="message"
@@ -162,7 +162,7 @@ export function ContactForm() {
 						type="submit"
 						size="lg"
 						disabled={isSubmitting}
-						className="w-full h-12 rounded-xl bg-primary-900 hover:bg-primary-950 text-white font-semibold text-base gap-2 shadow-md shadow-primary-900/20 hover:shadow-primary-900/30 transition-all duration-200 disabled:opacity-60"
+						className="w-full h-12 rounded-xl bg-primary-900 hover:bg-primary-950 text-white gap-2 shadow-md shadow-primary-900/20 hover:shadow-primary-900/30 transition-all duration-200 disabled:opacity-60"
 					>
 						{isSubmitting ? (
 							<><Loader2 className="w-5 h-5 animate-spin" />{t("contact.sending")}</>

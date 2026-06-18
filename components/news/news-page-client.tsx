@@ -337,10 +337,10 @@ export function NewsPageClient({
 			{featuredNews.length > 0 && (
 				<section className="section-padding bg-white">
 					<div className="container">
-						<AnimatedSection>
-							<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-								Featured News
-							</h2>
+							<AnimatedSection>
+								<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+									{t("events.featuredNews")}
+								</h2>
 						</AnimatedSection>
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 							{featuredNews.map((item) => (
@@ -398,11 +398,11 @@ export function NewsPageClient({
 														<BookOpen className="w-6 h-6" />
 													</div>
 													<div>
-														<h3 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight leading-tight">
+														<h3 className="text-heading-4">
 															{activeCategoryForBanner.name_en}
 														</h3>
-														<p className="text-sm text-gray-500 mt-1">
-															Category Overview
+														<p className="text-body-sm text-gray-500 mt-1">
+															{t("events.categoryOverview")}
 														</p>
 													</div>
 												</div>
@@ -417,10 +417,10 @@ export function NewsPageClient({
 												          relative overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200
 												          before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:h-[3px] before:bg-gradient-to-r before:from-blue-500 before:to-blue-400 before:rounded-t-2xl"
 												      >
-												        <span className="text-2xl md:text-3xl font-bold text-gray-900 mb-1 tracking-tight">
+												        <span className="text-heading-3 mb-1">
 												          {stat.value}
 												        </span>
-												        <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+												        <span className="text-caption font-semibold text-gray-400">
 												          {stat.label}
 												        </span>
 												      </div>

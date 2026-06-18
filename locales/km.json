@@ -119,6 +119,7 @@
     "heroDescription": "ស្វែងយល់ពីសកម្មភាព និងព្រឹត្តិការណ៍ចុងក្រោយរបស់យើង",
     "recentNews": "ព័ត៌មានថ្មីៗ",
     "featuredNews": "ព័ត៌មានលេចធ្លោ",
+    "categoryOverview": "សង្ខេបប្រភេទ",
     "allNewsGrid": "ព័ត៌មានទាំងអស់",
     "foundArticles": "បានរកឃើញអត្ថបទចំនួន {{count}}",
     "noNewsFound": "រកមិនឃើញព័ត៌មាន",
@@ -370,7 +371,9 @@
     "scrollToTop": "រំកិលទៅខាងលើ",
     "languageShort": "ភាសា",
     "selectLanguage": "ជ្រើសរើសភាសា",
-    "breadcrumb": "ផ្លូវរុករក"
+    "breadcrumb": "ផ្លូវរុករក",
+    "mediaUnavailable": "រូបភាពមិនអាចបង្ហាញបាន",
+    "minutesShort": "នាទី"
   },
   "video": {
     "category": "ប្រភេទ",
@@ -683,11 +686,17 @@
     }
   },
   "gallery": {
+    "subtitle": "ស្វែងយល់ពីសកម្មភាព និងគម្រោងរបស់យើងតាមរយៈរូបភាព",
+    "activityImages": "រូបភាពសកម្មភាព",
+    "activityGallery": "ជម្រុំរូបភាពសកម្មភាព",
+    "views": "ចំនួនមើល",
     "allVideos": "វីដេអូទាំងអស់",
     "videoGallery": "ជម្រុំវីដេអូ",
     "endOfList": "អ្នកបានមកដល់ចុងបញ្ចប់នៃបញ្ជីហើយ",
     "noItemsFound": "រកមិនឃើញធាតុ",
-    "noItemsInCategory": "មិនមានធាតុនៅក្នុងប្រភេទ \"{{category}}\" ទេ។"
+    "noItemsInCategory": "មិនមានធាតុនៅក្នុងប្រភេទ \"{{category}}\" ទេ។",
+    "noImagesFound": "រកមិនឃើញរូបភាព",
+    "noImagesInCategory": "មិនមានរូបភាពក្នុងប្រភេទនេះនៅឡើយទេ"
   },
   "news": {
     "search": "ស្វែងរក",
@@ -696,6 +705,7 @@
     "relatedArticles": "អត្ថបទពាក់ព័ន្ធ",
     "viewAllArticles": "មើលអត្ថបទទាំងអស់",
     "shareArticle": "ចែករំលែកអត្ថបទ",
+    "commentsLabel": "មតិយោបល់",
     "linkCopiedTitle": "បានចម្លងតំណ!",
     "linkCopiedDescription": "តំណអត្ថបទត្រូវបានចម្លងទៅកាន់ក្តារតម្បៀតខ្ទាស់របស់អ្នក។",
     "relatedLoadError": "មិនអាចផ្ទុកអត្ថបទពាក់ព័ន្ធបានទេ។",

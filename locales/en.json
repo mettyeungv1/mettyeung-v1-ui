@@ -129,6 +129,7 @@
     "heroDescription": "Explore our latest activities and events",
     "recentNews": "Recent News",
     "featuredNews": "Featured News",
+    "categoryOverview": "Category overview",
     "allNewsGrid": "All News",
     "foundArticles": "Found {{count}} articles",
     "noNewsFound": "No News Found",
@@ -353,7 +354,9 @@
     "scrollToTop": "Scroll to top",
     "languageShort": "Lang",
     "selectLanguage": "Select Language",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "mediaUnavailable": "Media unavailable",
+    "minutesShort": "min"
   },
   "video": {
     "category": "Category",
@@ -667,11 +670,17 @@
     }
   },
   "gallery": {
+    "subtitle": "Explore our activities and projects through photos",
+    "activityImages": "Activity Images",
+    "activityGallery": "Activity Gallery",
+    "views": "views",
     "allVideos": "All Videos",
     "videoGallery": "Video Gallery",
     "endOfList": "You've reached the end of the list",
     "noItemsFound": "No Items Found",
-    "noItemsInCategory": "There are no items in the \"{{category}}\" category."
+    "noItemsInCategory": "There are no items in the \"{{category}}\" category.",
+    "noImagesFound": "No images found",
+    "noImagesInCategory": "There are no images in this category yet."
   },
   "news": {
     "search": "Search",
@@ -680,6 +689,7 @@
     "relatedArticles": "Related Articles",
     "viewAllArticles": "View All Articles",
     "shareArticle": "Share Article",
+    "commentsLabel": "Comments",
     "linkCopiedTitle": "Link copied!",
     "linkCopiedDescription": "The article link has been copied to your clipboard.",
     "relatedLoadError": "Could not load related articles.",

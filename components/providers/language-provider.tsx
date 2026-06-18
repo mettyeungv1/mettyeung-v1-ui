@@ -19,12 +19,6 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
 		// Update the lang attribute
 		document.documentElement.lang = language;
 
-		// Add or remove the font class from the body
-		if (language === "en") {
-			document.body.classList.add("font-en");
-		} else {
-			document.body.classList.remove("font-en");
-		}
 	}, [language]);
 
 	return <>{children}</>;

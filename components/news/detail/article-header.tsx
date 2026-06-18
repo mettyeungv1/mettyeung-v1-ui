@@ -15,27 +15,27 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 		<header className="mb-8">
 			<div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
 				{article.category?.name && (
-					<Badge className="bg-khmer-gold text-white px-3 py-1 text-sm capitalize">
+					<Badge className="bg-khmer-gold text-white px-3 py-1 capitalize">
 						{article.category.name}
 					</Badge>
 				)}
-				<div className="flex items-center text-sm text-gray-500">
+				<div className="flex items-center text-caption text-gray-500">
 					<Calendar className="w-4 h-4 mr-1" />
 					{new Date(article.date).toLocaleDateString("en-GB")}
 				</div>
-				<div className="flex items-center text-sm text-gray-500">
+				<div className="flex items-center text-caption text-gray-500">
 					<Clock className="w-4 h-4 mr-1" />
-					{article.readTime} min
+					{article.readTime} {t("common.minutesShort")}
 				</div>
 				{/* <div className="flex items-center text-sm text-gray-500">
 					<Eye className="w-4 h-4 mr-1" />
 					{article.views.toLocaleString()} views
 				</div> */}
 			</div>
-			<h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+			<h1 className="text-heading-1 mb-6">
 				{t(article.title)}
 			</h1>
-			<p className="text-xl text-gray-600 leading-relaxed mb-8">
+			<p className="text-body-lg text-gray-600 mb-8">
 				{t(article.excerpt)}
 			</p>
 
@@ -50,9 +50,9 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 				</div>
 			)}
 			<div className="flex items-center justify-between py-4 border-t border-b mt-8">
-				<div className="flex items-center text-sm text-gray-500">
+				<div className="flex items-center text-caption text-gray-500">
 					<MessageCircle className="w-4 h-4 mr-2" />
-					{article.comments} Comments
+					{article.comments} {t("news.commentsLabel")}
 				</div>
 				<Button
 					variant="outline"
@@ -61,7 +61,7 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 					className="text-primary border-primary hover:bg-primary hover:text-white"
 				>
 					<Share2 className="w-4 h-4 mr-2" />
-					Share Article
+					{t("news.shareArticle")}
 				</Button>
 			</div>
 		</header>

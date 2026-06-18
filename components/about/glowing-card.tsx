@@ -14,7 +14,7 @@ export function GlowingCard({
 			transition={{ duration: 0.3 }}
 			className={`relative group ${className}`}
 		>
-			<div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-500 to-red-500 rounded-2xl blur opacity-0 group-hover:opacity-30 transition duration-1000 group-hover:duration-200" />
+			<div className="absolute -inset-0.5 rounded-xl bg-primary-900/10 opacity-0 blur transition duration-500 group-hover:opacity-100" />
 			<div className="relative">{children}</div>
 		</motion.div>
 	);

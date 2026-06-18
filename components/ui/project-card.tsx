@@ -63,7 +63,7 @@ export function ProjectCard({
 	if (variant === "compact") {
 		return (
 			<AnimatedSection delay={index * 0.1}>
-				<Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group card-interactive">
+				<Card variant="interactive" className="overflow-hidden group">
 					<div className="flex">
 						<div className="w-24 h-24 flex-shrink-0 relative">
 							<Image
@@ -87,10 +87,10 @@ export function ProjectCard({
 									{project.status === "ongoing" ? "Active" : "Completed"}
 								</Badge>
 							</div>
-							<h3 className="font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-900 transition-colors">
+							<h3 className="mb-2 line-clamp-2 text-heading-6 text-text-primary transition-colors group-hover:text-primary-900">
 								{project.title_en || project.title}
 							</h3>
-							<div className="flex items-center text-sm text-gray-500 space-x-4">
+							<div className="flex items-center space-x-4 text-caption text-text-secondary">
 								<div className="flex items-center">
 									<Users className="w-3.5 h-3.5 mr-1" />
 									{project.beneficiaries}
@@ -110,7 +110,7 @@ export function ProjectCard({
 	if (variant === "featured") {
 		return (
 			<AnimatedSection delay={index * 0.2}>
-				<Card className="overflow-hidden hover:shadow-2xl transition-all duration-500 group card-interactive">
+				<Card variant="interactive" className="overflow-hidden group">
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 						<div className="aspect-video lg:aspect-square overflow-hidden relative">
 							<Image
@@ -128,9 +128,9 @@ export function ProjectCard({
 							<div className="space-y-4">
 								{project.status === "ongoing" && (
 									<div>
-										<div className="flex justify-between text-sm mb-2">
-											<span className="text-gray-600">{t("projects.progress")}</span>
-											<span className="text-gray-900 font-medium">75%</span>
+										<div className="mb-2 flex justify-between text-body-sm">
+											<span className="text-text-secondary">{t("projects.progress")}</span>
+											<span className="font-medium text-text-primary">75%</span>
 										</div>
 										{/* ✅ FIX APPLIED HERE */}
 										<Progress value={75} className="h-2" />
@@ -157,7 +157,7 @@ export function ProjectCard({
 	// Default variant
 	return (
 		<AnimatedSection delay={index * 0.1}>
-			<Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group card-interactive h-full flex flex-col">
+			<Card variant="interactive" className="flex h-full flex-col overflow-hidden group">
 				<div className="aspect-video overflow-hidden relative">
 					<Image
 						src={project.images[0]}
@@ -171,9 +171,9 @@ export function ProjectCard({
 				<CardContent className="p-6 flex-1 flex flex-col">
 					{project.status === "ongoing" && (
 						<div className="mb-4">
-							<div className="flex justify-between text-sm mb-2">
-								<span className="text-gray-600">{t("projects.progress")}</span>
-								<span className="text-gray-900 font-medium">75%</span>
+							<div className="mb-2 flex justify-between text-body-sm">
+								<span className="text-text-secondary">{t("projects.progress")}</span>
+								<span className="font-medium text-text-primary">75%</span>
 							</div>
 							{/* ✅ FIX APPLIED HERE */}
 							<Progress value={75} className="h-2" />

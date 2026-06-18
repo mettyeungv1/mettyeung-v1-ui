@@ -29,11 +29,11 @@ function VideoModalContent({ video }: { video: Video }) {
 			<div className="flex-1 p-5 sm:p-8 space-y-8 pb-20 sm:pb-8">
 				{/* Title Section */}
 				<div className="space-y-3">
-					<h2 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug tracking-tight">
+					<h2 className="text-heading-3">
 						{video.title_en}
 					</h2>
 					{video.title_km && (
-						<h3 className="text-lg font-medium text-gray-500 leading-relaxed font-khmer">
+						<h3 className="text-body-lg text-gray-500 font-khmer">
 							{video.title_km}
 						</h3>
 					)}
@@ -43,12 +43,12 @@ function VideoModalContent({ video }: { video: Video }) {
 				{(video.categoryName || video.date || video.viewCount >= 0 || video.duration) && (
 					<div className="flex flex-wrap items-center gap-x-6 gap-y-3 py-5 border-y border-gray-100">
 						{video.categoryName && (
-							<Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md px-3 py-1.5 text-sm font-medium border-transparent shrink-0">
+							<Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md px-3 py-1.5 border-transparent shrink-0">
 								{video.categoryName} 
 							</Badge>
 						)}
 						
-						<div className="flex flex-wrap items-center gap-5 text-sm text-gray-500 font-medium">
+						<div className="flex flex-wrap items-center gap-5 text-caption text-gray-500 font-medium">
 							{video.date && (
 								<div className="flex items-center gap-2" title={t("video.publishedDate")}>
 									<Calendar className="w-4 h-4 text-gray-400" />
@@ -78,10 +78,10 @@ function VideoModalContent({ video }: { video: Video }) {
 					<div className="space-y-6 pt-2">
 						{video.description && (
 							<div className="space-y-2">
-								<h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
+								<h4 className="text-label text-gray-400">
 									{t("video.description")}
 								</h4>
-								<p className="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line">
+								<p className="text-body-lg text-gray-700 whitespace-pre-line">
 									{video.description}
 								</p>
 							</div>
@@ -89,10 +89,10 @@ function VideoModalContent({ video }: { video: Video }) {
 
 						{video.description_km && (
 							<div className="space-y-2">
-								<h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest">
+								<h4 className="text-label text-gray-400">
 									{t("video.description")}
 								</h4>
-								<p className="text-gray-700 leading-relaxed text-base sm:text-lg whitespace-pre-line font-khmer">
+								<p className="text-body-lg text-gray-700 whitespace-pre-line font-khmer">
 									{video.description_km}
 								</p>
 							</div>

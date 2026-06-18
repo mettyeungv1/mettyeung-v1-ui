@@ -57,7 +57,7 @@ export function ContactInfoGrid({ settings }: ContactInfoGridProps) {
 		<section className="bg-gray-50 pb-12 pt-8">
 			<div className="container">
 				<div className="text-center mb-8">
-					<p className="text-xs font-bold text-primary-900 uppercase tracking-widest mb-2">
+					<p className="text-caption font-bold text-primary-900 mb-2">
 						{t("contact.reachUs" as any)}
 					</p>
 					<h2 className="text-2xl font-bold text-gray-900">

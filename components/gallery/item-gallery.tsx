@@ -6,6 +6,7 @@ import { useTranslation } from "@/lib/i18n";
 import { Loader2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
+import { EmptyState } from "@/components/ui/empty-state";
 
 interface ItemGalleryProps<T> {
 	title: string;
@@ -141,15 +142,14 @@ export function ItemGallery<T extends GalleryItem>({
 									initial={{ opacity: 0, y: 20 }}
 									animate={{ opacity: 1, y: 0 }}
 									exit={{ opacity: 0, y: -20 }}
-									className="text-center py-16 text-gray-500 bg-white rounded-lg border"
 								>
-									<h3 className="text-xl font-semibold">{t("gallery.noItemsFound")}</h3>
-									<p className="mt-2 text-sm">
-										{t("gallery.noItemsInCategory").replace(
+									<EmptyState
+										title={t("gallery.noItemsFound")}
+										description={t("gallery.noItemsInCategory").replace(
 											"{{category}}",
 											selectedCategoryName
 										)}
-									</p>
+									/>
 								</motion.div>
 							)}
 						</AnimatePresence>

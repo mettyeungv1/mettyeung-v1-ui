@@ -95,8 +95,8 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 	if (loading && partners.length === 0) {
 		return (
 			<section className="section-padding min-h-[50vh] flex flex-col justify-center items-center">
-				<div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-				<p className="mt-4 text-gray-500">{t("common.loading")}</p>
+				<div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-900 border-t-transparent"></div>
+				<p className="mt-4 text-body text-text-secondary">{t("common.loading")}</p>
 			</section>
 		);
 	}
@@ -104,7 +104,7 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 	if (error && partners.length === 0) {
 		return (
 			<section className="section-padding min-h-[50vh] flex justify-center items-center">
-				<div className="text-center text-red-600">{error}</div>
+				<div className="text-center text-error">{error}</div>
 			</section>
 		);
 	}
@@ -112,26 +112,26 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 	if (partners.length === 0) {
 		return (
 			<section className="section-padding min-h-[50vh] flex flex-col justify-center items-center">
-				<p className="text-xl text-gray-500">{t("partners.noPartners")}</p>
+				<p className="text-body-lg text-text-secondary">{t("partners.noPartners")}</p>
 			</section>
 		);
 	}
 
 	return (
-		<section className="section-padding bg-gray-50/50">
+		<section className="section-md surface-page">
 			<div className="container relative z-10 max-w-7xl mx-auto">
 				{/* Modern Header Section */}
 				<AnimatedSection direction="up" className="text-center mb-16 lg:mb-20">
-					<div className="inline-flex items-center justify-center p-3 sm:p-4 bg-white rounded-2xl shadow-sm mb-6 border border-gray-100">
-						<svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<div className="inline-flex items-center justify-center p-3 sm:p-4 bg-surface-panel rounded-xl shadow-surface mb-6 border border-border-subtle">
+						<svg className="w-8 h-8 text-primary-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
 						</svg>
 					</div>
-					<h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight">
+					<h2 className="text-heading-1 mb-6">
 						{t("partners.title")}
 					</h2>
-					<div className="w-24 h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full mx-auto mb-8" />
-					<p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-medium">
+					<div className="w-24 h-1.5 bg-interactive-primary rounded-full mx-auto mb-8" />
+					<p className="text-body-lg text-gray-600 max-w-4xl mx-auto">
 						{t("partners.description")}
 					</p>
 				</AnimatedSection>
@@ -146,7 +146,7 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 							resolvePartnerText(t, partner.description, partner.descriptionTranslations);
 						const websiteUrl = partner.websiteUrl?.trim();
 						const cardContent = (
-							<Card className={`group relative overflow-hidden aspect-square border-0 shadow-xl bg-white transition-all duration-500 rounded-2xl ${websiteUrl ? "hover:shadow-2xl hover:-translate-y-2 focus-within:shadow-2xl focus-within:-translate-y-2" : "hover:shadow-2xl hover:-translate-y-1"}`}>
+							<Card variant="interactive" className="group relative aspect-square overflow-hidden">
 								<CardContent className="p-0 h-full flex items-center justify-center relative">
 									{/* Large Logo display */}
 									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 group-focus-within:scale-110 group-focus-within:opacity-40 opacity-100">
@@ -160,15 +160,15 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 									</div>
 
 									{/* Hover Overlay with info */}
-									<div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-slate-900/70 to-slate-900/80 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-700 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
+									<div className="absolute inset-0 bg-primary-950/90 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-300 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
                                         <div className="transform translate-y-6 group-hover:translate-y-0 group-focus-within:translate-y-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-all duration-700 delay-75 flex flex-col items-center h-full justify-center">
                                             {partnerName && (
-                                                <h3 className="text-xl md:text-2xl font-bold text-white line-clamp-2 mb-3 drop-shadow-md tracking-wide">
+                                                <h3 className="text-heading-4 text-white line-clamp-2 mb-3 drop-shadow-md">
                                                     {partnerName}
                                                 </h3>
                                             )}
                                             {partnerDescription && (
-                                                <p className="text-sm md:text-base text-slate-200 line-clamp-3 mb-6 leading-relaxed">
+                                                <p className="text-body-sm text-primary-100 line-clamp-3 mb-6">
                                                     {partnerDescription}
                                                 </p>
                                             )}
@@ -177,7 +177,7 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 													href={websiteUrl}
 													target="_blank"
 													rel="noopener noreferrer"
-													className="relative z-10 inline-flex items-center gap-2 px-6 py-2.5 mt-2 text-xs font-bold tracking-widest text-white uppercase transition-all duration-300 bg-white/10 rounded-full hover:bg-blue-600 border border-white/20 backdrop-blur-md shadow-lg hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+													className="relative z-10 inline-flex items-center gap-2 rounded-md border border-border-inverse bg-white/10 px-6 py-2.5 mt-2 text-button text-white transition-all duration-200 hover:bg-white/15 focus-ring"
 												>
                                                     {t("partners.visitWebsite")} <ArrowRight className="w-4 h-4 ml-1" />
                                                 </a>
@@ -203,7 +203,7 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 				{/* Loading More Indicator */}
 				{loadingMore && (
 					<div className="flex justify-center items-center py-12">
-						<div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+						<div className="w-8 h-8 border-4 border-primary-900 border-t-transparent rounded-full animate-spin"></div>
 					</div>
 				)}
 				
