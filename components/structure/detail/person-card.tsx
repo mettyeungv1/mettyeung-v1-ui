@@ -4,8 +4,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Card } from "@/components/ui/card";
 import { normalizeUrl } from "@/lib/utils/image";
 import { Person } from "@/lib/stores/person-store";
 import { MEDIA_ENDPOINT } from "@/lib/static";
@@ -28,6 +27,13 @@ type PersonMediaFields = Person &
 		name_en: string;
 		name_km: string;
 		position_en: string;
+		phoneNumber: string;
+		location_en: string;
+		associations: Array<{
+			name?: string;
+			role?: string;
+			isHead?: boolean;
+		}>;
 	}>;
 
 /* ── helpers ─────────────────────────────────────────────────────────── */
@@ -56,10 +62,15 @@ function getInitials(name?: string): string {
 function PersonCardComponent({ person, variant = "compact", index }: PersonCardProps) {
 	const [errored, setErrored] = useState(false);
 	const { language } = useTranslation();
+	const isDetailed = variant === "detailed";
 
 	const {
 		displayName,
 		displayTitle,
+		displayEmail,
+		displayPhone,
+		displayLocation,
+		isHead,
 		imageSrc,
 		initials,
 	} = useMemo(() => {
@@ -72,9 +83,14 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 			? (typedPerson.title_km || typedPerson.title_en || typedPerson.position_en || "")
 			: (typedPerson.title_en || typedPerson.position_en || "");
 
+		const primaryAssociation = typedPerson.associations?.[0];
 		return {
 			displayName: name,
 			displayTitle: rawTitle && rawTitle !== "Member" ? rawTitle : "",
+			displayEmail: typedPerson.email || "",
+			displayPhone: typedPerson.phone || typedPerson.phoneNumber || "",
+			displayLocation: typedPerson.location || typedPerson.location_en || "",
+			isHead: Boolean(primaryAssociation?.isHead),
 			imageSrc: resolveImage(typedPerson),
 			initials: getInitials(typedPerson.name_en || typedPerson.name),
 		};
@@ -90,54 +106,54 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 20 }}
+			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{
-				duration: 0.4,
-				delay: Math.min(index * 0.05, 0.3),
+				duration: 0.25,
+				delay: Math.min(index * 0.03, 0.18),
 				ease: "easeOut",
 			}}
 			className="h-full"
 		>
 			<Link
 				href={`/structure/${person.id}`}
-				className="group block h-full outline-none focus-visible:ring-2 focus-visible:ring-primary-900 rounded-xl"
+				className="group block h-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-primary-900 focus-visible:ring-offset-2"
 				aria-label={`View ${displayName}'s profile`}
 			>
 				<Card
-					className="h-full overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-300 group-hover:shadow-md group-hover:border-primary-200"
+					className="h-full rounded-lg border border-gray-200 bg-white shadow-none transition-colors duration-150 group-hover:border-gray-300 group-hover:bg-gray-50"
 				>
-					<div className="flex flex-col h-full">
-						{/* Image Section - Professional Portrait Style */}
-						<div className="relative w-full aspect-[4/5] bg-gray-100 overflow-hidden">
+					<div className="flex h-full items-start gap-4 p-4 sm:p-5">
+						<div
+							className={`relative shrink-0 overflow-hidden rounded-xl bg-gray-100 ${
+								isDetailed ? "h-20 w-20" : "h-16 w-16"
+							}`}
+						>
 							{imageSrc && !errored ? (
 								<Image
 									src={imageSrc}
 									alt={displayName}
 									fill
-									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-									className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+									sizes={isDetailed ? "80px" : "64px"}
+									className="object-cover object-top"
 									onError={handleImageError}
 								/>
 							) : (
-								<div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+								<div className="absolute inset-0 flex items-center justify-center bg-gray-100">
 									<span
-										className="text-4xl font-semibold text-gray-400"
+										className="text-base font-semibold text-gray-500"
 										aria-hidden="true"
 									>
 										{initials}
 									</span>
 								</div>
 							)}
-							{/* Subtle gradient overlay at bottom of image for blending */}
-							<div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 						</div>
 
-						{/* Info Section - Formal and Clean */}
-						<div className="flex flex-col flex-1 p-5 text-center bg-white border-t-4 border-primary-900">
+						<div className="min-w-0 flex-1">
 							<h4
 								title={displayName}
-								className="text-heading-5 mb-1 line-clamp-2 group-hover:text-primary-900 transition-colors"
+								className="line-clamp-1 text-sm font-semibold leading-6 text-gray-900 transition-colors group-hover:text-primary-900"
 							>
 								{displayName}
 							</h4>
@@ -145,17 +161,40 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 							{displayTitle && (
 								<p
 									title={displayTitle}
-									className="text-body-sm text-gray-600 line-clamp-2"
+									className="mt-0.5 line-clamp-2 text-sm leading-5 text-gray-500"
 								>
 									{displayTitle}
 								</p>
 							)}
 
-							<div className="mt-auto pt-4">
-								<span className="inline-block px-4 py-1.5 border border-primary-900 text-primary-900 text-caption font-semibold rounded opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-									View Profile
-								</span>
-							</div>
+							{(displayPhone || displayEmail) && (
+								<div className="mt-4 space-y-1">
+									{displayPhone && (
+										<p className="line-clamp-1 text-xs leading-5 text-gray-700">
+											{displayPhone}
+										</p>
+									)}
+									{displayEmail && (
+										<p className="line-clamp-1 text-xs leading-5 text-gray-700">
+											{displayEmail}
+										</p>
+									)}
+								</div>
+							)}
+
+							{displayLocation && (
+								<p className="mt-3 line-clamp-2 text-xs leading-5 text-gray-500">
+									{displayLocation}
+								</p>
+							)}
+
+							{isHead && (
+								<div className="mt-3">
+									<span className="inline-flex rounded-md bg-primary-50 px-2 py-1 text-xs font-medium text-primary-800">
+										Head
+									</span>
+								</div>
+							)}
 						</div>
 					</div>
 				</Card>

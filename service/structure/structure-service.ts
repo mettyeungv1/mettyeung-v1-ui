@@ -117,7 +117,7 @@ export function normalizeMemberData(member: any): Member {
 		joinDate,
 		joinYear: member.joinYear || member.join_year || (member.join_date ? new Date(member.join_date).getFullYear() : undefined),
 		bio: localizedText(member.bio),
-		department: associations.length > 0 ? associations[0].name : "",
+		department: associations.length > 0 ? associations[0].name : localizedText(member.department),
 		skills,
 		socials: rawSocials,
 		socialLinks: rawSocials, // Alias for legacy components

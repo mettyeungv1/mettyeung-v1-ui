@@ -1,58 +1,32 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import Link from "next/link";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { Member } from "@/lib/types/structure";
 import { useTranslation } from "@/lib/i18n";
 import { normalizeUrl } from "@/lib/utils/image";
 import { MEDIA_ENDPOINT } from "@/lib/static";
-
-// Reusable Components
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-
-// Icons
 import {
 	ArrowLeft,
-	Star,
-	Building2,
-	Download,
-	Loader2,
-	GraduationCap,
-	Briefcase,
-	Languages,
 	ChevronRight,
-	CircleCheck,
-	CircleMinus,
-	Mail,
-	Phone,
-	MapPin,
-	Calendar,
-	User,
-	Globe,
+	Download,
 	Facebook,
-	Linkedin,
-	Twitter,
+	Globe,
 	Instagram,
-	Youtube,
 	Link as LinkIcon,
-	Award,
-	Hash,
-	Quote,
-	Sparkles,
-	BadgeCheck,
+	Linkedin,
+	Loader2,
+	Twitter,
+	Youtube,
 } from "lucide-react";
 
 interface PersonDetailClientProps {
 	person: Member;
 }
 
-/* ============================================================== */
-/*  Localized text helper                                          */
-/* ============================================================== */
 type Localized = string | { en?: string | null; km?: string | null } | null | undefined;
 
 function pickLocalized(value: Localized, locale: string, fallback = ""): string {
@@ -62,113 +36,86 @@ function pickLocalized(value: Localized, locale: string, fallback = ""): string 
 	return value.en || value.km || fallback;
 }
 
-/* ============================================================== */
-/*  Status Badge                                                   */
-/* ============================================================== */
-function StatusBadge({ status, variant = "light" }: { status?: string; variant?: "light" | "dark" }) {
-	const lightConfig: Record<string, { label: string; icon: React.ElementType; classes: string }> = {
-		active: { label: "Active", icon: CircleCheck, classes: "bg-emerald-50 text-emerald-700 border-emerald-200" },
-		alumni: { label: "Alumni", icon: GraduationCap, classes: "bg-blue-50 text-blue-700 border-blue-200" },
-		inactive: { label: "Inactive", icon: CircleMinus, classes: "bg-gray-50 text-gray-600 border-gray-200" },
-	};
-	const darkConfig: Record<string, { label: string; icon: React.ElementType; classes: string }> = {
-		active: { label: "Active", icon: CircleCheck, classes: "bg-emerald-500/15 text-emerald-300 border-emerald-400/30 backdrop-blur" },
-		alumni: { label: "Alumni", icon: GraduationCap, classes: "bg-blue-500/15 text-blue-300 border-blue-400/30 backdrop-blur" },
-		inactive: { label: "Inactive", icon: CircleMinus, classes: "bg-white/10 text-gray-300 border-white/20 backdrop-blur" },
-	};
-	const config = variant === "dark" ? darkConfig : lightConfig;
-	const c = status ? config[status] : null;
-	if (!c) return null;
-	const Icon = c.icon;
-	return (
-		<span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${c.classes}`}>
-			<Icon className="w-3.5 h-3.5" />
-			{c.label}
-		</span>
-	);
-}
-
-/* ============================================================== */
-/*  Social Icon resolver                                           */
-/* ============================================================== */
 function getSocialIcon(platform: string) {
 	const p = platform.toLowerCase();
 	switch (p) {
-		case "facebook": return Facebook;
-		case "linkedin": return Linkedin;
+		case "facebook":
+			return Facebook;
+		case "linkedin":
+			return Linkedin;
 		case "twitter":
-		case "x": return Twitter;
-		case "instagram": return Instagram;
-		case "youtube": return Youtube;
-		case "website": return Globe;
-		default: return LinkIcon;
+		case "x":
+			return Twitter;
+		case "instagram":
+			return Instagram;
+		case "youtube":
+			return Youtube;
+		case "website":
+			return Globe;
+		default:
+			return LinkIcon;
 	}
 }
 
-/* ============================================================== */
-/*  Section wrapper                                                */
-/* ============================================================== */
 function Section({
 	title,
-	icon: Icon,
 	children,
 	count,
 }: {
 	title: string;
-	icon: React.ElementType;
 	children: React.ReactNode;
 	count?: number;
 }) {
 	return (
 		<section className="print:break-inside-avoid">
-			<header className="flex items-center gap-2.5 mb-5">
-				<div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-900/10">
-					<Icon className="w-4 h-4 text-primary-900" />
-				</div>
-				<h3 className="text-label text-gray-900">{title}</h3>
+			<header className="mb-4 flex items-baseline gap-2 border-b border-gray-200 pb-2">
+				<h3 className="text-sm font-semibold text-gray-900">{title}</h3>
 				{count !== undefined && count > 0 && (
-					<span className="text-caption font-semibold text-gray-400 ml-1">({count})</span>
+					<span className="text-xs font-medium text-gray-400">{count}</span>
 				)}
-				<div className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent ml-2" />
 			</header>
 			{children}
 		</section>
 	);
 }
 
-/* ============================================================== */
-/*  Info Row                                                       */
-/* ============================================================== */
 function InfoRow({
-	icon: Icon,
 	label,
 	value,
 	href,
 }: {
-	icon: React.ElementType;
 	label: string;
 	value?: string | null;
 	href?: string;
 }) {
 	if (!value) return null;
+
 	const content = (
-		<div className="flex items-start gap-3 group">
-			<div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-900/10 flex items-center justify-center transition-colors">
-				<Icon className="w-3.5 h-3.5 text-gray-500 group-hover:text-primary-900 transition-colors" />
-			</div>
-			<div className="min-w-0 flex-1">
-				<p className="text-caption font-semibold text-gray-400 mb-0.5">{label}</p>
-				<p className="text-body-sm text-gray-800 font-medium break-words">{value}</p>
-			</div>
+		<div>
+			<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{label}</p>
+			<p className="mt-1 break-words text-sm font-medium leading-5 text-gray-900">{value}</p>
 		</div>
 	);
-	if (href) return <a href={href} className="block hover:opacity-80 transition-opacity">{content}</a>;
+
+	if (href) {
+		return (
+			<a href={href} className="block rounded-md hover:text-primary-900">
+				{content}
+			</a>
+		);
+	}
+
 	return content;
 }
 
-/* ============================================================== */
-/*  MAIN COMPONENT                                                 */
-/* ============================================================== */
+function SoftPill({ children }: { children: React.ReactNode }) {
+	return (
+		<span className="inline-flex rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-700">
+			{children}
+		</span>
+	);
+}
+
 export function PersonDetailClient({ person }: PersonDetailClientProps) {
 	const [isGenerating, setIsGenerating] = useState(false);
 	const { t, language } = useTranslation();
@@ -186,7 +133,6 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 		}
 	};
 
-	/* ---------- Normalize data from API shape ---------- */
 	const data = useMemo(() => {
 		const p = person as any;
 
@@ -224,7 +170,14 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 			.map((s: any) =>
 				typeof s === "string"
 					? { id: s, name: s }
-					: { id: s.skillId || s.id, name: pickLocalized(s.skillName || s.name || s.skill?.name, locale, s.skillId || s.id || "") }
+					: {
+							id: s.skillId || s.id,
+							name: pickLocalized(
+								s.skillName || s.name || s.skill?.name,
+								locale,
+								s.skillId || s.id || ""
+							),
+						}
 			);
 
 		const associations = (p.associationMembers || p.associations || []).map((a: any) => ({
@@ -254,18 +207,25 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 					: normalizeUrl(`${MEDIA_ENDPOINT}/view/${rawAvatar}`)
 				: null;
 
-		const dob = p.dob ? new Date(p.dob).toLocaleDateString(locale === "km" ? "km-KH" : "en-US", { year: "numeric", month: "long", day: "numeric" }) : null;
+		const dob = p.dob
+			? new Date(p.dob).toLocaleDateString(locale === "km" ? "km-KH" : "en-US", {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				})
+			: null;
 		const joinDate = p.join_date || p.joinDate;
 		const formattedJoinDate = joinDate
-			? new Date(joinDate).toLocaleDateString(locale === "km" ? "km-KH" : "en-US", { year: "numeric", month: "long" })
+			? new Date(joinDate).toLocaleDateString(locale === "km" ? "km-KH" : "en-US", {
+					year: "numeric",
+					month: "long",
+				})
 			: null;
 
-		// Years of service
 		const yearsOfService = p.joinYear || p.join_year
 			? new Date().getFullYear() - (p.joinYear || p.join_year)
 			: null;
 
-		// Lead/head role
 		const headRole = (p.associationMembers || []).find((a: any) => a.isHead ?? a.is_head);
 
 		return {
@@ -280,7 +240,6 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 			joinYear: p.joinYear || p.join_year,
 			yearsOfService,
 			memberCode: p.memberCode || p.member_code,
-			status: p.status,
 			avatarUrl: fullAvatarUrl,
 			title,
 			location,
@@ -310,287 +269,193 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 		data.associations.length > 0 ||
 		data.languages.length > 0;
 
-	/* ================================================================ */
-	/*  RENDER                                                          */
-	/* ================================================================ */
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-[#F4EFE3]/30 via-[#FAF7F0]/50 to-white print:bg-white overflow-x-hidden pb-24 lg:pb-0">
-			<div className="absolute top-0 inset-x-0 h-80 bg-gradient-to-br from-primary-900/10 via-[#D4B49A]/15 to-transparent pointer-events-none print:hidden" />
-
-			<div className="relative z-10 container max-w-6xl pt-24 lg:pt-28 pb-12 print:pt-4 print:pb-4">
-				{/* Breadcrumb */}
+		<div className="min-h-screen overflow-x-hidden bg-gray-50 pb-24 print:bg-white lg:pb-0">
+			<div className="container max-w-6xl pt-24 pb-12 print:pt-4 print:pb-4 lg:pt-28">
 				<nav className="mb-4 print:hidden" aria-label={t("common.breadcrumb")}>
 					<ol className="flex items-center gap-1.5 text-sm text-gray-500">
 						<li>
-							<Link href="/structure" className="hover:text-primary-900 transition-colors font-medium">
+							<Link href="/structure" className="font-medium transition-colors hover:text-primary-900">
 								{t("member.detail.backToOrg")}
 							</Link>
 						</li>
-						<li><ChevronRight className="w-3.5 h-3.5" /></li>
-						<li className="text-gray-900 font-medium truncate max-w-[240px]">{displayName}</li>
+						<li>
+							<ChevronRight className="h-3.5 w-3.5" />
+						</li>
+						<li className="max-w-[240px] truncate font-medium text-gray-900">{displayName}</li>
 					</ol>
 				</nav>
 
-				{/* Top action bar */}
-				<div className="flex items-center justify-between mb-6 print:hidden">
-					<Button variant="ghost" asChild className="text-gray-600 hover:text-primary-900 gap-2 px-3 -ml-2">
+				<div className="mb-6 flex items-center justify-between print:hidden">
+					<Button variant="ghost" asChild className="-ml-2 gap-2 px-3 text-gray-600 hover:text-primary-900">
 						<Link href="/structure">
-							<ArrowLeft className="w-4 h-4" />
+							<ArrowLeft className="h-4 w-4" />
 							<span className="hidden sm:inline">{t("member.detail.back")}</span>
 						</Link>
 					</Button>
 
-					<div className="flex items-center gap-3">
-						<Button
-							onClick={handleDownloadPDF}
-							disabled={isGenerating}
-							className="bg-primary-900 hover:bg-primary-950 text-white shadow-lg shadow-primary-900/20 gap-2 px-5 rounded-xl transition-all duration-200 hover:shadow-xl"
-						>
-							{isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-							{isGenerating ? t("member.detail.generating") : t("member.detail.downloadCV")}
-						</Button>
-					</div>
+					<Button
+						onClick={handleDownloadPDF}
+						disabled={isGenerating}
+						className="gap-2 rounded-lg bg-primary-900 px-4 text-white shadow-none hover:bg-primary-950"
+					>
+						{isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+						{isGenerating ? t("member.detail.generating") : t("member.detail.downloadCV")}
+					</Button>
 				</div>
 
-				{/* ============ CV CARD ============ */}
 				<div
 					id="cv-content"
-					className="bg-white rounded-3xl shadow-xl shadow-gray-900/5 border border-gray-100 overflow-hidden print:shadow-none print:border-0 print:rounded-none"
+					className="space-y-6 print:space-y-0"
 				>
-					{/* ╔══════════════════════════════════════════════════════════╗
-					    ║                   IMPROVED COVER                          ║
-					    ╚══════════════════════════════════════════════════════════╝ */}
-					<div className="relative bg-gradient-to-br from-primary-950 via-primary-900 to-primary-950 overflow-hidden print:bg-primary-900">
-						{/* Layer 1: Subtle dot grid pattern */}
-						<div
-							className="absolute inset-0 opacity-[0.08] print:hidden"
-							style={{
-								backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
-								backgroundSize: "24px 24px",
-							}}
-						/>
-
-						{/* Layer 2: Glow orbs */}
-						<div className="absolute -top-20 -right-20 w-96 h-96 bg-primary-400/25 rounded-full blur-3xl pointer-events-none print:hidden" />
-						<div className="absolute -bottom-40 -left-20 w-96 h-96 bg-[#A87E5A]/20 rounded-full blur-3xl pointer-events-none print:hidden" />
-
-						{/* Layer 3: Light accent line (top) */}
-						<div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary-300/60 to-transparent print:hidden" />
-						<div className="absolute top-1.5 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary-300/20 to-transparent print:hidden" />
-
-						{/* Layer 4: Corner ornaments (top-left & top-right) */}
-						<div className="absolute top-6 left-6 w-12 h-12 border-l-2 border-t-2 border-primary-300/30 rounded-tl-lg print:hidden" />
-						<div className="absolute top-6 right-6 w-12 h-12 border-r-2 border-t-2 border-primary-300/30 rounded-tr-lg print:hidden" />
-
-						{/* ── Cover content ── */}
-						<div className="relative px-6 sm:px-10 lg:px-12 py-12 lg:py-14">
-							<div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-10">
-								{/* LEFT: Avatar */}
-								<div className="relative flex-shrink-0 mx-auto lg:mx-0">
-									{/* Ring accent */}
-									<div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-primary-300/40 via-primary-300/10 to-transparent blur-md print:hidden" />
-									<div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-3xl bg-gradient-to-br from-primary-300/30 to-primary-300/10 p-[3px] shadow-2xl shadow-black/30">
-										<div className="w-full h-full rounded-[20px] bg-primary-950 p-1">
-											{data.avatarUrl ? (
-												<img
-													src={data.avatarUrl}
-													alt={displayName}
-													className="w-full h-full object-cover rounded-2xl"
-												/>
-											) : (
-												<div className="w-full h-full rounded-2xl bg-gradient-to-br from-primary-300/30 to-primary-300/10 flex items-center justify-center">
-													<span className="text-4xl sm:text-5xl font-bold text-primary-200">{initials}</span>
-												</div>
-											)}
-										</div>
+					<header className="rounded-lg border border-gray-200 bg-white px-6 py-8 print:rounded-none print:border-0 sm:px-10 lg:px-12">
+						<div className="flex flex-col gap-7 md:flex-row md:items-start">
+							<div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-xl bg-gray-100 sm:h-36 sm:w-36">
+								{data.avatarUrl ? (
+									<Image
+										src={data.avatarUrl}
+										alt={displayName}
+										fill
+										sizes="(max-width: 640px) 128px, 144px"
+										className="object-cover object-top"
+									/>
+								) : (
+									<div className="flex h-full w-full items-center justify-center">
+										<span className="text-3xl font-semibold text-gray-500">{initials}</span>
 									</div>
-									{/* Status indicator */}
-									{data.status === "active" && (
-										<div className="absolute -bottom-1 -right-1 flex items-center justify-center w-9 h-9 rounded-full bg-emerald-500 ring-4 ring-primary-950 print:hidden">
-											<BadgeCheck className="w-5 h-5 text-white" />
-										</div>
+								)}
+							</div>
+
+							<div className="min-w-0 flex-1">
+								<div className="mb-3 flex flex-wrap items-center gap-2">
+									{data.memberCode && <SoftPill>{data.memberCode}</SoftPill>}
+									{data.headRole && <SoftPill>{t("member.detail.headMember")}</SoftPill>}
+								</div>
+
+								<h1 className="text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">{displayName}</h1>
+								{data.title && <p className="mt-2 text-base leading-6 text-gray-600">{data.title}</p>}
+
+								<div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-500">
+									{data.joinDate && <span>{t("member.detail.since")} {data.joinDate}</span>}
+									{data.yearsOfService !== null && data.yearsOfService > 0 && (
+										<span>
+											{data.yearsOfService} {data.yearsOfService === 1 ? t("member.detail.year") : t("member.detail.years")}{" "}
+											{t("member.detail.ofService")}
+										</span>
 									)}
 								</div>
 
-								{/* RIGHT: Info */}
-								<div className="flex-1 min-w-0 text-center lg:text-left">
-									{/* Top pills row: code + status + head role */}
-									<div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-4">
-										{data.memberCode && (
-											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-caption font-bold bg-[#D4B49A]/15 text-[#E8D5B5] border border-[#D4B49A]/30 backdrop-blur">
-												<Hash className="w-3 h-3" />
-												{data.memberCode}
-											</span>
+								{(data.phone || data.email || data.location) && (
+									<div className="mt-6 grid max-w-3xl grid-cols-1 gap-4 border-t border-gray-200 pt-5 sm:grid-cols-2">
+										{data.phone && (
+											<div>
+												<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.phone")}</p>
+												<p className="mt-1 break-words text-sm font-medium text-gray-900">{data.phone}</p>
+											</div>
 										)}
-										<StatusBadge status={data.status} variant="dark" />
-										{data.headRole && (
-											<span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-caption font-bold bg-accent-400/15 text-accent-300 border border-accent-400/30 backdrop-blur">
-												<Sparkles className="w-3 h-3" />
-												{t("member.detail.headMember")}
-											</span>
+										{data.email && (
+											<div>
+												<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.email")}</p>
+												<p className="mt-1 break-words text-sm font-medium text-gray-900">{data.email}</p>
+											</div>
 										)}
-									</div>
-
-									{/* Name */}
-									<h1 className="text-heading-1 text-white">
-										{displayName}
-									</h1>
-
-									{/* Title with accent underline */}
-									{data.title && (
-										<div className="mt-3 inline-block">
-											<p className="text-body-lg text-[#E8D5B5] font-medium">{data.title}</p>
-											<div className="mt-2 h-px w-20 bg-gradient-to-r from-[#D4B49A] via-[#D4B49A]/50 to-transparent mx-auto lg:mx-0" />
-										</div>
-									)}
-
-									{/* Meta row: location + join + years */}
-									<div className="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 text-sm text-primary-100/80">
 										{data.location && (
-											<span className="inline-flex items-center gap-1.5">
-												<MapPin className="w-3.5 h-3.5 text-primary-300/80" />
-												{data.location}
-											</span>
-										)}
-										{data.joinDate && (
-											<span className="inline-flex items-center gap-1.5">
-												<Calendar className="w-3.5 h-3.5 text-primary-300/80" />
-												{t("member.detail.since")} {data.joinDate}
-											</span>
-										)}
-										{data.yearsOfService !== null && data.yearsOfService > 0 && (
-											<span className="inline-flex items-center gap-1.5">
-												<Award className="w-3.5 h-3.5 text-primary-300/80" />
-												{data.yearsOfService} {data.yearsOfService === 1 ? t("member.detail.year") : t("member.detail.years")} {t("member.detail.ofService")}
-											</span>
+											<div className="sm:col-span-2">
+												<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.location")}</p>
+												<p className="mt-1 max-w-3xl text-sm font-medium leading-6 text-gray-900">{data.location}</p>
+											</div>
 										)}
 									</div>
+								)}
 
-									{/* Socials */}
-									{data.socials.length > 0 && (
-										<div className="mt-6 flex items-center justify-center lg:justify-start gap-2 print:hidden">
-											{data.socials.map((s: any) => {
-												const Icon = getSocialIcon(s.platform);
-												return (
-													<a
-														key={s.id || s.platform}
-														href={s.url}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="w-9 h-9 rounded-xl bg-white/5 hover:bg-primary-300 hover:text-primary-950 text-primary-100 border border-white/10 hover:border-primary-300 flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5 backdrop-blur"
-														aria-label={s.platform}
-														title={s.displayText || s.platform}
-													>
-														<Icon className="w-4 h-4" />
-													</a>
-												);
-											})}
-										</div>
-									)}
-								</div>
+								{data.socials.length > 0 && (
+									<div className="mt-5 flex items-center gap-3 print:hidden">
+										{data.socials.map((s: any) => {
+											const Icon = getSocialIcon(s.platform);
+											return (
+												<a
+													key={s.id || s.platform}
+													href={s.url}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-gray-400 transition-colors hover:text-primary-900"
+													aria-label={s.platform}
+													title={s.displayText || s.platform}
+												>
+													<Icon className="h-4 w-4" />
+												</a>
+											);
+										})}
+									</div>
+								)}
 							</div>
 						</div>
+					</header>
 
-						{/* Bottom accent divider */}
-						<div className="relative h-px bg-gradient-to-r from-transparent via-[#D4B49A] to-transparent print:hidden" />
-					</div>
-
-					{/* ── BODY ── */}
-					<div className="relative px-6 sm:px-10 pt-10 pb-10">
-						{/* Bio quote */}
+					<div className="rounded-lg border border-gray-200 bg-white px-6 py-8 print:rounded-none print:border-0 sm:px-10 lg:px-12">
 						{data.bio && (
-							<div className="mb-10 relative pl-6 border-l border-[#D4B49A]">
-								<Quote className="absolute -left-3 top-0 w-5 h-5 text-[#A87E5A] bg-white" />
-								<p className="text-base text-gray-700 leading-relaxed italic font-light">{data.bio}</p>
+							<div className="mb-8 max-w-3xl">
+								<p className="text-base leading-7 text-gray-700">{data.bio}</p>
 							</div>
 						)}
 
-						{/* ── 2-COLUMN GRID ── */}
-						<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-							{/* LEFT — Sidebar */}
-							<aside className="lg:col-span-4 space-y-8 print:space-y-5">
-								<Section title={t("member.detail.contact")} icon={User}>
-									<div className="space-y-4">
-										<InfoRow icon={Mail} label={t("member.detail.email")} value={data.email} href={data.email ? `mailto:${data.email}` : undefined} />
-										<InfoRow icon={Phone} label={t("member.detail.phone")} value={data.phone} href={data.phone ? `tel:${data.phone}` : undefined} />
-										<InfoRow icon={MapPin} label={t("member.detail.location")} value={data.location} />
-									</div>
-								</Section>
-
+						<div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+							<aside className="space-y-8 print:space-y-5 lg:col-span-4">
 								{(data.dob || data.nationality || data.gender || data.joinDate) && (
-									<Section title={t("member.detail.personal")} icon={Award}>
+									<Section title={t("member.detail.personal")}>
 										<div className="space-y-4">
-											<InfoRow icon={Calendar} label={t("member.detail.dateOfBirth")} value={data.dob} />
-											<InfoRow icon={Globe} label={t("member.detail.nationality")} value={data.nationality} />
-											<InfoRow icon={User} label={t("member.detail.gender")} value={data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : null} />
-											<InfoRow icon={Briefcase} label={t("member.detail.joined")} value={data.joinDate} />
+											<InfoRow label={t("member.detail.dateOfBirth")} value={data.dob} />
+											<InfoRow label={t("member.detail.nationality")} value={data.nationality} />
+											<InfoRow
+												label={t("member.detail.gender")}
+												value={data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : null}
+											/>
+											<InfoRow label={t("member.detail.joined")} value={data.joinDate} />
 										</div>
 									</Section>
 								)}
 
 								{data.skills.length > 0 && (
-									<Section title={t("member.detail.skills")} icon={Star} count={data.skills.length}>
+									<Section title={t("member.detail.skills")} count={data.skills.length}>
 										<div className="flex flex-wrap gap-2">
 											{data.skills.map((s: any) => (
-												<Badge
-													key={s.id}
-													variant="secondary"
-													className="bg-primary-50 text-primary-800 border border-primary-100 hover:bg-primary-100 hover:border-primary-200 px-3 py-1.5 rounded-md transition-colors"
-												>
-													{s.name}
-												</Badge>
+												<SoftPill key={s.id}>{s.name}</SoftPill>
 											))}
 										</div>
 									</Section>
 								)}
 
 								{data.languages.length > 0 && (
-									<Section title={t("member.detail.languages")} icon={Languages} count={data.languages.length}>
+									<Section title={t("member.detail.languages")} count={data.languages.length}>
 										<div className="flex flex-wrap gap-2">
 											{data.languages.map((lang: string, idx: number) => (
-												<Badge
-													key={idx}
-													variant="secondary"
-													className="bg-[#FAF7F0] text-[#8C6749] border border-[#D4B49A]/40 hover:border-[#D4B49A] px-3 py-1.5 rounded-md transition-colors"
-												>
-													{lang}
-												</Badge>
+												<SoftPill key={idx}>{lang}</SoftPill>
 											))}
 										</div>
 									</Section>
 								)}
 							</aside>
 
-							{/* RIGHT — Main */}
-							<main className="lg:col-span-8 space-y-10 print:space-y-6">
+							<main className="space-y-10 print:space-y-6 lg:col-span-8">
 								{data.experiences.length > 0 && (
-									<Section title={t("member.detail.experience")} icon={Briefcase} count={data.experiences.length}>
+									<Section title={t("member.detail.experience")} count={data.experiences.length}>
 										<div className="space-y-6">
 											{data.experiences.map((exp: any, index: number) => (
-												<article
-													key={exp.id || index}
-													className="relative pl-6 border-l-2 border-gray-100 hover:border-primary-900 transition-colors duration-300 group print:break-inside-avoid"
-												>
-													<span className="absolute left-0 top-1.5 -translate-x-[5px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary-900 transition-colors ring-4 ring-white" />
-													<div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-1.5">
-														<div className="flex-1 min-w-0">
-															<h4 className="text-label text-gray-900">
+												<article key={exp.id || index} className="print:break-inside-avoid">
+													<div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+														<div className="min-w-0 flex-1">
+															<h4 className="text-sm font-semibold text-gray-900">
 																{exp.title || t("member.detail.role")}
 															</h4>
-															<p className="text-body-sm font-semibold text-primary-900 mt-0.5">
+															<p className="mt-1 text-sm font-medium text-gray-600">
 																{exp.organization || t("member.detail.organization")}
 															</p>
 														</div>
-														<Badge
-															variant="secondary"
-															className="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
-														>
-															{exp.startYear || "—"} – {exp.endYear || t("member.detail.present")}
-														</Badge>
+														<p className="shrink-0 whitespace-nowrap text-sm text-gray-500">
+															{exp.startYear || "-"} - {exp.endYear || t("member.detail.present")}
+														</p>
 													</div>
-													{exp.description && (
-														<p className="text-body-sm text-gray-600 mt-2">{exp.description}</p>
-													)}
+													{exp.description && <p className="mt-2 text-sm leading-6 text-gray-600">{exp.description}</p>}
 												</article>
 											))}
 										</div>
@@ -598,27 +463,20 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								)}
 
 								{data.educations.length > 0 && (
-									<Section title={t("member.detail.education")} icon={GraduationCap} count={data.educations.length}>
+									<Section title={t("member.detail.education")} count={data.educations.length}>
 										<div className="space-y-5">
 											{data.educations.map((edu: any, index: number) => (
-												<article
-													key={edu.id || index}
-													className="relative pl-6 border-l-2 border-gray-100 hover:border-primary-900 transition-colors duration-300 group print:break-inside-avoid"
-												>
-													<span className="absolute left-0 top-1.5 -translate-x-[5px] w-2 h-2 rounded-full bg-gray-300 group-hover:bg-primary-900 transition-colors ring-4 ring-white" />
-													<div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-														<div className="flex-1 min-w-0">
-															<h4 className="text-label text-gray-900">
+												<article key={edu.id || index} className="print:break-inside-avoid">
+													<div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+														<div className="min-w-0 flex-1">
+															<h4 className="text-sm font-semibold text-gray-900">
 																{edu.degree || t("member.detail.degree")}
 															</h4>
-															<p className="text-body-sm font-semibold text-primary-900 mt-0.5">{edu.school}</p>
+															<p className="mt-1 text-sm font-medium text-gray-600">{edu.school}</p>
 														</div>
-														<Badge
-															variant="secondary"
-															className="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md border-0 flex-shrink-0 whitespace-nowrap"
-														>
-															{edu.startYear || "—"} – {edu.endYear || t("member.detail.present")}
-														</Badge>
+														<p className="shrink-0 whitespace-nowrap text-sm text-gray-500">
+															{edu.startYear || "-"} - {edu.endYear || t("member.detail.present")}
+														</p>
 													</div>
 												</article>
 											))}
@@ -627,29 +485,19 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								)}
 
 								{data.associations.length > 0 && (
-									<Section title={t("member.detail.organizations")} icon={Building2} count={data.associations.length}>
-										<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+									<Section title={t("member.detail.organizations")} count={data.associations.length}>
+										<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 											{data.associations.map((assoc: any, idx: number) => (
-												<div
-													key={assoc.id || idx}
-													className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl border border-gray-100 hover:border-primary-900/30 hover:bg-primary-900/5 transition-all duration-200 print:break-inside-avoid"
-												>
-													<div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary-900/10 flex items-center justify-center">
-														<Building2 className="w-4 h-4 text-primary-900" />
+												<div key={assoc.id || idx} className="rounded-lg border border-gray-200 bg-white p-4 print:break-inside-avoid">
+													<div className="flex items-start justify-between gap-3">
+														<div className="min-w-0">
+															<p className="truncate text-sm font-semibold text-gray-900">
+																{assoc.name || t("member.detail.organization")}
+															</p>
+															{assoc.role && <p className="mt-1 truncate text-sm text-gray-500">{assoc.role}</p>}
+														</div>
+														{assoc.isHead && <SoftPill>{t("member.detail.head")}</SoftPill>}
 													</div>
-													<div className="flex-1 min-w-0">
-														<p className="text-body-sm font-semibold text-gray-900 truncate">
-															{assoc.name || t("member.detail.organization")}
-														</p>
-														{assoc.role && (
-															<p className="text-caption text-gray-500 truncate mt-0.5">{assoc.role}</p>
-														)}
-													</div>
-													{assoc.isHead && (
-														<Badge className="bg-primary-900 text-white border-0 px-2 py-0.5 rounded-md flex-shrink-0">
-															{t("member.detail.head")}
-														</Badge>
-													)}
 												</div>
 											))}
 										</div>
@@ -657,11 +505,8 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 								)}
 
 								{!hasContent && (
-									<div className="text-center py-12 text-gray-400">
-										<FileTextEmpty />
-										<p className="mt-3 text-sm">
-											{t("member.detail.noContent")}
-										</p>
+									<div className="rounded-lg border border-dashed border-gray-200 py-12 text-center text-sm text-gray-400">
+										{t("member.detail.noContent")}
 									</div>
 								)}
 							</main>
@@ -670,31 +515,22 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 				</div>
 			</div>
 
-			{/* Mobile bottom action bar */}
-			<div className="fixed bottom-0 inset-x-0 z-40 lg:hidden print:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center gap-3">
+			<div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-3 border-t border-gray-200 bg-white px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(0,0,0,0.06)] print:hidden lg:hidden">
 				<Button variant="outline" asChild className="flex-1 gap-2 border-gray-200 text-gray-600">
 					<Link href="/structure">
-						<ArrowLeft className="w-4 h-4" />
+						<ArrowLeft className="h-4 w-4" />
 						{t("member.detail.back")}
 					</Link>
 				</Button>
 				<Button
 					onClick={handleDownloadPDF}
 					disabled={isGenerating}
-					className="flex-1 gap-2 bg-primary-900 hover:bg-primary-950 text-white rounded-xl"
+					className="flex-1 gap-2 rounded-lg bg-primary-900 text-white hover:bg-primary-950"
 				>
-					{isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+					{isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
 					{isGenerating ? t("member.detail.generating") : t("member.detail.downloadCV")}
 				</Button>
 			</div>
-		</div>
-	);
-}
-
-function FileTextEmpty() {
-	return (
-		<div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gray-100">
-			<User className="w-6 h-6 text-gray-300" />
 		</div>
 	);
 }
