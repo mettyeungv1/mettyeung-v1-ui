@@ -1,91 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Eye, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getBlogRelatedPostService } from "@/service/blog/blog-service";
 import type { BlogPost } from "@/lib/types/blog";
 import { formatDate } from "@/lib/utils";
-import { MEDIA_ENDPOINT } from "@/lib/static";
 import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
 import { useTranslation } from "@/lib/i18n";
 
 interface RelatedArticlesProps {
-	currentArticleId: string;
+	posts?: BlogPost[];
+	categoryId?: string;
 }
 
-// A dedicated skeleton loader for a better UX while data is fetching
-const RelatedArticlesSkeleton = () => (
-	<Card>
-		<CardHeader>
-			<Skeleton className="h-6 w-32" />
-		</CardHeader>
-		<CardContent className="space-y-4">
-			{Array.from({ length: 3 }).map((_, index) => (
-				<div key={index} className="flex space-x-4">
-					<Skeleton className="w-20 h-20 rounded-lg" />
-					<div className="flex-1 space-y-2">
-						<Skeleton className="h-4 w-1/4" />
-						<Skeleton className="h-5 w-full" />
-						<Skeleton className="h-4 w-1/2" />
-					</div>
-				</div>
-			))}
-		</CardContent>
-	</Card>
-);
-
-export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
+export function RelatedArticles({ posts = [], categoryId }: RelatedArticlesProps) {
 	const { t } = useTranslation();
-	// 1. Use strong typing, not 'any'
-	const [relatedPosts, setRelatedPosts] = useState<any>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (!currentArticleId) {
-			setLoading(false);
-			return;
-		}
-
-		const fetchRelated = async () => {
-			setLoading(true);
-			setError(null);
-			try {
-				const res = await getBlogRelatedPostService(currentArticleId);
-				if (res.data) {
-					setRelatedPosts(res.data.data.slice(0, 3));
-				} else {
-					throw new Error(res.message || "Failed to fetch related posts.");
-				}
-			} catch (err) {
-				console.error(err);
-				setError("news.relatedLoadError");
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchRelated();
-	}, [currentArticleId]);
-
-	if (loading) {
-		return <RelatedArticlesSkeleton />;
-	}
-
-	if (error) {
-		return (
-			<Card>
-				<CardContent className="pt-6 text-center text-sm text-destructive">
-					{t(error)}
-				</CardContent>
-			</Card>
-		);
-	}
+	const relatedPosts = posts.slice(0, 3);
 
 	// Don't render the component if there are no related articles
 	if (relatedPosts.length === 0) {
@@ -105,30 +38,31 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 						className="group cursor-pointer block"
 					>
 						<div className="flex space-x-4">
-							<div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 relative">
+							<div className="w-24 h-20 rounded-lg overflow-hidden flex-shrink-0 relative bg-gray-100">
 								<img
 									src={post.coverImageUrl}
-									alt={post.title[DEFAULT_LANGUAGE_CODE]}
+									alt={typeof post.title === "string" ? post.title : post.title?.[DEFAULT_LANGUAGE_CODE]}
 									className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
 								/>
 							</div>
 							<div className="flex-1 min-w-0">
-								{/* <Badge variant="secondary" className="text-xs mb-1">
-									{post.categoryName}
-								</Badge> */}
+								{post.category?.name && (
+									<Badge variant="secondary" className="text-xs mb-1">
+										{t(post.category.name)}
+									</Badge>
+								)}
 								<h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1 group-hover:text-primary transition-colors">
-									{post.title[DEFAULT_LANGUAGE_CODE]}{" "}
-									{/* 3. This now works perfectly */}
+									{t(post.title)}
 								</h4>
-								<div className="flex items-center text-sm text-gray-500 space-x-3">
+								<div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
 									<div className="flex items-center">
 										<Calendar className="w-3.5 h-3.5 mr-1" />
 										{formatDate(post.publishedAt)}
 									</div>
-									{/* <div className="flex items-center">
-										<Eye className="w-3 h-3 mr-1" />
-										{post.readCounts.toLocaleString()}
-									</div> */}
+									<div className="flex items-center">
+										<Clock className="w-3.5 h-3.5 mr-1" />
+										{post.readTimes || 1} {t("common.minutesShort")}
+									</div>
 								</div>
 							</div>
 						</div>
@@ -141,8 +75,8 @@ export function RelatedArticles({ currentArticleId }: RelatedArticlesProps) {
 						className="w-full text-primary border-primary hover:bg-primary hover:text-white"
 						asChild
 					>
-						<Link href="/news">
-							{t("news.viewAllArticles")}
+						<Link href={categoryId ? `/news?category=${categoryId}` : "/news"}>
+							{categoryId ? t("news.moreFromCategory") : t("news.viewAllArticles")}
 							<ArrowRight className="w-4 h-4 ml-2" />
 						</Link>
 					</Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { departments } from "@/lib/data/contact";
 import { Button } from "@/components/ui/button";
@@ -39,6 +39,22 @@ export function ContactForm() {
 	const set = (field: string, value: string) =>
 		setFormData((prev) => ({ ...prev, [field]: value }));
 
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const department = params.get("dept")?.toLowerCase();
+
+		if (department === "partnership") {
+			setFormData((prev) => ({
+				...prev,
+				department: "partnership",
+				subject: prev.subject || t("contact.partnershipSubject"),
+				message: prev.message || t("contact.partnershipMessage"),
+			}));
+		}
+		// The URL is only an initial form hint; after that, user edits should win.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<div id="contact-form" className="bg-white rounded-3xl border border-gray-100 shadow-lg overflow-hidden">
 			{/* Header — solid primary-900, no gradient */}
@@ -50,7 +66,9 @@ export function ContactForm() {
 					<h2 className="text-heading-4 text-white">{t("contact.formTitle")}</h2>
 				</div>
 				<p className="text-body-sm text-primary-200 pl-12">
-					{t("contact.formDesc")}
+					{formData.department === "partnership"
+						? t("contact.partnershipFormDesc")
+						: t("contact.formDesc")}
 				</p>
 			</div>
 

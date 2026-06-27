@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { listBlogsService } from "@/service/blog/blog-service";
+import { getFeaturedBlogService } from "@/service/blog/blog-service";
 import { listCategoriesService } from "@/service/category/category-service";
 import { NewsPageClient } from "@/components/news/news-page-client";
 import { NewsHero } from "@/components/news/news-hero";
@@ -46,9 +47,19 @@ export default async function NewsPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const params = await searchParams;
+	const featuredRes = await getFeaturedBlogService();
+	const featuredPost =
+		featuredRes.status_code === 200 && featuredRes.data
+			? {
+				...featuredRes.data,
+				coverImageUrl: normalizeUrl(featuredRes.data.coverImageUrl),
+				media: featuredRes.data.media?.map((m: any) => ({ ...m, url: normalizeUrl(m.url) })) || [],
+			}
+			: null;
+
 	return (
 		<div className="min-h-screen bg-gray-50">
-			<NewsHero />
+			<NewsHero featuredPost={featuredPost} />
 			<Suspense fallback={<NewsSkeleton />}>
 				<NewsContentServer searchParams={params} />
 			</Suspense>

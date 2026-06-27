@@ -9,7 +9,7 @@
 > - React `18.2.0`, TypeScript `5.2.2`  
 > - TailwindCSS `3.4.18`, Framer Motion `10.16.0`  
 > - Radix UI (shadcn/ui pattern), Zustand for state  
-> - i18n: Custom `useTranslation()` hook + JSON locale files (`locales/en.json`, `km.json`, `ja.json`, `ko.json`, `th.json`)  
+> - i18n: Custom `useTranslation()` hook + JSON locale files (`locales/en.json`, `km.json`, `ja.json`, `ko.json`)  
 > - Auth: NextAuth v5 beta  
 
 ---
@@ -883,7 +883,7 @@ useEffect(() => {
 }
 ```
 
-> ⚠️ **REMINDER:** All new/updated keys must be mirrored in `km.json` (Khmer), `ja.json`, `ko.json`, `th.json` with appropriate translations.
+> ⚠️ **REMINDER:** All new/updated keys must be mirrored in `km.json` (Khmer), `ja.json`, and `ko.json` with appropriate translations.
 
 ---
 
@@ -959,7 +959,6 @@ During deep analysis, I identified the following issues:
 | `locales/km.json` | Khmer translations for all new keys |
 | `locales/ja.json` | Japanese translations (lower priority) |
 | `locales/ko.json` | Korean translations (lower priority) |
-| `locales/th.json` | Thai translations (lower priority) |
 
 ### Files — NO CHANGE
 

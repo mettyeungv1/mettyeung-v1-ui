@@ -2,6 +2,7 @@ import { HeroCarousel } from "@/components/hero-carousel";
 import { MissionSection } from "@/components/home/mission-section";
 import { StatsSection } from "@/components/home/states-section";
 import { FeaturesSection } from "@/components/home/feature-section";
+import { SupportSection } from "@/components/home/support-section";
 import { HomeCTASection } from "@/components//home/home-cta-section";
 import { getBannersService } from "@/service/banner/banner-service";
 
@@ -21,6 +22,7 @@ export default async function HomePage() {
 			</div>
 			<StatsSection />
 			<FeaturesSection />
+			<SupportSection />
 			<HomeCTASection />
 		</>
 	);

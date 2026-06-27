@@ -1,50 +1,65 @@
 import { NewsArticle } from "@/lib/types/news";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { RelatedArticles } from "@/components/news/related-articles"; // Assuming this component exists
+import { ArticleToc } from "@/components/news/detail/article-toc";
+import { Calendar, Clock, Eye, Folder } from "lucide-react";
+import type { BlogPost } from "@/lib/types/blog";
+import { useTranslation } from "@/lib/i18n";
 
 interface ArticleSidebarProps {
 	article: NewsArticle;
+	relatedPosts?: BlogPost[];
+	tocItems?: Array<{ id: string; text: string; level: number }>;
 }
 
-export function ArticleSidebar({ article }: ArticleSidebarProps) {
+export function ArticleSidebar({ article, relatedPosts = [], tocItems = [] }: ArticleSidebarProps) {
+	const { t } = useTranslation();
+
 	return (
 		<div className="sticky top-24 space-y-6">
-			{/* Quick Info Card */}
-			{/* <Card className="border-l-4 border-l-khmer-gold">
+			<ArticleToc items={tocItems} />
+			<Card className="border-l-4 border-l-khmer-gold">
 				<CardContent className="p-6">
 					<h3 className="text-lg font-semibold text-gray-900 mb-4">
-						Article Details
+						{t("news.articleDetails")}
 					</h3>
-					<div className="space-y-3 text-sm">
+					<div className="space-y-3 text-sm text-gray-600">
 						<div className="flex items-center justify-between">
-							<span className="text-gray-600">Published:</span>
+							<span className="inline-flex items-center gap-2">
+								<Calendar className="h-4 w-4 text-khmer-gold" />
+								{t("news.published")}
+							</span>
 							<span className="font-medium">
 								{new Date(article.date).toLocaleDateString("en-GB")}
 							</span>
 						</div>
 						<div className="flex items-center justify-between">
-							<span className="text-gray-600">Category:</span>
+							<span className="inline-flex items-center gap-2">
+								<Folder className="h-4 w-4 text-khmer-gold" />
+								{t("news.category")}
+							</span>
 							<span className="font-medium">{article.category.name_en}</span>
 						</div>
 						<div className="flex items-center justify-between">
-							<span className="text-gray-600">Read Time:</span>
-							<span className="font-medium">{article.readTime}</span>
+							<span className="inline-flex items-center gap-2">
+								<Clock className="h-4 w-4 text-khmer-gold" />
+								{t("news.readTime")}
+							</span>
+							<span className="font-medium">{article.readTime} {t("common.minutesShort")}</span>
 						</div>
 						<div className="flex items-center justify-between">
-							<span className="text-gray-600">Views:</span>
+							<span className="inline-flex items-center gap-2">
+								<Eye className="h-4 w-4 text-khmer-gold" />
+								{t("news.views")}
+							</span>
 							<span className="font-medium">
 								{article.views.toLocaleString()}
 							</span>
 						</div>
-						<div className="flex items-center justify-between">
-							<span className="text-gray-600">Comments:</span>
-							<span className="font-medium">{article.comments}</span>
-						</div>
 					</div>
 				</CardContent>
-			</Card> */}
-			<RelatedArticles currentArticleId={article.id} />
+			</Card>
+			<RelatedArticles posts={relatedPosts} categoryId={(article.category as any)?.id} />
 			{/* <Card className="bg-gradient-to-br from-khmer-gold/5 to-khmer-red/5 border-khmer-gold/20">
 				<CardContent className="p-6 text-center">
 					<h3 className="text-lg font-semibold text-gray-900 mb-3">

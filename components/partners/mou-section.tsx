@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useTranslation } from "@/lib/i18n";
 import { Handshake, FileBadge, ChevronDown, ChevronUp } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -55,31 +56,41 @@ export function MouSection({ initialMous }: { initialMous: Partner[] }) {
                                 direction="up" 
                                 className={`h-full ${!showAll && index >= 4 ? 'hidden md:block' : 'block'}`}
                             >
-                                <div className="card-interactive group relative h-full flex flex-col items-center overflow-hidden p-card-lg text-center cursor-pointer">
+                                <div className="group relative flex flex-col h-full bg-surface-page hover:shadow-xl transition-all duration-300 border border-border-subtle hover:border-interactive-primary/30 overflow-hidden rounded-2xl cursor-pointer">
                                     
                                     {/* Top Gradient Accent Line */}
-                                    <div className={`absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${colors.accentLine}`} />
+                                    <div className={`absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 ${colors.accentLine}`} />
                                     
-                                    <div className="mb-6 md:mb-7 flex flex-col items-center w-full">
-                                        {/* Icon Container with subtle glow */}
-                                        <div className="relative mb-5 md:mb-6">
-                                            <div className={`relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-surface-panel ${colors.iconColor} rounded-xl flex items-center justify-center transition-all duration-200 shadow-surface ring-1 ring-border-subtle ${colors.hoverRing}`}>
+                                    {/* Logo Area */}
+                                    <div className="relative w-full aspect-[3/2] flex items-center justify-center p-8 bg-surface-panel/30 group-hover:bg-surface-panel/80 transition-colors duration-500">
+                                        {partner.media?.url ? (
+                                            <Image
+                                                src={partner.media.url}
+                                                alt={partnerName}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                                                className="object-contain p-6 md:p-8 drop-shadow-sm group-hover:scale-110 transition-transform duration-700 ease-out"
+                                            />
+                                        ) : (
+                                            <div className={`relative w-16 h-16 md:w-20 md:h-20 shrink-0 bg-surface-panel ${colors.iconColor} rounded-xl flex items-center justify-center transition-all duration-200 shadow-surface ring-1 ring-border-subtle ${colors.hoverRing} group-hover:scale-110`}>
                                                 <Handshake className="w-7 h-7 md:w-9 md:h-9" />
                                             </div>
+                                        )}
+                                        {/* MOU Type Badge */}
+                                        <div className={`absolute top-4 right-4 px-2.5 py-1 rounded-full text-xs font-medium border border-border-subtle/50 backdrop-blur-md ${colors.bgClass} ${colors.iconColor}`}>
+                                            {partner.mouType || "Partner"}
                                         </div>
-                                        
-                                        {/* Company Name Title */}
-                                        <h3 className={`text-heading-5 ${colors.hoverText} transition-colors duration-300`}>
-                                            {partnerName}
-                                        </h3>
                                     </div>
 
-                                    {/* Divider */}
-                                    <div className={`w-10 md:w-12 h-1 bg-gray-200 ${colors.hoverBg} rounded-full mb-5 md:mb-7 transition-colors duration-500`} />
-                                    
-                                    {/* Description */}
-                                    <div className="text-body-sm text-gray-600 mt-auto w-full">
-                                        {partnerDescription}
+                                    {/* Content Area */}
+                                    <div className="p-6 flex flex-col flex-1 border-t border-border-subtle/50 text-left">
+                                        <h3 className={`text-heading-5 font-semibold text-text-primary mb-2 line-clamp-2 ${colors.hoverText} transition-colors duration-300`}>
+                                            {partnerName}
+                                        </h3>
+                                        <div className="w-8 h-1 rounded-full mb-4 bg-border-subtle group-hover:bg-current transition-colors duration-500 opacity-50" />
+                                        <div className="text-body-sm text-text-secondary mt-auto w-full line-clamp-3">
+                                            {partnerDescription}
+                                        </div>
                                     </div>
                                 </div>
                             </AnimatedSection>

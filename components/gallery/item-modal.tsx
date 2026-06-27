@@ -32,7 +32,7 @@ export function ItemModal<T extends { title_en: string }>({
 	if (isMobile) {
 		return (
 			<Drawer open={isOpen} onOpenChange={onOpenChange}>
-				<DrawerContent className="h-[95dvh] mt-0 rounded-t-[10px] fixed bottom-0 left-0 right-0 z-[120]">
+				<DrawerContent className="h-[94dvh] mt-0 rounded-t-xl fixed bottom-0 left-0 right-0 z-[120] overflow-hidden bg-white">
 					<VisuallyHidden>
 						<DrawerTitle>{item.title_en}</DrawerTitle>
 					</VisuallyHidden>
@@ -46,7 +46,7 @@ export function ItemModal<T extends { title_en: string }>({
 
 	return (
 		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-y-auto z-[120] p-0 sm:rounded-lg border bg-white shadow-lg">
+			<DialogContent className="max-w-6xl w-[calc(100vw-2rem)] max-h-[92vh] overflow-hidden z-[120] p-0 sm:rounded-xl border bg-white shadow-xl">
 				<VisuallyHidden>
 					<DialogTitle>{item.title_en}</DialogTitle>
 				</VisuallyHidden>

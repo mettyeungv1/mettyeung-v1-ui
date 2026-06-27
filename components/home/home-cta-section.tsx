@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
 import Link from "next/link";
+import { Award, CheckCircle2, Heart } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
-import { Heart, Award } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { Button } from "@/components/ui/button";
+
+const benefitKeys = ["joinDesc1", "joinDesc2", "joinDesc3"];
 
 export function HomeCTASection() {
 	const { t } = useTranslation();
@@ -23,24 +24,18 @@ export function HomeCTASection() {
 			/>
 			<div className="container relative text-white">
 				<AnimatedSection className="text-center">
-					<h2 className="text-3xl text-white md:text-4xl lg:text-5xl font-bold mb-6">
+					<h2 className="mb-6 text-3xl font-bold text-white md:text-4xl lg:text-5xl">
 						{t("home.joinCommunity")}
 					</h2>
-					<ul className="text-xl text-start md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 space-y-4 leading-relaxed">
-						<li className="flex gap-3">
-							<span className="text-green-400">•</span>
-							<span>{t("home.joinDesc1")}</span>
-						</li>
-						<li className="flex gap-3">
-							<span className="text-green-400">•</span>
-							<span>{t("home.joinDesc2")}</span>
-						</li>
-						<li className="flex gap-3">
-							<span className="text-green-400">•</span>
-							<span>{t("home.joinDesc3")}</span>
-						</li>
+					<ul className="mx-auto mb-8 max-w-3xl space-y-4 text-left text-body-lg leading-relaxed text-gray-100 md:text-xl">
+						{benefitKeys.map((key) => (
+							<li key={key} className="flex gap-3">
+								<CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-khmer-gold" />
+								<span>{t(`home.${key}`)}</span>
+							</li>
+						))}
 					</ul>
-					<div className="flex flex-col sm:flex-row gap-6 justify-center">
+					<div className="flex flex-col justify-center gap-4 sm:flex-row">
 						<Button
 							asChild
 							size="xl"
@@ -48,7 +43,7 @@ export function HomeCTASection() {
 							className="bg-white text-primary-900 hover:bg-neutral-100"
 						>
 							<Link href="/contact">
-								<Heart className="mr-2 w-6 h-6" aria-hidden="true" />
+								<Heart className="mr-2 h-6 w-6" aria-hidden="true" />
 								{t("home.becomeOurMember")}
 							</Link>
 						</Button>
@@ -59,7 +54,7 @@ export function HomeCTASection() {
 							className="border-white bg-transparent text-white hover:bg-white hover:text-primary-900"
 						>
 							<Link href="/news">
-								<Award className="mr-2 w-6 h-6" aria-hidden="true" />
+								<Award className="mr-2 h-6 w-6" aria-hidden="true" />
 								{t("home.viewOurActivity")}
 							</Link>
 						</Button>

@@ -104,3 +104,13 @@ export const getFeaturedBlogService = async (): Promise<
 	if (res?.data) res.data = normalizeMediaUrls(res.data);
 	return res;
 };
+
+export const incrementBlogView = async (
+	id: string
+): Promise<APIResponse<null>> => {
+	return fetchAPI<null>(`${BLOG_ENDPOINT}/${id}/view`, {
+		method: "POST",
+		skipAuth: true,
+		retries: 0,
+	});
+};

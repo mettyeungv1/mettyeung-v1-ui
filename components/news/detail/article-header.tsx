@@ -1,6 +1,6 @@
 import { NewsArticle } from "@/lib/types/news";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Eye, MessageCircle, Share2 } from "lucide-react";
+import { Calendar, Clock, Copy, Eye, Facebook, Send, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "@/lib/i18n";
 
@@ -11,6 +11,17 @@ interface ArticleHeaderProps {
 
 export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 	const { t } = useTranslation();
+	const shareCurrent = (type: "facebook" | "whatsapp" | "copy") => {
+		const url = window.location.href;
+		if (type === "facebook") {
+			window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "share-dialog", "width=600,height=400");
+		} else if (type === "whatsapp") {
+			window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(`${article.title_en} - ${url}`)}`, "_blank");
+		} else {
+			navigator.clipboard?.writeText(url);
+		}
+	};
+
 	return (
 		<header className="mb-8">
 			<div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-6">
@@ -27,10 +38,10 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 					<Clock className="w-4 h-4 mr-1" />
 					{article.readTime} {t("common.minutesShort")}
 				</div>
-				{/* <div className="flex items-center text-sm text-gray-500">
+				<div className="flex items-center text-caption text-gray-500">
 					<Eye className="w-4 h-4 mr-1" />
-					{article.views.toLocaleString()} views
-				</div> */}
+					{article.views.toLocaleString()} {t("news.views")}
+				</div>
 			</div>
 			<h1 className="text-heading-1 mb-6">
 				{t(article.title)}
@@ -50,9 +61,16 @@ export function ArticleHeader({ article, onShareClick }: ArticleHeaderProps) {
 				</div>
 			)}
 			<div className="flex items-center justify-between py-4 border-t border-b mt-8">
-				<div className="flex items-center text-caption text-gray-500">
-					<MessageCircle className="w-4 h-4 mr-2" />
-					{article.comments} {t("news.commentsLabel")}
+				<div className="flex items-center gap-2">
+					<Button type="button" variant="ghost" size="sm" onClick={() => shareCurrent("facebook")} aria-label="Share on Facebook">
+						<Facebook className="h-4 w-4" />
+					</Button>
+					<Button type="button" variant="ghost" size="sm" onClick={() => shareCurrent("whatsapp")} aria-label="Share on WhatsApp">
+						<Send className="h-4 w-4" />
+					</Button>
+					<Button type="button" variant="ghost" size="sm" onClick={() => shareCurrent("copy")} aria-label="Copy link">
+						<Copy className="h-4 w-4" />
+					</Button>
 				</div>
 				<Button
 					variant="outline"

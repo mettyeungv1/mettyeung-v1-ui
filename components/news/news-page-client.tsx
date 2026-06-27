@@ -281,7 +281,7 @@ export function NewsPageClient({
 		};
 	}, [posts]);
 
-	const { filteredNews, featuredNews, recentNews } = normalized;
+	const { filteredNews, recentNews } = normalized;
 
 	// Derive the active category for the description banner
 	const activeCategoryForBanner = useMemo(() => {
@@ -333,28 +333,6 @@ export function NewsPageClient({
 
 	return (
 		<>
-
-			{featuredNews.length > 0 && (
-				<section className="section-padding bg-white">
-					<div className="container">
-							<AnimatedSection>
-								<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-									{t("events.featuredNews")}
-								</h2>
-						</AnimatedSection>
-						<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-							{featuredNews.map((item) => (
-								<AnimatedSection key={item.id}>
-									<NewsCard
-										item={item as any}
-										onClick={(nid) => handleArticleClick(String(nid))}
-									/>
-								</AnimatedSection>
-							))}
-						</div>
-					</div>
-				</section>
-			)}
 
 			<section className="section-padding">
 				<div className="container">

@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { NewsArticle, NewsCategory } from "@/lib/types/news";
 import { NewsCard } from "./news-card";
-import { Loader2 } from "lucide-react";
+import { Grid2X2, List, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "@/lib/i18n";
 import { EmptyState } from "@/components/ui/empty-state";
+import { Button } from "@/components/ui/button";
 
 interface NewsGridProps {
 	items: NewsArticle[];
@@ -25,6 +27,7 @@ export function NewsGrid({
 	loading = false
 }: NewsGridProps) {
 	const { t } = useTranslation();
+	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 	const getCategoryName = (id: string) =>
 		categories.find((c) => c.id === id)?.name_en;
 
@@ -37,6 +40,28 @@ export function NewsGrid({
 						{t("events.foundArticles").replace("{{count}}", String(items.length))}
 					</span>
 				</h2>
+				<div className="hidden items-center rounded-lg border border-gray-200 bg-white p-1 shadow-sm sm:flex">
+					<Button
+						type="button"
+						size="sm"
+						variant={viewMode === "grid" ? "default" : "ghost"}
+						className="h-8 px-3"
+						onClick={() => setViewMode("grid")}
+						aria-label="Grid view"
+					>
+						<Grid2X2 className={`h-4 w-4 ${viewMode === "grid" ? "text-white" : ""}`} />
+					</Button>
+					<Button
+						type="button"
+						size="sm"
+						variant={viewMode === "list" ? "default" : "ghost"}
+						className="h-8 px-3"
+						onClick={() => setViewMode("list")}
+						aria-label="List view"
+					>
+						<List className={`h-4 w-4 ${viewMode === "list" ? "text-white" : ""}`} />
+					</Button>
+				</div>
 			</div>
 
 			<AnimatePresence mode="wait">
@@ -63,19 +88,19 @@ export function NewsGrid({
 				) : items.length > 0 ? (
 					<motion.div
 						layout
-						className="grid grid-cols-1 md:grid-cols-2 gap-6"
+						className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "grid grid-cols-1 gap-5"}
 					>
 						<AnimatePresence mode="popLayout">
-							{items.map((item) => (
+							{items.map((item, index) => (
 								<motion.div
 									layout
 									key={item.id}
-									initial={{ opacity: 0, scale: 0.9 }}
-									animate={{ opacity: 1, scale: 1 }}
-									exit={{ opacity: 0, scale: 0.9 }}
-									transition={{ duration: 0.3 }}
+									initial={{ opacity: 0, y: 16 }}
+									animate={{ opacity: 1, y: 0 }}
+									exit={{ opacity: 0, y: 16 }}
+									transition={{ duration: 0.3, delay: Math.min(index * 0.035, 0.25) }}
 								>
-									<NewsCard item={item} onClick={onCardClick} />
+									<NewsCard item={item} onClick={onCardClick} variant={viewMode} />
 								</motion.div>
 							))}
 						</AnimatePresence>

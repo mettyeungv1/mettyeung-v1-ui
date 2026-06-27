@@ -26,7 +26,7 @@ export function FeaturesSection() {
 					{features.map((feature, index) => (
 						<AnimatedSection
 							key={feature.titleKey}
-							delay={index * 0.1}
+							delay={index * 0.08}
 							className="h-full"
 						>
 							<FeatureCard feature={feature} />

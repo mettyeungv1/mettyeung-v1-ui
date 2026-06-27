@@ -20,7 +20,7 @@ export default async function PartnersPage() {
 	const initialMous: Partner[] = mouRes.status_code === 200 ? (mouRes.data?.data || (Array.isArray(mouRes.data) ? mouRes.data : [])) : [];
 
 	return (
-		<div className="min-h-screen bg-gray-50/50">
+		<div className="min-h-screen bg-surface-page">
 			<PartnersHeroSection />
 			<MouSection initialMous={initialMous} />
 			<PartnersGrid initialPartners={initialPartners} />

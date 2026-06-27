@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "@/lib/i18n";
 
 import { normalizeUrl } from "@/lib/utils/image";
@@ -14,9 +14,13 @@ import { ArticleContent } from "@/components/news/detail/article-content";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { ImageGallery } from "@/components/news/image-gallery";
 import { ShareDialog } from "@/components/news/share-dialog";
-import { CommentSection } from "@/components/news/comment-section";
 import { ArticleSidebar } from "@/components/news/detail/article-sidebar";
 import { SpinnerEmpty } from "@/components/common/spinner";
+import { NewsProgress } from "@/components/news/news-progress";
+import { addHeadingIds, extractTocItems } from "@/components/news/detail/article-toc";
+import { incrementBlogView } from "@/service/blog/blog-service";
+import { ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import type { BlogPost } from "@/lib/types/blog";
 import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
@@ -28,8 +32,20 @@ interface NewsDetailClientProps {
 
 export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 	const [showShareDialog, setShowShareDialog] = useState(false);
+	const [showBackToTop, setShowBackToTop] = useState(false);
 	const { t } = useTranslation();
 	const { toast } = useToast();
+
+	useEffect(() => {
+		incrementBlogView(String(post.id)).catch(() => undefined);
+	}, [post.id]);
+
+	useEffect(() => {
+		const onScroll = () => setShowBackToTop(window.scrollY > 500);
+		onScroll();
+		window.addEventListener("scroll", onScroll);
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
 
 	const handleShare = async (platform: string) => {
 		const currentUrl = window.location.href;
@@ -67,6 +83,8 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 
 	const article = useMemo(() => {
 		if (!post) return null;
+		const rawContent = t(post.content);
+		const tocItems = extractTocItems(rawContent);
 		return {
 			id: post.id as unknown as number,
 			title: post.title,
@@ -85,7 +103,8 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 				avatar: normalizeUrl(post.author?.avatarUrl || ""),
 				bio_en: "",
 			},
-			content: post.content,
+			content: addHeadingIds(rawContent, tocItems),
+			tocItems,
 			tags: [] as string[],
 			gallery: (post.media || []).map((m) => ({
 				url: normalizeUrl(m.url),
@@ -94,11 +113,12 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 			readTime: post.readTimes || 0,
 			comments: post.commentsCount || 0,
 			category: {
+				id: post.category?.id || "",
 				name: typeof post.category?.name === "string" ? post.category.name : (post.category?.name as any)?.en || "",
 				name_en: typeof post.category?.name === "string" ? post.category.name : (post.category?.name as any)?.en || "",
 			},
 		};
-	}, [post]);
+	}, [post, t]);
 
 	if (!article)
 		return (
@@ -111,9 +131,16 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 		{ href: "/", label: "Home" },
 		{ href: "/news", label: "News" },
 	];
+	if ((article.category as any)?.id && article.category.name_en) {
+		breadcrumbItems.push({
+			href: `/news?category=${(article.category as any).id}`,
+			label: article.category.name_en,
+		});
+	}
 
 	return (
 		<div className="min-h-screen bg-white pt-16 lg:pt-20">
+			<NewsProgress />
 			<Breadcrumbs items={breadcrumbItems} currentPage={article.title_en} />
 			<div className="container py-12">
 				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
@@ -127,18 +154,19 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 								<ImageGallery images={article.gallery} />
 								<ArticleAuthor author={article.author as any} />
 								<ArticleContent
-									content={article.content as { [lang: string]: string }}
+									content={article.content}
 									tags={article.tags}
 								/>
 							</article>
 						</AnimatedSection>
-						{/* <div className="mt-16">
-							<CommentSection articleId={article.id} />
-						</div> */}
 					</main>
 					<aside className="lg:col-span-4">
 						<div className="sticky top-24">
-							<ArticleSidebar article={article as any} />
+							<ArticleSidebar
+								article={article as any}
+								relatedPosts={relatedPost?.data || relatedPost || []}
+								tocItems={(article as any).tocItems || []}
+							/>
 						</div>
 					</aside>
 				</div>
@@ -153,6 +181,17 @@ export function NewsDetailClient({ post, relatedPost }: NewsDetailClientProps) {
 					image: article.image,
 				}}
 			/>
+			{showBackToTop && (
+				<Button
+					type="button"
+					size="icon"
+					className="fixed bottom-6 right-6 z-50 rounded-full bg-primary-900 text-white shadow-lg hover:bg-primary-950"
+					onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+					aria-label={t("news.backToTop")}
+				>
+					<ArrowUp className="h-5 w-5" />
+				</Button>
+			)}
 		</div>
 	);
 }

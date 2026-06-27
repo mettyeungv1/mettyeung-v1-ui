@@ -2,104 +2,90 @@
 
 import { Video } from "@/lib/types/video";
 import { formatDate } from "@/lib/utils";
-import { Calendar, Eye, Clock } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
+import { Calendar, Clock, Eye } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 
 function VideoModalContent({ video }: { video: Video }) {
 	const { t } = useTranslation();
+	const hasDescription = Boolean(video.description || video.description_km);
 
 	return (
-		<div className="flex flex-col h-full sm:h-auto overflow-y-auto bg-white">
-			{/* Video Player - Full width on mobile */}
-			<div className="shrink-0 w-full aspect-video bg-black sticky top-0 z-10 sm:relative sm:rounded-t-lg overflow-hidden">
-				<iframe
-					width="100%"
-					height="100%"
-					src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
-					title={video.title_en}
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen
-					className="absolute inset-0 w-full h-full"
-				></iframe>
+		<div className="grid max-h-[92vh] overflow-hidden bg-white lg:grid-cols-[minmax(0,1fr)_380px]">
+			<div className="bg-black lg:flex lg:min-h-[540px] lg:items-center">
+				<div className="relative aspect-video w-full">
+					<iframe
+						width="100%"
+						height="100%"
+						src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&rel=0`}
+						title={video.title_en}
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen
+						className="absolute inset-0 h-full w-full"
+					/>
+				</div>
 			</div>
 
-			{/* Video Information - Scrollable Content */}
-			<div className="flex-1 p-5 sm:p-8 space-y-8 pb-20 sm:pb-8">
-				{/* Title Section */}
-				<div className="space-y-3">
-					<h2 className="text-heading-3">
-						{video.title_en}
-					</h2>
-					{video.title_km && (
-						<h3 className="text-body-lg text-gray-500 font-khmer">
-							{video.title_km}
-						</h3>
+			<aside className="min-h-0 overflow-y-auto border-t border-gray-100 bg-white p-5 sm:p-6 lg:max-h-[92vh] lg:border-l lg:border-t-0 lg:p-7">
+				<div className="mb-4 min-h-5">
+					{video.categoryName && (
+						<span className="text-caption font-semibold uppercase tracking-wide text-primary-700">
+							{video.categoryName}
+						</span>
 					)}
 				</div>
 
-				{/* Metadata Bar */}
-				{(video.categoryName || video.date || video.viewCount >= 0 || video.duration) && (
-					<div className="flex flex-wrap items-center gap-x-6 gap-y-3 py-5 border-y border-gray-100">
-						{video.categoryName && (
-							<Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-md px-3 py-1.5 border-transparent shrink-0">
-								{video.categoryName} 
-							</Badge>
+				<h2 className="text-heading-3 leading-tight text-primary-950">
+					{video.title_en}
+				</h2>
+				{video.title_km && (
+					<h3 className="mt-2 text-body-lg text-gray-500 font-khmer">
+						{video.title_km}
+					</h3>
+				)}
+
+				{(video.date || video.duration || video.viewCount > 0) && (
+					<div className="mt-5 space-y-3 border-y border-gray-100 py-5 text-caption font-medium text-gray-500">
+						{video.date && (
+							<div className="flex items-center gap-2" title={t("video.publishedDate")}>
+								<Calendar className="h-4 w-4 shrink-0 text-primary-700" />
+								<span>{formatDate(video.date)}</span>
+							</div>
 						)}
-						
-						<div className="flex flex-wrap items-center gap-5 text-caption text-gray-500 font-medium">
-							{video.date && (
-								<div className="flex items-center gap-2" title={t("video.publishedDate")}>
-									<Calendar className="w-4 h-4 text-gray-400" />
-									<span>{formatDate(video.date)}</span>
-								</div>
-							)}
+						{video.duration && (
+							<div className="flex items-center gap-2" title={t("video.duration")}>
+								<Clock className="h-4 w-4 shrink-0 text-primary-700" />
+								<span>{video.duration}</span>
+							</div>
+						)}
+						{video.viewCount > 0 && (
+							<div className="flex items-center gap-2" title={t("video.totalViews")}>
+								<Eye className="h-4 w-4 shrink-0 text-primary-700" />
+								<span>{video.viewCount.toLocaleString()}</span>
+							</div>
+						)}
+					</div>
+				)}
 
-							{video.viewCount >= 0 && (
-								<div className="flex items-center gap-2" title={t("video.totalViews")}>
-									<Eye className="w-4 h-4 text-gray-400" />
-									<span>{video.viewCount.toLocaleString()}</span>
-								</div>
+				{hasDescription && (
+					<div className="mt-5">
+						<h4 className="mb-3 text-caption font-semibold uppercase tracking-wide text-gray-400">
+							{t("video.description")}
+						</h4>
+						<div className="space-y-4 rounded-lg bg-gray-50 p-4">
+							{video.description && (
+								<p className="whitespace-pre-line text-body-sm leading-relaxed text-gray-700">
+									{video.description}
+								</p>
 							)}
-
-							{video.duration && (
-								<div className="flex items-center gap-2" title={t("video.duration")}>
-									<Clock className="w-4 h-4 text-gray-400" />
-									<span>{video.duration}</span>
-								</div>
+							{video.description_km && (
+								<p className="whitespace-pre-line text-body-sm leading-relaxed text-gray-700 font-khmer">
+									{video.description_km}
+								</p>
 							)}
 						</div>
 					</div>
 				)}
-
-				{/* Description Section */}
-				{(video.description || video.description_km) && (
-					<div className="space-y-6 pt-2">
-						{video.description && (
-							<div className="space-y-2">
-								<h4 className="text-label text-gray-400">
-									{t("video.description")}
-								</h4>
-								<p className="text-body-lg text-gray-700 whitespace-pre-line">
-									{video.description}
-								</p>
-							</div>
-						)}
-
-						{video.description_km && (
-							<div className="space-y-2">
-								<h4 className="text-label text-gray-400">
-									{t("video.description")}
-								</h4>
-								<p className="text-body-lg text-gray-700 whitespace-pre-line font-khmer">
-									{video.description_km}
-								</p>
-							</div>
-						)}
-					</div>
-				)}
-			</div>
+			</aside>
 		</div>
 	);
 }

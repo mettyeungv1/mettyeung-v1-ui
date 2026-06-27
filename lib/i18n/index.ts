@@ -9,12 +9,19 @@ import en from "@/locales/en.json";
 import km from "@/locales/km.json";
 import ja from "@/locales/ja.json";
 import ko from "@/locales/ko.json";
-import th from "@/locales/th.json";
 
-export type Language = "en" | "km" | "ko" | "ja" | "th";
+const SUPPORTED_LANGUAGES = ["en", "km", "ko", "ja"] as const;
+
+export type Language = (typeof SUPPORTED_LANGUAGES)[number];
 
 // The translations object
-const translations = { en, km, ko, ja, th };
+const translations = { en, km, ko, ja };
+
+function normalizeLanguage(language: unknown): Language {
+	return SUPPORTED_LANGUAGES.includes(language as Language)
+		? (language as Language)
+		: "km";
+}
 
 // Function to get translation by key
 export function getTranslation(
@@ -59,14 +66,23 @@ export const useLanguageStore = create<LanguageStore>()(
 	persist(
 		(set, get) => ({
 			language: "km",
-			setLanguage: (language) => set({ language }),
+			setLanguage: (language) => set({ language: normalizeLanguage(language) }),
 			t: (keyOrObject) => {
-				const { language } = get();
+				const language = normalizeLanguage(get().language);
 				return getTranslation(keyOrObject, language, translations);
 			},
 		}),
 		{
 			name: "language-storage",
+			merge: (persistedState, currentState) => {
+				const persisted = persistedState as Partial<LanguageStore> | undefined;
+
+				return {
+					...currentState,
+					...persisted,
+					language: normalizeLanguage(persisted?.language),
+				};
+			},
 		}
 	)
 );
@@ -87,7 +103,7 @@ export const useTranslation = () => {
 	};
 
 	return {
-		language: store.language,
+		language: normalizeLanguage(store.language),
 		setLanguage: store.setLanguage,
 		t,
 		isHydrated,

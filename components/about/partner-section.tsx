@@ -48,39 +48,38 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 							partner.descriptionTranslations
 						);
 						const cardContent = (
-							<Card variant="interactive" className="group relative aspect-square overflow-hidden">
-								<CardContent className="p-0 h-full flex items-center justify-center relative">
-									{/* Large Logo display */}
-									<div className="relative w-full h-full p-10 flex items-center justify-center transition-all duration-700 group-hover:scale-110 group-hover:opacity-40 opacity-100">
-										<Image
-											src={partner.media?.url || "/my-cut.png"}
-											alt={partnerName}
-											fill
-											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-											className="object-contain p-8 md:p-12 drop-shadow-sm"
-										/>
-									</div>
+							<Card className="group relative flex flex-col h-full bg-surface-page hover:shadow-xl transition-all duration-300 border-border-subtle hover:border-interactive-primary/30 overflow-hidden rounded-2xl">
+								{/* Logo Area */}
+								<div className="relative w-full aspect-[3/2] flex items-center justify-center p-8 bg-surface-panel/30 group-hover:bg-surface-panel/80 transition-colors duration-500">
+									<Image
+										src={partner.media?.url || "/my-cut.png"}
+										alt={partnerName}
+										fill
+										sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+										className="object-contain p-6 md:p-8 drop-shadow-sm group-hover:scale-110 transition-transform duration-700 ease-out"
+									/>
+								</div>
 
-									{/* Hover Overlay with info */}
-									<div className="absolute inset-0 bg-primary-950/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-center items-center p-6 sm:p-8 text-center backdrop-blur-[2px]">
-										<div className="transform translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-75 flex flex-col items-center h-full justify-center">
-											{partnerName && (
-												<h3 className="text-heading-4 text-white line-clamp-2 mb-3 drop-shadow-md">
-													{partnerName}
-												</h3>
-											)}
-											{partnerDescription && (
-												<p className="text-body-sm text-primary-100 line-clamp-3 mb-6">
-													{partnerDescription}
-												</p>
-											)}
-											{partner.websiteUrl && (
-												<a href={partner.websiteUrl} target="_blank" rel="noopener noreferrer" className="relative z-10 inline-flex items-center gap-2 rounded-md border border-border-inverse bg-white/10 px-6 py-2.5 mt-2 text-button text-white transition-all duration-200 hover:bg-white/15 focus-ring">
-													{t("partners.visitWebsite")} <ArrowRight className="w-4 h-4 ml-1" />
-												</a>
-											)}
-										</div>
-									</div>
+								{/* Content Area */}
+								<CardContent className="p-6 flex flex-col flex-1 border-t border-border-subtle/50 text-left">
+									<h3 className="text-heading-5 font-semibold text-text-primary mb-2 line-clamp-2 group-hover:text-primary-900 transition-colors">
+										{partnerName}
+									</h3>
+									{partnerDescription && (
+										<p className="text-body-sm text-text-secondary line-clamp-3 mb-6 flex-1">
+											{partnerDescription}
+										</p>
+									)}
+									{partner.websiteUrl && (
+										<a
+											href={partner.websiteUrl}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="mt-auto inline-flex items-center text-button font-medium text-interactive-primary group-hover:text-primary-800 transition-colors"
+										>
+											{t("partners.visitWebsite")} <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+										</a>
+									)}
 								</CardContent>
 							</Card>
 						);

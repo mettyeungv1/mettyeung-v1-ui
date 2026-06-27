@@ -5,12 +5,13 @@ import { useCallback } from "react";
 import DOMPurify from "dompurify";
 
 interface ArticleContentProps {
-	content: { [lang: string]: string };
+	content: string | { [lang: string]: string };
 	tags: string[];
 }
 
 export function ArticleContent({ content, tags }: ArticleContentProps) {
 	const { t } = useTranslation();
+	const htmlContent = typeof content === "string" ? content : t(content);
 	const renderPreviewContent = useCallback((htmlContent: string) => {
 		const sanitized = DOMPurify.sanitize(htmlContent);
 		return { __html: sanitized };
@@ -42,7 +43,7 @@ export function ArticleContent({ content, tags }: ArticleContentProps) {
 					[&_td]:py-3 [&_td]:border-b [&_td]:border-gray-100
 					[&_hr]:border-gray-200 [&_hr]:my-8
 					[&_iframe]:w-full [&_iframe]:rounded-xl [&_iframe]:my-6 [&_iframe]:aspect-video"
-					dangerouslySetInnerHTML={renderPreviewContent(t(content))}
+					dangerouslySetInnerHTML={renderPreviewContent(htmlContent)}
 				/>
 			)}
 			{tags.length > 0 && (
