@@ -6,10 +6,10 @@ import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
 /**
  * Normalizes a raw member from the API into a clean, consistent Member type for the frontend.
  */
-function localizedText(value: any, fallback = ""): string {
+function localizedText(value: any, fallback = "", lang = DEFAULT_LANGUAGE_CODE): string {
 	if (typeof value === "string") return value;
 	if (value && typeof value === "object") {
-		return value[DEFAULT_LANGUAGE_CODE] || value.en || value.km || fallback;
+		return value[lang] || value[DEFAULT_LANGUAGE_CODE] || value.en || value.km || fallback;
 	}
 	return fallback;
 }
@@ -21,8 +21,8 @@ export function normalizeMemberData(member: any): Member {
 		return t ? t[field] : null;
 	};
 
-	const name_en = localizedText(member.name, "Unknown Member");
-	const name_km = localizedText(member.name, name_en);
+	const name_en = localizedText(member.name, "Unknown Member", "en");
+	const name_km = localizedText(member.name, name_en, "km");
 
 	const title_en = getTranslation(member.memberTranslations, "title", "en") 
 		|| member.role 
@@ -32,7 +32,10 @@ export function normalizeMemberData(member: any): Member {
 		|| title_en;
 
 	const position_en = title_en;
-	const location_en = localizedText(member.location);
+	const location_en = localizedText(member.location, "", "en");
+	const location_km = localizedText(member.location, location_en, "km");
+	const bio_en = localizedText(member.bio, "", "en");
+	const bio_km = localizedText(member.bio, bio_en, "km");
 
 	// Join date — preserve full date, fallback to year-only
 	const joinDate = member.join_date
@@ -114,9 +117,11 @@ export function normalizeMemberData(member: any): Member {
 		phoneNumber: member.phoneNumber || member.phone_number || "",
 		location: location_en,
 		location_en,
+		location_km,
 		joinDate,
 		joinYear: member.joinYear || member.join_year || (member.join_date ? new Date(member.join_date).getFullYear() : undefined),
-		bio: localizedText(member.bio),
+		bio: bio_en,
+		bio_km,
 		department: associations.length > 0 ? associations[0].name : localizedText(member.department),
 		skills,
 		socials: rawSocials,

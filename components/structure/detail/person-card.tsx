@@ -9,6 +9,7 @@ import { normalizeUrl } from "@/lib/utils/image";
 import { Person } from "@/lib/stores/person-store";
 import { MEDIA_ENDPOINT } from "@/lib/static";
 import { useTranslation } from "@/lib/i18n";
+import { displayStructureValue, optionalStructureValue } from "@/lib/utils/structure-display";
 
 /* ── props ──────────────────────────────────────────────────────────── */
 
@@ -47,7 +48,7 @@ function resolveImage(person: PersonMediaFields): string {
 
 function getInitials(name?: string): string {
 	const normalizedName = name?.trim();
-	if (!normalizedName) return "?";
+	if (!normalizedName) return "NA";
 
 	return normalizedName
 		.split(/\s+/)
@@ -76,8 +77,8 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 	} = useMemo(() => {
 		const typedPerson = person as PersonMediaFields;
 		const name = language === 'km' 
-			? (typedPerson.name_km || typedPerson.name_en || typedPerson.name || "—")
-			: (typedPerson.name_en || typedPerson.name || "—");
+			? (typedPerson.name_km || typedPerson.name_en || typedPerson.name)
+			: (typedPerson.name_en || typedPerson.name);
 			
 		const rawTitle = language === 'km'
 			? (typedPerson.title_km || typedPerson.title_en || typedPerson.position_en || "")
@@ -85,14 +86,14 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 
 		const primaryAssociation = typedPerson.associations?.[0];
 		return {
-			displayName: name,
-			displayTitle: rawTitle && rawTitle !== "Member" ? rawTitle : "",
-			displayEmail: typedPerson.email || "",
-			displayPhone: typedPerson.phone || typedPerson.phoneNumber || "",
-			displayLocation: typedPerson.location || typedPerson.location_en || "",
+			displayName: displayStructureValue(name),
+			displayTitle: rawTitle === "Member" ? displayStructureValue("") : displayStructureValue(rawTitle),
+			displayEmail: displayStructureValue(typedPerson.email),
+			displayPhone: displayStructureValue(typedPerson.phone || typedPerson.phoneNumber),
+			displayLocation: displayStructureValue(typedPerson.location || typedPerson.location_en),
 			isHead: Boolean(primaryAssociation?.isHead),
 			imageSrc: resolveImage(typedPerson),
-			initials: getInitials(typedPerson.name_en || typedPerson.name),
+			initials: getInitials(optionalStructureValue(typedPerson.name_en || typedPerson.name)),
 		};
 	}, [person, language]);
 
@@ -158,35 +159,25 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 								{displayName}
 							</h4>
 
-							{displayTitle && (
-								<p
-									title={displayTitle}
-									className="mt-0.5 line-clamp-2 text-sm leading-5 text-gray-500"
-								>
-									{displayTitle}
-								</p>
-							)}
+							<p
+								title={displayTitle}
+								className="mt-0.5 line-clamp-2 text-sm leading-5 text-gray-500"
+							>
+								{displayTitle}
+							</p>
 
-							{(displayPhone || displayEmail) && (
-								<div className="mt-4 space-y-1">
-									{displayPhone && (
-										<p className="line-clamp-1 text-xs leading-5 text-gray-700">
-											{displayPhone}
-										</p>
-									)}
-									{displayEmail && (
-										<p className="line-clamp-1 text-xs leading-5 text-gray-700">
-											{displayEmail}
-										</p>
-									)}
-								</div>
-							)}
-
-							{displayLocation && (
-								<p className="mt-3 line-clamp-2 text-xs leading-5 text-gray-500">
-									{displayLocation}
+							<div className="mt-4 space-y-1">
+								<p className="line-clamp-1 text-xs leading-5 text-gray-700">
+									{displayPhone}
 								</p>
-							)}
+								<p className="line-clamp-1 text-xs leading-5 text-gray-700">
+									{displayEmail}
+								</p>
+							</div>
+
+							<p className="mt-3 line-clamp-2 text-xs leading-5 text-gray-500">
+								{displayLocation}
+							</p>
 
 							{isHead && (
 								<div className="mt-3">

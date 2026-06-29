@@ -80,9 +80,11 @@ export interface Member {
 	phoneNumber: string;
 	location: string;
 	location_en: string;
+	location_km?: string;
 	joinDate: string;
 	joinYear?: number;
 	bio: string;
+	bio_km?: string;
 	department: string;
 	skills: string[];
 	socialLinks: SocialLink[];

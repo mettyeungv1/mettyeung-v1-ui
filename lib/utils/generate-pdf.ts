@@ -1,356 +1,495 @@
 import { Member } from "@/lib/types/structure";
 import { normalizeUrl } from "@/lib/utils/image";
+import { displayStructureValue, optionalStructureValue } from "@/lib/utils/structure-display";
 
-const PW = 210;
-const PH = 297;
-const MX = 18;
-const TOP = 18;
-const BOTTOM = 280;
-const CONTENT_W = PW - MX * 2;
+type LanguageCode = "en" | "km" | string;
+type LocalizedValue = string | number | { en?: string | null; km?: string | null } | null | undefined;
 
-const INK = "#111827";
-const MUTED = "#4B5563";
-const FAINT = "#6B7280";
-const LINE = "#D1D5DB";
-const SOFT_LINE = "#E5E7EB";
-const ACCENT = "#1F4E79";
-const PAPER = "#FFFFFF";
+const PAPER_WIDTH = 794;
+const EMPTY = "N/A";
 
-type PdfDoc = any;
+type CvEducation = {
+	degree: string;
+	school: string;
+	period: string;
+};
 
-const clean = (value?: string | null): string =>
-	(value || "").replace(/\s+/g, " ").trim();
+type CvExperience = {
+	title: string;
+	organization: string;
+	description: string;
+	period: string;
+};
 
-const pick = (...values: Array<string | undefined | null>): string =>
-	clean(values.find((value) => clean(value)) || "");
+type CvAssociation = {
+	name: string;
+	role: string;
+};
 
-const lines = (doc: PdfDoc, value: string, width: number): string[] =>
-	clean(value) ? doc.splitTextToSize(clean(value), width) : [];
+type CvSocial = {
+	platform: string;
+	url: string;
+};
 
-const formatDate = (value?: string | number | null): string => {
-	if (!value) return "";
+function escapeHtml(value: unknown): string {
+	return displayStructureValue(value)
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
+}
+
+function pickLocalized(value: LocalizedValue, language: LanguageCode, fallback: LocalizedValue = ""): string {
 	if (typeof value === "number") return String(value);
+	if (typeof value === "string") {
+		const text = optionalStructureValue(value);
+		if (text) return text;
+		if (fallback === value) return "";
+		return pickLocalized(fallback, language, "");
+	}
+	if (value && typeof value === "object") {
+		const primary = language === "km" ? value.km : value.en;
+		const secondary = language === "km" ? value.en : value.km;
+		return optionalStructureValue(primary) || optionalStructureValue(secondary) || pickLocalized(fallback, language, "");
+	}
+	return fallback === value ? "" : pickLocalized(fallback, language, "");
+}
 
-	const raw = clean(value);
+function firstValue(language: LanguageCode, ...values: LocalizedValue[]): string {
+	for (const value of values) {
+		const picked = pickLocalized(value, language);
+		if (optionalStructureValue(picked)) return picked;
+	}
+	return EMPTY;
+}
+
+function formatDate(value: unknown, language: LanguageCode, options: Intl.DateTimeFormatOptions): string {
+	const raw = optionalStructureValue(value);
+	if (!raw) return EMPTY;
+
 	const date = new Date(raw);
 	if (Number.isNaN(date.getTime())) return raw;
 
-	return date.toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
-};
+	return date.toLocaleDateString(language === "km" ? "km-KH" : "en-US", options);
+}
 
-const formatPeriod = (start?: number, end?: number): string => {
-	if (!start && !end) return "";
-	if (start && end) return `${start} - ${end}`;
-	if (start) return `${start} - Present`;
-	return String(end);
-};
+function formatPeriod(start: unknown, end: unknown, language: LanguageCode): string {
+	const startText = optionalStructureValue(start);
+	const endText = optionalStructureValue(end);
+	if (!startText && !endText) return EMPTY;
+	return `${startText || EMPTY} - ${endText || (language === "km" ? "បច្ចុប្បន្ន" : "Present")}`;
+}
 
-const filenameSafe = (value: string): string =>
-	(value || "Member")
+function filenameSafe(value: string): string {
+	return optionalStructureValue(value)
 		.replace(/[^\w\s-]/g, "")
 		.trim()
 		.replace(/\s+/g, "_") || "Member";
+}
 
-const makeSquareAvatar = (url: string): Promise<string | null> =>
-	new Promise((resolve) => {
-		const size = 360;
-		const canvas = document.createElement("canvas");
-		canvas.width = size;
-		canvas.height = size;
+function absoluteAssetUrl(value: unknown): string {
+	const raw = optionalStructureValue(value);
+	if (!raw || raw === "/placeholder.svg") return "";
+	const normalized = normalizeUrl(raw);
+	if (normalized.startsWith("http")) return normalized;
+	if (typeof window === "undefined") return normalized;
+	return `${window.location.origin}${normalized.startsWith("/") ? "" : "/"}${normalized}`;
+}
 
-		const ctx = canvas.getContext("2d");
-		if (!ctx) return resolve(null);
+function row(label: string, value: unknown): string {
+	return `
+		<div class="cv-row">
+			<div class="cv-label">${escapeHtml(label)}</div>
+			<div class="cv-value">${escapeHtml(value)}</div>
+		</div>
+	`;
+}
 
-		const img = new Image();
-		img.crossOrigin = "anonymous";
-		img.onload = () => {
-			const side = Math.min(img.width, img.height);
-			const sx = (img.width - side) / 2;
-			const sy = (img.height - side) / 2;
-			ctx.fillStyle = PAPER;
-			ctx.fillRect(0, 0, size, size);
-			ctx.drawImage(img, sx, sy, side, side, 0, 0, size, size);
-			resolve(canvas.toDataURL("image/jpeg", 0.92));
-		};
-		img.onerror = () => resolve(null);
-		img.src = url;
-	});
+function section(title: string, content: string): string {
+	return `
+		<section class="cv-section">
+			<h2>${escapeHtml(title)}</h2>
+			${content}
+		</section>
+	`;
+}
 
-const fetchDataUrl = async (url: string): Promise<string | null> => {
-	try {
-		const response = await fetch(url, { cache: "no-cache" });
-		if (!response.ok) return null;
+function collectCvData(member: Member, language: LanguageCode) {
+	const raw = member as any;
+	const name = firstValue(language, raw.name, raw.name_km, raw.name_en, member.name_km, member.name_en, member.name);
+	const title = firstValue(language, raw.title, raw.title_km, raw.title_en, member.title_km, member.title_en, member.position_en, member.department);
+	const bio = firstValue(language, raw.bio, raw.bio_km, member.bio_km, member.bio);
+	const location = firstValue(language, raw.location, raw.location_km, raw.location_en, member.location_km, member.location, member.location_en);
+	const phone = firstValue(language, raw.phoneNumber, raw.phone_number, member.phone, member.phoneNumber);
 
-		const blob = await response.blob();
-		return await new Promise((resolve) => {
-			const reader = new FileReader();
-			reader.onloadend = () => resolve(reader.result as string);
-			reader.onerror = () => resolve(null);
-			reader.readAsDataURL(blob);
-		});
-	} catch {
-		return null;
-	}
-};
+	const educations = (raw.personalEducations || member.educations || [])
+		.slice()
+		.sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0))
+		.map((education: any) => ({
+			degree: firstValue(language, education.degree),
+			school: firstValue(language, education.schoolName, education.school_name),
+			period: formatPeriod(education.startYear ?? education.start_year, education.endYear ?? education.end_year, language),
+		}));
 
-const setText = (doc: PdfDoc, size: number, color = INK, weight: "normal" | "bold" = "normal") => {
-	doc.setFont("helvetica", weight);
-	doc.setFontSize(size);
-	doc.setTextColor(color);
-};
+	const experiences = (raw.personalExperiences || member.experiences || [])
+		.slice()
+		.sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0))
+		.map((experience: any) => ({
+			title: firstValue(language, experience.title),
+			organization: firstValue(language, experience.organization),
+			description: firstValue(language, experience.description),
+			period: formatPeriod(experience.startYear ?? experience.start_year, experience.endYear ?? experience.end_year, language),
+		}));
 
-const drawSectionTitle = (doc: PdfDoc, title: string, y: number) => {
-	setText(doc, 9.3, ACCENT, "bold");
-	doc.text(title.toUpperCase(), MX, y);
-	doc.setDrawColor(LINE);
-	doc.setLineWidth(0.25);
-	doc.line(MX, y + 2.5, PW - MX, y + 2.5);
-};
+	const associations = (raw.associationMembers || member.associations || [])
+		.slice()
+		.sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0))
+		.map((association: any) => ({
+			name: firstValue(language, association.name, association.association?.name, association.association?.name_en),
+			role: firstValue(language, association.role, association.isHead || association.is_head ? "Head" : ""),
+		}));
 
-const drawFooter = (doc: PdfDoc, page: number, total: number) => {
-	doc.setDrawColor(SOFT_LINE);
-	doc.setLineWidth(0.2);
-	doc.line(MX, PH - 12, PW - MX, PH - 12);
-	setText(doc, 7.5, FAINT);
-	doc.text(`Page ${page} of ${total}`, PW / 2, PH - 7, { align: "center" });
-};
+	const skills = (raw.memberSkills || member.skills || [])
+		.map((skill: any) =>
+			typeof skill === "string"
+				? displayStructureValue(skill)
+				: firstValue(language, skill.skillName, skill.name, skill.skill?.name, skill.skillId || skill.id)
+		);
 
-export const generateMemberPDF = async (member: Member): Promise<void> => {
-	const { jsPDF } = await import("jspdf");
-
-	const rawSrc = normalizeUrl(member.image || (member as any).avatarUrl || "");
-	const absSrc = rawSrc
-		? rawSrc.startsWith("http")
-			? rawSrc
-			: `${window.location.origin}${rawSrc.startsWith("/") ? "" : "/"}${rawSrc}`
-		: "";
-
-	const [avatarDataUrl, logoDataUrl] = await Promise.all([
-		absSrc ? makeSquareAvatar(absSrc) : Promise.resolve(null),
-		fetchDataUrl(`${window.location.origin}/logo.png`),
-	]);
-
-	const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
-	let y = TOP;
-
-	const newPage = () => {
-		doc.addPage();
-		y = TOP;
-	};
-
-	const ensure = (height: number) => {
-		if (y + height > BOTTOM) newPage();
-	};
-
-	const name = pick(member.name_en, member.name, "Member");
-	const title = pick(member.position_en, member.title_en, member.department);
-	const phone = pick(member.phone, member.phoneNumber);
-	const location = pick(member.location_en, member.location);
-	const contact = [member.email, phone, location].filter(Boolean).join("  |  ");
-
-	if (logoDataUrl) {
-		try {
-			doc.addImage(logoDataUrl, "PNG", MX, y - 3, 29, 11);
-		} catch {
-			/* Optional logo. */
-		}
-	}
-
-	if (avatarDataUrl) {
-		doc.addImage(avatarDataUrl, "JPEG", PW - MX - 24, y - 2, 24, 24);
-		doc.setDrawColor(LINE);
-		doc.setLineWidth(0.25);
-		doc.rect(PW - MX - 24, y - 2, 24, 24, "S");
-	}
-
-	const headerTextW = avatarDataUrl ? CONTENT_W - 34 : CONTENT_W;
-	setText(doc, 21, INK, "bold");
-	doc.text(lines(doc, name, headerTextW).slice(0, 2), MX, y + 20);
-	y += 28;
-
-	if (title) {
-		setText(doc, 10.5, MUTED);
-		doc.text(lines(doc, title, headerTextW).slice(0, 2), MX, y);
-		y += 6;
-	}
-
-	if (contact) {
-		setText(doc, 8.6, FAINT);
-		doc.text(lines(doc, contact, CONTENT_W).slice(0, 2), MX, y);
-		y += 7;
-	}
-
-	doc.setDrawColor(ACCENT);
-	doc.setLineWidth(0.55);
-	doc.line(MX, y, PW - MX, y);
-	y += 11;
-
-	if (member.bio) {
-		const bioLines = lines(doc, member.bio, CONTENT_W);
-		ensure(bioLines.length * 4.5 + 12);
-		drawSectionTitle(doc, "Profile", y);
-		y += 8;
-		setText(doc, 9.2, MUTED);
-		doc.text(bioLines, MX, y);
-		y += bioLines.length * 4.5 + 8;
-	}
-
-	const experiences = member.experiences?.length ? [...member.experiences] : [];
-	if (experiences.length) {
-		ensure(18);
-		drawSectionTitle(doc, "Professional Experience", y);
-		y += 8;
-
-		experiences.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-		for (const exp of experiences) {
-			const role = pick(exp.title?.en, exp.title?.km, "Role");
-			const org = pick(exp.organization?.en, exp.organization?.km);
-			const desc = pick(exp.description?.en, exp.description?.km);
-			const period = formatPeriod(exp.startYear, exp.endYear);
-			const roleLines = lines(doc, role, period ? CONTENT_W - 38 : CONTENT_W).slice(0, 2);
-			const orgLines = org ? lines(doc, org, CONTENT_W).slice(0, 2) : [];
-			const descLines = desc ? lines(doc, desc, CONTENT_W).slice(0, 8) : [];
-			const blockH = roleLines.length * 4.8 + orgLines.length * 4.3 + descLines.length * 4.4 + 10;
-
-			ensure(blockH);
-			setText(doc, 10.3, INK, "bold");
-			doc.text(roleLines, MX, y);
-
-			if (period) {
-				setText(doc, 8.4, FAINT);
-				doc.text(period, PW - MX, y, { align: "right" });
-			}
-
-			y += roleLines.length * 4.8;
-			if (orgLines.length) {
-				setText(doc, 9, ACCENT, "bold");
-				doc.text(orgLines, MX, y);
-				y += orgLines.length * 4.3 + 1;
-			}
-
-			if (descLines.length) {
-				setText(doc, 8.9, MUTED);
-				doc.text(descLines, MX, y);
-				y += descLines.length * 4.4;
-			}
-
-			y += 6;
-		}
-	}
-
-	const educations = member.educations?.length ? [...member.educations] : [];
-	if (educations.length) {
-		ensure(18);
-		drawSectionTitle(doc, "Education", y);
-		y += 8;
-
-		educations.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-		for (const edu of educations) {
-			const degree = pick(edu.degree?.en, edu.degree?.km, "Degree");
-			const school = pick(edu.schoolName?.en, edu.schoolName?.km);
-			const period = formatPeriod(edu.startYear, edu.endYear);
-			const degreeLines = lines(doc, degree, period ? CONTENT_W - 38 : CONTENT_W).slice(0, 2);
-			const schoolLines = school ? lines(doc, school, CONTENT_W).slice(0, 2) : [];
-			const blockH = degreeLines.length * 4.7 + schoolLines.length * 4.2 + 8;
-
-			ensure(blockH);
-			setText(doc, 10, INK, "bold");
-			doc.text(degreeLines, MX, y);
-
-			if (period) {
-				setText(doc, 8.4, FAINT);
-				doc.text(period, PW - MX, y, { align: "right" });
-			}
-
-			y += degreeLines.length * 4.7;
-			if (schoolLines.length) {
-				setText(doc, 8.9, MUTED);
-				doc.text(schoolLines, MX, y);
-				y += schoolLines.length * 4.2;
-			}
-			y += 6;
-		}
-	}
-
-	const associations = member.associations?.length ? [...member.associations] : [];
-	if (associations.length) {
-		ensure(18);
-		drawSectionTitle(doc, "Organizations & Memberships", y);
-		y += 8;
-
-		associations.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-		for (const assoc of associations) {
-			const assocName = pick(assoc.name, assoc.association?.name_en, assoc.association?.name, "Organization");
-			const role = pick(assoc.role, assoc.isHead ? "Head" : "");
-			const rowText = role ? `${assocName} - ${role}` : assocName;
-			const rowLines = lines(doc, rowText, CONTENT_W);
-			ensure(rowLines.length * 4.4 + 5);
-			setText(doc, 8.9, MUTED);
-			doc.text(rowLines, MX, y);
-			y += rowLines.length * 4.4 + 4;
-		}
-	}
-
-	const skillText = member.skills?.map(clean).filter(Boolean).join(", ");
-	const languagesText = member.languages?.map(clean).filter(Boolean).join(", ");
-	const personalRows: string[] = [];
-	if (member.dob) personalRows.push(`Born: ${formatDate(member.dob)}`);
-	if (member.gender) personalRows.push(`Gender: ${member.gender.charAt(0).toUpperCase()}${member.gender.slice(1)}`);
-	if (member.nationality) personalRows.push(`Nationality: ${member.nationality}`);
-	if (member.joinDate || member.joinYear) personalRows.push(`Joined: ${formatDate(member.joinDate || member.joinYear)}`);
-	if (member.memberCode) personalRows.push(`Member ID: ${member.memberCode}`);
-
-	if (skillText || languagesText || personalRows.length) {
-		ensure(18);
-		drawSectionTitle(doc, "Additional Information", y);
-		y += 8;
-
-		const rows: Array<[string, string]> = [];
-		if (skillText) rows.push(["Skills", skillText]);
-		if (languagesText) rows.push(["Languages", languagesText]);
-		if (personalRows.length) rows.push(["Details", personalRows.join("  |  ")]);
-
-		for (const [label, value] of rows) {
-			const labelW = 24;
-			const valueLines = lines(doc, value, CONTENT_W - labelW);
-			ensure(valueLines.length * 4.4 + 5);
-
-			setText(doc, 8.9, INK, "bold");
-			doc.text(label, MX, y);
-			setText(doc, 8.9, MUTED);
-			doc.text(valueLines, MX + labelW, y);
-			y += valueLines.length * 4.4 + 4;
-		}
-	}
+	const languages = (raw.memberLanguages || member.languages || [])
+		.map((languageItem: any) =>
+			typeof languageItem === "string"
+				? displayStructureValue(languageItem)
+				: firstValue(language, languageItem.name, languageItem.language?.name, languageItem.languageName)
+		);
 
 	const socials = (member.socialLinks?.length ? member.socialLinks : member.socials || [])
-		.map((social) => [clean(social.platform), clean(social.url)] as [string, string])
-		.filter(([, url]) => url);
+		.map((social: any) => ({
+			platform: displayStructureValue(social.platform || "Link"),
+			url: displayStructureValue(social.url),
+		}))
+		.filter((social) => social.url !== EMPTY);
 
-	if (socials.length) {
-		ensure(18);
-		drawSectionTitle(doc, "Links", y);
-		y += 8;
+	return {
+		name,
+		title,
+		bio,
+		email: displayStructureValue(member.email),
+		phone,
+		location,
+		avatarUrl: absoluteAssetUrl(raw.image || raw.avatarUrl || raw.avatar_url),
+		memberCode: displayStructureValue(raw.memberCode || raw.member_code || member.memberCode),
+		dob: formatDate(raw.dob || member.dob, language, { year: "numeric", month: "long", day: "numeric" }),
+		gender: displayStructureValue(raw.gender || member.gender),
+		nationality: displayStructureValue(raw.nationality || member.nationality),
+		joined: formatDate(raw.join_date || raw.joinDate || member.joinDate || member.joinYear, language, { year: "numeric", month: "long" }),
+		educations,
+		experiences,
+		associations,
+		skills,
+		languages,
+		socials,
+	};
+}
 
-		for (const [platform, url] of socials) {
-			const text = `${platform || "Link"}: ${url.replace(/^https?:\/\//, "")}`;
-			const rowLines = lines(doc, text, CONTENT_W);
-			ensure(rowLines.length * 4.4 + 4);
-			setText(doc, 8.7, MUTED);
-			doc.text(rowLines, MX, y);
-			y += rowLines.length * 4.4 + 3;
+function buildCvHtml(member: Member, language: LanguageCode): HTMLElement {
+	const data = collectCvData(member, language);
+	const root = document.createElement("div");
+	root.className = "cv-export";
+	root.style.position = "absolute";
+	root.style.left = "0";
+	root.style.top = "0";
+	root.style.width = `${PAPER_WIDTH}px`;
+	root.style.background = "#ffffff";
+	root.style.pointerEvents = "none";
+	root.style.zIndex = "-1";
+
+	const fontFamily = language === "km"
+		? "'MiSansKhmerPdf', 'Khmer OS Siemreap', 'Noto Sans Khmer', Arial, sans-serif"
+		: "'GoogleSansPdf', Arial, sans-serif";
+
+	root.innerHTML = `
+		<style>
+			@font-face {
+				font-family: 'MiSansKhmerPdf';
+				src: url('/fonts/MiSansKhmer-Regular.ttf') format('truetype');
+				font-weight: 400;
+				font-style: normal;
+			}
+			@font-face {
+				font-family: 'GoogleSansPdf';
+				src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
+				font-weight: 400;
+				font-style: normal;
+			}
+			.cv-export, .cv-export * {
+				box-sizing: border-box;
+				font-family: ${fontFamily};
+				letter-spacing: 0;
+			}
+			.cv-page {
+				width: ${PAPER_WIDTH}px;
+				min-height: 1123px;
+				padding: 54px 58px;
+				color: #111827;
+				background: #ffffff;
+			}
+			.cv-header {
+				display: grid;
+				grid-template-columns: 1fr 112px;
+				gap: 28px;
+				align-items: start;
+				border-bottom: 3px solid #1f4e79;
+				padding-bottom: 26px;
+				margin-bottom: 28px;
+			}
+			.cv-name {
+				margin: 0 0 10px;
+				font-size: 30px;
+				line-height: 1.35;
+				font-weight: 700;
+				color: #111827;
+			}
+			.cv-title {
+				margin: 0 0 18px;
+				font-size: 15px;
+				line-height: 1.65;
+				color: #4b5563;
+			}
+			.cv-contact {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 8px 18px;
+				font-size: 12px;
+				line-height: 1.6;
+				color: #374151;
+			}
+			.cv-avatar {
+				width: 112px;
+				height: 112px;
+				object-fit: cover;
+				object-position: top;
+				border: 1px solid #d1d5db;
+				border-radius: 8px;
+				background: #f3f4f6;
+			}
+			.cv-avatar-fallback {
+				width: 112px;
+				height: 112px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid #d1d5db;
+				border-radius: 8px;
+				background: #f3f4f6;
+				color: #6b7280;
+				font-size: 26px;
+				font-weight: 700;
+			}
+			.cv-grid {
+				display: grid;
+				grid-template-columns: 220px 1fr;
+				gap: 34px;
+			}
+			.cv-section {
+				break-inside: avoid;
+				margin-bottom: 26px;
+			}
+			.cv-section h2 {
+				margin: 0 0 12px;
+				padding-bottom: 7px;
+				border-bottom: 1px solid #d1d5db;
+				color: #1f4e79;
+				font-size: 13px;
+				line-height: 1.4;
+				text-transform: uppercase;
+				font-weight: 700;
+			}
+			.cv-row {
+				margin-bottom: 12px;
+				break-inside: avoid;
+			}
+			.cv-label {
+				margin-bottom: 3px;
+				color: #6b7280;
+				font-size: 10px;
+				line-height: 1.4;
+				text-transform: uppercase;
+				font-weight: 700;
+			}
+			.cv-value {
+				color: #111827;
+				font-size: 12px;
+				line-height: 1.65;
+				overflow-wrap: anywhere;
+			}
+			.cv-item {
+				break-inside: avoid;
+				margin-bottom: 18px;
+			}
+			.cv-item-head {
+				display: grid;
+				grid-template-columns: 1fr auto;
+				gap: 16px;
+				align-items: start;
+			}
+			.cv-item-title {
+				margin: 0;
+				color: #111827;
+				font-size: 14px;
+				line-height: 1.55;
+				font-weight: 700;
+			}
+			.cv-item-meta {
+				margin: 2px 0 0;
+				color: #1f4e79;
+				font-size: 12px;
+				line-height: 1.6;
+				font-weight: 700;
+			}
+			.cv-period {
+				white-space: nowrap;
+				color: #6b7280;
+				font-size: 11px;
+				line-height: 1.7;
+			}
+			.cv-desc {
+				margin: 7px 0 0;
+				color: #4b5563;
+				font-size: 12px;
+				line-height: 1.75;
+			}
+			.cv-pills {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 7px;
+			}
+			.cv-pill {
+				display: inline-flex;
+				padding: 5px 8px;
+				border-radius: 6px;
+				background: #f3f4f6;
+				color: #374151;
+				font-size: 11px;
+				line-height: 1.4;
+			}
+			.cv-profile {
+				margin: 0;
+				color: #374151;
+				font-size: 13px;
+				line-height: 1.85;
+			}
+		</style>
+		<div class="cv-page" lang="${escapeHtml(language)}">
+			<header class="cv-header">
+				<div>
+					<h1 class="cv-name">${escapeHtml(data.name)}</h1>
+					<p class="cv-title">${escapeHtml(data.title)}</p>
+					<div class="cv-contact">
+						<div><strong>Email:</strong> ${escapeHtml(data.email)}</div>
+						<div><strong>Phone:</strong> ${escapeHtml(data.phone)}</div>
+						<div><strong>Location:</strong> ${escapeHtml(data.location)}</div>
+						<div><strong>Member ID:</strong> ${escapeHtml(data.memberCode)}</div>
+					</div>
+				</div>
+				${data.avatarUrl
+					? `<img class="cv-avatar" src="${escapeHtml(data.avatarUrl)}" crossorigin="anonymous" alt="${escapeHtml(data.name)}" />`
+					: `<div class="cv-avatar-fallback">${escapeHtml(data.name.slice(0, 2).toUpperCase())}</div>`}
+			</header>
+
+			<div class="cv-grid">
+				<aside>
+					${section("Personal", [
+						row("Date of Birth", data.dob),
+						row("Gender", data.gender),
+						row("Nationality", data.nationality),
+						row("Joined", data.joined),
+					].join(""))}
+					${data.skills.length ? section("Skills", `<div class="cv-pills">${data.skills.map((skill: string) => `<span class="cv-pill">${escapeHtml(skill)}</span>`).join("")}</div>`) : ""}
+					${data.languages.length ? section("Languages", `<div class="cv-pills">${data.languages.map((item: string) => `<span class="cv-pill">${escapeHtml(item)}</span>`).join("")}</div>`) : ""}
+					${data.socials.length ? section("Links", data.socials.map((social: CvSocial) => row(social.platform, social.url)).join("")) : ""}
+				</aside>
+
+				<main>
+					${section("Profile", `<p class="cv-profile">${escapeHtml(data.bio)}</p>`)}
+					${data.experiences.length ? section("Professional Experience", data.experiences.map((item: CvExperience) => `
+						<article class="cv-item">
+							<div class="cv-item-head">
+								<div>
+									<h3 class="cv-item-title">${escapeHtml(item.title)}</h3>
+									<p class="cv-item-meta">${escapeHtml(item.organization)}</p>
+								</div>
+								<div class="cv-period">${escapeHtml(item.period)}</div>
+							</div>
+							<p class="cv-desc">${escapeHtml(item.description)}</p>
+						</article>
+					`).join("")) : ""}
+					${data.educations.length ? section("Education", data.educations.map((item: CvEducation) => `
+						<article class="cv-item">
+							<div class="cv-item-head">
+								<div>
+									<h3 class="cv-item-title">${escapeHtml(item.degree)}</h3>
+									<p class="cv-item-meta">${escapeHtml(item.school)}</p>
+								</div>
+								<div class="cv-period">${escapeHtml(item.period)}</div>
+							</div>
+						</article>
+					`).join("")) : ""}
+					${data.associations.length ? section("Organizations & Memberships", data.associations.map((item: CvAssociation) => row(item.name, item.role)).join("")) : ""}
+				</main>
+			</div>
+		</div>
+	`;
+
+	return root;
+}
+
+async function waitForFonts(language: LanguageCode): Promise<void> {
+	if (!("fonts" in document)) return;
+	const family = language === "km" ? "MiSansKhmerPdf" : "GoogleSansPdf";
+	await document.fonts.load(`16px ${family}`);
+	await document.fonts.ready;
+}
+
+export async function generateMemberPDF(member: Member, language: LanguageCode = "en"): Promise<void> {
+	const html2pdfModule = await import("html2pdf.js");
+	const html2pdf = (html2pdfModule as any).default || html2pdfModule;
+	const cvElement = buildCvHtml(member, language);
+	document.body.appendChild(cvElement);
+
+	try {
+		await waitForFonts(language);
+		const pageElement = cvElement.querySelector(".cv-page");
+		if (!(pageElement instanceof HTMLElement)) {
+			throw new Error("CV page element was not created.");
 		}
-	}
 
-	const total = doc.getNumberOfPages();
-	for (let page = 1; page <= total; page += 1) {
-		doc.setPage(page);
-		drawFooter(doc, page, total);
-	}
+		const options = {
+			margin: 0,
+			filename: `${filenameSafe(collectCvData(member, language).name)}_CV.pdf`,
+			image: { type: "jpeg", quality: 0.98 },
+			html2canvas: {
+				scale: Math.min(window.devicePixelRatio || 1, 2) * 2,
+				useCORS: true,
+				allowTaint: false,
+				backgroundColor: "#ffffff",
+				letterRendering: true,
+				windowWidth: PAPER_WIDTH,
+			},
+			jsPDF: {
+				unit: "px",
+				format: [PAPER_WIDTH, 1123],
+				orientation: "portrait",
+			},
+			pagebreak: { mode: ["css", "legacy"] },
+		};
 
-	doc.save(`${filenameSafe(name)}_CV.pdf`);
-};
+		await html2pdf()
+			.set(options as any)
+			.from(pageElement)
+			.save();
+	} finally {
+		cvElement.remove();
+	}
+}

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Member } from "@/lib/types/structure";
 import { useTranslation } from "@/lib/i18n";
 import { normalizeUrl } from "@/lib/utils/image";
+import { displayStructureValue, optionalStructureValue } from "@/lib/utils/structure-display";
 import { MEDIA_ENDPOINT } from "@/lib/static";
 import {
 	ArrowLeft,
@@ -31,9 +32,19 @@ type Localized = string | { en?: string | null; km?: string | null } | null | un
 
 function pickLocalized(value: Localized, locale: string, fallback = ""): string {
 	if (!value) return fallback;
-	if (typeof value === "string") return value;
+	if (typeof value === "string") return optionalStructureValue(value) || fallback;
 	if (locale === "km") return value.km || value.en || fallback;
 	return value.en || value.km || fallback;
+}
+
+function formatDisplayDate(value: unknown, locale: string, options: Intl.DateTimeFormatOptions): string | null {
+	const raw = optionalStructureValue(value);
+	if (!raw) return null;
+
+	const date = new Date(raw);
+	if (Number.isNaN(date.getTime())) return raw;
+
+	return date.toLocaleDateString(locale === "km" ? "km-KH" : "en-US", options);
 }
 
 function getSocialIcon(platform: string) {
@@ -88,12 +99,12 @@ function InfoRow({
 	value?: string | null;
 	href?: string;
 }) {
-	if (!value) return null;
+	const displayValue = displayStructureValue(value);
 
 	const content = (
 		<div>
 			<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{label}</p>
-			<p className="mt-1 break-words text-sm font-medium leading-5 text-gray-900">{value}</p>
+			<p className="mt-1 break-words text-sm font-medium leading-5 text-gray-900">{displayValue}</p>
 		</div>
 	);
 
@@ -125,7 +136,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 		try {
 			setIsGenerating(true);
 			const { generateMemberPDF } = await import("@/lib/utils/generate-pdf");
-			await generateMemberPDF(person);
+			await generateMemberPDF(person, language);
 		} catch (error) {
 			console.error("Failed to generate PDF:", error);
 		} finally {
@@ -136,10 +147,14 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 	const data = useMemo(() => {
 		const p = person as any;
 
-		const name = pickLocalized(p.name, locale, p.name_en || "Unknown Member");
+		const name = pickLocalized(p.name, locale, p.name_en || "");
 		const title = pickLocalized(p.title, locale);
-		const location = pickLocalized(p.location, locale);
-		const bio = pickLocalized(p.bio, locale);
+		const location = locale === "km"
+			? pickLocalized(p.location, locale, p.location_km || p.location_en || "")
+			: pickLocalized(p.location, locale, p.location_en || "");
+		const bio = locale === "km"
+			? pickLocalized(p.bio, locale, p.bio_km || "")
+			: pickLocalized(p.bio, locale);
 
 		const educations = (p.personalEducations || p.educations || [])
 			.slice()
@@ -196,8 +211,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 		}));
 
 		const languages = (p.memberLanguages || p.languages || [])
-			.map((lang: any) => pickLocalized(lang.name || lang.language?.name || lang.languageName || lang, locale))
-			.filter(Boolean);
+			.map((lang: any) => pickLocalized(lang.name || lang.language?.name || lang.languageName || lang, locale));
 
 		const rawAvatar = p.image || p.avatarUrl || p.avatar_url || null;
 		const fullAvatarUrl =
@@ -207,20 +221,16 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 					: normalizeUrl(`${MEDIA_ENDPOINT}/view/${rawAvatar}`)
 				: null;
 
-		const dob = p.dob
-			? new Date(p.dob).toLocaleDateString(locale === "km" ? "km-KH" : "en-US", {
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				})
-			: null;
+		const dob = formatDisplayDate(p.dob, locale, {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		});
 		const joinDate = p.join_date || p.joinDate;
-		const formattedJoinDate = joinDate
-			? new Date(joinDate).toLocaleDateString(locale === "km" ? "km-KH" : "en-US", {
-					year: "numeric",
-					month: "long",
-				})
-			: null;
+		const formattedJoinDate = formatDisplayDate(joinDate, locale, {
+			year: "numeric",
+			month: "long",
+		});
 
 		const yearsOfService = p.joinYear || p.join_year
 			? new Date().getFullYear() - (p.joinYear || p.join_year)
@@ -254,7 +264,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 		};
 	}, [person, locale]);
 
-	const displayName = data.name || t("member.detail.unknownMember");
+	const displayName = displayStructureValue(data.name);
 	const initials = displayName
 		.split(" ")
 		.map((n: string) => n[0])
@@ -328,12 +338,12 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 
 							<div className="min-w-0 flex-1">
 								<div className="mb-3 flex flex-wrap items-center gap-2">
-									{data.memberCode && <SoftPill>{data.memberCode}</SoftPill>}
+									{optionalStructureValue(data.memberCode) && <SoftPill>{displayStructureValue(data.memberCode)}</SoftPill>}
 									{data.headRole && <SoftPill>{t("member.detail.headMember")}</SoftPill>}
 								</div>
 
 								<h1 className="text-2xl font-semibold leading-tight text-gray-900 sm:text-3xl">{displayName}</h1>
-								{data.title && <p className="mt-2 text-base leading-6 text-gray-600">{data.title}</p>}
+								<p className="mt-2 text-base leading-6 text-gray-600">{displayStructureValue(data.title)}</p>
 
 								<div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-500">
 									{data.joinDate && <span>{t("member.detail.since")} {data.joinDate}</span>}
@@ -345,28 +355,20 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 									)}
 								</div>
 
-								{(data.phone || data.email || data.location) && (
-									<div className="mt-6 grid max-w-3xl grid-cols-1 gap-4 border-t border-gray-200 pt-5 sm:grid-cols-2">
-										{data.phone && (
-											<div>
-												<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.phone")}</p>
-												<p className="mt-1 break-words text-sm font-medium text-gray-900">{data.phone}</p>
-											</div>
-										)}
-										{data.email && (
-											<div>
-												<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.email")}</p>
-												<p className="mt-1 break-words text-sm font-medium text-gray-900">{data.email}</p>
-											</div>
-										)}
-										{data.location && (
-											<div className="sm:col-span-2">
-												<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.location")}</p>
-												<p className="mt-1 max-w-3xl text-sm font-medium leading-6 text-gray-900">{data.location}</p>
-											</div>
-										)}
+								<div className="mt-6 grid max-w-3xl grid-cols-1 gap-4 border-t border-gray-200 pt-5 sm:grid-cols-2">
+									<div>
+										<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.phone")}</p>
+										<p className="mt-1 break-words text-sm font-medium text-gray-900">{displayStructureValue(data.phone)}</p>
 									</div>
-								)}
+									<div>
+										<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.email")}</p>
+										<p className="mt-1 break-words text-sm font-medium text-gray-900">{displayStructureValue(data.email)}</p>
+									</div>
+									<div className="sm:col-span-2">
+										<p className="text-xs font-medium uppercase tracking-normal text-gray-500">{t("member.detail.location")}</p>
+										<p className="mt-1 max-w-3xl text-sm font-medium leading-6 text-gray-900">{displayStructureValue(data.location)}</p>
+									</div>
+								</div>
 
 								{data.socials.length > 0 && (
 									<div className="mt-5 flex items-center gap-3 print:hidden">
@@ -393,33 +395,29 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 					</header>
 
 					<div className="rounded-lg border border-gray-200 bg-white px-6 py-8 print:rounded-none print:border-0 sm:px-10 lg:px-12">
-						{data.bio && (
-							<div className="mb-8 max-w-3xl">
-								<p className="text-base leading-7 text-gray-700">{data.bio}</p>
-							</div>
-						)}
+						<div className="mb-8 max-w-3xl">
+							<p className="text-base leading-7 text-gray-700">{displayStructureValue(data.bio)}</p>
+						</div>
 
 						<div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
 							<aside className="space-y-8 print:space-y-5 lg:col-span-4">
-								{(data.dob || data.nationality || data.gender || data.joinDate) && (
-									<Section title={t("member.detail.personal")}>
-										<div className="space-y-4">
-											<InfoRow label={t("member.detail.dateOfBirth")} value={data.dob} />
-											<InfoRow label={t("member.detail.nationality")} value={data.nationality} />
-											<InfoRow
-												label={t("member.detail.gender")}
-												value={data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : null}
-											/>
-											<InfoRow label={t("member.detail.joined")} value={data.joinDate} />
-										</div>
-									</Section>
-								)}
+								<Section title={t("member.detail.personal")}>
+									<div className="space-y-4">
+										<InfoRow label={t("member.detail.dateOfBirth")} value={data.dob} />
+										<InfoRow label={t("member.detail.nationality")} value={data.nationality} />
+										<InfoRow
+											label={t("member.detail.gender")}
+											value={data.gender ? data.gender.charAt(0).toUpperCase() + data.gender.slice(1) : null}
+										/>
+										<InfoRow label={t("member.detail.joined")} value={data.joinDate} />
+									</div>
+								</Section>
 
 								{data.skills.length > 0 && (
 									<Section title={t("member.detail.skills")} count={data.skills.length}>
 										<div className="flex flex-wrap gap-2">
 											{data.skills.map((s: any) => (
-												<SoftPill key={s.id}>{s.name}</SoftPill>
+												<SoftPill key={s.id || s.name}>{displayStructureValue(s.name)}</SoftPill>
 											))}
 										</div>
 									</Section>
@@ -429,7 +427,7 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 									<Section title={t("member.detail.languages")} count={data.languages.length}>
 										<div className="flex flex-wrap gap-2">
 											{data.languages.map((lang: string, idx: number) => (
-												<SoftPill key={idx}>{lang}</SoftPill>
+												<SoftPill key={idx}>{displayStructureValue(lang)}</SoftPill>
 											))}
 										</div>
 									</Section>
@@ -445,17 +443,17 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
 														<div className="min-w-0 flex-1">
 															<h4 className="text-sm font-semibold text-gray-900">
-																{exp.title || t("member.detail.role")}
+																{displayStructureValue(exp.title)}
 															</h4>
 															<p className="mt-1 text-sm font-medium text-gray-600">
-																{exp.organization || t("member.detail.organization")}
+																{displayStructureValue(exp.organization)}
 															</p>
 														</div>
 														<p className="shrink-0 whitespace-nowrap text-sm text-gray-500">
-															{exp.startYear || "-"} - {exp.endYear || t("member.detail.present")}
+															{displayStructureValue(exp.startYear)} - {displayStructureValue(exp.endYear || t("member.detail.present"))}
 														</p>
 													</div>
-													{exp.description && <p className="mt-2 text-sm leading-6 text-gray-600">{exp.description}</p>}
+													<p className="mt-2 text-sm leading-6 text-gray-600">{displayStructureValue(exp.description)}</p>
 												</article>
 											))}
 										</div>
@@ -470,12 +468,12 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
 														<div className="min-w-0 flex-1">
 															<h4 className="text-sm font-semibold text-gray-900">
-																{edu.degree || t("member.detail.degree")}
+																{displayStructureValue(edu.degree)}
 															</h4>
-															<p className="mt-1 text-sm font-medium text-gray-600">{edu.school}</p>
+															<p className="mt-1 text-sm font-medium text-gray-600">{displayStructureValue(edu.school)}</p>
 														</div>
 														<p className="shrink-0 whitespace-nowrap text-sm text-gray-500">
-															{edu.startYear || "-"} - {edu.endYear || t("member.detail.present")}
+															{displayStructureValue(edu.startYear)} - {displayStructureValue(edu.endYear || t("member.detail.present"))}
 														</p>
 													</div>
 												</article>
@@ -492,9 +490,9 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 													<div className="flex items-start justify-between gap-3">
 														<div className="min-w-0">
 															<p className="truncate text-sm font-semibold text-gray-900">
-																{assoc.name || t("member.detail.organization")}
+																{displayStructureValue(assoc.name)}
 															</p>
-															{assoc.role && <p className="mt-1 truncate text-sm text-gray-500">{assoc.role}</p>}
+															<p className="mt-1 truncate text-sm text-gray-500">{displayStructureValue(assoc.role)}</p>
 														</div>
 														{assoc.isHead && <SoftPill>{t("member.detail.head")}</SoftPill>}
 													</div>
