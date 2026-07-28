@@ -26,8 +26,6 @@
     # ---- Production Stage ----
     FROM base AS production
 
-    # Use non-root user for security
-    USER node
     WORKDIR /app
 
     ENV NODE_ENV=production
@@ -39,6 +37,14 @@
 
     # ❗ FIX: Add this line to copy your images and other public assets right here
     COPY --from=builder --chown=node:node /app/public ./public
+
+    # Next.js writes ISR/image/fetch cache at runtime. Keep the root filesystem
+    # read-only by mounting only this cache path as a writable Docker volume.
+    RUN mkdir -p /app/.next/cache && chown -R node:node /app/.next/cache
+    VOLUME ["/app/.next/cache"]
+
+    # Use non-root user for security
+    USER node
 
     EXPOSE 3000
     CMD ["node", "server.js"]

@@ -32,6 +32,23 @@ const nextConfig = {
 			},
 		],
 	},
+	async redirects() {
+		return [
+			{
+				source: "/Partners",
+				destination: "/partners",
+				permanent: true,
+			},
+		];
+	},
+	async rewrites() {
+		return [
+			{
+				source: "/partners",
+				destination: "/network",
+			},
+		];
+	},
 };
 
 module.exports = nextConfig;
