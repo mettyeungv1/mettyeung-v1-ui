@@ -32,10 +32,14 @@ export function normalizeMemberData(member: any): Member {
 		|| title_en;
 
 	const position_en = title_en;
-	const location_en = localizedText(member.location, "", "en");
-	const location_km = localizedText(member.location, location_en, "km");
-	const bio_en = localizedText(member.bio, "", "en");
-	const bio_km = localizedText(member.bio, bio_en, "km");
+	const location_en = getTranslation(member.memberTranslations, "location", "en")
+		|| localizedText(member.location, "", "en");
+	const location_km = getTranslation(member.memberTranslations, "location", "km")
+		|| localizedText(member.location, location_en, "km");
+	const bio_en = getTranslation(member.memberTranslations, "bio", "en")
+		|| localizedText(member.bio, "", "en");
+	const bio_km = getTranslation(member.memberTranslations, "bio", "km")
+		|| localizedText(member.bio, bio_en, "km");
 
 	// Join date — preserve full date, fallback to year-only
 	const joinDate = member.join_date
