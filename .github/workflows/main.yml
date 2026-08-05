@@ -1,92 +1,184 @@
-name: Admin CI/CD Pipeline
+name: Client trusted build and deployment
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  id-token: write
 
 env:
-  # Correctly identifies the admin image
   DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/mya-client
-  # Correctly identifies the service name in docker-compose.yml
   SERVICE_NAME: client
 
 jobs:
-  build_and_push:
-    name: Build & Push Docker Image
+  verify_build_push:
     runs-on: ubuntu-latest
+    outputs:
+      image_digest: ${{ steps.build.outputs.digest }}
     steps:
-      - name: ⬇️ Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout reviewed source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
-      - name: 🏷️ Generate image tags
-        id: git_info
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
-      - name: 🐳 Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: 🔐 Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: 🏷️ Calculate Docker tags
-        id: dockertags
+      - name: Validate immutable Node base
+        env:
+          NODE_IMAGE: ${{ vars.NODE_IMAGE }}
+          TRIVY_IMAGE: ${{ vars.TRIVY_IMAGE }}
+          COSIGN_IMAGE: ${{ vars.COSIGN_IMAGE }}
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
-            echo "tags=${{ env.DOCKER_IMAGE }}:uat" >> $GITHUB_OUTPUT
-          else
-            echo "tags=${{ env.DOCKER_IMAGE }}:latest,${{ env.DOCKER_IMAGE }}:${{ steps.git_info.outputs.sha_short }}" >> $GITHUB_OUTPUT
+          if [[ ! "$NODE_IMAGE" =~ ^node:22-alpine@sha256:[a-f0-9]{64}$ ]]; then
+            echo "Repository variable NODE_IMAGE must pin node:22-alpine by sha256 digest" >&2
+            exit 1
+          fi
+          if [[ ! "$TRIVY_IMAGE" =~ @sha256:[a-f0-9]{64}$ ]]; then
+            echo "Repository variable TRIVY_IMAGE must pin Trivy by sha256 digest" >&2
+            exit 1
+          fi
+          if [[ ! "$COSIGN_IMAGE" =~ @sha256:[a-f0-9]{64}$ ]]; then
+            echo "Repository variable COSIGN_IMAGE must pin Cosign by sha256 digest" >&2
+            exit 1
           fi
 
-      - name: 🏗️ Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.dockertags.outputs.tags }}
-          build-args: |
-            NEXT_PUBLIC_AUTH_BASE_URL=${{ github.ref == 'refs/heads/develop' && 'https://api.uat.mettyeung27.org/api/v1' || secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      - name: Check tracked source for secret material
+        run: |
+          if git grep -nE 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}' -- . ':!package-lock.json'; then
+            echo "Potential secret material found in tracked source" >&2
+            exit 1
+          fi
 
-  deploy:
-    name: Deploy to Server
-    needs: build_and_push
-    runs-on: ubuntu-latest
+      - name: Install and verify dependencies without project lifecycle scripts
+        env:
+          NODE_IMAGE: ${{ vars.NODE_IMAGE }}
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/app" -w /app "$NODE_IMAGE" sh -lc '
+            npm ci --ignore-scripts --legacy-peer-deps &&
+            npm audit --omit=dev --audit-level=high &&
+            npm run test:security &&
+            npm run typecheck &&
+            npm run lint
+          '
+
+      - name: Login to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: printf '%s' "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+
+      - name: Create isolated BuildKit builder
+        run: docker buildx create --name trusted-builder --driver docker-container --use
+
+      - name: Build and push attested artifact
+        id: build
+        env:
+          NODE_IMAGE: ${{ vars.NODE_IMAGE }}
+          PROD_API_URL: ${{ secrets.NEXT_PUBLIC_AUTH_BASE_URL }}
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
+            PUBLIC_API_URL="https://api.uat.mettyeung27.org/api/v1"
+            IMAGE_TAG="uat-${GITHUB_SHA}"
+          else
+            PUBLIC_API_URL="$PROD_API_URL"
+            IMAGE_TAG="${GITHUB_SHA}"
+          fi
+
+          docker buildx build \
+            --pull \
+            --no-cache \
+            --provenance=mode=max \
+            --sbom=true \
+            --build-arg "NODE_IMAGE=${NODE_IMAGE}" \
+            --build-arg "NEXT_PUBLIC_AUTH_BASE_URL=${PUBLIC_API_URL}" \
+            --build-arg "SOURCE_REVISION=${GITHUB_SHA}" \
+            --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
+            --tag "${DOCKER_IMAGE}:${IMAGE_TAG}" \
+            --metadata-file build-metadata.json \
+            --push \
+            .
+
+          DIGEST="$(jq -r '."containerimage.digest"' build-metadata.json)"
+          if [[ ! "$DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]; then
+            echo "Build did not produce a valid immutable digest" >&2
+            exit 1
+          fi
+          echo "digest=${DIGEST}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify published image metadata
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: docker buildx imagetools inspect "${DOCKER_IMAGE}@${DIGEST}"
+
+      - name: Block high and critical image findings
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          TRIVY_IMAGE: ${{ vars.TRIVY_IMAGE }}
+        run: |
+          docker run --rm \
+            -v "$HOME/.docker:/root/.docker:ro" \
+            "$TRIVY_IMAGE" image \
+            --exit-code 1 \
+            --severity HIGH,CRITICAL \
+            "${DOCKER_IMAGE}@${DIGEST}"
+
+      - name: Sign immutable image digest with GitHub OIDC
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          COSIGN_IMAGE: ${{ vars.COSIGN_IMAGE }}
+        run: |
+          docker run --rm \
+            -e ACTIONS_ID_TOKEN_REQUEST_TOKEN \
+            -e ACTIONS_ID_TOKEN_REQUEST_URL \
+            -v "$HOME/.docker:/root/.docker:ro" \
+            "$COSIGN_IMAGE" sign --yes "${DOCKER_IMAGE}@${DIGEST}"
+
+  deploy_production:
+    needs: verify_build_push
     if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
     steps:
-      - name: Get commit SHA tag
-        id: meta
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Configure pinned SSH host identity
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
 
-      - name: 🚀 Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /home/mya_user/mettyeung-v1
-            # ✅ CORRECT: Calls the deploy script with the correct service and image tag
-            ./deploy.sh ${{ env.SERVICE_NAME }} ${{ env.DOCKER_IMAGE }}:latest
+      - name: Deploy immutable production digest
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          DIGEST: ${{ needs.verify_build_push.outputs.image_digest }}
+        run: |
+          ssh -i "$HOME/.ssh/deploy_key" -o BatchMode=yes "${SSH_USER}@${SSH_HOST}" \
+            "cd /home/mya_user/mettyeung-v1 && ./deploy.sh client '${DOCKER_IMAGE}@${DIGEST}'"
 
   deploy_uat:
-    name: Deploy to UAT
-    needs: build_and_push
-    runs-on: ubuntu-latest
+    needs: verify_build_push
     if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    environment: uat
     steps:
-      - name: 🚀 Deploy UAT via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /home/mya_user/mettyeung-v1
-            # Run the NEW UAT deploy script
-            ./uat/deploy-uat.sh uat-${{ env.SERVICE_NAME }}
+      - name: Configure pinned SSH host identity
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+      - name: Deploy immutable UAT digest
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          DIGEST: ${{ needs.verify_build_push.outputs.image_digest }}
+        run: |
+          ssh -i "$HOME/.ssh/deploy_key" -o BatchMode=yes "${SSH_USER}@${SSH_HOST}" \
+            "cd /home/mya_user/mettyeung-v1 && ./uat/deploy-uat.sh uat-client '${DOCKER_IMAGE}@${DIGEST}'"

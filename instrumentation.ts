@@ -6,7 +6,7 @@ export async function register() {
     const { setGlobalDispatcher, Agent } = await import("undici");
     setGlobalDispatcher(
       new Agent({
-        // 1. Force close connections after 10s (Must be < Nginx's 300s/60s)
+        // Force idle connections closed before the server-managed edge timeout.
         keepAliveTimeout: 10000,
         
         // 2. Kill stuck headers parsing after 10s

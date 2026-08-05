@@ -5,6 +5,7 @@ import { CheckCircle, Clock, MessageCircle, X } from "lucide-react";
 import type { ISocialLinkAPI, IOfficeHourAPI } from "@/lib/types/contact";
 import { getSocialIcon } from "@/lib/utils/social-icon-map";
 import { useTranslation } from "@/lib/i18n";
+import { safeExternalHttpsUrl } from "@/lib/security/url";
 
 const DAY_LABEL_KEYS: Record<number, string> = {
 	0: "contact.hours.sunday",
@@ -127,8 +128,9 @@ export function ContactSidebar({ socialLinks, officeHours }: ContactSidebarProps
 
 	const activeLinks = useMemo(
 		() =>
-			[...socialLinks]
-				.filter((l) => l.isActive)
+			socialLinks
+				.map((link) => ({ ...link, url: safeExternalHttpsUrl(link.url) }))
+				.filter((link): link is ISocialLinkAPI => link.isActive && Boolean(link.url))
 				.sort((a, b) => a.order - b.order),
 		[socialLinks]
 	);

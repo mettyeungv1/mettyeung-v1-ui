@@ -54,6 +54,9 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { FALLBACK_CONTACT_SETTINGS } from "@/lib/data/contact";
 import type { IContactSettingsAPI, ISocialLinkAPI } from "@/lib/types/contact";
 
+// Never bake mutable CMS/API responses into a release artifact.
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
 	children,
 }: {

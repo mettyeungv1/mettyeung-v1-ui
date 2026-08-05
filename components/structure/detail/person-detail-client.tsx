@@ -10,6 +10,7 @@ import { useTranslation } from "@/lib/i18n";
 import { normalizeUrl } from "@/lib/utils/image";
 import { displayStructureValue, optionalStructureValue } from "@/lib/utils/structure-display";
 import { MEDIA_ENDPOINT } from "@/lib/static";
+import { safeExternalHttpsUrl } from "@/lib/security/url";
 import {
 	ArrowLeft,
 	BadgeCheck,
@@ -437,14 +438,16 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 									<DetailTile icon={MapPin} label={t("member.detail.location")} value={data.location} />
 								</div>
 
-								{data.socials.length > 0 && (
+								{data.socials.some((social: any) => safeExternalHttpsUrl(social.url)) && (
 									<div className="mt-6 flex items-center gap-2 print:hidden">
 										{data.socials.map((s: any) => {
+											const safeUrl = safeExternalHttpsUrl(s.url);
+											if (!safeUrl) return null;
 											const Icon = getSocialIcon(s.platform);
 											return (
 												<a
 													key={s.id || s.platform}
-													href={s.url}
+													href={safeUrl}
 													target="_blank"
 													rel="noopener noreferrer"
 													className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition-colors hover:border-primary-200 hover:bg-primary-50 hover:text-primary-900"

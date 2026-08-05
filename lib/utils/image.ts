@@ -1,53 +1,54 @@
-/**
- * Normalizes image URLs from the API.
- * Replaces internal Docker URLs with the resolved API base URL.
- * In development, this keeps localhost URLs; in production, it uses the public domain.
- *
- * @param url - The URL to normalize
- * @returns The normalized URL
- */
+const APPROVED_API_BASE_URLS = new Set([
+	"https://api.mettyeung27.org/api/v1",
+	"https://api.uat.mettyeung27.org/api/v1",
+]);
 
-function getResolvedApiHost(): string {
-	// Client-side
-	if (typeof window !== "undefined") {
-		const clientUrl = process.env.NEXT_PUBLIC_AUTH_BASE_URL;
-		if (clientUrl) {
-			try {
-				const u = new URL(clientUrl);
-				return `${u.protocol}//${u.host}`;
-			} catch { /* fall through */ }
-		}
+function getResolvedApiBaseUrl(): URL {
+	try {
+		const url = new URL(process.env.NEXT_PUBLIC_AUTH_BASE_URL || "");
+		const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
+		if (APPROVED_API_BASE_URLS.has(normalized)) return new URL(normalized);
+	} catch {
+		// Use the production public API fallback below.
 	}
 
-	// Server-side
-	const serverUrl =
-		process.env.AUTH_BASE_URL ||
-		process.env.INTERNAL_API_URL ||
-		process.env.NEXT_PUBLIC_AUTH_BASE_URL;
-	if (serverUrl) {
-		try {
-			const u = new URL(serverUrl);
-			return `${u.protocol}//${u.host}`;
-		} catch { /* fall through */ }
-	}
-
-	// Ultimate fallback (production)
-	return "https://api.mettyeung27.org";
+	return new URL("https://api.mettyeung27.org/api/v1");
 }
 
-export function normalizeUrl(url: string | null | undefined): string {
-	if (!url) return "";
+function isApprovedExternalImage(url: URL, apiBaseUrl: URL): boolean {
+	if (url.protocol !== "https:") return false;
 
-	const targetHost = getResolvedApiHost();
-
-	// If it's already pointing to the correct host, return as-is
-	if (url.startsWith(targetHost)) {
-		return url;
+	if (url.origin === apiBaseUrl.origin) {
+		return url.pathname.startsWith(`${apiBaseUrl.pathname}/media/view/`);
 	}
 
-	// Replace internal Docker URLs or mismatched hosts with the resolved host
-	return url
-		.replace("http://backend:8000", targetHost)
-		.replace("http://localhost:8000", targetHost)
-		.replace("https://api.mettyeung27.org", targetHost);
+	if (url.hostname === "i.ytimg.com" || url.hostname === "img.youtube.com") {
+		return url.pathname.startsWith("/vi/");
+	}
+
+	return (
+		url.hostname === "images.pexels.com" || url.hostname === "randomuser.me"
+	);
+}
+
+export function normalizeUrl(value: string | null | undefined): string {
+	if (!value) return "";
+
+	const candidate = value.trim();
+	if (/^\/(?!\/)/.test(candidate)) return candidate;
+
+	const apiBaseUrl = getResolvedApiBaseUrl();
+	const apiHost = apiBaseUrl.origin;
+	const rewritten = candidate
+		.replace("http://backend:8000", apiHost)
+		.replace("http://localhost:8000", apiHost)
+		.replace("https://api.mettyeung27.org", apiHost)
+		.replace("https://api.uat.mettyeung27.org", apiHost);
+
+	try {
+		const url = new URL(rewritten);
+		return isApprovedExternalImage(url, apiBaseUrl) ? url.toString() : "";
+	} catch {
+		return "";
+	}
 }

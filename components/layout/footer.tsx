@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import type { ISocialLinkAPI, IContactSettingsAPI } from "@/lib/types/contact";
 import { getSocialIcon } from "@/lib/utils/social-icon-map";
+import { safeExternalHttpsUrl } from "@/lib/security/url";
 
 // Data is moved outside the component for cleaner code
 const footerColumns = [
@@ -46,8 +47,9 @@ interface FooterProps {
 export function Footer({ socialLinks, contactSettings }: FooterProps) {
 	const { t, language } = useTranslation();
 
-	const activeLinks = [...socialLinks]
-		.filter((l) => l.isActive)
+	const activeLinks = socialLinks
+		.map((link) => ({ ...link, url: safeExternalHttpsUrl(link.url) }))
+		.filter((link): link is ISocialLinkAPI => link.isActive && Boolean(link.url))
 		.sort((a, b) => a.order - b.order);
 
 	const phone = contactSettings.phone;

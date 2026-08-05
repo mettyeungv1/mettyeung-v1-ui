@@ -4,6 +4,7 @@ import { Member } from "@/lib/types/structure";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { normalizeUrl } from "@/lib/utils/image";
 import { useTranslation } from "@/lib/i18n";
+import { safeExternalHttpsUrl } from "@/lib/security/url";
 import {
 	Mail,
 	Phone,
@@ -145,9 +146,13 @@ export function ProfileCard({ person }: ProfileCardProps) {
 	const hasPersonalInfo =
 		person.dob || person.gender || person.nationality;
 
-	const hasSocials =
-		(person.socialLinks && person.socialLinks.length > 0) ||
-		(person.socials && person.socials.length > 0);
+	const safeSocials = (person.socials || person.socialLinks || [])
+		.map((social: any) => ({
+			...social,
+			url: safeExternalHttpsUrl(social.url),
+		}))
+		.filter((social: any) => Boolean(social.url));
+	const hasSocials = safeSocials.length > 0;
 
 	const hasAssociations =
 		person.associations && person.associations.length > 0;
@@ -373,7 +378,7 @@ export function ProfileCard({ person }: ProfileCardProps) {
 						<div className="px-5 py-4">
 							<SectionLabel icon={Globe} label={t("member.detail.social")} />
 							<div className="flex flex-wrap gap-2">
-								{(person.socials || person.socialLinks || []).map(
+									{safeSocials.map(
 									(social: any, idx: number) => (
 										<a
 											key={idx}

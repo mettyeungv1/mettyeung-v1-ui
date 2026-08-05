@@ -4,12 +4,11 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { useTranslation } from "@/lib/i18n";
 import { Phone, Mail, MapPin } from "lucide-react";
 import type { IContactSettingsAPI } from "@/lib/types/contact";
+import { createGoogleMapsLocationUrl } from "@/lib/security/url";
 
 interface ContactInfoGridProps {
 	settings: IContactSettingsAPI;
 }
-
-const MAPS_URL = "https://maps.google.com/maps?ll=11.595197,104.901852&z=17&t=m&hl=en&gl=KH";
 
 export function ContactInfoGrid({ settings }: ContactInfoGridProps) {
 	const { t, language } = useTranslation();
@@ -20,10 +19,10 @@ export function ContactInfoGrid({ settings }: ContactInfoGridProps) {
 		settings.address?.["en"] ??
 		"";
 
-	const mapsUrl =
-		settings.mapLat && settings.mapLng
-			? `https://maps.google.com/maps?ll=${settings.mapLat},${settings.mapLng}&z=17&t=m&hl=en&gl=KH`
-			: MAPS_URL;
+	const mapsUrl = createGoogleMapsLocationUrl(
+		settings.mapLat,
+		settings.mapLng
+	);
 
 	const contactItems = [
 		{

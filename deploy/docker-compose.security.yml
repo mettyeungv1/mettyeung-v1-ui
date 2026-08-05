@@ -1,0 +1,28 @@
+services:
+  client:
+    image: ${CLIENT_IMAGE:?set CLIENT_IMAGE to a signed image@sha256 digest}
+    user: "1000:1000"
+    read_only: true
+    init: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m,uid=1000,gid=1000,mode=1777
+      - /app/.next/cache:rw,noexec,nosuid,nodev,size=128m,uid=1000,gid=1000,mode=0750
+    pids_limit: 128
+    cpus: 1.0
+    mem_limit: 768m
+    restart: unless-stopped
+    stop_grace_period: 20s
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

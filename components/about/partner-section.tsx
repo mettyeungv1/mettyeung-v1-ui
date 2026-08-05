@@ -9,6 +9,7 @@ import { GlowingCard } from "./glowing-card";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { Partner } from "@/lib/types/partner";
+import { safeExternalHttpsUrl } from "@/lib/security/url";
 
 function resolvePartnerText(
 	t: (key: string | Record<string, string> | null | undefined) => string,
@@ -38,6 +39,7 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 				</AnimatedSection>
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
 					{initialPartners.map((partner, index) => {
+						const websiteUrl = safeExternalHttpsUrl(partner.websiteUrl);
 						const partnerName =
 							resolvePartnerText(t, partner.name, partner.nameTranslations) ||
 							partner.media?.altText ||
@@ -70,9 +72,9 @@ export function PartnersSection({ initialPartners = [] }: { initialPartners?: Pa
 											{partnerDescription}
 										</p>
 									)}
-									{partner.websiteUrl && (
+									{websiteUrl && (
 										<a
-											href={partner.websiteUrl}
+											href={websiteUrl}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="mt-auto inline-flex items-center text-button font-medium text-interactive-primary group-hover:text-primary-800 transition-colors"

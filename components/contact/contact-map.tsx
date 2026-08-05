@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { MapPin, Phone } from "lucide-react";
 import { useTranslation } from "@/lib/i18n";
 import type { IContactSettingsAPI } from "@/lib/types/contact";
+import { createGoogleMapsEmbedUrl } from "@/lib/security/url";
 
 interface ContactMapSectionProps {
 	settings: IContactSettingsAPI;
@@ -12,9 +13,7 @@ interface ContactMapSectionProps {
 export function ContactMapSection({ settings }: ContactMapSectionProps) {
 	const { t, language } = useTranslation();
 
-	const embedUrl =
-		settings.mapEmbedUrl ||
-		"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.287265969562!2d104.89966301136453!3d11.595197200000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109539297965083%3A0x7d11e2074597e98c!2sMett%20Yeung%20Association!5e0!3m2!1sen!2skh!4v1707378900000!5m2!1sen!2skh";
+	const embedUrl = createGoogleMapsEmbedUrl(settings.mapLat, settings.mapLng);
 
 	const addressText =
 		settings.address?.[language] ??
@@ -47,9 +46,9 @@ export function ContactMapSection({ settings }: ContactMapSectionProps) {
 								width="100%"
 								height="100%"
 								style={{ border: 0 }}
-								allowFullScreen
-								loading="lazy"
-								referrerPolicy="no-referrer-when-downgrade"
+									loading="lazy"
+									referrerPolicy="no-referrer"
+									sandbox="allow-scripts allow-same-origin allow-popups"
 								className="absolute inset-0 h-full w-full"
 								title={t("contact.mapTitle")}
 							/>

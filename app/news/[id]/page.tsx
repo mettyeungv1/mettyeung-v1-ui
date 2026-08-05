@@ -8,6 +8,8 @@ import {
 	getBlogRelatedPostService,
 } from "@/service/blog/blog-service";
 import { NewsDetailClient } from "@/components/news/detail/news-detail-client";
+import { serializeJsonForScript } from "@/lib/security/json";
+import { headers } from "next/headers";
 
 interface NewsDetailPageProps {
 	params: Promise<{
@@ -57,6 +59,7 @@ export async function generateMetadata({
 
 export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 	const { id } = await params;
+	const nonce = (await headers()).get("x-nonce") ?? undefined;
 	
 	if (!id) return notFound();
 
@@ -83,9 +86,10 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
 	return (
 		<>
-			<script
-				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				<script
+					nonce={nonce}
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{ __html: serializeJsonForScript(jsonLd) }}
 			/>
 			<NewsDetailClient 
 				post={res.data} 

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { safeNavigationHref } from "@/lib/security/url";
 
 interface FeatureCardProps {
 	feature: FeatureItem;
@@ -14,6 +15,7 @@ interface FeatureCardProps {
 
 export function FeatureCard({ feature }: FeatureCardProps) {
 	const { t } = useTranslation();
+	const safeLink = safeNavigationHref(feature.link);
 
 	return (
 		<Card variant="interactive" className="h-full flex flex-col overflow-hidden">
@@ -35,12 +37,14 @@ export function FeatureCard({ feature }: FeatureCardProps) {
 					{t(feature.descriptionKey)}
 				</p>
 
-				<Button asChild size="sm" className="self-start bg-primary-900 text-white hover:bg-primary-950">
-					<Link href={feature.link}>
-						{t("common.learnMore")}
-						<ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-					</Link>
-				</Button>
+				{safeLink && (
+					<Button asChild size="sm" className="self-start bg-primary-900 text-white hover:bg-primary-950">
+						<Link href={safeLink}>
+							{t("common.learnMore")}
+							<ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+						</Link>
+					</Button>
+				)}
 			</CardContent>
 		</Card>
 	);

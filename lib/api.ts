@@ -1,20 +1,20 @@
 import headerToken from "./header";
 
+const APPROVED_API_BASE_URLS = new Set([
+	"https://api.mettyeung27.org/api/v1",
+	"https://api.uat.mettyeung27.org/api/v1",
+]);
+
 export function getApiUrl(): string {
-	// Server-side: prefer explicit internal Docker URL, then fall back to
-	// the build-time-baked NEXT_PUBLIC_ value (set via build-arg in CI/CD)
-	if (typeof window === "undefined") {
-		return (
-			process.env.AUTH_BASE_URL ||
-			process.env.INTERNAL_API_URL ||
-			process.env.NEXT_PUBLIC_AUTH_BASE_URL ||
-			"https://api.mettyeung27.org/api/v1"
-		);
+	try {
+		const url = new URL(process.env.NEXT_PUBLIC_AUTH_BASE_URL || "");
+		const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
+		if (APPROVED_API_BASE_URLS.has(normalized)) return normalized;
+	} catch {
+		// Use the production public API fallback below.
 	}
-	// Client-side: use public URL
-	return (
-		process.env.NEXT_PUBLIC_AUTH_BASE_URL || "https://api.mettyeung27.org/api/v1"
-	);
+
+	return "https://api.mettyeung27.org/api/v1";
 }
 
 type FetchAPIOptions = RequestInit & {

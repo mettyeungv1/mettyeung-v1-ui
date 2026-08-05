@@ -9,6 +9,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { getPartnersService } from "@/service/partner/partner-service";
 import type { Partner } from "@/lib/types/partner";
+import { safeExternalHttpsUrl } from "@/lib/security/url";
 
 function resolvePartnerText(
 	t: (key: string | Record<string, string> | null | undefined) => string,
@@ -144,7 +145,7 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 							"Partner";
 						const partnerDescription =
 							resolvePartnerText(t, partner.description, partner.descriptionTranslations);
-						const websiteUrl = partner.websiteUrl?.trim();
+							const websiteUrl = safeExternalHttpsUrl(partner.websiteUrl);
 						const cardContent = (
 							<Card className="group relative flex flex-col h-full bg-surface-page hover:shadow-xl transition-all duration-300 border-border-subtle hover:border-interactive-primary/30 overflow-hidden rounded-2xl">
 								{/* Logo Area */}

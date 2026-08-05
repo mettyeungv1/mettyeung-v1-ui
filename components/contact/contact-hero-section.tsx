@@ -9,6 +9,7 @@ import {
 	Phone,
 } from "lucide-react";
 import type { IContactSettingsAPI } from "@/lib/types/contact";
+import { createGoogleMapsLocationUrl } from "@/lib/security/url";
 
 interface ContactHeroSectionProps {
 	settings: IContactSettingsAPI;
@@ -23,10 +24,10 @@ export function ContactHeroSection({ settings }: ContactHeroSectionProps) {
 		settings.address?.en ??
 		t("contact.defaultAddress");
 
-	const mapsHref =
-		settings.mapLat && settings.mapLng
-			? `https://maps.google.com/maps?ll=${settings.mapLat},${settings.mapLng}&z=17`
-			: "https://maps.google.com/maps?ll=11.595197,104.901852&z=17";
+	const mapsHref = createGoogleMapsLocationUrl(
+		settings.mapLat,
+		settings.mapLng
+	);
 
 	const contactRows = [
 		{
