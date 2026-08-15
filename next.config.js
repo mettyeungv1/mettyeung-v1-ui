@@ -1,6 +1,7 @@
 const APPROVED_API_BASE_URLS = new Set([
 	"https://api.mettyeung27.org/api/v1",
 	"https://api.uat.mettyeung27.org/api/v1",
+	"http://localhost:8000/api/v1", // local Docker testing
 ]);
 
 function normalizeBaseUrl(value) {
@@ -38,9 +39,9 @@ function getApiImagePattern() {
 
 	const url = new URL(configuredBaseUrl);
 	return {
-		protocol: "https",
+		protocol: url.protocol.replace(":", ""),
 		hostname: url.hostname,
-		port: "",
+		port: url.port || "",
 		pathname: `${url.pathname}/media/view/**`,
 	};
 }

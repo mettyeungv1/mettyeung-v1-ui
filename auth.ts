@@ -6,6 +6,9 @@ import { loginService } from "./service/auth/login-service";
 const isProduction = process.env.NODE_ENV === "production";
 const isProductionBuild = process.env.NEXT_PHASE === "phase-production-build";
 const authSecret = process.env.AUTH_SECRET;
+// Disable secure cookies when AUTH_URL is HTTP (e.g. local Docker testing over localhost)
+const authUrl = process.env.AUTH_URL || "";
+const useSecureCookies = isProduction && !authUrl.startsWith("http://");
 
 if (isProduction && !isProductionBuild && (!authSecret || authSecret.length < 32)) {
 	throw new Error("AUTH_SECRET must be set to at least 32 characters in production");
@@ -48,17 +51,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		}),
 	],
 	secret: authSecret,
-	useSecureCookies: isProduction,
+	useSecureCookies: useSecureCookies,
 	cookies: {
 		sessionToken: {
-			name: isProduction
+			name: useSecureCookies
 				? "__Host-authjs.session-token"
 				: "authjs.session-token",
 			options: {
 				httpOnly: true,
 				sameSite: "lax",
 				path: "/",
-				secure: isProduction,
+				secure: useSecureCookies,
 			},
 		},
 	},

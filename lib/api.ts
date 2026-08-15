@@ -3,15 +3,26 @@ import headerToken from "./header";
 const APPROVED_API_BASE_URLS = new Set([
 	"https://api.mettyeung27.org/api/v1",
 	"https://api.uat.mettyeung27.org/api/v1",
+	"http://localhost:8000/api/v1", // local Docker testing (client-side)
+	"http://api:8000/api/v1", // local Docker testing (server-side SSR)
 ]);
 
 export function getApiUrl(): string {
-	try {
-		const url = new URL(process.env.NEXT_PUBLIC_AUTH_BASE_URL || "");
-		const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
-		if (APPROVED_API_BASE_URLS.has(normalized)) return normalized;
-	} catch {
-		// Use the production public API fallback below.
+	// AUTH_BASE_URL is a runtime-only env var (no NEXT_PUBLIC_ prefix) used for server-side
+	// fetches (SSR, API routes). On the client it is undefined and falls back to the
+	// baked-in NEXT_PUBLIC_AUTH_BASE_URL so browser requests reach the correct host.
+	const candidates = [
+		process.env.AUTH_BASE_URL,
+		process.env.NEXT_PUBLIC_AUTH_BASE_URL,
+	];
+	for (const candidate of candidates) {
+		try {
+			const url = new URL(candidate || "");
+			const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
+			if (APPROVED_API_BASE_URLS.has(normalized)) return normalized;
+		} catch {
+			// try next candidate
+		}
 	}
 
 	return "https://api.mettyeung27.org/api/v1";

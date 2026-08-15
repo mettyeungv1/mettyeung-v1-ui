@@ -13,6 +13,7 @@ const authRoutes = [
 const approvedApiOrigins = new Set([
 	"https://api.mettyeung27.org",
 	"https://api.uat.mettyeung27.org",
+	"http://localhost:8000", // local Docker testing
 ]);
 
 function matchesRoute(pathname: string, route: string): boolean {
@@ -36,6 +37,7 @@ function configuredApiOrigin(): string {
 function createContentSecurityPolicy(nonce: string): string {
 	const apiOrigin = configuredApiOrigin();
 	const isDevelopment = process.env.NODE_ENV === "development";
+	const isLocalHttp = apiOrigin.startsWith("http://");
 	const scriptPolicy = isDevelopment
 		? "script-src 'self' 'unsafe-eval' 'unsafe-inline'"
 		: `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`;
@@ -53,7 +55,8 @@ function createContentSecurityPolicy(nonce: string): string {
 		"frame-src https://www.google.com https://www.youtube.com",
 		"font-src 'self' data:",
 		"worker-src 'self' blob:",
-		...(isDevelopment ? [] : ["upgrade-insecure-requests"]),
+		// skip upgrade-insecure-requests for local HTTP Docker testing
+		...(!isDevelopment && !isLocalHttp ? ["upgrade-insecure-requests"] : []),
 	].join("; ");
 }
 

@@ -1,6 +1,7 @@
 const APPROVED_API_BASE_URLS = new Set([
 	"https://api.mettyeung27.org/api/v1",
 	"https://api.uat.mettyeung27.org/api/v1",
+	"http://localhost:8000/api/v1", // local Docker testing
 ]);
 
 function getResolvedApiBaseUrl(): URL {
@@ -16,7 +17,9 @@ function getResolvedApiBaseUrl(): URL {
 }
 
 function isApprovedExternalImage(url: URL, apiBaseUrl: URL): boolean {
-	if (url.protocol !== "https:") return false;
+	// Allow http only when the configured API is also http (local Docker testing)
+	const allowHttp = apiBaseUrl.protocol === "http:";
+	if (url.protocol !== "https:" && !allowHttp) return false;
 
 	if (url.origin === apiBaseUrl.origin) {
 		return url.pathname.startsWith(`${apiBaseUrl.pathname}/media/view/`);
