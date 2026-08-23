@@ -1,6 +1,7 @@
 import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { AUTH_ENDPOINT } from "./lib/static";
+import { getApiUrl } from "./lib/api";
 import { loginService } from "./service/auth/login-service";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -20,6 +21,33 @@ class CustomError extends CredentialsSignin {
 		this.code = code;
 		this.message = code;
 		this.stack = undefined;
+	}
+}
+
+type RefreshedTokens = { accessToken: string; refreshToken: string };
+const refreshPromises = new Map<string, Promise<RefreshedTokens>>();
+
+async function refreshAccessToken(refreshToken: string): Promise<RefreshedTokens> {
+	const existing = refreshPromises.get(refreshToken);
+	if (existing) return existing;
+
+	const request = (async () => {
+		const response = await fetch(`${getApiUrl()}/auth/refresh-token`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ refreshToken }),
+		});
+		const result = await response.json();
+		if (!response.ok || !result.data?.accessToken || !result.data?.refreshToken) {
+			throw new Error("Token refresh failed");
+		}
+		return result.data as RefreshedTokens;
+	})();
+	refreshPromises.set(refreshToken, request);
+	try {
+		return await request;
+	} finally {
+		refreshPromises.delete(refreshToken);
 	}
 }
 
@@ -77,6 +105,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			if (user) {
 				token.accessToken = user.accessToken;
 				token.refreshToken = user.refreshToken;
+				token.expiresAt = Date.now() + 14 * 60 * 1000;
+			}
+			const expiresAt = token.expiresAt as number | undefined;
+			if (expiresAt && Date.now() >= expiresAt) {
+				try {
+					const refreshToken = token.refreshToken as string | undefined;
+					if (!refreshToken) throw new Error("Missing refresh token");
+					const refreshed = await refreshAccessToken(refreshToken);
+					token.accessToken = refreshed.accessToken;
+					token.refreshToken = refreshed.refreshToken;
+					token.expiresAt = Date.now() + 14 * 60 * 1000;
+				} catch {
+					token.error = "RefreshTokenError";
+				}
 			}
 
 			return token;

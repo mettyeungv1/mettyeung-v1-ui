@@ -51,7 +51,8 @@ jobs:
         env:
           NODE_IMAGE: ${{ vars.NODE_IMAGE }}
         run: |
-          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/app" -w /app "$NODE_IMAGE" sh -lc '
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e NEXT_PUBLIC_AUTH_BASE_URL=https://api.mettyeung27.org/api/v1 -v "$PWD:/app" -w /app "$NODE_IMAGE" sh -lc '
+            npm config set cache /app/.npm-cache &&
             npm ci --ignore-scripts --legacy-peer-deps &&
             npm audit --omit=dev --audit-level=high &&
             npm run test:security &&
@@ -77,9 +78,11 @@ jobs:
           if [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
             PUBLIC_API_URL="https://api.uat.mettyeung27.org/api/v1"
             IMAGE_TAG="uat-${GITHUB_SHA}"
+            EXTRA_TAG="--tag ${DOCKER_IMAGE}:uat"
           else
             PUBLIC_API_URL="$PROD_API_URL"
             IMAGE_TAG="${GITHUB_SHA}"
+            EXTRA_TAG=""
           fi
 
           docker buildx build \
@@ -92,6 +95,7 @@ jobs:
             --build-arg "SOURCE_REVISION=${GITHUB_SHA}" \
             --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
             --tag "${DOCKER_IMAGE}:${IMAGE_TAG}" \
+            ${EXTRA_TAG} \
             --metadata-file build-metadata.json \
             --push \
             .
@@ -124,12 +128,17 @@ jobs:
         env:
           DIGEST: ${{ steps.build.outputs.digest }}
           COSIGN_IMAGE: ${{ vars.COSIGN_IMAGE }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           docker run --rm \
             -e ACTIONS_ID_TOKEN_REQUEST_TOKEN \
             -e ACTIONS_ID_TOKEN_REQUEST_URL \
-            -v "$HOME/.docker:/root/.docker:ro" \
-            "$COSIGN_IMAGE" sign --yes "${DOCKER_IMAGE}@${DIGEST}"
+            -e COSIGN_DOCKER_MEDIA_TYPES=1 \
+            "$COSIGN_IMAGE" sign --yes \
+            --registry-username="$DOCKER_USERNAME" \
+            --registry-password="$DOCKER_PASSWORD" \
+            "${DOCKER_IMAGE}@${DIGEST}"
 
   deploy_production:
     needs: verify_build_push
@@ -174,11 +183,10 @@ jobs:
           printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
           chmod 600 "$HOME/.ssh/known_hosts"
 
-      - name: Deploy immutable UAT digest
+      - name: Deploy UAT
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
-          DIGEST: ${{ needs.verify_build_push.outputs.image_digest }}
         run: |
           ssh -i "$HOME/.ssh/deploy_key" -o BatchMode=yes "${SSH_USER}@${SSH_HOST}" \
-            "cd /home/mya_user/mettyeung-v1 && ./uat/deploy-uat.sh uat-client '${DOCKER_IMAGE}@${DIGEST}'"
+            "cd /home/mya_user/mettyeung-v1 && ./uat/deploy-uat.sh uat-client"

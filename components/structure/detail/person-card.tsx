@@ -3,11 +3,8 @@
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { normalizeUrl } from "@/lib/utils/image";
 import { Person } from "@/lib/stores/person-store";
-import { MEDIA_ENDPOINT } from "@/lib/static";
 import { useTranslation } from "@/lib/i18n";
 import { displayStructureValue, optionalStructureValue } from "@/lib/utils/structure-display";
 
@@ -42,8 +39,8 @@ type PersonMediaFields = Person &
 function resolveImage(person: PersonMediaFields): string {
 	const raw = person.image || person.avatarUrl || person.avatar_url;
 	if (!raw || raw === "/placeholder.svg") return "";
-	if (raw.startsWith("http")) return normalizeUrl(raw);
-	return normalizeUrl(`${MEDIA_ENDPOINT}/view/${raw}`);
+	// Image URLs are pre-normalized server-side; use as-is.
+	return raw;
 }
 
 function getInitials(name?: string): string {
@@ -106,15 +103,9 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 	}, []);
 
 	return (
-		<motion.div
-			initial={{ opacity: 0, y: 8 }}
-			animate={{ opacity: 1, y: 0 }}
-			transition={{
-				duration: 0.25,
-				delay: Math.min(index * 0.03, 0.18),
-				ease: "easeOut",
-			}}
-			className="h-full"
+		<div
+			className="person-card-enter h-full"
+			style={{ animationDelay: `${Math.min(index * 30, 180)}ms` }}
 		>
 			<Link
 				href={`/structure/${person.id}`}
@@ -190,7 +181,7 @@ function PersonCardComponent({ person, variant = "compact", index }: PersonCardP
 					</div>
 				</Card>
 			</Link>
-		</motion.div>
+		</div>
 	);
 }
 

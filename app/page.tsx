@@ -5,12 +5,17 @@ import { FeaturesSection } from "@/components/home/feature-section";
 import { SupportSection } from "@/components/home/support-section";
 import { HomeCTASection } from "@/components//home/home-cta-section";
 import { getBannersService } from "@/service/banner/banner-service";
+import { toMediaUrl } from "@/lib/utils/image";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
 	const bannersRes = await getBannersService();
-	const banners = bannersRes.status_code === 200 && bannersRes.data ? bannersRes.data : [];
+	const rawBanners = bannersRes.status_code === 200 && bannersRes.data ? bannersRes.data : [];
+	const banners = rawBanners.map((b: any) => ({
+		...b,
+		media: b.media ? { ...b.media, url: toMediaUrl(b.media.url) } : b.media,
+	}));
 
 	return (
 		<>

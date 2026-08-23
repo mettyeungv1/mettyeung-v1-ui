@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { NewsArticle, NewsCategory } from "@/lib/types/news";
 import { Search, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslation } from "@/lib/i18n";
 
 interface NewsFilterSidebarProps {
@@ -183,11 +184,13 @@ export function NewsFilterSidebar({
 							className="focus-ring group flex w-full space-x-3 text-left"
 							onClick={() => onRecentNewsClick(item.id)}
 						>
-							<div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-								<img
+							<div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg">
+								<Image
 									src={item.image}
 									alt={item.title_en}
-									className="w-full h-full object-cover"
+									fill
+									sizes="64px"
+									className="object-cover"
 								/>
 							</div>
 							<div className="flex-1 min-w-0">

@@ -7,7 +7,7 @@ import {
 	safeExternalHttpsUrl,
 	safeNavigationHref,
 } from "../../lib/security/url.ts";
-import { normalizeUrl } from "../../lib/utils/image.ts";
+import { normalizeUrl, toMediaUrl } from "../../lib/utils/image.ts";
 
 test("safeExternalHttpsUrl only accepts absolute HTTPS URLs", () => {
 	assert.equal(safeExternalHttpsUrl("javascript:alert(1)"), null);
@@ -52,4 +52,21 @@ test("normalizeUrl blocks database-controlled image origins and internal hosts",
 		),
 		"https://api.mettyeung27.org/api/v1/media/view/123e4567-e89b-42d3-a456-426614174000.png"
 	);
+	assert.equal(
+		normalizeUrl(
+			"http://api:8000/api/v1/media/view/123e4567-e89b-42d3-a456-426614174000.png"
+		),
+		"https://api.mettyeung27.org/api/v1/media/view/123e4567-e89b-42d3-a456-426614174000.png"
+	);
+	assert.equal(normalizeUrl("http://api:8000/private/image.png"), "");
+});
+
+test("toMediaUrl expands bare media filenames through the approved media endpoint", () => {
+	const filename = "123e4567-e89b-42d3-a456-426614174000.png";
+	assert.equal(
+		toMediaUrl(filename),
+		`https://api.mettyeung27.org/api/v1/media/view/${filename}`
+	);
+	assert.equal(toMediaUrl("/local/image.png"), "/local/image.png");
+	assert.equal(toMediaUrl("https://evil.example/pixel.png"), "");
 });

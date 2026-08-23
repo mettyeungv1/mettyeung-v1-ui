@@ -7,9 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Member } from "@/lib/types/structure";
 import { useTranslation } from "@/lib/i18n";
-import { normalizeUrl } from "@/lib/utils/image";
 import { displayStructureValue, optionalStructureValue } from "@/lib/utils/structure-display";
-import { MEDIA_ENDPOINT } from "@/lib/static";
 import { safeExternalHttpsUrl } from "@/lib/security/url";
 import {
 	ArrowLeft,
@@ -279,12 +277,9 @@ export function PersonDetailClient({ person }: PersonDetailClientProps) {
 			.map((lang: any) => pickLocalized(lang.name || lang.language?.name || lang.languageName || lang, locale));
 
 		const rawAvatar = p.image || p.avatarUrl || p.avatar_url || null;
+		// Image URL is pre-normalized server-side; use as-is.
 		const fullAvatarUrl =
-			rawAvatar && rawAvatar !== "/placeholder.svg"
-				? rawAvatar.startsWith("http")
-					? normalizeUrl(rawAvatar)
-					: normalizeUrl(`${MEDIA_ENDPOINT}/view/${rawAvatar}`)
-				: null;
+			rawAvatar && rawAvatar !== "/placeholder.svg" ? rawAvatar : null;
 
 		const dob = formatDisplayDate(p.dob, locale, {
 			year: "numeric",

@@ -7,7 +7,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import { Banner } from "@/lib/types/banner";
-import { API_BASE_URL } from "@/lib/static";
 import { useTranslation } from "@/lib/i18n";
 
 import "swiper/css";
@@ -54,7 +53,7 @@ export function HeroCarousel({ banners }: { banners: Banner[] }) {
 					>
 						{({ isActive }) => (
 							<MotionImage
-								src={`${API_BASE_URL}/media/view/${banner.media.url}`}
+								src={banner.media.url}
 								alt={banner.media.altText || `Banner ${banner.order}`}
 								fill
 								priority={index === 0}

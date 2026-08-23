@@ -10,7 +10,7 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { NewsFilterSidebar } from "@/components/news/new-filter-sidebar";
 import { NewsGrid } from "@/components/news/news-grid";
 import { NewsCard } from "@/components/news/news-card";
-import { listBlogsService } from "@/service/blog/blog-service";
+import { fetchNormalizedPosts } from "@/app/news/actions";
 import {
 	mapToUICategories,
 	UICategory,
@@ -56,6 +56,11 @@ export function NewsPageClient({
 	const handleArticleClick = (id: number | string) => {
 		router.push(`/news/${id}`);
 	};
+
+	const prefetchArticle = useCallback(
+		(id: number | string) => router.prefetch(`/news/${id}`),
+		[router]
+	);
 
 	// Initialize categories from server data
 	useEffect(() => {
@@ -112,7 +117,6 @@ export function NewsPageClient({
         setSelectedCategory(newCategory);
         setSelectedSubCategory(newSubCategory);
 
-		updateUrl(newTerm, newCategory, newSubCategory);
 	};
 
     // React to URL changes and Categories loading
@@ -139,6 +143,7 @@ export function NewsPageClient({
 
 		setLoading(true);
 		const resetPagination = async () => {
+			updateUrl(searchTerm, selectedCategory, selectedSubCategory);
 			setPage(1);
 			setPosts([]);
 
@@ -158,7 +163,7 @@ export function NewsPageClient({
 				params.categoryId = selectedSubCategory || selectedCategory;
 			}
 
-			const postRes = await listBlogsService(params);
+			const postRes = await fetchNormalizedPosts(params);
 
 			if (postRes.status_code === 200 && postRes.data?.data) {
 				setPosts(postRes.data.data);
@@ -203,7 +208,7 @@ export function NewsPageClient({
 			params.categoryId = selectedSubCategory || selectedCategory;
 		}
 
-		const postRes = await listBlogsService(params);
+		const postRes = await fetchNormalizedPosts(params);
 
 		if (postRes.status_code === 200 && postRes.data?.data) {
 			setPosts((prev) => [...prev, ...postRes.data.data]);
@@ -440,6 +445,7 @@ export function NewsPageClient({
 									items={filteredNews as any}
 									categories={categories as any}
 									onCardClick={(nid) => handleArticleClick(String(nid))}
+									onCardPrefetch={(nid) => prefetchArticle(String(nid))}
 									loadingMore={loadingMore}
 									hasMore={hasMore}
 									loading={loading && page === 1}

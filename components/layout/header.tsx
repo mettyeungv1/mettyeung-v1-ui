@@ -271,7 +271,7 @@ const MobileMenuItem = ({
 							e.stopPropagation();
 							setIsExpanded(!isExpanded);
 						}}
-						className="min-h-9 min-w-9 rounded-full p-1 hover:bg-interactive-neutral"
+						className="min-h-9 min-w-9 p-1"
 					>
 						<ChevronDown
 							className={cn(

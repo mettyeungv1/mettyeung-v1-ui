@@ -2,6 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes structure-enter {
+	from { opacity: 0; transform: translateY(2rem); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.structure-department-enter {
+	animation: structure-enter 500ms ease-out both;
+}
+
+@keyframes person-card-enter {
+	from { opacity: 0; transform: translateY(0.5rem); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.person-card-enter {
+	animation: person-card-enter 250ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.structure-department-enter,
+	.person-card-enter { animation: none; }
+}
+
 :root {
 	--foreground-rgb: 31, 31, 31;
 	--background-start-rgb: 255, 255, 255;

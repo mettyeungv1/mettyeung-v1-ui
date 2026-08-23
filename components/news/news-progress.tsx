@@ -1,33 +1,20 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export function NewsProgress() {
-	const [scrollProgress, setScrollProgress] = useState(0);
-
+	const barRef = useRef<HTMLDivElement>(null);
 	useEffect(() => {
-		const updateScrollProgress = () => {
-			const scrollTop = window.scrollY;
-			const documentHeight =
-				document.documentElement.scrollHeight - window.innerHeight;
-			const progress = (scrollTop / documentHeight) * 100;
-			setScrollProgress(progress);
+		let frame = 0;
+		const update = () => {
+			frame = 0;
+			const height = document.documentElement.scrollHeight - window.innerHeight;
+			const progress = height > 0 ? Math.min(window.scrollY / height, 1) : 0;
+			barRef.current?.style.setProperty("transform", `scaleX(${progress})`);
 		};
-
-		window.addEventListener("scroll", updateScrollProgress);
-		return () => window.removeEventListener("scroll", updateScrollProgress);
+		const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+		update(); window.addEventListener("scroll", onScroll, { passive: true }); window.addEventListener("resize", onScroll);
+		return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (frame) cancelAnimationFrame(frame); };
 	}, []);
-
-	return (
-		<div className="fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200">
-			<motion.div
-				className="h-full bg-gradient-to-r from-khmer-gold to-khmer-red"
-				style={{ width: `${scrollProgress}%` }}
-				initial={{ width: "0%" }}
-				animate={{ width: `${scrollProgress}%` }}
-				transition={{ duration: 0.1 }}
-			/>
-		</div>
-	);
+	return <div className="fixed inset-x-0 top-0 z-50 h-1 bg-black/5"><div ref={barRef} className="h-full origin-left bg-gradient-to-r from-khmer-gold to-khmer-red transition-transform duration-100" /></div>;
 }

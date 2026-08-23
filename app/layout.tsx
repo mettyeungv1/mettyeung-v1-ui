@@ -8,7 +8,6 @@ import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
-import { AppInitializer } from "@/components/providers/app-initializer";
 import { googleSans, miSansKhmer } from "@/lib/fonts";
 import { SessionProvider } from "next-auth/react";
 
@@ -45,17 +44,15 @@ export const metadata: Metadata = {
 	},
 };
 
-import {
-	listCategoriesService,
-	type RawCategory,
-} from "@/service/category/category-service";
-import { getContactSettingsService, getSocialLinksService } from "@/service/contact/contact-service";
+import type { RawCategory } from "@/service/category/category-service";
+import { getLayoutDataService } from "@/service/layout/layout-service";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { FALLBACK_CONTACT_SETTINGS } from "@/lib/data/contact";
 import type { IContactSettingsAPI, ISocialLinkAPI } from "@/lib/types/contact";
 
-// Never bake mutable CMS/API responses into a release artifact.
-export const dynamic = "force-dynamic";
+// Docker builds run before the API service is available. Revalidate shared CMS
+// data immediately at runtime so a build-time fallback is replaced promptly.
+export const revalidate = 1;
 
 export default async function RootLayout({
 	children,
@@ -67,19 +64,12 @@ export default async function RootLayout({
 	let contactSettings: IContactSettingsAPI = FALLBACK_CONTACT_SETTINGS;
 
 	try {
-		const [categoriesRes, fetchedSocialLinks, fetchedContactSettings] =
-			await Promise.all([
-				listCategoriesService(),
-				getSocialLinksService(),
-				getContactSettingsService(),
-			]);
-
-		categories =
-			categoriesRes.status_code === 200 && Array.isArray(categoriesRes.data)
-				? categoriesRes.data
-				: [];
-		socialLinks = fetchedSocialLinks;
-		contactSettings = fetchedContactSettings;
+		const response = await getLayoutDataService();
+		if (response.status_code === 200 && response.data) {
+			categories = Array.isArray(response.data.categories) ? response.data.categories : [];
+			socialLinks = Array.isArray(response.data.socialLinks) ? response.data.socialLinks : [];
+			contactSettings = response.data.contactSettings || FALLBACK_CONTACT_SETTINGS;
+		}
 	} catch (error) {
 		console.error("[RootLayout] Failed to load shared SSR data", error);
 	}
@@ -98,7 +88,6 @@ export default async function RootLayout({
 					disableTransitionOnChange
 				>
 					<LanguageProvider>
-						<AppInitializer />
 						<div className="min-h-screen flex flex-col">
 							<SessionProvider>
 								<Header categories={categories} />

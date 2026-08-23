@@ -1,87 +1,12 @@
 "use client";
-
-import React from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { BlogPost } from "@/lib/types/blog";
-import { formatDate } from "@/lib/utils";
-import { DEFAULT_LANGUAGE_CODE } from "@/lib/types/languages";
 import { useTranslation } from "@/lib/i18n";
-
-interface RelatedArticlesProps {
-	posts?: BlogPost[];
-	categoryId?: string;
-}
-
-export function RelatedArticles({ posts = [], categoryId }: RelatedArticlesProps) {
-	const { t } = useTranslation();
-	const relatedPosts = posts.slice(0, 3);
-
-	// Don't render the component if there are no related articles
-	if (relatedPosts.length === 0) {
-		return null;
-	}
-
-	return (
-		<Card>
-			<CardHeader>
-				<CardTitle className="text-lg">{t("news.relatedArticles")}</CardTitle>
-			</CardHeader>
-			<CardContent className="space-y-4">
-				{relatedPosts.map((post: any) => (
-					<Link
-						key={post.id}
-						href={`/news/${post.id}`}
-						className="group cursor-pointer block"
-					>
-						<div className="flex space-x-4">
-							<div className="w-24 h-20 rounded-lg overflow-hidden flex-shrink-0 relative bg-gray-100">
-								<img
-									src={post.coverImageUrl}
-									alt={typeof post.title === "string" ? post.title : post.title?.[DEFAULT_LANGUAGE_CODE]}
-									className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-								/>
-							</div>
-							<div className="flex-1 min-w-0">
-								{post.category?.name && (
-									<Badge variant="secondary" className="text-xs mb-1">
-										{t(post.category.name)}
-									</Badge>
-								)}
-								<h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1 group-hover:text-primary transition-colors">
-									{t(post.title)}
-								</h4>
-								<div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500">
-									<div className="flex items-center">
-										<Calendar className="w-3.5 h-3.5 mr-1" />
-										{formatDate(post.publishedAt)}
-									</div>
-									<div className="flex items-center">
-										<Clock className="w-3.5 h-3.5 mr-1" />
-										{post.readTimes || 1} {t("common.minutesShort")}
-									</div>
-								</div>
-							</div>
-						</div>
-					</Link>
-				))}
-
-				<div className="pt-4 border-t">
-					<Button
-						variant="outline"
-						className="w-full text-primary border-primary hover:bg-primary hover:text-white"
-						asChild
-					>
-						<Link href={categoryId ? `/news?category=${categoryId}` : "/news"}>
-							{categoryId ? t("news.moreFromCategory") : t("news.viewAllArticles")}
-							<ArrowRight className="w-4 h-4 ml-2" />
-						</Link>
-					</Button>
-				</div>
-			</CardContent>
-		</Card>
-	);
-}
+import { formatDate } from "@/lib/utils";
+import type { BlogPost } from "@/lib/types/blog";
+import { MediaFallback } from "@/components/ui/media-fallback";
+export function RelatedArticles({ posts = [], categoryId }: { posts?: BlogPost[]; categoryId?: string }) { const { t } = useTranslation(); const related = posts.slice(0, 3); if (!related.length) return null; return <Card><CardHeader><CardTitle className="text-lg">{t("news.relatedArticles")}</CardTitle></CardHeader><CardContent className="space-y-4">{related.map((post) => { const image = post.coverImageUrl || post.media?.[0]?.url; const publishedAt = post.publishedAt ? String(post.publishedAt) : ""; return <Link key={post.id} href={`/news/${post.id}`} className="group block cursor-pointer"><div className="flex space-x-4"><div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-lg bg-gray-100">{image ? <Image src={image} alt={t(post.title)} fill sizes="96px" className="object-cover transition-transform duration-300 group-hover:scale-105" /> : <MediaFallback label={t("common.mediaUnavailable")} className="h-full min-h-0" />}</div><div className="min-w-0 flex-1">{post.category?.name ? <Badge variant="secondary" className="mb-1 text-xs">{t(post.category.name)}</Badge> : null}<h4 className="mb-1 line-clamp-2 text-sm font-semibold text-gray-900 transition-colors group-hover:text-primary">{t(post.title)}</h4><div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-500"><span className="flex items-center"><Calendar className="mr-1 h-3.5 w-3.5" />{publishedAt ? formatDate(publishedAt) : ""}</span><span className="flex items-center"><Clock className="mr-1 h-3.5 w-3.5" />{post.readTimes || 1} {t("common.minutesShort")}</span></div></div></div></Link>; })}<div className="border-t pt-4"><Button variant="outline" className="w-full text-primary" asChild><Link href={categoryId ? `/news?category=${categoryId}` : "/news"}>{categoryId ? t("news.moreFromCategory") : t("news.viewAllArticles")}<ArrowRight className="ml-2 h-4 w-4" /></Link></Button></div></CardContent></Card>; }

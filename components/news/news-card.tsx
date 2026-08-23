@@ -9,10 +9,11 @@ import { MediaFallback } from "@/components/ui/media-fallback";
 interface NewsCardProps {
 	item: NewsArticle;
 	onClick: (id: string) => void;
+	onPrefetch?: (id: string) => void;
 	variant?: "grid" | "list";
 }
 
-export function NewsCard({ item, onClick, variant = "grid" }: NewsCardProps) {
+export function NewsCard({ item, onClick, onPrefetch, variant = "grid" }: NewsCardProps) {
 	const { t } = useTranslation();
 	const [imageFailed, setImageFailed] = useState(false);
 
@@ -26,6 +27,8 @@ export function NewsCard({ item, onClick, variant = "grid" }: NewsCardProps) {
 				variant === "list" ? "flex-col md:flex-row" : "flex-col"
 			}`}
 			onClick={() => onClick(item.id)}
+			onMouseEnter={() => onPrefetch?.(item.id)}
+			onFocus={() => onPrefetch?.(item.id)}
 		>
 			<div className={`${variant === "list" ? "aspect-video md:w-72 md:shrink-0 md:aspect-[4/3]" : "aspect-video"} overflow-hidden relative`}>
 				{imageFailed ? (
