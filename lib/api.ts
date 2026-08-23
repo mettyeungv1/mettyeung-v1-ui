@@ -7,6 +7,21 @@ const APPROVED_API_BASE_URLS = new Set([
 	"http://api:8000/api/v1", // local Docker testing (server-side SSR)
 ]);
 
+const APPROVED_PUBLIC_API_BASE_URLS = new Set([
+	"https://api.mettyeung27.org/api/v1",
+	"https://api.uat.mettyeung27.org/api/v1",
+	"http://localhost:8000/api/v1",
+]);
+
+function normalizeApiBaseUrl(value: string | undefined): string | null {
+	try {
+		const url = new URL(value || "");
+		return `${url.origin}${url.pathname.replace(/\/$/, "")}`;
+	} catch {
+		return null;
+	}
+}
+
 export function getApiUrl(): string {
 	// AUTH_BASE_URL is a runtime-only env var (no NEXT_PUBLIC_ prefix) used for server-side
 	// fetches (SSR, API routes). On the client it is undefined and falls back to the
@@ -16,13 +31,22 @@ export function getApiUrl(): string {
 		process.env.NEXT_PUBLIC_AUTH_BASE_URL,
 	];
 	for (const candidate of candidates) {
-		try {
-			const url = new URL(candidate || "");
-			const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
-			if (APPROVED_API_BASE_URLS.has(normalized)) return normalized;
-		} catch {
-			// try next candidate
-		}
+		const normalized = normalizeApiBaseUrl(candidate);
+		if (normalized && APPROVED_API_BASE_URLS.has(normalized)) return normalized;
+	}
+
+	return "https://api.mettyeung27.org/api/v1";
+}
+
+/**
+ * Browser-visible API origin. Never return Docker-only hostnames from this
+ * helper: values generated with it can be rendered into HTML and fetched by a
+ * visitor's browser or Next's image optimizer.
+ */
+export function getPublicApiUrl(): string {
+	const normalized = normalizeApiBaseUrl(process.env.NEXT_PUBLIC_AUTH_BASE_URL);
+	if (normalized && APPROVED_PUBLIC_API_BASE_URLS.has(normalized)) {
+		return normalized;
 	}
 
 	return "https://api.mettyeung27.org/api/v1";

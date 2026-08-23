@@ -31,6 +31,8 @@ COPY --from=builder --chown=node:node /app/public ./public
 # The orchestrator supplies bounded noexec tmpfs mounts for this path and /tmp.
 RUN mkdir -p /app/.next/cache && chown -R node:node /app/.next/cache
 
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/lib/node_modules/corepack
+
 USER 1000:1000
 EXPOSE 3000
 CMD ["node", "server.js"]

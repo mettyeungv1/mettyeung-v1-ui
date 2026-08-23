@@ -5,9 +5,9 @@ import { listCategoriesService } from "@/service/category/category-service";
 import { NewsPageClient } from "@/components/news/news-page-client";
 import { NewsHero } from "@/components/news/news-hero";
 import { NewsSkeleton } from "@/components/news/news-skeleton";
-import { normalizeUrl } from "@/lib/utils/image";
+import { toMediaUrl } from "@/lib/utils/image";
 
-export const revalidate = 60;
+export const revalidate = 300;
 const POSTS_PER_PAGE = 12;
 
 async function NewsContentServer({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
@@ -25,8 +25,8 @@ async function NewsContentServer({ searchParams }: { searchParams: { [key: strin
 	const rawPosts = postRes.status_code === 200 && postRes.data?.data ? postRes.data.data : [];
 	const initialPosts = rawPosts.map((post: any) => ({
 		...post,
-		coverImageUrl: normalizeUrl(post.coverImageUrl),
-		media: post.media?.map((m: any) => ({ ...m, url: normalizeUrl(m.url) })) || []
+		coverImageUrl: toMediaUrl(post.coverImageUrl),
+		media: post.media?.map((m: any) => ({ ...m, url: toMediaUrl(m.url) })) || []
 	}));
 
 	const initialTotalPages = postRes.data?.totalPages || 1;
@@ -52,8 +52,8 @@ export default async function NewsPage({
 		featuredRes.status_code === 200 && featuredRes.data
 			? {
 				...featuredRes.data,
-				coverImageUrl: normalizeUrl(featuredRes.data.coverImageUrl),
-				media: featuredRes.data.media?.map((m: any) => ({ ...m, url: normalizeUrl(m.url) })) || [],
+				coverImageUrl: toMediaUrl(featuredRes.data.coverImageUrl),
+				media: featuredRes.data.media?.map((m: any) => ({ ...m, url: toMediaUrl(m.url) })) || [],
 			}
 			: null;
 

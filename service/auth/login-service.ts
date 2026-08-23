@@ -1,22 +1,16 @@
-import { AUTH_ENDPOINT } from "@/lib/static";
+import { fetchAPI, getApiUrl } from "@/lib/api";
 
 export const loginService = async ({
 	credentials,
 }: {
 	credentials: { email: string; password: string };
 }) => {
-	try {
-		const res = await fetch(`${AUTH_ENDPOINT}/login`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(credentials),
-		});
-
-		const result = await res.json();
-		return result.data;
-	} catch (error) {
-		throw new Error("can't fetch user");
+	const result = await fetchAPI<{ accessToken: string; refreshToken: string }>(
+		`${getApiUrl()}/auth/login`,
+		{ method: "POST", body: JSON.stringify(credentials), skipAuth: true, retries: 1 }
+	);
+	if (result.status_code !== 200 || !result.data) {
+		throw new Error(result.message || "Login failed");
 	}
+	return result.data;
 };

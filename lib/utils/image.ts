@@ -2,15 +2,25 @@ const APPROVED_API_BASE_URLS = new Set([
 	"https://api.mettyeung27.org/api/v1",
 	"https://api.uat.mettyeung27.org/api/v1",
 	"http://localhost:8000/api/v1", // local Docker testing
+	"http://api:8000/api/v1", // Docker-internal hostname
 ]);
 
 function getResolvedApiBaseUrl(): URL {
-	try {
-		const url = new URL(process.env.NEXT_PUBLIC_AUTH_BASE_URL || "");
-		const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
-		if (APPROVED_API_BASE_URLS.has(normalized)) return new URL(normalized);
-	} catch {
-		// Use the production public API fallback below.
+	// Prefer AUTH_BASE_URL (server-side, Docker-internal) so next/image can
+	// actually reach the API from inside the container.  Fall back to the
+	// browser-visible NEXT_PUBLIC_ variant.
+	const candidates = [
+		process.env.AUTH_BASE_URL,
+		process.env.NEXT_PUBLIC_AUTH_BASE_URL,
+	];
+	for (const candidate of candidates) {
+		try {
+			const url = new URL(candidate || "");
+			const normalized = `${url.origin}${url.pathname.replace(/\/$/, "")}`;
+			if (APPROVED_API_BASE_URLS.has(normalized)) return new URL(normalized);
+		} catch {
+			// try next candidate
+		}
 	}
 
 	return new URL("https://api.mettyeung27.org/api/v1");
@@ -43,6 +53,7 @@ export function normalizeUrl(value: string | null | undefined): string {
 	const apiBaseUrl = getResolvedApiBaseUrl();
 	const apiHost = apiBaseUrl.origin;
 	const rewritten = candidate
+		.replace("http://api:8000", apiHost)
 		.replace("http://backend:8000", apiHost)
 		.replace("http://localhost:8000", apiHost)
 		.replace("https://api.mettyeung27.org", apiHost)
@@ -54,4 +65,24 @@ export function normalizeUrl(value: string | null | undefined): string {
 	} catch {
 		return "";
 	}
+}
+
+/**
+ * Converts API media filenames to normalized, server-reachable image URLs.
+ * Full URLs and site-relative paths continue through the existing allowlist.
+ */
+export function toMediaUrl(filenameOrUrl: string | null | undefined): string {
+	if (!filenameOrUrl) return "";
+
+	const value = filenameOrUrl.trim();
+	if (value.startsWith("http") || value.startsWith("/")) {
+		return normalizeUrl(value);
+	}
+
+	const apiBase =
+		process.env.AUTH_BASE_URL ||
+		process.env.NEXT_PUBLIC_AUTH_BASE_URL ||
+		"https://api.mettyeung27.org/api/v1";
+
+	return normalizeUrl(`${apiBase}/media/view/${value}`);
 }

@@ -1,108 +1,84 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Phone } from "lucide-react";
+import { useMemo } from "react";
 import { useTranslation } from "@/lib/i18n";
-import type { IContactSettingsAPI } from "@/lib/types/contact";
-import { createGoogleMapsEmbedUrl } from "@/lib/security/url";
+import type { IContactSettingsAPI, ISocialLinkAPI } from "@/lib/types/contact";
+import { createGoogleMapsEmbedUrl, safeExternalHttpsUrl } from "@/lib/security/url";
+import { getSocialIcon } from "@/lib/utils/social-icon-map";
+
+const socialColors: Record<string, string> = {
+	facebook: "bg-[#1877F2] hover:bg-[#166FE5]",
+	youtube: "bg-[#FF0000] hover:bg-[#cc0000]",
+	telegram: "bg-[#229ED9] hover:bg-[#1a86bc]",
+	instagram: "bg-[#E1306C] hover:bg-[#c2255c]",
+	twitter: "bg-[#1DA1F2] hover:bg-[#0d8ecf]",
+	tiktok: "bg-[#010101] hover:bg-[#333]",
+	linkedin: "bg-[#0077B5] hover:bg-[#005582]",
+};
 
 interface ContactMapSectionProps {
 	settings: IContactSettingsAPI;
+	socialLinks: ISocialLinkAPI[];
 }
 
-export function ContactMapSection({ settings }: ContactMapSectionProps) {
-	const { t, language } = useTranslation();
-
+export function ContactMapSection({ settings, socialLinks }: ContactMapSectionProps) {
+	const { t } = useTranslation();
 	const embedUrl = createGoogleMapsEmbedUrl(settings.mapLat, settings.mapLng);
-
-	const addressText =
-		settings.address?.[language] ??
-		settings.address?.km ??
-		settings.address?.en ??
-		t("contact.defaultAddress");
+	const activeLinks = useMemo(
+		() => socialLinks
+			.map((link) => ({ ...link, url: safeExternalHttpsUrl(link.url) }))
+			.filter((link): link is ISocialLinkAPI => link.isActive && Boolean(link.url))
+			.sort((a, b) => a.order - b.order),
+		[socialLinks]
+	);
 
 	return (
-		<section className="relative w-full px-4 pb-20 md:px-0">
-			<div className="container mx-auto">
-				<div className="mb-8">
-					<p className="text-caption font-bold text-khmer-gold">{t("contact.findUs")}</p>
-					<h2 className="mt-2 text-3xl font-bold text-gray-950 md:text-4xl">
-						{t("contact.visitOffice")}
-					</h2>
-				</div>
-
+		<section className="bg-gray-50 py-16 md:py-24">
+			<div className="container">
 				<motion.div
-					initial={{ opacity: 0, y: 50 }}
+					initial={{ opacity: 0, y: 32 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					viewport={{ once: true }}
-					transition={{ duration: 0.8, ease: "easeOut" }}
-					className="relative group"
+					transition={{ duration: 0.5, ease: "easeOut" }}
+					className="overflow-hidden rounded-2xl border border-border-subtle bg-surface-panel shadow-surface"
 				>
-					<div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-khmer-gold/40 via-primary-900/25 to-primary-600/25 blur opacity-25 transition duration-700 group-hover:opacity-45" />
-					<div className="relative grid overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-primary-900/10 ring-1 ring-gray-900/5 lg:grid-cols-[2fr_1fr]">
-						<div className="relative h-[320px] overflow-hidden bg-gray-100 md:h-[420px] lg:h-[500px]">
-							<iframe
-								src={embedUrl}
-								width="100%"
-								height="100%"
-								style={{ border: 0 }}
-									loading="lazy"
-									referrerPolicy="no-referrer"
-									sandbox="allow-scripts allow-same-origin allow-popups"
-								className="absolute inset-0 h-full w-full"
-								title={t("contact.mapTitle")}
-							/>
-							<div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-primary-900/20 to-transparent" />
-						</div>
-
-						<div className="relative flex min-h-[360px] flex-col overflow-hidden bg-gradient-to-br from-primary-900 via-primary-900 to-primary-800 p-6 text-white md:p-8">
-							<div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-khmer-gold/20 blur-3xl" />
-							<div className="pointer-events-none absolute -bottom-24 -left-20 h-56 w-56 rounded-full bg-primary-400/25 blur-3xl" />
-
-							<div className="relative flex flex-1 flex-col">
-								<div className="flex items-start gap-4">
-									<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-khmer-gold text-primary-900 shadow-lg shadow-khmer-gold/20">
-										<MapPin className="h-6 w-6" />
-									</div>
-									<div className="min-w-0">
-										<p className="text-caption font-bold text-khmer-gold">{t("contact.location")}</p>
-										<h3 className="mt-1 text-2xl font-bold leading-tight text-white">
-											{t("contact.organizationName")}
-										</h3>
-									</div>
-								</div>
-
-								<div className="mt-7 space-y-3">
-									<div className="rounded-2xl border border-white/10 bg-white/[0.07] p-4 backdrop-blur">
-										<p className="mb-1 text-caption font-bold text-primary-200">
-											{t("contact.officeAddress")}
-										</p>
-										<p className="text-sm font-medium leading-relaxed text-white">
-											{addressText}
-										</p>
-									</div>
-
-									<div className="grid gap-3">
-										{settings.phone && (
-											<a
-												href={`tel:${settings.phone.replace(/\s/g, "")}`}
-												className="group/phone rounded-2xl border border-white/10 bg-white/[0.06] p-4 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-khmer-gold"
-											>
-												<p className="mb-1 flex items-center gap-1.5 text-caption font-bold text-primary-200">
-													<Phone className="h-3.5 w-3.5 text-khmer-gold" />
-													{t("contact.callOffice")}
-												</p>
-												<p className="text-sm font-bold text-white transition-colors group-hover/phone:text-khmer-gold">
-													{settings.phone}
-												</p>
-											</a>
-										)}
-									</div>
-								</div>
-							</div>
-						</div>
+					<div className="relative h-[320px] bg-gray-100 md:h-[480px]">
+						<iframe
+							src={embedUrl}
+							width="100%"
+							height="100%"
+							style={{ border: 0 }}
+							loading="lazy"
+							referrerPolicy="no-referrer"
+							sandbox="allow-scripts allow-same-origin allow-popups"
+							className="absolute inset-0 h-full w-full"
+							title={t("contact.mapTitle")}
+						/>
 					</div>
 				</motion.div>
+
+				{activeLinks.length > 0 && (
+					<div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+						{activeLinks.map((social) => {
+							const Icon = getSocialIcon(social.iconName ?? social.platform);
+							const colorClass = socialColors[social.platform.toLowerCase()] ?? "bg-gray-900 hover:bg-gray-700";
+							return (
+								<a
+									key={social.id}
+									href={social.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									title={social.platform}
+									aria-label={t("contact.sidebar.followOn").replace("{{platform}}", social.platform)}
+									className={`flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900 focus-visible:ring-offset-2 ${colorClass}`}
+								>
+									<Icon className="h-5 w-5" />
+								</a>
+							);
+						})}
+					</div>
+				)}
 			</div>
 		</section>
 	);

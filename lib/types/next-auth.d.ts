@@ -4,11 +4,15 @@ declare module "next-auth" {
 	interface Session extends DefaultSession {
 		accessToken?: string;
 		refreshToken?: string;
+		expiresAt?: number;
+		error?: "RefreshTokenError";
 	}
 
 	interface User extends DefaultUser {
 		accessToken?: string;
 		refreshToken?: string;
+		expiresAt?: number;
+		error?: "RefreshTokenError";
 	}
 }
 

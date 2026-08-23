@@ -16,7 +16,10 @@ export interface CommentItem {
 }
 
 export async function listCommentsService(blogId: string) {
-  return fetchAPI<CommentItem[]>(`${BLOG_ENDPOINT}/${blogId}/comments`);
+  return fetchAPI<CommentItem[]>(`${BLOG_ENDPOINT}/${blogId}/comments`, {
+    skipAuth: true,
+    next: { revalidate: 60, tags: ["comments", `blog:${blogId}:comments`] },
+  });
 }
 
 export async function createCommentService(blogId: string, payload: { content: string }) {
@@ -25,5 +28,4 @@ export async function createCommentService(blogId: string, payload: { content: s
     body: JSON.stringify(payload),
   });
 }
-
 

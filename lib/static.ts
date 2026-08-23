@@ -1,6 +1,7 @@
-import { getApiUrl } from "@/lib/api";
+import { getApiUrl, getPublicApiUrl } from "@/lib/api";
 
 export const API_BASE_URL = getApiUrl();
+export const PUBLIC_API_BASE_URL = getPublicApiUrl();
 export const AUTH_ENDPOINT = `${API_BASE_URL}/auth`;
 
 /*
@@ -25,7 +26,7 @@ export const BLOG_ENDPOINT = `${API_BASE_URL}/blogs`;
 	Media API: 
 	- Get endpoint
 */
-export const MEDIA_ENDPOINT = `${API_BASE_URL}/media`;
+export const MEDIA_ENDPOINT = `${PUBLIC_API_BASE_URL}/media`;
 
 export const VIDEO_ENDPOINT = `${API_BASE_URL}/videos`;
 export const CATEGORY_ENDPOINT = `${API_BASE_URL}/categories`;

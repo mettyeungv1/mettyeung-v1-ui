@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, Loader2 } from "lucide-react";
+import React, { useState, useMemo } from "react";
+import { Search } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 
 import type { Member, Department } from "@/lib/types/structure";
@@ -10,9 +9,7 @@ import type { Member, Department } from "@/lib/types/structure";
 // Components
 import { StructureHero } from "@/components/structure/structure-hero";
 import { DepartmentSection } from "@/components/structure/department-section";
-import { MEDIA_ENDPOINT } from "@/lib/static";
-import { getAssociationService, listMembersService, normalizeMemberData } from "@/service/structure/structure-service";
-import { normalizeUrl } from "@/lib/utils/image";
+import { normalizeMemberData } from "@/service/structure/structure-service";
 
 // Icons for departments
 import { Users, Award, BookOpen, Heart, Briefcase, Star, Building2, Flame, Feather } from "lucide-react";
@@ -43,38 +40,8 @@ export function StructurePageClient({
 
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-	// Live API data states
-	const [members, setMembers] = useState<any[]>(initialMembers);
-	const [associations, setAssociations] = useState<Member[]>(initialAssociations);
-	const [isLoading, setIsLoading] = useState(false);
-
-	useEffect(() => {
-		const fetchLiveData = async () => {
-			try {
-				setIsLoading(true);
-				const [membersRes, associationsRes] = await Promise.all([
-					listMembersService(),
-					getAssociationService(),
-				]);
-
-				const rawMembers = Array.isArray(membersRes.data) ? membersRes.data : [];
-				const liveMembers = rawMembers.map((member: Member) => ({
-					...member,
-					image: normalizeUrl(member.image)
-				}));
-				const liveAssociations = associationsRes?.data ? associationsRes.data : [];
-
-				setMembers(liveMembers);
-				setAssociations(liveAssociations);
-			} catch (error) {
-				console.error("Failed to fetch live structure API data:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchLiveData();
-	}, []);
+	const members = initialMembers;
+	const associations = initialAssociations;
 
 	// Build full organization data (unfiltered) for department list
 	const allOrganizationData = useMemo((): Department[] => {
@@ -103,7 +70,7 @@ export function StructurePageClient({
 					icon: theme.icon,
 					color: theme.color,
 					bgColor: theme.bgColor,
-					image: assoc.image_url ? `${MEDIA_ENDPOINT}/view/${assoc.image_url}` : "",
+					image: assoc.image_url || "",
 				};
 			}) as any;
 	}, [members, associations, t]);
@@ -117,14 +84,6 @@ export function StructurePageClient({
 				totalMembers={totalMembers}
 			/>
 
-			{/* Loading indicator */}
-			{isLoading && (
-				<div className="flex items-center justify-center gap-2 py-4 text-sm text-gray-500">
-					<Loader2 className="w-4 h-4 animate-spin" />
-					<span>{t("structure.updating")}</span>
-				</div>
-			)}
-
 			<section className="py-16 md:py-24">
 				<div className="container">
 					<AnimatedSection className="text-center mb-16">
@@ -133,38 +92,29 @@ export function StructurePageClient({
 						</h2>
 					</AnimatedSection>
 					<div className="space-y-16">
-						<AnimatePresence mode="popLayout">
 							{allOrganizationData.map((section, index) => (
-								<motion.div
+								<div
 									key={section.id}
-									initial={{ opacity: 0, y: 50 }}
-									animate={{ opacity: 1, y: 0 }}
-									exit={{ opacity: 0, y: -20 }}
-									transition={{ duration: 0.5, delay: index * 0.1 }}
-									layout
+									className="structure-department-enter"
+									style={{ animationDelay: `${Math.min(index * 80, 480)}ms` }}
 								>
 									<DepartmentSection
 										department={section}
 										viewMode={viewMode}
 									/>
-								</motion.div>
+								</div>
 							))}
-						</AnimatePresence>
 					</div>
 
-					{allOrganizationData.length === 0 && !isLoading && (
-						<motion.div
-							className="text-center py-16"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-						>
+					{allOrganizationData.length === 0 && (
+						<div className="text-center py-16">
 							<div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
 								<Search className="w-8 h-8 text-gray-400" />
 							</div>
 							<h3 className="text-lg font-semibold text-gray-900 mb-2">
 								{t("structure.noMembersFound")}
 							</h3>
-						</motion.div>
+						</div>
 					)}
 				</div>
 			</section>

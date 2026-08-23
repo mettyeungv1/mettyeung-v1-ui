@@ -13,6 +13,7 @@ interface NewsGridProps {
 	items: NewsArticle[];
 	categories: NewsCategory[];
 	onCardClick: (id: string) => void;
+	onCardPrefetch?: (id: string) => void;
 	loadingMore?: boolean;
 	hasMore?: boolean;
 	loading?: boolean;
@@ -22,6 +23,7 @@ export function NewsGrid({
 	items,
 	categories,
 	onCardClick,
+	onCardPrefetch,
 	loadingMore = false,
 	hasMore = true,
 	loading = false
@@ -100,7 +102,12 @@ export function NewsGrid({
 									exit={{ opacity: 0, y: 16 }}
 									transition={{ duration: 0.3, delay: Math.min(index * 0.035, 0.25) }}
 								>
-									<NewsCard item={item} onClick={onCardClick} variant={viewMode} />
+									<NewsCard
+										item={item}
+										onClick={onCardClick}
+										onPrefetch={onCardPrefetch}
+										variant={viewMode}
+									/>
 								</motion.div>
 							))}
 						</AnimatePresence>

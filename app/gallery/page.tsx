@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Calendar, Eye } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -255,10 +256,12 @@ export default function GalleryPage() {
 													className="relative block aspect-square w-full overflow-hidden text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-900 focus-visible:ring-offset-2"
 													onClick={() => handleImageClick(item)}
 												>
-													<img
+													<Image
 														src={item.thumbnail}
 														alt={item.title}
-														className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+														fill
+														sizes="(max-width: 768px) 100vw, 50vw"
+														className="object-cover transition-transform duration-500 group-hover:scale-110"
 														loading="lazy"
 													/>
 
@@ -342,10 +345,14 @@ export default function GalleryPage() {
 							</Button>
 
 							<div className="relative">
-								<img
+								<Image
 									src={selectedImage.image}
 									alt={selectedImage.title}
+									width={1200}
+									height={800}
+									sizes="(max-width: 1024px) 100vw, 80vw"
 									className="w-full max-h-[80vh] object-contain"
+									priority
 								/>
 
 								{/* Image Info Overlay */}
