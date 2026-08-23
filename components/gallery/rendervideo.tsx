@@ -10,7 +10,7 @@ function VideoModalContent({ video }: { video: Video }) {
 	const hasDescription = Boolean(video.description || video.description_km);
 
 	return (
-		<div className="grid max-h-[92vh] overflow-hidden bg-white lg:grid-cols-[minmax(0,1fr)_380px]">
+		<div className="grid bg-white lg:max-h-[92vh] lg:overflow-hidden lg:grid-cols-[minmax(0,1fr)_380px]">
 			<div className="bg-black lg:flex lg:min-h-[540px] lg:items-center">
 				<div className="relative aspect-video w-full">
 					<iframe
@@ -25,7 +25,7 @@ function VideoModalContent({ video }: { video: Video }) {
 				</div>
 			</div>
 
-			<aside className="min-h-0 overflow-y-auto border-t border-gray-100 bg-white p-5 sm:p-6 lg:max-h-[92vh] lg:border-l lg:border-t-0 lg:p-7">
+			<aside className="border-t border-gray-100 bg-white p-5 pb-10 sm:p-6 lg:min-h-0 lg:overflow-y-auto lg:max-h-[92vh] lg:border-l lg:border-t-0 lg:p-7">
 				<div className="mb-4 min-h-5">
 					{video.categoryName && (
 						<span className="text-caption font-semibold uppercase tracking-wide text-primary-700">

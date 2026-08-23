@@ -96,8 +96,7 @@ VIDEO (app/videos/page.tsx)
 CONTACT (app/contact/page.tsx)
 ├── ContactHeroSection    ← components/contact/contact-hero-section.tsx
 ├── ContactInfoGrid       ← components/contact/contact-info-grid.tsx
-├── ContactForm           ← components/contact/contact-from.tsx
-└── ContactSidebar        ← components/contact/contact-sidebar.tsx
+└── ContactMapSection     ← components/contact/contact-map.tsx
 ```
 
 ### 2.3 API Endpoints in Use

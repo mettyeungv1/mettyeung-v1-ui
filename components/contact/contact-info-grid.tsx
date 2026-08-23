@@ -53,23 +53,15 @@ export function ContactInfoGrid({ settings }: ContactInfoGridProps) {
 	};
 
 	return (
-		<section className="bg-gray-50 pb-12 pt-8">
+		<section className="bg-white py-16 md:py-24">
 			<div className="container">
-				<div className="text-center mb-8">
-					<p className="text-caption font-bold text-primary-900 mb-2">
-						{t("contact.reachUs" as any)}
-					</p>
-					<h2 className="text-2xl font-bold text-gray-900">
-						{t("contact.infoTitle" as any)}
-					</h2>
-				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
 					{contactItems.map((info, index) => {
 						const Icon = info.icon;
 
 						return (
 							<AnimatedSection key={info.titleKey} delay={index * 0.08} direction="up">
-								<div className="group h-full bg-white rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-primary-900 hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+								<div className="group h-full rounded-2xl border border-border-subtle bg-surface-panel shadow-surface transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
 									<div className="p-6 flex flex-col gap-4">
 										{/* Icon */}
 										<div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
