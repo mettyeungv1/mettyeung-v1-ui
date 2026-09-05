@@ -2,10 +2,8 @@
 
 import { useTranslation } from "@/lib/i18n";
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { GlowingCard } from "@/components/about/glowing-card"; // Reusing GlowingCard
-import { ArrowRight } from "lucide-react";
+import { Users, Handshake, ArrowUpRight } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { getPartnersService } from "@/service/partner/partner-service";
 import type { Partner } from "@/lib/types/partner";
@@ -19,38 +17,40 @@ function resolvePartnerText(
 	return t(primary) || t(translations);
 }
 
+function getInitials(name: string): string {
+	return name
+		.split(/\s+/)
+		.slice(0, 2)
+		.map((w) => w[0])
+		.join("")
+		.toUpperCase();
+}
+
 export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partner[] }) {
 	const { t } = useTranslation();
 	const [partners, setPartners] = useState<Partner[]>(initialPartners);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
 
-	// Sync state when initialPartners prop changes (e.g. RSC re-renders with fresh data)
 	useEffect(() => {
 		setPartners(initialPartners);
 		setPage(1);
 		setHasMore(true);
 	}, [initialPartners]);
-	
-	// Pagination state
+
 	const [page, setPage] = useState(1);
 	const [hasMore, setHasMore] = useState(true);
 	const [loadingMore, setLoadingMore] = useState(false);
 	const observerTarget = useRef<HTMLDivElement>(null);
 
-	// Load more partners
 	const loadMorePartners = async () => {
 		if (loadingMore || !hasMore) return;
-
 		setLoadingMore(true);
 		const nextPage = page + 1;
-
 		try {
-			const res = await getPartnersService({ 
-				page: nextPage, 
-				limit: 24, 
-				sort: "order", 
-				isActive: true 
+			const res = await getPartnersService({
+				page: nextPage,
+				limit: 24,
+				sort: "order",
+				isActive: true,
 			});
 			if (res.status_code === 200) {
 				const newPartners = res.data?.data || [];
@@ -70,139 +70,113 @@ export function PartnersGrid({ initialPartners = [] }: { initialPartners?: Partn
 		}
 	};
 
-	// Intersection Observer
 	useEffect(() => {
 		const observer = new IntersectionObserver(
 			(entries) => {
-				if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+				if (entries[0].isIntersecting && hasMore && !loadingMore) {
 					loadMorePartners();
 				}
 			},
 			{ threshold: 0.1 }
 		);
-
 		const currentTarget = observerTarget.current;
-		if (currentTarget) {
-			observer.observe(currentTarget);
-		}
-
+		if (currentTarget) observer.observe(currentTarget);
 		return () => {
-			if (currentTarget) {
-				observer.unobserve(currentTarget);
-			}
+			if (currentTarget) observer.unobserve(currentTarget);
 		};
-	}, [hasMore, loadingMore, loading]);
+	}, [hasMore, loadingMore]);
 
-	if (loading && partners.length === 0) {
-		return (
-			<section className="section-padding min-h-[50vh] flex flex-col justify-center items-center">
-				<div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-900 border-t-transparent"></div>
-				<p className="mt-4 text-body text-text-secondary">{t("common.loading")}</p>
-			</section>
-		);
-	}
-
-	if (error && partners.length === 0) {
-		return (
-			<section className="section-padding min-h-[50vh] flex justify-center items-center">
-				<div className="text-center text-error">{error}</div>
-			</section>
-		);
-	}
-
-	if (partners.length === 0) {
-		return (
-			<section className="section-padding min-h-[50vh] flex flex-col justify-center items-center">
-				<p className="text-body-lg text-text-secondary">{t("partners.noPartners")}</p>
-			</section>
-		);
-	}
+	if (partners.length === 0) return null;
 
 	return (
-		<section className="section-md surface-page">
-			<div className="container relative z-10 max-w-7xl mx-auto">
-				{/* Modern Header Section */}
-				<AnimatedSection direction="up" className="text-center mb-16 lg:mb-20">
-					<div className="inline-flex items-center justify-center p-3 sm:p-4 bg-surface-panel rounded-xl shadow-surface mb-6 border border-border-subtle">
-						<svg className="w-8 h-8 text-primary-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-						</svg>
+		<section className="relative overflow-hidden py-20 lg:py-28">
+			{/* Background — clean white, contrasts with MOU's muted bg */}
+			<div className="absolute inset-0 bg-surface-page" />
+			{/* Subtle dot grid texture */}
+			<div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #004D8C 0.75px, transparent 0.75px)", backgroundSize: "24px 24px" }} />
+
+			<div className="container relative z-10 max-w-6xl mx-auto px-4 sm:px-6">
+				{/* Section header — matches MOU convention */}
+				<AnimatedSection direction="up" className="mb-16 lg:mb-20">
+					<div className="flex flex-col items-center text-center">
+						<span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 border border-accent-200 text-caption font-semibold text-accent-700 uppercase tracking-wider mb-6">
+							<Users className="w-3.5 h-3.5" />
+							{t("partners.title")}
+						</span>
+						<h2 className="text-display-sm font-bold text-text-primary mb-5 max-w-3xl">
+							{t("partners.title")}
+						</h2>
+						<p className="text-body-lg text-text-secondary max-w-2xl leading-relaxed">
+							{t("partners.description")}
+						</p>
 					</div>
-					<h2 className="text-heading-1 mb-6">
-						{t("partners.title")}
-					</h2>
-					<div className="w-24 h-1.5 bg-interactive-primary rounded-full mx-auto mb-8" />
-					<p className="text-body-lg text-gray-600 max-w-4xl mx-auto">
-						{t("partners.description")}
-					</p>
 				</AnimatedSection>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 auto-rows-fr">
+				{/* Logo showcase wall */}
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
 					{partners.map((partner, index) => {
 						const partnerName =
 							resolvePartnerText(t, partner.name, partner.nameTranslations) ||
 							partner.media?.altText ||
 							"Partner";
-						const partnerDescription =
-							resolvePartnerText(t, partner.description, partner.descriptionTranslations);
-							const websiteUrl = safeExternalHttpsUrl(partner.websiteUrl);
-						const cardContent = (
-							<Card className="group relative flex flex-col h-full bg-surface-page hover:shadow-xl transition-all duration-300 border-border-subtle hover:border-interactive-primary/30 overflow-hidden rounded-2xl">
-								{/* Logo Area */}
-								<div className="relative w-full aspect-[3/2] flex items-center justify-center p-8 bg-surface-panel/30 group-hover:bg-surface-panel/80 transition-colors duration-500">
-									<Image
-										src={partner.media?.url || "/my-cut.png"}
-										alt={partnerName}
-										fill
-										sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-										className="object-contain p-6 md:p-8 drop-shadow-sm group-hover:scale-110 transition-transform duration-700 ease-out"
-									/>
-								</div>
+						const websiteUrl = safeExternalHttpsUrl(partner.websiteUrl);
+						const hasLogo = !!partner.media?.url;
 
-								{/* Content Area */}
-								<CardContent className="p-6 flex flex-col flex-1 border-t border-border-subtle/50">
-									<h3 className="text-heading-5 font-semibold text-text-primary mb-2 line-clamp-2 group-hover:text-primary-900 transition-colors">
-										{partnerName}
-									</h3>
-									{partnerDescription && (
-										<p className="text-body-sm text-text-secondary line-clamp-3 mb-6 flex-1">
-											{partnerDescription}
-										</p>
-									)}
-									{websiteUrl && (
-										<a
-											href={websiteUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="mt-auto inline-flex items-center text-button font-medium text-interactive-primary group-hover:text-primary-800 transition-colors"
-										>
-											{t("partners.visitWebsite")} <ArrowRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
-										</a>
-									)}
-								</CardContent>
-							</Card>
-						);
+						const Wrapper = websiteUrl ? "a" : "div";
+						const wrapperProps = websiteUrl
+							? { href: websiteUrl, target: "_blank" as const, rel: "noopener noreferrer" }
+							: {};
 
 						return (
-							<AnimatedSection key={partner.id} delay={(index % 10) * 0.1}>
-								<GlowingCard>
-									<div className="h-full">
-										{cardContent}
+							<AnimatedSection key={partner.id} delay={(index % 10) * 0.04}>
+								<Wrapper
+									{...wrapperProps}
+									className="group relative flex flex-col h-full bg-surface-panel rounded-xl border border-border-subtle overflow-hidden transition-all duration-300 hover:border-primary-200 hover:shadow-xl hover:shadow-primary-900/8 hover:-translate-y-1"
+								>
+									{/* Logo area — generous, centered */}
+									<div className="relative aspect-[4/3] flex items-center justify-center p-6 sm:p-8 bg-gradient-to-b from-white to-neutral-50/80">
+										{hasLogo ? (
+											<Image
+												src={partner.media!.url}
+												alt={partnerName}
+												width={140}
+												height={100}
+												className="object-contain max-w-full max-h-full transition-transform duration-500 ease-out group-hover:scale-110"
+											/>
+										) : (
+											<div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent-50 border border-accent-200 flex items-center justify-center">
+												<span className="text-xl sm:text-2xl font-bold text-accent-700">
+													{getInitials(partnerName)}
+												</span>
+											</div>
+										)}
+
+										{/* External link indicator */}
+										{websiteUrl && (
+											<div className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-white/80 backdrop-blur-sm border border-border-subtle flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0">
+												<ArrowUpRight className="w-3.5 h-3.5 text-primary-900" />
+											</div>
+										)}
 									</div>
-								</GlowingCard>
+
+									{/* Name strip — fixed height for alignment */}
+									<div className="mt-auto px-4 py-3 border-t border-border-subtle bg-white">
+										<p className="text-caption font-semibold text-text-primary text-center line-clamp-2 min-h-[2.5rem] flex items-center justify-center group-hover:text-primary-900 transition-colors duration-200">
+											{partnerName}
+										</p>
+									</div>
+								</Wrapper>
 							</AnimatedSection>
 						);
 					})}
 				</div>
-				
-				{/* Loading More Indicator */}
+
 				{loadingMore && (
 					<div className="flex justify-center items-center py-12">
-						<div className="w-8 h-8 border-4 border-primary-900 border-t-transparent rounded-full animate-spin"></div>
+						<div className="w-8 h-8 border-4 border-accent-700 border-t-transparent rounded-full animate-spin" />
 					</div>
 				)}
-				
-				{/* Intersection Observer Target */}
+
 				<div ref={observerTarget} className="h-10" />
 			</div>
 		</section>

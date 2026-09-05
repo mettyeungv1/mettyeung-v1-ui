@@ -681,6 +681,11 @@
     }
   },
   "network": {
+    "stats": {
+      "mousSigned": "締結済みMOU",
+      "partners": "パートナー",
+      "sectors": "分野"
+    },
     "mou": {
       "title": "覚書（MOU）",
       "description": "Mett Yeungは、専門的なトレーニングと技術的スキルの協力について、機関や民間企業とMOUに署名しました。協力には以下が含まれます:",

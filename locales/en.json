@@ -723,6 +723,11 @@
     }
   },
   "network": {
+    "stats": {
+      "mousSigned": "MOUs Signed",
+      "partners": "Partners",
+      "sectors": "Sectors"
+    },
     "mou": {
       "title": "Memorandum of Understanding (MOU)",
       "description": "Mett Yeung has signed the MOU with institution and private companies for cooperation on professional training and technical skills. The cooperation including:",

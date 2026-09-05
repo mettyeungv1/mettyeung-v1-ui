@@ -1,4 +1,5 @@
 import { PartnersHeroSection } from "@/components/partners/partners-hero";
+import { NetworkStats } from "@/components/partners/network-stats";
 import { PartnersGrid } from "@/components/partners/partners-grid";
 import { MouSection } from "@/components/partners/mou-section";
 import { getPartnersService, getMousService } from "@/service/partner/partner-service";
@@ -20,8 +21,13 @@ async function PartnerContent() {
 	const initialPartners: Partner[] = res.status_code === 200 ? (res.data?.data || (Array.isArray(res.data) ? res.data : [])) : [];
 	const initialMous: Partner[] = mouRes.status_code === 200 ? (mouRes.data?.data || (Array.isArray(mouRes.data) ? mouRes.data : [])) : [];
 
+	const mouCount = initialMous.length;
+	const partnerCount = res.data?.total || initialPartners.length;
+	const sectorCount = new Set(initialMous.map((m) => m.mouType).filter(Boolean)).size;
+
 	return (
 		<>
+			<NetworkStats mouCount={mouCount} partnerCount={partnerCount} sectorCount={sectorCount} />
 			<MouSection initialMous={initialMous} />
 			<PartnersGrid initialPartners={initialPartners} />
 		</>

@@ -681,6 +681,11 @@
     }
   },
   "network": {
+    "stats": {
+      "mousSigned": "체결된 MOU",
+      "partners": "파트너",
+      "sectors": "분야"
+    },
     "mou": {
       "title": "양해각서(MOU)",
       "description": "Mett Yeung은 전문 교육 및 기술적 기술 협력을 위해 기관 및 민간 기업과 MOU를 체결했습니다. 협력 내용은 다음과 같습니다:",
