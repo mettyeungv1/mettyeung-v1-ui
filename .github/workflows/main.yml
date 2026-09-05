@@ -82,7 +82,7 @@ jobs:
           else
             PUBLIC_API_URL="$PROD_API_URL"
             IMAGE_TAG="${GITHUB_SHA}"
-            EXTRA_TAG=""
+            EXTRA_TAG="--tag ${DOCKER_IMAGE}:latest"
           fi
 
           docker buildx build \
