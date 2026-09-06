@@ -50,9 +50,11 @@ import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { FALLBACK_CONTACT_SETTINGS } from "@/lib/data/contact";
 import type { IContactSettingsAPI, ISocialLinkAPI } from "@/lib/types/contact";
 
-// Docker builds run before the API service is available. Revalidate shared CMS
-// data immediately at runtime so a build-time fallback is replaced promptly.
-export const revalidate = 1;
+// Docker builds can run before the API service is available. Keep shared CMS
+// data fresh at runtime without forcing every route that uses this layout to
+// regenerate once per second. Individual pages and fetches can still opt into
+// a shorter interval (for example, the home page and news feeds).
+export const revalidate = 300;
 
 export default async function RootLayout({
 	children,

@@ -8,6 +8,8 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import NetworkLoading from "./loading";
 
+export const revalidate = 600; // Re-fetch data every 10 minutes (ISR)
+
 export const metadata: Metadata = {
 	title: "Our Partners | Mettyerng",
 	description: "Discover the organizations and partners we collaborate with to achieve our mission.",

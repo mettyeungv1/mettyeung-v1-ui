@@ -9,5 +9,9 @@ export type LayoutData = {
 };
 
 export function getLayoutDataService() {
-	return fetchAPI<LayoutData>(`${getApiUrl()}/layout-data`, { retries: 1 });
+	return fetchAPI<LayoutData>(`${getApiUrl()}/layout-data`, {
+		skipAuth: true,
+		retries: 1,
+		next: { revalidate: 300, tags: ["layout-data"] },
+	});
 }
